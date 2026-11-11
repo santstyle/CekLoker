@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# opencode / tooling lokal
+.omo
+.codegraph
+
+# contoh env tetap di-track
+!.env.example
