@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  quality:
+    name: Kualitas kode
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ambil kode sumber
+        uses: actions/checkout@v7
+      - name: Pasang pnpm
+        uses: pnpm/action-setup@v6
+      - name: Pasang Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - name: Pasang dependensi
+        run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm lint
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Unit test
+        run: pnpm test
+      - name: Build produksi
+        run: pnpm build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+  secrets:
+    name: Deteksi kebocoran rahasia
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ambil seluruh riwayat untuk gitleaks
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Jalankan gitleaks
+        uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
