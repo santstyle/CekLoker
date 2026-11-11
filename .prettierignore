@@ -1,0 +1,13 @@
+node_modules
+.git
+.next
+out
+build
+dist
+coverage
+.vercel
+.codegraph
+.omo
+drizzle
+pnpm-lock.yaml
+next-env.d.ts
