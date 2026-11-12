@@ -1,5 +1,4 @@
-![CekLoker](/CekLoker%20Job%20Safety%20Banner.png)
-
+/ses
 
 # CekLoker
 
@@ -19,7 +18,7 @@ Setiap evaluasi menghasilkan salah satu dari tiga rentang:
 
 Rentang ditentukan secara deterministik dari pemeriksaan berbasis aturan, bukan opini model. Setiap temuan disertai kutipan dari teks lowongan sebagai bukti.
 
-## Status Proyek
+## Status Proyekkamu 
 
 **Fase 0 — fondasi proyek.** Fitur evaluasi lowongan menyusul. Saat ini repositori berisi kerangka aplikasi, konfigurasi alat, validasi variabel lingkungan, fondasi akses database, dan pipeline CI.
 
