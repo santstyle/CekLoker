@@ -43,6 +43,7 @@ next-env.d.ts
 # opencode / tooling lokal
 .omo
 .codegraph
+.playwright-mcp/
 
 # contoh env tetap di-track
 !.env.example
