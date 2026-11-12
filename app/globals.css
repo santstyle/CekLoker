@@ -1,80 +1,25 @@
 @import "tailwindcss";
 
-/*
- * Primitif warna disimpan di :root biasa agar selalu ter-emit, lalu dipetakan
- * ke utilitas Tailwind lewat `@theme inline`. Jangan memakai nama lama
- * (--background/--foreground) — sistem ini hanya punya satu mode terang.
- */
-:root {
-  --ck-ink: #122922;
-  --ck-ink-deep: #0a0f0d;
-  --ck-lime: #d6ee30;
-  --ck-cream: #f3f6f2;
-  --ck-paper: #ffffff;
-  --ck-muted: #4a5a52;
-  --ck-line: #cfd9cf;
-
-  --ck-risiko-rendah: #14532d;
-  --ck-risiko-rendah-bg: #e6f3e6;
-  --ck-risiko-rendah-garis: #1f6b3f;
-  --ck-risiko-sedang: #6b3f00;
-  --ck-risiko-sedang-bg: #fdf0d5;
-  --ck-risiko-sedang-garis: #8a5200;
-  --ck-risiko-tinggi: #7a1d14;
-  --ck-risiko-tinggi-bg: #fbe6e4;
-  --ck-risiko-tinggi-garis: #a02c1c;
-}
-
-@theme inline {
-  --color-ink: var(--ck-ink);
-  --color-ink-deep: var(--ck-ink-deep);
-  --color-lime: var(--ck-lime);
-  --color-cream: var(--ck-cream);
-  --color-paper: var(--ck-paper);
-  --color-muted: var(--ck-muted);
-  --color-line: var(--ck-line);
-
-  --color-risiko-rendah: var(--ck-risiko-rendah);
-  --color-risiko-rendah-bg: var(--ck-risiko-rendah-bg);
-  --color-risiko-rendah-garis: var(--ck-risiko-rendah-garis);
-  --color-risiko-sedang: var(--ck-risiko-sedang);
-  --color-risiko-sedang-bg: var(--ck-risiko-sedang-bg);
-  --color-risiko-sedang-garis: var(--ck-risiko-sedang-garis);
-  --color-risiko-tinggi: var(--ck-risiko-tinggi);
-  --color-risiko-tinggi-bg: var(--ck-risiko-tinggi-bg);
-  --color-risiko-tinggi-garis: var(--ck-risiko-tinggi-garis);
-
-  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
-
-  --radius-kartu: 16px;
-  --radius-input: 12px;
-  --radius-pil: 999px;
-
-  --shadow-kartu: 6px 6px 0 0 rgba(10, 15, 13, 0.16);
-  --shadow-kartu-unggulan: 8px 8px 0 0 rgba(10, 15, 13, 0.55);
-  --shadow-pil: 4px 4px 0 0 var(--ck-ink-deep);
-  --shadow-pil-hover: 5px 5px 0 0 var(--ck-ink-deep);
-
-  --container-page: 72rem;
-
-  --ease-cekloker: cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    background-color: var(--ck-paper);
-    color: var(--ck-ink-deep);
-    font-family: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+    background-color: #ffffff;
+    color: #0f172a;
+    font-family: var(--font-inter-tight), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
-    background-color: var(--ck-lime);
-    color: var(--ck-ink-deep);
+    background-color: #10b981;
+    color: #ffffff;
   }
 
   :focus-visible {
-    outline: 2px solid var(--ck-ink);
+    outline: 2px solid #10b981;
     outline-offset: 2px;
   }
 
@@ -86,67 +31,6 @@
       animation-duration: 0ms !important;
       animation-iteration-count: 1 !important;
       scroll-behavior: auto !important;
-    }
-  }
-}
-
-@layer components {
-  .t-display {
-    font-size: 40px;
-    font-weight: 800;
-    line-height: 1.04;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-  }
-
-  .t-h2 {
-    font-size: 34px;
-    font-weight: 800;
-    line-height: 1.04;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-  }
-
-  .t-h3 {
-    font-size: 26px;
-    font-weight: 800;
-    line-height: 1.04;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-  }
-
-  .t-eyebrow {
-    font-size: 11.5px;
-    font-weight: 800;
-    line-height: 1.4;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .t-body {
-    font-size: 16px;
-    line-height: 1.55;
-  }
-
-  .t-small {
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  .t-mono {
-    font-size: 13px;
-    line-height: 1.6;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.01em;
-  }
-
-  @media (min-width: 1280px) {
-    .t-display {
-      font-size: 58.88px;
-    }
-
-    .t-h2 {
-      font-size: 53.76px;
     }
   }
 }

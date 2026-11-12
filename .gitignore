@@ -44,6 +44,7 @@ next-env.d.ts
 .omo
 .codegraph
 .playwright-mcp/
+powershell.cmd
 
 # contoh env tetap di-track
 !.env.example

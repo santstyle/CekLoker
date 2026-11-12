@@ -1,115 +1,138 @@
 import Link from "next/link";
-
+import { Container } from "@/components/ui/container";
 import { EVALUATOR_VERSION } from "@/lib/evaluation/evaluate";
 
 export const metadata = {
-  title: "Tentang — CekLoker",
+  title: "Tentang Inisiatif — CekLoker",
 };
 
 const PRINSIP = [
   {
-    judul: "Tanpa vonis",
+    judul: "Tanpa Vonis Sepihak",
     uraian:
-      "CekLoker tidak pernah menyatakan sebuah lowongan 'penipuan' atau 'asli'. Yang diberikan hanyalah rentang risiko beserta alasan dan buktinya, agar Anda bisa memutuskan sendiri.",
+      "CekLoker tidak pernah menghakimi secara mutlak sebuah lowongan 'penipuan' atau 'asli'. Kami menyajikan rentang risiko terukur beserta kutipan bukti dan rujukan hukum resmi agar pencari kerja dapat mengambil keputusan secara mandiri dan bijak.",
   },
   {
-    judul: "Deterministik",
+    judul: "Deterministik Murni",
     uraian:
-      "Hasil dihitung oleh aturan tetap, bukan opini model AI. Teks yang sama selalu menghasilkan rentang dan skor yang sama, sehingga mudah diuji dan direproduksi.",
+      "Hasil evaluasi dihitung oleh sekumpulan aturan baku ketenagakerjaan, bukan opini acak model generatif. Teks iklan yang sama akan selalu menghasilkan skor dan rentang risiko yang konsisten.",
   },
   {
-    judul: "Privasi",
+    judul: "Privasi Tanpa Kompromi",
     uraian:
-      "Teks lowongan yang Anda tempel tidak disimpan di server. Yang tercatat hanyalah ringkasan agregat tanpa isi teks, dan hasil pemeriksaan tersimpan sementara di peramban Anda sendiri.",
+      "Teks iklan lowongan yang Anda tempel dianalisis saat itu juga dan tidak pernah disimpan di basis data server kami. Kami menghormati kerahasiaan data pencari kerja sepenuhnya.",
   },
 ];
 
 export default function HalamanTentang() {
   return (
-    <div className="flex flex-col gap-10">
-      <section className="flex flex-col gap-3">
-        <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Tentang CekLoker
-        </h1>
-        <p className="max-w-2xl text-zinc-600 dark:text-zinc-400">
-          CekLoker membantu pencari kerja di Indonesia menilai iklan lowongan
-          sebelum melamar. Tempel teks lowongan, dan mesin pemeriksaan
-          membandingkannya dengan standar ketenagakerjaan serta indikator yang
-          sering muncul pada penipuan rekrutmen.
-        </p>
-      </section>
+    <div className="relative min-h-screen overflow-hidden bg-slate-50/60 py-16 sm:py-24">
+      {/* Background Ambient Glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 -top-32 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl"
+      >
+        <div className="aspect-[1155/678] w-[65rem] flex-none bg-gradient-to-tr from-emerald-400/20 to-teal-400/15 opacity-60" />
+      </div>
 
-      <section className="flex flex-col gap-4">
-        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Prinsip
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-3">
-          {PRINSIP.map((prinsip) => (
-            <div
-              key={prinsip.judul}
-              className="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800"
-            >
-              <p className="font-semibold text-zinc-900 dark:text-zinc-50">
-                {prinsip.judul}
-              </p>
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                {prinsip.uraian}
+      <Container>
+        <div className="mx-auto flex max-w-4xl flex-col gap-16 sm:gap-20">
+          {/* Header */}
+          <div className="flex flex-col items-center text-center gap-4">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-50 px-4 py-1 text-xs font-semibold text-emerald-800 shadow-2xs">
+              <span className="size-1.5 rounded-full bg-emerald-600 animate-pulse" />
+              <span>Inisiatif Ketenagakerjaan</span>
+            </div>
+
+            <h1 className="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl text-balance">
+              Mewujudkan Ekosistem Rekrutmen Kerja yang Adil &amp; Transparan
+            </h1>
+
+            <p className="max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              CekLoker dibangun untuk mendukung SDG 8 (Decent Work &amp; Economic Growth), mendampingi pencari kerja di Indonesia dari indikator risiko dan pelanggaran hak kerja.
+            </p>
+          </div>
+
+          {/* 3 Prinsip Utama */}
+          <section className="flex flex-col gap-6">
+            <div className="flex flex-col gap-1">
+              <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
+                Prinsip Integritas Produk
+              </h2>
+              <p className="text-sm text-slate-500">
+                Landasan etika dalam setiap baris kode CekLoker.
               </p>
             </div>
-          ))}
+
+            <div className="grid gap-6 sm:grid-cols-3">
+              {PRINSIP.map((prinsip) => (
+                <div
+                  key={prinsip.judul}
+                  className="flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs transition-all hover:shadow-md"
+                >
+                  <div className="flex flex-col gap-3">
+                    <span className="size-2 rounded-full bg-emerald-500" />
+                    <h3 className="text-lg font-bold text-slate-950">{prinsip.judul}</h3>
+                    <p className="text-sm leading-relaxed text-slate-600">{prinsip.uraian}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Arsitektur Teknologi */}
+          <section className="rounded-3xl border border-slate-200/90 bg-white p-8 sm:p-10 shadow-xs">
+            <h2 className="text-2xl font-black text-slate-950">
+              Spesifikasi Teknologi Terverifikasi
+            </h2>
+            <p className="mt-1 text-sm text-slate-500">
+              Fondasi arsitektur perangkat lunak yang andal, aman, dan dapat diuji.
+            </p>
+
+            <ul className="mt-6 flex flex-col gap-4 text-sm leading-relaxed text-slate-700 sm:text-base">
+              <li className="flex items-start gap-3">
+                <span className="size-2 rounded-full bg-slate-950 mt-2 shrink-0" />
+                <span>
+                  <strong className="text-slate-950">Next.js App Router &amp; TypeScript Strict:</strong> Arsitektur aplikasi modern dengan performa kompilasi instan dan keamanan tipe penuh.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="size-2 rounded-full bg-slate-950 mt-2 shrink-0" />
+                <span>
+                  <strong className="text-slate-950">Mesin Evaluasi Versi {EVALUATOR_VERSION}:</strong> Seluruh aturan diuji secara deterministik melalui pengujian otomatis Vitest.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="size-2 rounded-full bg-slate-950 mt-2 shrink-0" />
+                <span>
+                  <strong className="text-slate-950">Drizzle ORM &amp; Neon Postgres:</strong> Persistensi metadata agregat dengan validasi skema Zod tanpa menyimpan isi lowongan teks mentah pengguna.
+                </span>
+              </li>
+            </ul>
+          </section>
+
+          {/* Keterbatasan Layanan */}
+          <div className="rounded-3xl border border-slate-200/80 bg-slate-100/70 p-7 sm:p-9 text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <span className="font-bold text-slate-900">Batasan Layanan: </span>
+            CekLoker adalah instrumen skrining awal dan bukan pengganti konsultasi hukum resmi atau penyelidikan aparat penegak hukum. Analisis dibatasi oleh isi informasi tertulis pada teks yang dimasukkan pengguna.
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/cek"
+              className="rounded-full bg-slate-950 px-8 py-4 text-sm font-bold text-white transition-all hover:bg-slate-800"
+            >
+              Mulai Evaluasi Lowongan
+            </Link>
+            <Link
+              href="/metodologi"
+              className="rounded-full border border-slate-200 bg-white px-7 py-4 text-sm font-bold text-slate-700 transition-all hover:bg-slate-50"
+            >
+              Pelajari Metodologi Penilaian
+            </Link>
+          </div>
         </div>
-      </section>
-
-      <section className="flex flex-col gap-3">
-        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Teknologi
-        </h2>
-        <ul className="flex list-disc flex-col gap-1.5 pl-5 text-sm text-zinc-700 dark:text-zinc-300">
-          <li>
-            Next.js dengan App Router dan TypeScript strict sebagai aplikasi
-            utama.
-          </li>
-          <li>
-            Mesin evaluasi berbasis aturan dengan {EVALUATOR_VERSION} sebagai
-            versi saat ini; seluruh perilakunya diuji dengan pengujian unit.
-          </li>
-          <li>
-            Zod untuk validasi masukan, Drizzle ORM dengan Postgres (Neon)
-            untuk pencatatan agregat, dan Vitest untuk pengujian.
-          </li>
-          <li>
-            Basis pengetahuan aturan dan rujukan hukum dikelola lewat panel
-            administrasi internal, bukan lewat aplikasi publik.
-          </li>
-        </ul>
-      </section>
-
-      <section className="rounded-xl border border-zinc-200 bg-zinc-50 p-5 text-sm text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
-        <p className="font-semibold text-zinc-900 dark:text-zinc-50">
-          Keterbatasan
-        </p>
-        <p className="mt-1">
-          CekLoker bukan layanan hukum dan tidak menggantikan konsultasi dengan
-          ahli hukum atau instansi ketenagakerjaan. Rentang risiko hanya
-          mencerminkan isi teks yang Anda tempel; informasi yang tidak tertulis
-          di sana tidak bisa dinilai.
-        </p>
-      </section>
-
-      <div className="flex flex-wrap gap-3">
-        <Link
-          href="/cek"
-          className="rounded-lg bg-zinc-900 px-5 py-2.5 text-sm font-medium text-zinc-50 transition-colors hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-300"
-        >
-          Periksa Lowongan
-        </Link>
-        <Link
-          href="/metodologi"
-          className="rounded-lg border border-zinc-300 px-5 py-2.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
-        >
-          Baca Metodologi
-        </Link>
-      </div>
+      </Container>
     </div>
   );
 }

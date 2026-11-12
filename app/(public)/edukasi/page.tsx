@@ -1,154 +1,223 @@
+import Link from "next/link";
+import { Container } from "@/components/ui/container";
+
 export const metadata = {
-  title: "Edukasi — CekLoker",
+  title: "Edukasi Hak Kerja — CekLoker",
 };
 
 const POLA_WASPADA = [
   {
-    judul: "Diminta membayar biaya",
+    judul: "Pungutan Biaya Rekrutmen",
     uraian:
-      "Rekrutmen resmi tidak memungut biaya dari pelamar, apa pun namanya: biaya administrasi, seragam, pelatihan, atau jaminan.",
+      "Rekrutmen resmi tidak memungut biaya dari pelamar: biaya formulir, administrasi berkas, seragam, pelatihan, atau jaminan kerja.",
     saran:
-      "Jangan membayar apa pun. Bila diminta, hentikan proses dan pertimbangkan melaporkannya.",
+      "Tolak pembayaran apa pun. Pungutan kepada pencari kerja dilarang keras oleh Pasal 35 UU Ketenagakerjaan.",
+    kategori: "Kritis",
   },
   {
-    judul: "Gaji jauh di atas kisaran wajar",
+    judul: "Nominal Upah Tidak Realistis",
     uraian:
-      "Nominal gaji yang jauh melampaui standar posisi serupa dengan syarat ringan patut dipertanyakan.",
+      "Iming-iming gaji fantastis puluhan juta untuk kualifikasi ringan tanpa wawancara formal patut dicurigai.",
     saran:
-      "Minta rincian komponen gaji dan target yang menyertainya secara tertulis.",
+      "Minta surat penawaran kerja (Offering Letter) resmi yang merinci gaji pokok dan struktur tunjangan.",
+    kategori: "Waspada",
   },
   {
-    judul: "Komunikasi hanya lewat kanal pribadi",
+    judul: "Komunikasi Jalur Pribadi",
     uraian:
-      "Proses yang hanya berjalan lewat pesan pribadi tanpa identitas perusahaan yang jelas menyulitkan verifikasi.",
+      "Proses perekrutan hanya berjalan lewat pesan instan nomor telepon pribadi tanpa surat berkop atau email domain kantor.",
     saran:
-      "Cari kanal resmi perusahaan dan pindahkan komunikasi ke sana sebelum memberikan data apa pun.",
+      "Pastikan nomor telepon kantor atau email memiliki domain korporat resmi dan alamat fisik kantor terdaftar.",
+    kategori: "Waspada",
   },
   {
-    judul: "Dokumen sensitif diminta terlalu dini",
+    judul: "Permintaan Berkas Sensitif Terlalu Dini",
     uraian:
-      "Nomor rekening, fotokopi identitas, atau data keluarga belum seharusnya diminta sebelum ada kontrak dan proses seleksi yang jelas.",
+      "Permintaan buku tabungan, nomor PIN, data keluarga lengkap, atau fotokopi KTP sebelum tahapan penawaran kerja resmi.",
     saran:
-      "Tunda pengiriman dokumen hingga tahapan seleksi dan kontrak resmi tersedia.",
+      "Tunda pengiriman data sensitif hingga ada surat penawaran kerja (Offering Letter) resmi.",
+    kategori: "Privasi",
   },
   {
-    judul: "Diterima tanpa seleksi",
+    judul: "Diterima Instan Tanpa Seleksi",
     uraian:
-      "Proses seleksi resmi memiliki tahapan. Penerimaan instan tanpa wawancara layak dicurigai.",
+      "Pemberitahuan lolos kerja secara instan tanpa proses wawancara, tes kompetensi, atau klarifikasi kualifikasi.",
     saran:
-      "Tanyakan tahapan seleksi resmi dan jangan menyerahkan berkas sebelum prosesnya jelas.",
+      "Tanyakan prosedur seleksi baku dan profil posisi sebelum menyetujui komitmen apa pun.",
+    kategori: "Waspada",
   },
   {
-    judul: "Tekanan untuk memutuskan segera",
+    judul: "Tekanan Waktu Berlebihan",
     uraian:
-      "Batasan waktu yang mendesak seperti 'hari ini juga' bertujuan membuat Anda tidak sempat memverifikasi.",
+      "Desakan untuk menandatangani atau mengirim uang 'hari ini juga' agar pelamar tidak sempat berpikir jernih.",
     saran:
-      "Abaikan tekanan waktu dan ambil keputusan setelah memverifikasi perusahaan.",
-  },
-  {
-    judul: "Penghasilan bergantung pada anggota baru",
-    uraian:
-      "Skema yang menjanjikan komisi dari merekrut orang lain lagi berpotensi menjadi penipuan rekrutmen berantai.",
-    saran:
-      "Minta penjelasan tertulis sumber penghasilan utama dan hindari skema yang bergantung pada anggota baru.",
+      "Abaikan tekanan waktu dan lakukan riset legalitas badan usaha melalui AHU Kemenkumham.",
+    kategori: "Manipulasi",
   },
 ];
 
 const HAK_DASAR = [
   {
-    judul: "Upah minimum",
+    judul: "Upah Minimum (UMP/UMK)",
     uraian:
-      "Upah minimum provinsi ditetapkan pemerintah setiap tahun. Nominal upah dalam iklan tidak boleh di bawah angka provinsi yang berlaku.",
+      "Pemberi kerja dilarang membayar upah lebih rendah dari ketetapan upah minimum provinsi/kota tempat pekerja ditempatkan.",
+    rujukan: "UU No. 6/2023 Cipta Kerja",
   },
   {
-    judul: "Batas jam kerja",
+    judul: "Batas Jam Kerja & Hak Lembur",
     uraian:
-      "Peraturan perundang-undangan menetapkan batas jam kerja wajar per hari dan per minggu, termasuk ketentuan upah lembur dan hak istirahat mingguan.",
+      "Batas standar 40 jam per minggu (7 jam/hari untuk 6 hari kerja, atau 8 jam/hari untuk 5 hari kerja). Kerja lembur wajib dibayar.",
+    rujukan: "PP No. 35/2021",
   },
   {
-    judul: "Penempatan luar negeri",
+    judul: "Penempatan Luar Negeri Resmi",
     uraian:
-      "Penempatan pekerja ke luar negeri harus melalui perusahaan penempatan berizin resmi (P3MI), bukan perantara perorangan.",
+      "Penempatan tenaga kerja ke luar negeri wajib melalui Perusahaan Penempatan Pekerja Migran Indonesia (P3MI) berizin resmi.",
+    rujukan: "UU No. 18/2017 PPMI",
   },
-];
-
-const CARA_VERIFIKASI = [
-  "Cari nama badan usaha lengkap dan alamat kantor, lalu cocokkan dengan situs resmi perusahaan.",
-  "Hubungi perusahaan lewat kanal resmi yang tertera di situsnya, bukan nomor yang muncul dari iklan.",
-  "Bandingkan nominal upah dengan upah minimum provinsi pada sumber resmi pemerintah.",
-  "Baca kontrak dengan saksama sebelum menandatangani atau menyerahkan dokumen apa pun.",
-  "Bila menemukan pelanggaran ketenagakerjaan, laporkan ke instansi ketenagakerjaan setempat.",
 ];
 
 export default function HalamanEdukasi() {
   return (
-    <div className="flex flex-col gap-10">
-      <section className="flex flex-col gap-3">
-        <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Edukasi
-        </h1>
-        <p className="max-w-2xl text-zinc-600 dark:text-zinc-400">
-          Sebelum melamar, pahami hak dasar Anda sebagai pencari kerja dan
-          pola yang sering muncul pada praktik rekrutmen yang merugikan.
-        </p>
-      </section>
+    <div className="relative min-h-screen overflow-hidden bg-slate-50/60 py-16 sm:py-24">
+      {/* Background Ambient Glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 -top-32 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl"
+      >
+        <div className="aspect-[1155/678] w-[65rem] flex-none bg-gradient-to-tr from-emerald-400/20 to-teal-400/15 opacity-60" />
+      </div>
 
-      <section className="flex flex-col gap-4">
-        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Hak dasar pekerja
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-3">
-          {HAK_DASAR.map((hak) => (
-            <div
-              key={hak.judul}
-              className="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800"
-            >
-              <p className="font-semibold text-zinc-900 dark:text-zinc-50">
-                {hak.judul}
-              </p>
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                {hak.uraian}
+      <Container>
+        <div className="mx-auto flex max-w-4xl flex-col gap-16 sm:gap-20">
+          {/* Header */}
+          <div className="flex flex-col items-center text-center gap-4">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-50 px-4 py-1 text-xs font-semibold text-emerald-800 shadow-2xs">
+              <span className="size-1.5 rounded-full bg-emerald-600 animate-pulse" />
+              <span>Pusat Literasi Pencari Kerja</span>
+            </div>
+
+            <h1 className="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl text-balance">
+              Kenali Hak Kerja &amp; Waspadai Risiko
+            </h1>
+
+            <p className="max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              Panduan praktis berbasis peraturan perundang-undangan ketenagakerjaan Indonesia untuk membekali pencari kerja sebelum melamar.
+            </p>
+          </div>
+
+          {/* Section 1: Hak Dasar Pekerja */}
+          <section className="flex flex-col gap-6">
+            <div className="flex flex-col gap-1">
+              <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
+                Hak Dasar yang Wajib Anda Peroleh
+              </h2>
+              <p className="text-sm text-slate-500">
+                Standar minimum yang dijamin oleh regulasi pemerintah Republik Indonesia.
               </p>
             </div>
-          ))}
-        </div>
-      </section>
 
-      <section className="flex flex-col gap-4">
-        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Pola yang perlu diwaspadai
-        </h2>
-        <ul className="flex flex-col gap-4">
-          {POLA_WASPADA.map((pola) => (
-            <li
-              key={pola.judul}
-              className="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800"
+            <div className="grid gap-6 sm:grid-cols-3">
+              {HAK_DASAR.map((hak) => (
+                <div
+                  key={hak.judul}
+                  className="flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs transition-all hover:shadow-md"
+                >
+                  <div className="flex flex-col gap-3">
+                    <span className="inline-flex w-fit items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">
+                      {hak.rujukan}
+                    </span>
+                    <h3 className="text-lg font-bold text-slate-950">{hak.judul}</h3>
+                    <p className="text-sm leading-relaxed text-slate-600">{hak.uraian}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Section 2: Pola Waspada Bento */}
+          <section className="flex flex-col gap-6">
+            <div className="flex flex-col gap-1">
+              <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
+                Pola Risiko yang Sering Terjadi
+              </h2>
+              <p className="text-sm text-slate-500">
+                Pola-pola rekrutmen yang berpotensi merugikan atau melanggar hak pelamar.
+              </p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              {POLA_WASPADA.map((pola) => (
+                <div
+                  key={pola.judul}
+                  className="flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs transition-all hover:shadow-md"
+                >
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <span className="rounded-full bg-slate-100 px-3 py-0.5 text-xs font-semibold text-slate-700">
+                        {pola.kategori}
+                      </span>
+                    </div>
+                    <h3 className="text-base font-bold text-slate-950 sm:text-lg">{pola.judul}</h3>
+                    <p className="text-sm leading-relaxed text-slate-600">{pola.uraian}</p>
+                  </div>
+
+                  <div className="mt-5 rounded-2xl border border-emerald-200/80 bg-emerald-50/60 p-4 text-xs sm:text-sm text-emerald-950">
+                    <span className="font-bold">Langkah Preventif: </span>
+                    <span>{pola.saran}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Checklist Verifikasi */}
+          <section className="rounded-3xl border border-slate-200/90 bg-white p-8 sm:p-10 shadow-xs">
+            <h2 className="text-2xl font-black text-slate-950">
+              5 Langkah Mandiri Sebelum Mengirim Lamaran
+            </h2>
+            <p className="mt-1 text-sm text-slate-500">
+              Gunakan daftar periksa ini untuk memastikan legalitas perekrut.
+            </p>
+
+            <ol className="mt-6 flex list-decimal flex-col gap-4 pl-5 text-sm leading-relaxed text-slate-700 sm:text-base">
+              <li>
+                <strong>Cek Alamat Fisik di Google Maps:</strong> Pastikan kantor memiliki plang nama fisik dan bukan sekadar rumah kosong atau ruko terbengkalai.
+              </li>
+              <li>
+                <strong>Verifikasi Legalitas Badan Usaha:</strong> Periksa nama PT/CV di situs resmi Ditjen AHU Online Kemenkumham.
+              </li>
+              <li>
+                <strong>Bandingkan Gaji dengan UMP:</strong> Bila gaji yang dijanjikan jauh di bawah atau tidak masuk akal di atas UMP daerah bersangkutan, lakukan konfirmasi ulang.
+              </li>
+              <li>
+                <strong>Hindari Jalur Kontak WA Pribadi:</strong> Utamakan pendaftaran melalui portal karir resmi perusahaan atau job portal terverifikasi.
+              </li>
+              <li>
+                <strong>Jangan Pernah Mentransfer Uang:</strong> Proses rekrutmen tidak pernah meminta biaya apa pun dari pelamar kerja.
+              </li>
+            </ol>
+          </section>
+
+          {/* CTA Banner */}
+          <div className="flex flex-col items-center justify-between gap-6 rounded-3xl bg-slate-950 p-8 sm:p-12 text-center sm:text-left sm:flex-row shadow-xl">
+            <div>
+              <h3 className="text-xl font-black text-white sm:text-2xl">
+                Punya iklan lowongan yang mencurigakan?
+              </h3>
+              <p className="mt-1 text-sm text-slate-400">
+                Uji langsung menggunakan mesin evaluasi CekLoker secara instan.
+              </p>
+            </div>
+            <Link
+              href="/cek"
+              className="rounded-full bg-emerald-500 px-7 py-3.5 text-sm font-bold text-slate-950 transition-all hover:bg-emerald-400 shrink-0"
             >
-              <p className="font-semibold text-zinc-900 dark:text-zinc-50">
-                {pola.judul}
-              </p>
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                {pola.uraian}
-              </p>
-              <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">
-                <span className="font-medium">Yang bisa Anda lakukan: </span>
-                {pola.saran}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="flex flex-col gap-4">
-        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Daftar periksa verifikasi
-        </h2>
-        <ol className="flex list-decimal flex-col gap-2 pl-5 text-sm text-zinc-700 dark:text-zinc-300">
-          {CARA_VERIFIKASI.map((butir) => (
-            <li key={butir}>{butir}</li>
-          ))}
-        </ol>
-      </section>
+              Periksa Sekarang
+            </Link>
+          </div>
+        </div>
+      </Container>
     </div>
   );
 }

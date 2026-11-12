@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useSyncExternalStore } from "react";
 
+import { Container } from "@/components/ui/container";
 import { kunciSimpananHasil } from "@/lib/api/evaluasi";
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
 import type {
@@ -13,32 +14,57 @@ import type {
   KategoriRule,
 } from "@/lib/evaluation/types";
 
-const GAYA_BAND: Record<Band, string> = {
-  rendah: "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300",
-  perlu_dicek:
-    "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300",
-  tinggi: "bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300",
+const TEMA_BAND: Record<
+  Band,
+  {
+    badge: string;
+    border: string;
+    bgBanner: string;
+    textTitle: string;
+    barColor: string;
+  }
+> = {
+  rendah: {
+    badge: "bg-emerald-100 text-emerald-800 border-emerald-300",
+    border: "border-emerald-200",
+    bgBanner: "bg-gradient-to-r from-emerald-50 via-teal-50 to-white",
+    textTitle: "text-emerald-950",
+    barColor: "bg-emerald-500",
+  },
+  perlu_dicek: {
+    badge: "bg-amber-100 text-amber-800 border-amber-300",
+    border: "border-amber-200",
+    bgBanner: "bg-gradient-to-r from-amber-50 via-orange-50 to-white",
+    textTitle: "text-amber-950",
+    barColor: "bg-amber-500",
+  },
+  tinggi: {
+    badge: "bg-rose-100 text-rose-800 border-rose-300",
+    border: "border-rose-200",
+    bgBanner: "bg-gradient-to-r from-rose-50 via-red-50 to-white",
+    textTitle: "text-rose-950",
+    barColor: "bg-rose-500",
+  },
 };
 
 const LABEL_KATEGORI: Record<KategoriRule, string> = {
-  upah: "Upah",
-  kontak: "Kontak",
-  identitas: "Identitas",
-  dokumen: "Dokumen",
-  seleksi: "Seleksi",
-  tekanan: "Tekanan",
-  diskriminasi: "Diskriminasi",
-  penempatan: "Penempatan",
-  lainnya: "Lainnya",
+  upah: "Kompensasi & Upah",
+  kontak: "Saluran Komunikasi",
+  identitas: "Identitas Perusahaan",
+  dokumen: "Dokumen & Data Pribadi",
+  seleksi: "Prosedur Rekrutmen",
+  tekanan: "Tekanan Waktu",
+  diskriminasi: "Klausul Diskriminasi",
+  penempatan: "Penempatan Kerja",
+  lainnya: "Indikator Lain",
 };
 
 const LABEL_KEKUATAN: Record<Kekuatan, string> = {
-  lemah: "Lemah",
-  sedang: "Sedang",
-  kuat: "Kuat",
+  lemah: "Bobot Lemah",
+  sedang: "Bobot Sedang",
+  kuat: "Bobot Kuat",
 };
 
-/** Cache agar getSnapshot mengembalikan referensi yang stabil per id. */
 const CACHE_HASIL = new Map<string, HasilEvaluasi | null>();
 
 function bacaHasilSesi(id: string): HasilEvaluasi | null {
@@ -75,150 +101,221 @@ export default function KontenHasil() {
   );
 
   if (hasil === undefined) {
-    return <p className="text-zinc-600 dark:text-zinc-400">Memuat hasil...</p>;
-  }
-
-  if (hasil === null) {
     return (
-      <div className="flex flex-col gap-4">
-        <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Hasil tidak ditemukan
-        </h1>
-        <p className="max-w-2xl text-zinc-600 dark:text-zinc-400">
-          Hasil disimpan sementara di peramban yang sama tempat pemeriksaan
-          dilakukan. Jika Anda membuka tautan ini dari peramban lain atau
-          setelah menutup sesi, hasilnya sudah tidak tersedia. Silakan periksa
-          kembali lowongannya.
-        </p>
-        <div>
-          <Link
-            href="/cek"
-            className="rounded-lg bg-zinc-900 px-5 py-2.5 text-sm font-medium text-zinc-50 transition-colors hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-300"
-          >
-            Periksa Lowongan Lain
-          </Link>
-        </div>
+      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 bg-slate-50/50">
+        <span className="size-10 rounded-full border-3 border-slate-200 border-t-emerald-600 animate-spin" />
+        <p className="text-sm font-medium text-slate-500">Memuat analisis hasil evaluasi...</p>
       </div>
     );
   }
 
-  return (
-    <div className="flex flex-col gap-10">
-      <section className="flex flex-col gap-3">
-        <span
-          className={`inline-flex w-fit items-center rounded-full px-4 py-1.5 text-sm font-semibold ${GAYA_BAND[hasil.band]}`}
-        >
-          Rentang risiko: {LABEL_BAND[hasil.band]}
-        </span>
-        <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Hasil pemeriksaan
-        </h1>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">
-          Skor risiko {hasil.skor} dari 100 · Mesin pemeriksaan versi{" "}
-          {hasil.versi}
-        </p>
-        <p className="max-w-2xl text-lg text-zinc-700 dark:text-zinc-300">
-          {hasil.ringkasan}
-        </p>
-      </section>
-
-      <section className="flex flex-col gap-4">
-        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Temuan
-        </h2>
-        {hasil.temuan.length === 0 ? (
-          <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-200">
-            Tidak ditemukan indikator bermasalah pada teks lowongan. Rentang
-            rendah bukan jaminan — tetap verifikasi perusahaan dan kondisi
-            kerja ke sumber resmi.
+  if (hasil === null) {
+    return (
+      <div className="py-24 sm:py-32 bg-slate-50/60">
+        <Container>
+          <div className="mx-auto flex max-w-lg flex-col items-center text-center">
+            <div className="rounded-full bg-slate-200/60 p-3">
+              <svg className="size-6 text-slate-500" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+              </svg>
+            </div>
+            <h1 className="mt-4 text-2xl font-black text-slate-900 sm:text-3xl">
+              Sesi Tidak Ditemukan
+            </h1>
+            <p className="mt-2 text-sm leading-relaxed text-slate-600">
+              Hasil evaluasi disimpan sementara di sesi peramban Anda. Bila sesi tertutup atau Anda membuka dari peramban lain, data dihapus otomatis demi menjaga privasi Anda.
+            </p>
+            <Link
+              href="/cek"
+              className="mt-6 rounded-full bg-slate-950 px-7 py-3 text-sm font-bold text-white transition-all hover:bg-slate-800"
+            >
+              Periksa Lowongan Baru
+            </Link>
           </div>
-        ) : (
-          <ul className="flex flex-col gap-4">
-            {hasil.temuan.map((temuan) => (
-              <li
-                key={temuan.ruleId}
-                className="flex flex-col gap-3 rounded-xl border border-zinc-200 p-4 dark:border-zinc-800"
-              >
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <p className="font-semibold text-zinc-900 dark:text-zinc-50">
-                    {temuan.judul}
-                  </p>
-                  <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-                    Kontribusi skor: +{temuan.kontribusi}
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-2 text-xs">
-                  <span className="rounded-full border border-zinc-300 px-2.5 py-0.5 text-zinc-600 dark:border-zinc-700 dark:text-zinc-400">
-                    {LABEL_KATEGORI[temuan.kategori]}
-                  </span>
-                  <span className="rounded-full border border-zinc-300 px-2.5 py-0.5 text-zinc-600 dark:border-zinc-700 dark:text-zinc-400">
-                    Kekuatan: {LABEL_KEKUATAN[temuan.kekuatan]}
-                  </span>
-                </div>
-                {temuan.bukti.length > 0 ? (
-                  <div className="flex flex-col gap-1.5">
-                    <p className="text-xs font-medium uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
-                      Bukti
-                    </p>
-                    <ul className="flex flex-col gap-1.5">
-                      {temuan.bukti.map((bukti, indeksBukti) => (
-                        <li
-                          key={`${temuan.ruleId}-${indeksBukti}`}
-                          className="rounded-md bg-zinc-100 px-2.5 py-1 font-mono text-xs text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
-                        >
-                          &ldquo;{bukti}&rdquo;
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-                <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                  {temuan.penjelasan}
-                </p>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
-
-      <section className="flex flex-col gap-4">
-        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-          Saran langkah berikutnya
-        </h2>
-        {hasil.saran.length === 0 ? (
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            Tidak ada saran khusus. Ikuti daftar periksa pada halaman Edukasi
-            sebelum melamar.
-          </p>
-        ) : (
-          <ol className="flex list-decimal flex-col gap-2 pl-5 text-sm text-zinc-700 dark:text-zinc-300">
-            {hasil.saran.map((saran, indeksSaran) => (
-              <li key={`${saran}-${indeksSaran}`}>{saran}</li>
-            ))}
-          </ol>
-        )}
-      </section>
-
-      <section className="rounded-xl border border-zinc-200 bg-zinc-50 p-5 text-sm text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
-        <p className="font-semibold text-zinc-900 dark:text-zinc-50">
-          Catatan penting
-        </p>
-        <p className="mt-1">
-          Hasil ini berupa rentang risiko, bukan vonis atas keaslian lowongan.
-          CekLoker juga tidak menyimpan teks lowongan Anda. Verifikasi selalu
-          ke kanal resmi perusahaan, dan laporkan ke instansi ketenagakerjaan
-          bila Anda menemukan pelanggaran.
-        </p>
-      </section>
-
-      <div>
-        <Link
-          href="/cek"
-          className="rounded-lg border border-zinc-300 px-5 py-2.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
-        >
-          Periksa Lowongan Lain
-        </Link>
+        </Container>
       </div>
+    );
+  }
+
+  const tema = TEMA_BAND[hasil.band];
+
+  return (
+    <div className="min-h-screen bg-slate-50/60 py-12 sm:py-16 lg:py-20">
+      <Container>
+        <div className="mx-auto flex max-w-4xl flex-col gap-10">
+          {/* Top Breadcrumb & Actions */}
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <Link
+              href="/cek"
+              className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-slate-900"
+            >
+              <svg className="size-4" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+              </svg>
+              <span>Periksa Iklan Lain</span>
+            </Link>
+
+            <span className="font-mono text-xs text-slate-400">
+              Evaluator Engine {hasil.versi} &bull; Sesi #{id.slice(0, 8)}
+            </span>
+          </div>
+
+          {/* Dribbble Style Main Score Hero Card */}
+          <div className={`overflow-hidden rounded-3xl border ${tema.border} ${tema.bgBanner} p-7 sm:p-10 shadow-lg`}>
+            <div className="flex flex-col justify-between gap-8 sm:flex-row sm:items-center">
+              <div className="flex flex-col gap-3">
+                <span className={`w-fit rounded-full border px-3.5 py-1 text-xs font-bold uppercase tracking-wider ${tema.badge}`}>
+                  Rentang Risiko: {LABEL_BAND[hasil.band]}
+                </span>
+                <h1 className={`text-3xl font-black tracking-tight sm:text-4xl ${tema.textTitle}`}>
+                  Hasil Pemeriksaan Iklan
+                </h1>
+                <p className="max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
+                  {hasil.ringkasan}
+                </p>
+              </div>
+
+              {/* Gauge Meter Box */}
+              <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-200/80 bg-white/90 p-6 shadow-md backdrop-blur-xs min-w-[180px]">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  Indeks Risiko
+                </span>
+                <div className="mt-2 flex items-baseline gap-1">
+                  <span className="text-5xl font-black text-slate-950">
+                    {hasil.skor}
+                  </span>
+                  <span className="text-sm font-semibold text-slate-400">/ 100</span>
+                </div>
+                <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-100">
+                  <div
+                    className={`h-full rounded-full ${tema.barColor}`}
+                    style={{ width: `${Math.min(hasil.skor, 100)}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Temuan Indikator Section */}
+          <section className="flex flex-col gap-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-bold text-slate-950 sm:text-2xl">
+                  Temuan Indikator ({hasil.temuan.length})
+                </h2>
+                <p className="text-xs text-slate-500 sm:text-sm">
+                  Kutipan spesifik dan aturan yang teridentifikasi dalam teks lowongan.
+                </p>
+              </div>
+            </div>
+
+            {hasil.temuan.length === 0 ? (
+              <div className="flex items-start gap-3.5 rounded-2xl border border-emerald-200 bg-emerald-50/80 p-6 text-sm text-emerald-950 shadow-xs">
+                <svg className="size-5 shrink-0 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5z" clipRule="evenodd" />
+                </svg>
+                <div className="leading-relaxed">
+                  <span className="font-bold">Tidak ditemukan indikator bermasalah. </span>
+                  Teks iklan tidak memuat kata kunci atau pola yang melanggar standar aturan ketenagakerjaan CekLoker. Tetap lakukan verifikasi keabsahan izin perusahaan sebelum melamar.
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-4">
+                {hasil.temuan.map((temuan) => (
+                  <div
+                    key={temuan.ruleId}
+                    className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs transition-all hover:shadow-md"
+                  >
+                    <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+                      <h3 className="text-base font-bold text-slate-950 sm:text-lg">
+                        {temuan.judul}
+                      </h3>
+                      <span className="text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200/80 px-2.5 py-1 rounded-full w-fit">
+                        Kontribusi Skor: +{temuan.kontribusi}
+                      </span>
+                    </div>
+
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <span className="rounded-full bg-slate-100 px-3 py-0.5 text-xs font-semibold text-slate-700">
+                        {LABEL_KATEGORI[temuan.kategori]}
+                      </span>
+                      <span className="rounded-full bg-slate-100 px-3 py-0.5 text-xs font-medium text-slate-500">
+                        {LABEL_KEKUATAN[temuan.kekuatan]}
+                      </span>
+                    </div>
+
+                    {temuan.bukti.length > 0 && (
+                      <div className="mt-4 rounded-xl border border-slate-200/80 bg-slate-50/70 p-4">
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                          Kutipan Bukti Langsung dari Teks:
+                        </span>
+                        <ul className="mt-2 flex flex-col gap-2">
+                          {temuan.bukti.map((bukti, idx) => (
+                            <li
+                              key={`${temuan.ruleId}-${idx}`}
+                              className="rounded-lg border border-slate-200 bg-white px-3.5 py-2 font-mono text-xs text-slate-800 shadow-2xs leading-relaxed"
+                            >
+                              &ldquo;{bukti}&rdquo;
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    <p className="mt-4 text-sm leading-relaxed text-slate-600">
+                      {temuan.penjelasan}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
+          {/* Saran Langkah Berikutnya Section */}
+          <section className="rounded-3xl border border-slate-200/90 bg-white p-7 sm:p-9 shadow-xs">
+            <h2 className="text-xl font-bold text-slate-950">
+              Saran Langkah Sebelum Melamar
+            </h2>
+            <p className="mt-1 text-xs text-slate-500">
+              Rekomendasi tindakan preventif berdasarkan hasil evaluasi lowongan ini.
+            </p>
+
+            {hasil.saran.length === 0 ? (
+              <p className="mt-4 text-sm text-slate-600">
+                Tidak ada anjuran khusus. Ikuti prosedur pencarian kerja baku pada halaman Edukasi.
+              </p>
+            ) : (
+              <ol className="mt-5 flex list-decimal flex-col gap-3.5 pl-5 text-sm leading-relaxed text-slate-700">
+                {hasil.saran.map((saran, idx) => (
+                  <li key={`${saran}-${idx}`}>{saran}</li>
+                ))}
+              </ol>
+            )}
+          </section>
+
+          {/* Disclaimer & Nav Buttons */}
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between border-t border-slate-200/80 pt-6">
+            <p className="max-w-md text-xs leading-relaxed text-slate-400">
+              Hasil ini bersifat estimasi risiko deterministik berbasis teks dan bukan vonis hukum. CekLoker tidak menyimpan teks lowongan Anda di server.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                href="/cek"
+                className="rounded-full bg-slate-950 px-6 py-3 text-xs font-bold text-white transition-all hover:bg-slate-800"
+              >
+                Periksa Lowongan Baru
+              </Link>
+              <Link
+                href="/edukasi"
+                className="rounded-full border border-slate-200 bg-white px-5 py-3 text-xs font-bold text-slate-700 transition-all hover:bg-slate-50"
+              >
+                Panduan Edukasi Hak Kerja
+              </Link>
+            </div>
+          </div>
+        </div>
+      </Container>
     </div>
   );
 }
