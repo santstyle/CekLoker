@@ -1,5 +1,9 @@
 # CekLoker
 
+<p align="center">
+  <img src="CekLoker%20Job%20Safety%20Banner.png" alt="CekLoker Job Safety Banner" width="100%" />
+</p>
+
 [![CI](https://github.com/santstyle/CekLoker/actions/workflows/ci.yml/badge.svg)](https://github.com/santstyle/CekLoker/actions/workflows/ci.yml)
 
 CekLoker membantu pencari kerja di Indonesia menilai iklan lowongan kerja sebelum melamar. Tempel teks lowongan, dan CekLoker menandai indikator risiko serta membandingkannya dengan standar ketenagakerjaan — mulai dari upah minimum, batas jam lembur, hingga pola rekrutmen berisiko.
