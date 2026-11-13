@@ -24,19 +24,25 @@ import { getUpahMinimum } from "./wages";
 
 export const EVALUATOR_VERSION = "1.0.0";
 
-export const skemaInputEvaluasi = z.object({
-  teksLowongan: z.string().trim().min(30, "Teks lowongan minimal 30 karakter."),
-  lokasi: z
-    .string()
-    .trim()
-    .max(200, "Lokasi maksimal 200 karakter.")
-    .optional(),
-  perusahaan: z
-    .string()
-    .trim()
-    .max(200, "Nama perusahaan maksimal 200 karakter.")
-    .optional(),
-});
+export const skemaInputEvaluasi = z.object(
+  {
+    teksLowongan: z
+      .string("Teks lowongan wajib diisi.")
+      .trim()
+      .min(30, "Teks lowongan minimal 30 karakter."),
+    lokasi: z
+      .string("Lokasi harus berupa teks.")
+      .trim()
+      .max(200, "Lokasi maksimal 200 karakter.")
+      .optional(),
+    perusahaan: z
+      .string("Nama perusahaan harus berupa teks.")
+      .trim()
+      .max(200, "Nama perusahaan maksimal 200 karakter.")
+      .optional(),
+  },
+  { error: "Body permintaan harus berupa objek JSON." },
+);
 
 export type InputEvaluasi = z.infer<typeof skemaInputEvaluasi>;
 

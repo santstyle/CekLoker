@@ -97,6 +97,16 @@ export default function HalamanMetodologi() {
                   Hasil akhir diklasifikasikan ke dalam 3 rentang risiko
                   objektif (Rendah, Perlu Dicek, Tinggi).
                 </li>
+                <li>
+                  <strong className="text-slate-950">
+                    Aturan Penentu Langsung:{" "}
+                  </strong>
+                  Beberapa indikator terkuat dapat menetapkan rentang minimal
+                  berapa pun skornya — misalnya pungutan biaya penempatan atau
+                  permintaan dokumen sensitif di awal proses menandai rentang
+                  Tinggi. Aturan semacam ini hanya menaikkan rentang, tidak
+                  pernah menurunkannya.
+                </li>
               </ol>
               <p className="mt-6 rounded-2xl border border-amber-200 bg-amber-50/70 px-4 py-3 text-xs leading-relaxed text-amber-900">
                 {CATATAN_DATA_UPAH}

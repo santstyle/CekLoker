@@ -94,6 +94,22 @@ describe("validasi masukan", () => {
     expect(hasil.success).toBe(false);
   });
 
+  it("menolak body yang bukan objek dengan pesan Indonesia", () => {
+    const hasil = skemaInputEvaluasi.safeParse("bukan objek");
+    expect(hasil.success).toBe(false);
+    if (!hasil.success) {
+      expect(hasil.error.issues[0]?.message).toContain("objek JSON");
+    }
+  });
+
+  it("menolak field wajib yang hilang dengan pesan Indonesia", () => {
+    const hasil = skemaInputEvaluasi.safeParse({});
+    expect(hasil.success).toBe(false);
+    if (!hasil.success) {
+      expect(hasil.error.issues[0]?.message).toContain("wajib diisi");
+    }
+  });
+
   it("menerima teks valid dengan lokasi opsional", () => {
     const hasil = skemaInputEvaluasi.safeParse({
       teksLowongan:
