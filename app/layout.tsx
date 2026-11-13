@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, IBM_Plex_Mono, Inter_Tight } from "next/font/google";
+import { IBM_Plex_Mono, Inter_Tight, Space_Grotesk } from "next/font/google";
 
 import {
   ambilUrlSitus,
@@ -10,18 +10,18 @@ import {
 
 import "./globals.css";
 
-// Sistem tiga keluarga: Fraunces untuk display (serif editorial ala berkas
-// resmi), Inter Tight untuk body, IBM Plex Mono untuk label/data.
+// Sistem tiga keluarga: Space Grotesk untuk display, Inter Tight untuk body,
+// IBM Plex Mono untuk label/data ala dokumen resmi.
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
   subsets: ["latin"],
   display: "swap",
 });
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
-  axes: ["opsz"],
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
@@ -97,7 +97,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="id"
-      className={`${interTight.variable} ${fraunces.variable} ${plexMono.variable} h-full antialiased`}
+      className={`${interTight.variable} ${spaceGrotesk.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
