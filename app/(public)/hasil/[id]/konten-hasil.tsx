@@ -180,11 +180,11 @@ export default function KontenHasil() {
             </Link>
 
             <span className="font-mono text-xs text-slate-400">
-              Evaluator Engine {hasil.versi} &bull; Sesi #{id.slice(0, 8)}
+              Mesin Evaluasi v{hasil.versi} &bull; Sesi #{id.slice(0, 8)}
             </span>
           </div>
 
-          {/* Dribbble Style Main Score Hero Card */}
+          {/* Kartu Skor Utama */}
           <div
             className={`overflow-hidden rounded-3xl border ${tema.border} ${tema.bgBanner} p-7 shadow-lg sm:p-10`}
           >

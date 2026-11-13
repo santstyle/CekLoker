@@ -38,15 +38,15 @@ Terima kasih tertarik berkontribusi pada CekLoker. Dokumen ini menjelaskan cara 
 
 Semua variabel dibaca lewat `lib/env.ts` dan divalidasi dengan Zod saat pertama kali dibutuhkan. Aplikasi gagal cepat dengan pesan kesalahan dalam Bahasa Indonesia bila ada nilai yang tidak valid.
 
-| Variabel                | Wajib             | Keterangan                                               |
-| ----------------------- | ----------------- | -------------------------------------------------------- |
-| `DATABASE_URL`          | Ya (mulai Fase 1) | Connection string Neon Postgres pooled                   |
-| `GEMINI_API_KEY`        | Tidak             | Kunci Google Gemini untuk fallback ekstraksi AI          |
-| `AI_EXTRACTION_ENABLED` | Tidak             | `"true"`/`"1"` mengaktifkan ekstraksi AI; bawaan `false` |
-| `ADMIN_EMAIL`           | Tidak             | Email admin untuk panel administrasi                     |
-| `ADMIN_PASSWORD_HASH`   | Tidak             | Hash kata sandi admin                                    |
-| `AUTH_SECRET`           | Tidak             | Rahasia untuk menandatangani sesi admin                  |
-| `NEXT_PUBLIC_SITE_URL`  | Tidak             | URL publik situs; bawaan `http://localhost:3000`         |
+| Variabel                | Wajib             | Keterangan                                                 |
+| ----------------------- | ----------------- | ---------------------------------------------------------- |
+| `DATABASE_URL`          | Ya (mulai Fase 1) | Connection string Neon Postgres pooled                     |
+| `GEMINI_API_KEY`        | Tidak             | Kunci Google Gemini untuk fallback ekstraksi AI            |
+| `AI_EXTRACTION_ENABLED` | Tidak             | `"true"`/`"1"` mengaktifkan ekstraksi AI; bawaan `false`   |
+| `ADMIN_EMAIL`           | Tidak             | Email admin untuk panel administrasi                       |
+| `ADMIN_PASSWORD_HASH`   | Tidak             | Hash kata sandi admin                                      |
+| `AUTH_SECRET`           | Tidak             | Rahasia untuk menandatangani sesi admin                    |
+| `NEXT_PUBLIC_SITE_URL`  | Tidak             | URL publik situs; bawaan `https://ceklokerkita.vercel.app` |
 
 Jangan pernah commit file `.env`. Hanya `.env.example` yang boleh masuk repositori.
 
@@ -70,17 +70,31 @@ Jangan pernah commit file `.env`. Hanya `.env.example` yang boleh masuk reposito
 ## Struktur Direktori
 
 ```
-app/                 # Rute dan komponen App Router
-  (public)/          # Halaman publik
-  api/health/        # Endpoint kesehatan layanan
+app/                  # Rute App Router
+  (public)/           # Halaman publik: beranda, /cek, edukasi, metodologi,
+                      # tentang, dan dokumen legal (privasi, syarat, disclaimer)
+  api/health/         # Endpoint kesehatan layanan
+  api/evaluasi/       # POST evaluasi rentang risiko
+  robots.ts           # Aturan perayap
+  sitemap.ts          # Peta situs
+  manifest.ts         # Web app manifest
+  opengraph-image.tsx # Gambar Open Graph
 lib/
-  env.ts             # Validasi variabel lingkungan (Zod)
-  db/
-    client.ts        # Klien Drizzle (Neon serverless)
-    schema.ts        # Definisi skema database
+  env.ts              # Validasi variabel lingkungan (Zod)
+  situs.ts            # Identitas situs (judul, deskripsi, URL, sitemap)
+  db/                 # Klien Drizzle (Neon serverless) dan skema database
+  evaluation/         # Mesin evaluasi deterministik (aturan, skor, upah)
+  security/           # Rate limiter jendela tetap
+  api/                # Tipe bersama rute API dan klien
+components/
+  check/              # Komponen formulir cek (unggah poster, pilih lokasi)
+  situs/              # Komponen situs (navigasi, Reveal, halaman legal)
+  ui/                 # Komponen UI dasar (tombol, kartu, kontainer)
+public/               # Aset statis; tesseract/ melayani OCR 100% di peramban
+drizzle/              # Migrasi database
 tests/
-  unit/              # Pengujian unit Vitest
-.github/workflows/   # Pipeline CI
+  unit/               # Pengujian unit Vitest
+.github/workflows/    # Pipeline CI
 ```
 
 ## Konvensi

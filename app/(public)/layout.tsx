@@ -4,6 +4,7 @@ import { Suspense } from "react";
 
 import { Navigasi } from "@/components/situs/navigasi";
 import { NAV, NAV_LEGAL } from "@/components/situs/nav";
+import { GarisProgresGulir } from "@/components/situs/garis-progres";
 import { Container } from "@/components/ui/container";
 import { TautanTombol } from "@/components/ui/tombol";
 
@@ -14,6 +15,7 @@ export default function LayoutPublik({
 }) {
   return (
     <div className="flex min-h-screen flex-col bg-cream">
+      <GarisProgresGulir />
       <header className="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
         <div
           aria-hidden="true"

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { Kepala } from "@/components/situs/kepala";
 import { metadataHalaman } from "@/lib/situs";
+import { Reveal } from "@/components/situs/reveal";
 
 export const metadata: Metadata = metadataHalaman({
   judul: "Edukasi Hak Kerja",
@@ -100,133 +101,143 @@ export default function HalamanEdukasi() {
       <Container className="py-16 sm:py-20">
         <div className="mx-auto flex max-w-4xl flex-col gap-16 sm:gap-20">
           {/* Section 1: Hak Dasar Pekerja */}
-          <section className="flex flex-col gap-6">
-            <div className="flex flex-col gap-1">
-              <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
-                Hak Dasar yang Wajib Anda Peroleh
-              </h2>
-              <p className="text-sm text-slate-500">
-                Standar minimum yang dijamin oleh regulasi pemerintah Republik
-                Indonesia.
-              </p>
-            </div>
+          <Reveal>
+            <section className="flex flex-col gap-6">
+              <div className="flex flex-col gap-1">
+                <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
+                  Hak Dasar yang Wajib Anda Peroleh
+                </h2>
+                <p className="text-sm text-slate-500">
+                  Standar minimum yang dijamin oleh regulasi pemerintah Republik
+                  Indonesia.
+                </p>
+              </div>
 
-            <div className="grid gap-6 sm:grid-cols-3">
-              {HAK_DASAR.map((hak) => (
-                <div
-                  key={hak.judul}
-                  className="flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs transition-all hover:shadow-md"
-                >
-                  <div className="flex flex-col gap-3">
-                    <span className="inline-flex w-fit items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
-                      {hak.rujukan}
-                    </span>
-                    <h3 className="text-lg font-bold text-slate-950">
-                      {hak.judul}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-slate-600">
-                      {hak.uraian}
-                    </p>
+              <div className="grid gap-6 sm:grid-cols-3">
+                {HAK_DASAR.map((hak) => (
+                  <div
+                    key={hak.judul}
+                    className="flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs transition-all hover:shadow-md"
+                  >
+                    <div className="flex flex-col gap-3">
+                      <span className="inline-flex w-fit items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
+                        {hak.rujukan}
+                      </span>
+                      <h3 className="text-lg font-bold text-slate-950">
+                        {hak.judul}
+                      </h3>
+                      <p className="text-sm leading-relaxed text-slate-600">
+                        {hak.uraian}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </section>
+                ))}
+              </div>
+            </section>
+          </Reveal>
 
           {/* Section 2: Pola Waspada Bento */}
-          <section className="flex flex-col gap-6">
-            <div className="flex flex-col gap-1">
-              <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
-                Pola Risiko yang Sering Terjadi
-              </h2>
-              <p className="text-sm text-slate-500">
-                Pola-pola rekrutmen yang berpotensi merugikan atau melanggar hak
-                pelamar.
-              </p>
-            </div>
+          <Reveal>
+            <section className="flex flex-col gap-6">
+              <div className="flex flex-col gap-1">
+                <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
+                  Pola Risiko yang Sering Terjadi
+                </h2>
+                <p className="text-sm text-slate-500">
+                  Pola-pola rekrutmen yang berpotensi merugikan atau melanggar
+                  hak pelamar.
+                </p>
+              </div>
 
-            <div className="grid gap-6 md:grid-cols-2">
-              {POLA_WASPADA.map((pola) => (
-                <div
-                  key={pola.judul}
-                  className="flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs transition-all hover:shadow-md"
-                >
-                  <div className="flex flex-col gap-3">
-                    <div className="flex items-center justify-between">
-                      <span className="rounded-full bg-slate-100 px-3 py-0.5 text-xs font-semibold text-slate-700">
-                        {pola.kategori}
-                      </span>
+              <div className="grid gap-6 md:grid-cols-2">
+                {POLA_WASPADA.map((pola) => (
+                  <div
+                    key={pola.judul}
+                    className="flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs transition-all hover:shadow-md"
+                  >
+                    <div className="flex flex-col gap-3">
+                      <div className="flex items-center justify-between">
+                        <span className="rounded-full bg-slate-100 px-3 py-0.5 text-xs font-semibold text-slate-700">
+                          {pola.kategori}
+                        </span>
+                      </div>
+                      <h3 className="text-base font-bold text-slate-950 sm:text-lg">
+                        {pola.judul}
+                      </h3>
+                      <p className="text-sm leading-relaxed text-slate-600">
+                        {pola.uraian}
+                      </p>
                     </div>
-                    <h3 className="text-base font-bold text-slate-950 sm:text-lg">
-                      {pola.judul}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-slate-600">
-                      {pola.uraian}
-                    </p>
-                  </div>
 
-                  <div className="mt-5 rounded-2xl border border-blue-200/80 bg-blue-50/60 p-4 text-xs text-blue-950 sm:text-sm">
-                    <span className="font-bold">Langkah Preventif: </span>
-                    <span>{pola.saran}</span>
+                    <div className="mt-5 rounded-2xl border border-blue-200/80 bg-blue-50/60 p-4 text-xs text-blue-950 sm:text-sm">
+                      <span className="font-bold">Langkah Preventif: </span>
+                      <span>{pola.saran}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </section>
+                ))}
+              </div>
+            </section>
+          </Reveal>
 
           {/* Checklist Verifikasi */}
-          <section className="rounded-3xl border border-slate-200/90 bg-white p-8 shadow-xs sm:p-10">
-            <h2 className="text-2xl font-black text-slate-950">
-              5 Langkah Mandiri Sebelum Mengirim Lamaran
-            </h2>
-            <p className="mt-1 text-sm text-slate-500">
-              Gunakan daftar periksa ini untuk memastikan legalitas perekrut.
-            </p>
+          <Reveal>
+            <section className="rounded-3xl border border-slate-200/90 bg-white p-8 shadow-xs sm:p-10">
+              <h2 className="text-2xl font-black text-slate-950">
+                5 Langkah Mandiri Sebelum Mengirim Lamaran
+              </h2>
+              <p className="mt-1 text-sm text-slate-500">
+                Gunakan daftar periksa ini untuk memastikan legalitas perekrut.
+              </p>
 
-            <ol className="mt-6 flex list-decimal flex-col gap-4 pl-5 text-sm leading-relaxed text-slate-700 sm:text-base">
-              <li>
-                <strong>Cek Alamat Fisik di Google Maps:</strong> Pastikan
-                kantor memiliki plang nama fisik dan bukan sekadar rumah kosong
-                atau ruko terbengkalai.
-              </li>
-              <li>
-                <strong>Verifikasi Legalitas Badan Usaha:</strong> Periksa nama
-                PT/CV di situs resmi Ditjen AHU Online Kemenkumham.
-              </li>
-              <li>
-                <strong>Bandingkan Gaji dengan UMP:</strong> Bila gaji yang
-                dijanjikan jauh di bawah atau tidak masuk akal di atas UMP
-                daerah bersangkutan, lakukan konfirmasi ulang.
-              </li>
-              <li>
-                <strong>Hindari Jalur Kontak WA Pribadi:</strong> Utamakan
-                pendaftaran melalui portal karir resmi perusahaan atau job
-                portal terverifikasi.
-              </li>
-              <li>
-                <strong>Jangan Pernah Mentransfer Uang:</strong> Proses
-                rekrutmen tidak pernah meminta biaya apa pun dari pelamar kerja.
-              </li>
-            </ol>
-          </section>
+              <ol className="mt-6 flex list-decimal flex-col gap-4 pl-5 text-sm leading-relaxed text-slate-700 sm:text-base">
+                <li>
+                  <strong>Cek Alamat Fisik di Google Maps:</strong> Pastikan
+                  kantor memiliki plang nama fisik dan bukan sekadar rumah
+                  kosong atau ruko terbengkalai.
+                </li>
+                <li>
+                  <strong>Verifikasi Legalitas Badan Usaha:</strong> Periksa
+                  nama PT/CV di situs resmi Ditjen AHU Online Kemenkumham.
+                </li>
+                <li>
+                  <strong>Bandingkan Gaji dengan UMP:</strong> Bila gaji yang
+                  dijanjikan jauh di bawah atau tidak masuk akal di atas UMP
+                  daerah bersangkutan, lakukan konfirmasi ulang.
+                </li>
+                <li>
+                  <strong>Hindari Jalur Kontak WA Pribadi:</strong> Utamakan
+                  pendaftaran melalui portal karir resmi perusahaan atau job
+                  portal terverifikasi.
+                </li>
+                <li>
+                  <strong>Jangan Pernah Mentransfer Uang:</strong> Proses
+                  rekrutmen tidak pernah meminta biaya apa pun dari pelamar
+                  kerja.
+                </li>
+              </ol>
+            </section>
+          </Reveal>
 
           {/* CTA Banner */}
-          <div className="gradien-samudra flex flex-col items-center justify-between gap-6 rounded-3xl p-8 text-center shadow-xl sm:flex-row sm:p-12 sm:text-left">
-            <div>
-              <h3 className="font-display text-xl font-semibold text-white sm:text-2xl">
-                Punya iklan lowongan yang mencurigakan?
-              </h3>
-              <p className="mt-1 text-sm text-blue-100/90">
-                Uji langsung menggunakan mesin evaluasi CekLoker secara instan.
-              </p>
+          <Reveal>
+            <div className="gradien-samudra flex flex-col items-center justify-between gap-6 rounded-3xl p-8 text-center shadow-xl sm:flex-row sm:p-12 sm:text-left">
+              <div>
+                <h3 className="font-display text-xl font-semibold text-white sm:text-2xl">
+                  Punya iklan lowongan yang mencurigakan?
+                </h3>
+                <p className="mt-1 text-sm text-blue-100/90">
+                  Uji langsung menggunakan mesin evaluasi CekLoker secara
+                  instan.
+                </p>
+              </div>
+              <Link
+                href="/cek"
+                className="shrink-0 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-ink transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-50"
+              >
+                Periksa Sekarang
+              </Link>
             </div>
-            <Link
-              href="/cek"
-              className="shrink-0 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-ink transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-50"
-            >
-              Periksa Sekarang
-            </Link>
-          </div>
+          </Reveal>
         </div>
       </Container>
     </div>
