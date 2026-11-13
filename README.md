@@ -39,7 +39,7 @@ Rentang ditentukan secara deterministik dari pemeriksaan berbasis aturan, bukan 
 
 ## Privasi
 
-CekLoker tidak menyimpan teks lowongan yang Anda tempel di server. Sistem hanya menyimpan penilaian dan kutipan bukti singkat yang diperlukan agar hasil evaluasi dapat dibuka kembali lewat peramban Anda.
+CekLoker tidak pernah menyimpan teks lowongan yang Anda tempel di server. Hasil evaluasi beserta kutipan buktinya hanya tersimpan di peramban Anda (sessionStorage) dan hilang saat tab ditutup. Ke server hanya dikirim metadata agregat yang anonim — rentang risiko, skor, kode aturan yang menyala, wilayah, dan panjang teks — tanpa isi lowongan maupun identitas pengguna.
 
 ## Lisensi
 
