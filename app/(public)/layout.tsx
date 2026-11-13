@@ -68,7 +68,7 @@ export default function LayoutPublik({
         <Container className="relative pt-14 pb-8 md:pt-16">
           <div className="grid gap-10 md:grid-cols-12">
             <div className="flex max-w-sm flex-col gap-4 md:col-span-5">
-              <p className="font-display text-2xl font-semibold tracking-tight text-white">
+              <p className="font-display text-2xl font-extrabold tracking-tight text-white">
                 Cek<span className="teks-gradasi-terang">Loker</span>
               </p>
               <p className="font-mono text-[0.6rem] tracking-[0.22em] text-slate-500 uppercase">
