@@ -39,7 +39,7 @@ export function BagianLegal({
   children: ReactNode;
 }) {
   return (
-    <section className="flex flex-col gap-3 border-l-2 border-transparent pl-0 transition-colors hover:border-violet-300 sm:pl-5">
+    <section className="flex flex-col gap-3 border-l-2 border-transparent pl-0 transition-colors hover:border-sky-300 sm:pl-5">
       <h2 className="font-display text-lg font-semibold tracking-tight text-ink sm:text-xl">
         {judul}
       </h2>

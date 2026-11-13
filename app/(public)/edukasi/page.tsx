@@ -211,7 +211,7 @@ export default function HalamanEdukasi() {
           </section>
 
           {/* CTA Banner */}
-          <div className="gradien-senja flex flex-col items-center justify-between gap-6 rounded-3xl p-8 text-center shadow-xl sm:flex-row sm:p-12 sm:text-left">
+          <div className="gradien-samudra flex flex-col items-center justify-between gap-6 rounded-3xl p-8 text-center shadow-xl sm:flex-row sm:p-12 sm:text-left">
             <div>
               <h3 className="font-display text-xl font-semibold text-white sm:text-2xl">
                 Punya iklan lowongan yang mencurigakan?

@@ -69,7 +69,7 @@ export default function HalamanTentang() {
                   <div className="flex flex-col gap-3">
                     <span
                       aria-hidden="true"
-                      className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 via-violet-600 to-rose-500 font-mono text-[0.65rem] font-semibold text-white shadow-md"
+                      className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-sky-400 to-blue-700 font-mono text-[0.65rem] font-semibold text-white shadow-md"
                     >
                       {prinsip.nomor}
                     </span>

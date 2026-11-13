@@ -61,7 +61,7 @@ export default function LayoutPublik({
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-40 -bottom-40 size-[34rem] rounded-full bg-[radial-gradient(circle,rgb(219_39_119/0.22),transparent_65%)] blur-3xl"
+          className="pointer-events-none absolute -right-40 -bottom-40 size-[34rem] rounded-full bg-[radial-gradient(circle,rgb(56_189_248/0.25),transparent_65%)] blur-3xl"
         />
         <Container className="relative pt-14 pb-8 md:pt-16">
           <div className="grid gap-10 md:grid-cols-12">

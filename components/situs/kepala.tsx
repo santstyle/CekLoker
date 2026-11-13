@@ -21,7 +21,7 @@ export function Kepala({
       <div aria-hidden="true" className="pola-kisi-gelap absolute inset-0" />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-48 right-[-12rem] size-[36rem] rounded-full bg-[radial-gradient(circle,rgb(109_40_217/0.5),transparent_65%)] blur-3xl"
+        className="pointer-events-none absolute -top-48 right-[-12rem] size-[36rem] rounded-full bg-[radial-gradient(circle,rgb(125_211_252/0.32),transparent_65%)] blur-3xl"
       />
       <div
         aria-hidden="true"
@@ -32,7 +32,7 @@ export function Kepala({
         <p className="flex items-center gap-2.5 font-mono text-[0.62rem] font-medium tracking-[0.24em] text-blue-300 uppercase">
           <span
             aria-hidden="true"
-            className="inline-block size-1.5 rounded-[2px] bg-gradient-to-r from-blue-400 to-fuchsia-400"
+            className="inline-block size-1.5 rounded-[2px] bg-gradient-to-r from-sky-400 to-blue-500"
           />
           {kicker}
         </p>

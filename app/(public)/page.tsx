@@ -112,7 +112,7 @@ export default function Beranda() {
           <p className="mx-auto inline-flex items-center gap-2.5 rounded-full bg-white/70 py-1.5 pr-4 pl-2 font-mono text-[0.6rem] font-medium tracking-[0.2em] text-ink uppercase ring-1 ring-ink/10 backdrop-blur-sm">
             <span
               aria-hidden="true"
-              className="size-2 rounded-full bg-gradient-to-r from-blue-500 to-fuchsia-500"
+              className="size-2 rounded-full bg-gradient-to-r from-sky-400 to-blue-600"
             />
             Alat pra-lamaran · Ketenagakerjaan Indonesia
           </p>
@@ -154,11 +154,11 @@ export default function Beranda() {
         >
           <defs>
             <linearGradient id="kubah" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#60a5fa" />
-              <stop offset="32%" stop-color="#818cf8" />
-              <stop offset="62%" stop-color="#c084fc" />
-              <stop offset="84%" stop-color="#f472b6" />
-              <stop offset="100%" stop-color="#fda4af" />
+              <stop offset="0%" stop-color="#2563eb" />
+              <stop offset="30%" stop-color="#3b82f6" />
+              <stop offset="58%" stop-color="#60a5fa" />
+              <stop offset="82%" stop-color="#93c5fd" />
+              <stop offset="100%" stop-color="#e0f2fe" />
             </linearGradient>
             <radialGradient id="cahayaHorizon" cx="50%" cy="100%" r="75%">
               <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85" />
@@ -218,7 +218,7 @@ export default function Beranda() {
 
         {/* Kartu laporan ilustrasi, mengambang di atas horizon */}
         <div className="relative z-10 -mt-24 flex justify-center px-4 pb-16 sm:-mt-40 sm:pb-20">
-          <figure className="kartu-bingkai-gradasi w-[min(92vw,400px)] rotate-[-1.2deg] rounded-2xl p-5 shadow-[0_30px_60px_-20px_rgb(76_29_149/0.45)]">
+          <figure className="kartu-bingkai-gradasi w-[min(92vw,400px)] rotate-[-1.2deg] rounded-2xl p-5 shadow-[0_30px_60px_-20px_rgb(15_23_42/0.4)]">
             <div className="flex items-center justify-between gap-4 border-b border-slate-100 pb-3 font-mono text-[0.58rem] font-semibold tracking-[0.2em] text-ink uppercase">
               <span>CekLoker · Laporan risiko</span>
               <span className="text-muted normal-case">
@@ -289,7 +289,7 @@ export default function Beranda() {
       {/* ============ Strip marquee pola ============ */}
       <div
         aria-label="Contoh pola yang dikenali mesin CekLoker"
-        className="overflow-hidden bg-gradient-to-r from-blue-600 via-violet-600 to-rose-500 py-2.5"
+        className="overflow-hidden bg-gradient-to-r from-blue-800 via-blue-600 to-sky-400 py-2.5"
       >
         <div className="animate-marquee flex w-max items-center whitespace-nowrap">
           {[...POLA, ...POLA].map((pola, i) => (
@@ -424,7 +424,7 @@ export default function Beranda() {
               >
                 <span
                   aria-hidden="true"
-                  className="flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-violet-600 to-rose-500 font-mono text-sm font-semibold text-white shadow-lg"
+                  className="flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-blue-700 font-mono text-sm font-semibold text-white shadow-lg"
                 >
                   {langkah.nomor}
                 </span>
@@ -514,7 +514,7 @@ export default function Beranda() {
       </section>
 
       {/* ============ CTA penutup: panel gradasi senja ============ */}
-      <section className="gradien-senja relative overflow-hidden py-20 text-white sm:py-28">
+      <section className="gradien-samudra relative overflow-hidden py-20 text-white sm:py-28">
         <Container
           ukuran="penuh"
           className="relative flex flex-col items-center text-center"
