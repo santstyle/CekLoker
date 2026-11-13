@@ -222,7 +222,7 @@ export default function HalamanEdukasi() {
           <Reveal>
             <div className="gradien-samudra flex flex-col items-center justify-between gap-6 rounded-3xl p-8 text-center shadow-xl sm:flex-row sm:p-12 sm:text-left">
               <div>
-                <h3 className="font-display text-xl font-semibold text-white sm:text-2xl">
+                <h3 className="font-display text-xl font-extrabold text-white sm:text-2xl">
                   Punya iklan lowongan yang mencurigakan?
                 </h3>
                 <p className="mt-1 text-sm text-blue-100/90">

@@ -116,7 +116,7 @@ export default function Beranda() {
             />
             Alat pra-lamaran · Ketenagakerjaan Indonesia
           </p>
-          <h1 className="mx-auto mt-6 max-w-5xl font-display text-[clamp(2.75rem,7.4vw,5.5rem)] leading-[1.0] font-semibold tracking-tight text-balance text-ink">
+          <h1 className="mx-auto mt-6 max-w-5xl font-display text-[clamp(2.75rem,7.4vw,5.5rem)] leading-[1.0] font-extrabold tracking-tight text-balance text-ink">
             Kerja yang layak dimulai dari iklan yang{" "}
             <span className="teks-gradasi">jujur.</span>
           </h1>
@@ -256,7 +256,7 @@ export default function Beranda() {
                 <p className="font-mono text-[0.52rem] tracking-[0.18em] text-muted uppercase">
                   Skor risiko
                 </p>
-                <p className="mt-1 font-display text-5xl leading-none font-semibold text-ink tabular-nums">
+                <p className="mt-1 font-display text-5xl leading-none font-extrabold text-ink tabular-nums">
                   65<span className="text-lg font-medium text-muted">/100</span>
                 </p>
               </div>
@@ -316,7 +316,7 @@ export default function Beranda() {
                 <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
                   Bukan vonis
                 </p>
-                <h2 className="mt-4 max-w-3xl font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.02] font-semibold tracking-tight text-ink">
+                <h2 className="mt-4 max-w-3xl font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.02] font-extrabold tracking-tight text-ink">
                   Bukan angka hitam putih.{" "}
                   <span className="teks-gradasi">Rentang risiko</span>, dengan
                   buktinya di meja Anda.
@@ -358,7 +358,7 @@ export default function Beranda() {
                     </span>
                     <span
                       aria-hidden="true"
-                      className="font-display text-5xl leading-none font-semibold text-ink/10 transition-colors duration-300 group-hover:text-ink/20"
+                      className="font-display text-5xl leading-none font-extrabold text-ink/10 transition-colors duration-300 group-hover:text-ink/20"
                     >
                       {band.nomor}
                     </span>
@@ -366,7 +366,7 @@ export default function Beranda() {
                   <p className="mt-5 font-mono text-[0.6rem] tracking-[0.18em] text-muted uppercase">
                     {band.skor}
                   </p>
-                  <h3 className="mt-2 font-display text-xl font-semibold text-ink sm:text-2xl">
+                  <h3 className="mt-2 font-display text-xl font-extrabold text-ink sm:text-2xl">
                     {band.status}
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-slate-600">
@@ -388,7 +388,7 @@ export default function Beranda() {
                 <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
                   Cara kerja
                 </p>
-                <h2 className="mt-4 font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.02] font-semibold tracking-tight text-ink">
+                <h2 className="mt-4 font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.02] font-extrabold tracking-tight text-ink">
                   Tempel iklannya.{" "}
                   <span className="teks-gradasi">Buktinya kembali.</span>
                 </h2>
@@ -435,7 +435,7 @@ export default function Beranda() {
                   >
                     {langkah.nomor}
                   </span>
-                  <h3 className="mt-5 font-display text-2xl font-semibold text-ink">
+                  <h3 className="mt-5 font-display text-2xl font-extrabold text-ink">
                     {langkah.judul}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">
@@ -467,7 +467,7 @@ export default function Beranda() {
                 <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
                   Dasar hukum
                 </p>
-                <h2 className="mt-4 font-display text-[clamp(2.25rem,4.5vw,4rem)] leading-[1.02] font-semibold tracking-tight text-ink">
+                <h2 className="mt-4 font-display text-[clamp(2.25rem,4.5vw,4rem)] leading-[1.02] font-extrabold tracking-tight text-ink">
                   Setiap temuan,{" "}
                   <span className="teks-gradasi">pasalnya ikut.</span>
                 </h2>
@@ -516,7 +516,7 @@ export default function Beranda() {
                 <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
                   FAQ
                 </p>
-                <h2 className="mt-4 font-display text-[clamp(2.25rem,4.2vw,3.5rem)] leading-[1.02] font-semibold tracking-tight text-ink">
+                <h2 className="mt-4 font-display text-[clamp(2.25rem,4.2vw,3.5rem)] leading-[1.02] font-extrabold tracking-tight text-ink">
                   Pertanyaan yang <span className="teks-gradasi">sering</span>{" "}
                   diajukan.
                 </h2>
@@ -541,7 +541,7 @@ export default function Beranda() {
             <p className="font-mono text-[0.62rem] font-semibold tracking-[0.26em] text-blue-200/90 uppercase">
               Cek dulu, baru lamar
             </p>
-            <h2 className="mt-5 font-display text-[clamp(3rem,8.5vw,6rem)] leading-[1.0] font-semibold tracking-tight text-balance">
+            <h2 className="mt-5 font-display text-[clamp(3rem,8.5vw,6rem)] leading-[1.0] font-extrabold tracking-tight text-balance">
               Baca iklannya.
               <br />
               <span className="teks-gradasi-terang">Baru lamar.</span>

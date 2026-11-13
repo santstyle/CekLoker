@@ -20,7 +20,7 @@ interface PilihLokasiProps {
 }
 
 const KELAS_INPUT =
-  "w-full rounded-xl border border-slate-200 bg-slate-50/40 py-3.5 pr-11 pl-4 text-sm text-slate-900 transition-all duration-200 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 sm:text-base";
+  "w-full rounded-xl border border-line bg-cream/60 py-3.5 pr-11 pl-4 text-sm text-ink transition-all duration-200 placeholder:text-slate-400 focus:border-aksen focus:bg-paper focus:ring-4 focus:ring-aksen/10 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 sm:text-base";
 
 /**
  * Pemilih lokasi dengan saran yang mengikuti ketikan.
@@ -203,7 +203,7 @@ export function PilihLokasi({
           aria-label="Kosongkan lokasi"
           onMouseDown={(peristiwa) => peristiwa.preventDefault()}
           onClick={kosongkan}
-          className="absolute top-1/2 right-3 flex size-6 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-200/70 hover:text-slate-700"
+          className="absolute top-1/2 right-3 flex size-6 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-muted transition-colors hover:bg-ink/5 hover:text-ink"
         >
           <svg
             viewBox="0 0 20 20"
@@ -221,7 +221,7 @@ export function PilihLokasi({
       )}
 
       {terbuka && (
-        <div className="absolute z-20 mt-2 max-h-72 w-full overflow-auto rounded-xl border border-slate-200 bg-white shadow-xl shadow-slate-900/5">
+        <div className="absolute z-20 mt-2 max-h-72 w-full overflow-auto rounded-2xl border border-line bg-paper shadow-xl shadow-slate-900/5">
           {hasil.length > 0 ? (
             <ul
               id={idDaftar}
@@ -241,19 +241,19 @@ export function PilihLokasi({
                   className={cn(
                     "flex cursor-pointer items-center justify-between gap-3 px-4 py-2.5 text-sm",
                     sorotanAman === indeks
-                      ? "bg-blue-50 text-blue-900"
-                      : "text-slate-700 hover:bg-slate-50",
+                      ? "bg-aksen/8 text-aksen-pekat"
+                      : "text-ink/80 hover:bg-cream",
                   )}
                 >
                   <span className="font-medium">{opsi.label}</span>
-                  <span className="shrink-0 text-xs text-slate-400">
+                  <span className="shrink-0 font-mono text-[0.65rem] text-muted">
                     {opsi.jenis === "provinsi" ? "Provinsi" : opsi.provinsi}
                   </span>
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="px-4 py-3 text-sm text-slate-500">
+            <p className="px-4 py-3 text-sm text-muted">
               Lokasi tidak dikenali. Ketik nama kota atau provinsi, atau
               kosongkan kolom ini.
             </p>
