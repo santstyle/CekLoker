@@ -1,7 +1,7 @@
 # CekLoker
 
 <p align="center">
-  <img src="CekLoker%20Job%20Safety%20Banner.png" alt="CekLoker Job Safety Banner" width="100%" />
+  <img src="docs/banner.png" alt="Spanduk CekLoker" width="100%" />
 </p>
 
 [![CI](https://github.com/santstyle/CekLoker/actions/workflows/ci.yml/badge.svg)](https://github.com/santstyle/CekLoker/actions/workflows/ci.yml)
