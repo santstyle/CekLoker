@@ -25,11 +25,11 @@ const TEMA_BAND: Record<
   }
 > = {
   rendah: {
-    badge: "bg-emerald-100 text-emerald-800 border-emerald-300",
-    border: "border-emerald-200",
-    bgBanner: "bg-gradient-to-r from-emerald-50 via-teal-50 to-white",
-    textTitle: "text-emerald-950",
-    barColor: "bg-emerald-500",
+    badge: "bg-blue-100 text-blue-800 border-blue-300",
+    border: "border-blue-200",
+    bgBanner: "bg-gradient-to-r from-blue-50 via-indigo-50 to-white",
+    textTitle: "text-blue-950",
+    barColor: "bg-blue-500",
   },
   perlu_dicek: {
     badge: "bg-amber-100 text-amber-800 border-amber-300",
@@ -103,27 +103,41 @@ export default function KontenHasil() {
   if (hasil === undefined) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 bg-slate-50/50">
-        <span className="size-10 rounded-full border-3 border-slate-200 border-t-emerald-600 animate-spin" />
-        <p className="text-sm font-medium text-slate-500">Memuat analisis hasil evaluasi...</p>
+        <span className="size-10 animate-spin rounded-full border-3 border-slate-200 border-t-blue-600" />
+        <p className="text-sm font-medium text-slate-500">
+          Memuat analisis hasil evaluasi...
+        </p>
       </div>
     );
   }
 
   if (hasil === null) {
     return (
-      <div className="py-24 sm:py-32 bg-slate-50/60">
+      <div className="bg-slate-50/60 py-24 sm:py-32">
         <Container>
           <div className="mx-auto flex max-w-lg flex-col items-center text-center">
             <div className="rounded-full bg-slate-200/60 p-3">
-              <svg className="size-6 text-slate-500" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+              <svg
+                className="size-6 text-slate-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+                />
               </svg>
             </div>
             <h1 className="mt-4 text-2xl font-black text-slate-900 sm:text-3xl">
               Sesi Tidak Ditemukan
             </h1>
             <p className="mt-2 text-sm leading-relaxed text-slate-600">
-              Hasil evaluasi disimpan sementara di sesi peramban Anda. Bila sesi tertutup atau Anda membuka dari peramban lain, data dihapus otomatis demi menjaga privasi Anda.
+              Hasil evaluasi disimpan sementara di sesi peramban Anda. Bila sesi
+              tertutup atau Anda membuka dari peramban lain, data dihapus
+              otomatis demi menjaga privasi Anda.
             </p>
             <Link
               href="/cek"
@@ -149,8 +163,18 @@ export default function KontenHasil() {
               href="/cek"
               className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-slate-900"
             >
-              <svg className="size-4" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+              <svg
+                className="size-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2.5"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                />
               </svg>
               <span>Periksa Iklan Lain</span>
             </Link>
@@ -161,13 +185,19 @@ export default function KontenHasil() {
           </div>
 
           {/* Dribbble Style Main Score Hero Card */}
-          <div className={`overflow-hidden rounded-3xl border ${tema.border} ${tema.bgBanner} p-7 sm:p-10 shadow-lg`}>
+          <div
+            className={`overflow-hidden rounded-3xl border ${tema.border} ${tema.bgBanner} p-7 shadow-lg sm:p-10`}
+          >
             <div className="flex flex-col justify-between gap-8 sm:flex-row sm:items-center">
               <div className="flex flex-col gap-3">
-                <span className={`w-fit rounded-full border px-3.5 py-1 text-xs font-bold uppercase tracking-wider ${tema.badge}`}>
+                <span
+                  className={`w-fit rounded-full border px-3.5 py-1 text-xs font-bold tracking-wider uppercase ${tema.badge}`}
+                >
                   Rentang Risiko: {LABEL_BAND[hasil.band]}
                 </span>
-                <h1 className={`text-3xl font-black tracking-tight sm:text-4xl ${tema.textTitle}`}>
+                <h1
+                  className={`text-3xl font-black tracking-tight sm:text-4xl ${tema.textTitle}`}
+                >
                   Hasil Pemeriksaan Iklan
                 </h1>
                 <p className="max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
@@ -176,15 +206,17 @@ export default function KontenHasil() {
               </div>
 
               {/* Gauge Meter Box */}
-              <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-200/80 bg-white/90 p-6 shadow-md backdrop-blur-xs min-w-[180px]">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              <div className="flex min-w-[180px] flex-col items-center justify-center rounded-2xl border border-slate-200/80 bg-white/90 p-6 shadow-md backdrop-blur-xs">
+                <span className="text-xs font-bold tracking-wider text-slate-400 uppercase">
                   Indeks Risiko
                 </span>
                 <div className="mt-2 flex items-baseline gap-1">
                   <span className="text-5xl font-black text-slate-950">
                     {hasil.skor}
                   </span>
-                  <span className="text-sm font-semibold text-slate-400">/ 100</span>
+                  <span className="text-sm font-semibold text-slate-400">
+                    / 100
+                  </span>
                 </div>
                 <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-100">
                   <div
@@ -204,19 +236,32 @@ export default function KontenHasil() {
                   Temuan Indikator ({hasil.temuan.length})
                 </h2>
                 <p className="text-xs text-slate-500 sm:text-sm">
-                  Kutipan spesifik dan aturan yang teridentifikasi dalam teks lowongan.
+                  Kutipan spesifik dan aturan yang teridentifikasi dalam teks
+                  lowongan.
                 </p>
               </div>
             </div>
 
             {hasil.temuan.length === 0 ? (
-              <div className="flex items-start gap-3.5 rounded-2xl border border-emerald-200 bg-emerald-50/80 p-6 text-sm text-emerald-950 shadow-xs">
-                <svg className="size-5 shrink-0 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5z" clipRule="evenodd" />
+              <div className="flex items-start gap-3.5 rounded-2xl border border-blue-200 bg-blue-50/80 p-6 text-sm text-blue-950 shadow-xs">
+                <svg
+                  className="size-5 shrink-0 text-blue-600"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5z"
+                    clipRule="evenodd"
+                  />
                 </svg>
                 <div className="leading-relaxed">
-                  <span className="font-bold">Tidak ditemukan indikator bermasalah. </span>
-                  Teks iklan tidak memuat kata kunci atau pola yang melanggar standar aturan ketenagakerjaan CekLoker. Tetap lakukan verifikasi keabsahan izin perusahaan sebelum melamar.
+                  <span className="font-bold">
+                    Tidak ditemukan indikator bermasalah.{" "}
+                  </span>
+                  Teks iklan tidak memuat kata kunci atau pola yang melanggar
+                  standar aturan ketenagakerjaan CekLoker. Tetap lakukan
+                  verifikasi keabsahan izin perusahaan sebelum melamar.
                 </div>
               </div>
             ) : (
@@ -224,13 +269,13 @@ export default function KontenHasil() {
                 {hasil.temuan.map((temuan) => (
                   <div
                     key={temuan.ruleId}
-                    className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs transition-all hover:shadow-md"
+                    className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs transition-all hover:shadow-md sm:p-7"
                   >
                     <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
                       <h3 className="text-base font-bold text-slate-950 sm:text-lg">
                         {temuan.judul}
                       </h3>
-                      <span className="text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200/80 px-2.5 py-1 rounded-full w-fit">
+                      <span className="w-fit rounded-full border border-amber-200/80 bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700">
                         Kontribusi Skor: +{temuan.kontribusi}
                       </span>
                     </div>
@@ -246,14 +291,14 @@ export default function KontenHasil() {
 
                     {temuan.bukti.length > 0 && (
                       <div className="mt-4 rounded-xl border border-slate-200/80 bg-slate-50/70 p-4">
-                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                        <span className="text-xs font-bold tracking-wider text-slate-400 uppercase">
                           Kutipan Bukti Langsung dari Teks:
                         </span>
                         <ul className="mt-2 flex flex-col gap-2">
                           {temuan.bukti.map((bukti, idx) => (
                             <li
                               key={`${temuan.ruleId}-${idx}`}
-                              className="rounded-lg border border-slate-200 bg-white px-3.5 py-2 font-mono text-xs text-slate-800 shadow-2xs leading-relaxed"
+                              className="rounded-lg border border-slate-200 bg-white px-3.5 py-2 font-mono text-xs leading-relaxed text-slate-800 shadow-2xs"
                             >
                               &ldquo;{bukti}&rdquo;
                             </li>
@@ -272,17 +317,19 @@ export default function KontenHasil() {
           </section>
 
           {/* Saran Langkah Berikutnya Section */}
-          <section className="rounded-3xl border border-slate-200/90 bg-white p-7 sm:p-9 shadow-xs">
+          <section className="rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs sm:p-9">
             <h2 className="text-xl font-bold text-slate-950">
               Saran Langkah Sebelum Melamar
             </h2>
             <p className="mt-1 text-xs text-slate-500">
-              Rekomendasi tindakan preventif berdasarkan hasil evaluasi lowongan ini.
+              Rekomendasi tindakan preventif berdasarkan hasil evaluasi lowongan
+              ini.
             </p>
 
             {hasil.saran.length === 0 ? (
               <p className="mt-4 text-sm text-slate-600">
-                Tidak ada anjuran khusus. Ikuti prosedur pencarian kerja baku pada halaman Edukasi.
+                Tidak ada anjuran khusus. Ikuti prosedur pencarian kerja baku
+                pada halaman Edukasi.
               </p>
             ) : (
               <ol className="mt-5 flex list-decimal flex-col gap-3.5 pl-5 text-sm leading-relaxed text-slate-700">
@@ -294,9 +341,11 @@ export default function KontenHasil() {
           </section>
 
           {/* Disclaimer & Nav Buttons */}
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between border-t border-slate-200/80 pt-6">
+          <div className="flex flex-col gap-6 border-t border-slate-200/80 pt-6 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-md text-xs leading-relaxed text-slate-400">
-              Hasil ini bersifat estimasi risiko deterministik berbasis teks dan bukan vonis hukum. CekLoker tidak menyimpan teks lowongan Anda di server.
+              Hasil ini bersifat estimasi risiko deterministik berbasis teks dan
+              bukan vonis hukum. CekLoker tidak menyimpan teks lowongan Anda di
+              server.
             </p>
 
             <div className="flex flex-wrap items-center gap-3">

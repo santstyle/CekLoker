@@ -1,10 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { EVALUATOR_VERSION } from "@/lib/evaluation/evaluate";
+import { metadataHalaman } from "@/lib/situs";
 
-export const metadata = {
-  title: "Tentang Inisiatif — CekLoker",
-};
+export const metadata: Metadata = metadataHalaman({
+  judul: "Tentang Inisiatif",
+  deskripsi:
+    "Alasan CekLoker dibangun, prinsip integritas produk, arsitektur teknologi, dan batas layanan yang perlu dipahami pengguna.",
+  jalur: "/tentang",
+});
 
 const PRINSIP = [
   {
@@ -32,24 +37,26 @@ export default function HalamanTentang() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 -top-32 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl"
       >
-        <div className="aspect-[1155/678] w-[65rem] flex-none bg-gradient-to-tr from-emerald-400/20 to-teal-400/15 opacity-60" />
+        <div className="aspect-[1155/678] w-[65rem] flex-none bg-gradient-to-tr from-blue-400/20 to-indigo-400/15 opacity-60" />
       </div>
 
       <Container>
         <div className="mx-auto flex max-w-4xl flex-col gap-16 sm:gap-20">
           {/* Header */}
-          <div className="flex flex-col items-center text-center gap-4">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-50 px-4 py-1 text-xs font-semibold text-emerald-800 shadow-2xs">
-              <span className="size-1.5 rounded-full bg-emerald-600 animate-pulse" />
+          <div className="flex flex-col items-center gap-4 text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/25 bg-blue-50 px-4 py-1 text-xs font-semibold text-blue-800 shadow-2xs">
+              <span className="size-1.5 animate-pulse rounded-full bg-blue-600" />
               <span>Inisiatif Ketenagakerjaan</span>
             </div>
 
-            <h1 className="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl text-balance">
+            <h1 className="text-4xl font-black tracking-tight text-balance text-slate-950 sm:text-5xl">
               Mewujudkan Ekosistem Rekrutmen Kerja yang Adil &amp; Transparan
             </h1>
 
             <p className="max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-              CekLoker dibangun untuk mendukung SDG 8 (Decent Work &amp; Economic Growth), mendampingi pencari kerja di Indonesia dari indikator risiko dan pelanggaran hak kerja.
+              CekLoker dibangun untuk mendukung SDG 8 (Decent Work &amp;
+              Economic Growth), mendampingi pencari kerja di Indonesia dari
+              indikator risiko dan pelanggaran hak kerja.
             </p>
           </div>
 
@@ -71,9 +78,13 @@ export default function HalamanTentang() {
                   className="flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs transition-all hover:shadow-md"
                 >
                   <div className="flex flex-col gap-3">
-                    <span className="size-2 rounded-full bg-emerald-500" />
-                    <h3 className="text-lg font-bold text-slate-950">{prinsip.judul}</h3>
-                    <p className="text-sm leading-relaxed text-slate-600">{prinsip.uraian}</p>
+                    <span className="size-2 rounded-full bg-blue-500" />
+                    <h3 className="text-lg font-bold text-slate-950">
+                      {prinsip.judul}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-slate-600">
+                      {prinsip.uraian}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -81,40 +92,56 @@ export default function HalamanTentang() {
           </section>
 
           {/* Arsitektur Teknologi */}
-          <section className="rounded-3xl border border-slate-200/90 bg-white p-8 sm:p-10 shadow-xs">
+          <section className="rounded-3xl border border-slate-200/90 bg-white p-8 shadow-xs sm:p-10">
             <h2 className="text-2xl font-black text-slate-950">
               Spesifikasi Teknologi Terverifikasi
             </h2>
             <p className="mt-1 text-sm text-slate-500">
-              Fondasi arsitektur perangkat lunak yang andal, aman, dan dapat diuji.
+              Fondasi arsitektur perangkat lunak yang andal, aman, dan dapat
+              diuji.
             </p>
 
             <ul className="mt-6 flex flex-col gap-4 text-sm leading-relaxed text-slate-700 sm:text-base">
               <li className="flex items-start gap-3">
-                <span className="size-2 rounded-full bg-slate-950 mt-2 shrink-0" />
+                <span className="mt-2 size-2 shrink-0 rounded-full bg-slate-950" />
                 <span>
-                  <strong className="text-slate-950">Next.js App Router &amp; TypeScript Strict:</strong> Arsitektur aplikasi modern dengan performa kompilasi instan dan keamanan tipe penuh.
+                  <strong className="text-slate-950">
+                    Next.js App Router &amp; TypeScript Strict:
+                  </strong>{" "}
+                  Arsitektur aplikasi modern dengan performa kompilasi instan
+                  dan keamanan tipe penuh.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="size-2 rounded-full bg-slate-950 mt-2 shrink-0" />
+                <span className="mt-2 size-2 shrink-0 rounded-full bg-slate-950" />
                 <span>
-                  <strong className="text-slate-950">Mesin Evaluasi Versi {EVALUATOR_VERSION}:</strong> Seluruh aturan diuji secara deterministik melalui pengujian otomatis Vitest.
+                  <strong className="text-slate-950">
+                    Mesin Evaluasi Versi {EVALUATOR_VERSION}:
+                  </strong>{" "}
+                  Seluruh aturan diuji secara deterministik melalui pengujian
+                  otomatis Vitest.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="size-2 rounded-full bg-slate-950 mt-2 shrink-0" />
+                <span className="mt-2 size-2 shrink-0 rounded-full bg-slate-950" />
                 <span>
-                  <strong className="text-slate-950">Drizzle ORM &amp; Neon Postgres:</strong> Persistensi metadata agregat dengan validasi skema Zod tanpa menyimpan isi lowongan teks mentah pengguna.
+                  <strong className="text-slate-950">
+                    Drizzle ORM &amp; Neon Postgres:
+                  </strong>{" "}
+                  Persistensi metadata agregat dengan validasi skema Zod tanpa
+                  menyimpan isi lowongan teks mentah pengguna.
                 </span>
               </li>
             </ul>
           </section>
 
           {/* Keterbatasan Layanan */}
-          <div className="rounded-3xl border border-slate-200/80 bg-slate-100/70 p-7 sm:p-9 text-xs sm:text-sm text-slate-600 leading-relaxed">
+          <div className="rounded-3xl border border-slate-200/80 bg-slate-100/70 p-7 text-xs leading-relaxed text-slate-600 sm:p-9 sm:text-sm">
             <span className="font-bold text-slate-900">Batasan Layanan: </span>
-            CekLoker adalah instrumen skrining awal dan bukan pengganti konsultasi hukum resmi atau penyelidikan aparat penegak hukum. Analisis dibatasi oleh isi informasi tertulis pada teks yang dimasukkan pengguna.
+            CekLoker adalah instrumen skrining awal dan bukan pengganti
+            konsultasi hukum resmi atau penyelidikan aparat penegak hukum.
+            Analisis dibatasi oleh isi informasi tertulis pada teks yang
+            dimasukkan pengguna.
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4">

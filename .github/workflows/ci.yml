@@ -21,6 +21,8 @@ jobs:
           cache: pnpm
       - name: Pasang dependensi
         run: pnpm install --frozen-lockfile
+      - name: Format
+        run: pnpm format:check
       - name: Lint
         run: pnpm lint
       - name: Typecheck

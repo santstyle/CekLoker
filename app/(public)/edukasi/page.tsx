@@ -1,9 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
+import { metadataHalaman } from "@/lib/situs";
 
-export const metadata = {
-  title: "Edukasi Hak Kerja — CekLoker",
-};
+export const metadata: Metadata = metadataHalaman({
+  judul: "Edukasi Hak Kerja",
+  deskripsi:
+    "Panduan mengenali pola lowongan kerja berisiko dan memahami hak dasar pekerja Indonesia, lengkap dengan rujukan regulasi resmi.",
+  jalur: "/edukasi",
+});
 
 const POLA_WASPADA = [
   {
@@ -11,7 +16,7 @@ const POLA_WASPADA = [
     uraian:
       "Rekrutmen resmi tidak memungut biaya dari pelamar: biaya formulir, administrasi berkas, seragam, pelatihan, atau jaminan kerja.",
     saran:
-      "Tolak pembayaran apa pun. Pungutan kepada pencari kerja dilarang keras oleh Pasal 35 UU Ketenagakerjaan.",
+      "Tolak pembayaran apa pun. Pungutan biaya penempatan kepada tenaga kerja dilarang oleh Pasal 38 ayat (1) UU No. 13/2003.",
     kategori: "Kritis",
   },
   {
@@ -85,24 +90,26 @@ export default function HalamanEdukasi() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 -top-32 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl"
       >
-        <div className="aspect-[1155/678] w-[65rem] flex-none bg-gradient-to-tr from-emerald-400/20 to-teal-400/15 opacity-60" />
+        <div className="aspect-[1155/678] w-[65rem] flex-none bg-gradient-to-tr from-blue-400/20 to-indigo-400/15 opacity-60" />
       </div>
 
       <Container>
         <div className="mx-auto flex max-w-4xl flex-col gap-16 sm:gap-20">
           {/* Header */}
-          <div className="flex flex-col items-center text-center gap-4">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-50 px-4 py-1 text-xs font-semibold text-emerald-800 shadow-2xs">
-              <span className="size-1.5 rounded-full bg-emerald-600 animate-pulse" />
+          <div className="flex flex-col items-center gap-4 text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/25 bg-blue-50 px-4 py-1 text-xs font-semibold text-blue-800 shadow-2xs">
+              <span className="size-1.5 animate-pulse rounded-full bg-blue-600" />
               <span>Pusat Literasi Pencari Kerja</span>
             </div>
 
-            <h1 className="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl text-balance">
+            <h1 className="text-4xl font-black tracking-tight text-balance text-slate-950 sm:text-5xl">
               Kenali Hak Kerja &amp; Waspadai Risiko
             </h1>
 
             <p className="max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-              Panduan praktis berbasis peraturan perundang-undangan ketenagakerjaan Indonesia untuk membekali pencari kerja sebelum melamar.
+              Panduan praktis berbasis peraturan perundang-undangan
+              ketenagakerjaan Indonesia untuk membekali pencari kerja sebelum
+              melamar.
             </p>
           </div>
 
@@ -113,7 +120,8 @@ export default function HalamanEdukasi() {
                 Hak Dasar yang Wajib Anda Peroleh
               </h2>
               <p className="text-sm text-slate-500">
-                Standar minimum yang dijamin oleh regulasi pemerintah Republik Indonesia.
+                Standar minimum yang dijamin oleh regulasi pemerintah Republik
+                Indonesia.
               </p>
             </div>
 
@@ -124,11 +132,15 @@ export default function HalamanEdukasi() {
                   className="flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs transition-all hover:shadow-md"
                 >
                   <div className="flex flex-col gap-3">
-                    <span className="inline-flex w-fit items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">
+                    <span className="inline-flex w-fit items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
                       {hak.rujukan}
                     </span>
-                    <h3 className="text-lg font-bold text-slate-950">{hak.judul}</h3>
-                    <p className="text-sm leading-relaxed text-slate-600">{hak.uraian}</p>
+                    <h3 className="text-lg font-bold text-slate-950">
+                      {hak.judul}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-slate-600">
+                      {hak.uraian}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -142,7 +154,8 @@ export default function HalamanEdukasi() {
                 Pola Risiko yang Sering Terjadi
               </h2>
               <p className="text-sm text-slate-500">
-                Pola-pola rekrutmen yang berpotensi merugikan atau melanggar hak pelamar.
+                Pola-pola rekrutmen yang berpotensi merugikan atau melanggar hak
+                pelamar.
               </p>
             </div>
 
@@ -158,11 +171,15 @@ export default function HalamanEdukasi() {
                         {pola.kategori}
                       </span>
                     </div>
-                    <h3 className="text-base font-bold text-slate-950 sm:text-lg">{pola.judul}</h3>
-                    <p className="text-sm leading-relaxed text-slate-600">{pola.uraian}</p>
+                    <h3 className="text-base font-bold text-slate-950 sm:text-lg">
+                      {pola.judul}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-slate-600">
+                      {pola.uraian}
+                    </p>
                   </div>
 
-                  <div className="mt-5 rounded-2xl border border-emerald-200/80 bg-emerald-50/60 p-4 text-xs sm:text-sm text-emerald-950">
+                  <div className="mt-5 rounded-2xl border border-blue-200/80 bg-blue-50/60 p-4 text-xs text-blue-950 sm:text-sm">
                     <span className="font-bold">Langkah Preventif: </span>
                     <span>{pola.saran}</span>
                   </div>
@@ -172,7 +189,7 @@ export default function HalamanEdukasi() {
           </section>
 
           {/* Checklist Verifikasi */}
-          <section className="rounded-3xl border border-slate-200/90 bg-white p-8 sm:p-10 shadow-xs">
+          <section className="rounded-3xl border border-slate-200/90 bg-white p-8 shadow-xs sm:p-10">
             <h2 className="text-2xl font-black text-slate-950">
               5 Langkah Mandiri Sebelum Mengirim Lamaran
             </h2>
@@ -182,25 +199,33 @@ export default function HalamanEdukasi() {
 
             <ol className="mt-6 flex list-decimal flex-col gap-4 pl-5 text-sm leading-relaxed text-slate-700 sm:text-base">
               <li>
-                <strong>Cek Alamat Fisik di Google Maps:</strong> Pastikan kantor memiliki plang nama fisik dan bukan sekadar rumah kosong atau ruko terbengkalai.
+                <strong>Cek Alamat Fisik di Google Maps:</strong> Pastikan
+                kantor memiliki plang nama fisik dan bukan sekadar rumah kosong
+                atau ruko terbengkalai.
               </li>
               <li>
-                <strong>Verifikasi Legalitas Badan Usaha:</strong> Periksa nama PT/CV di situs resmi Ditjen AHU Online Kemenkumham.
+                <strong>Verifikasi Legalitas Badan Usaha:</strong> Periksa nama
+                PT/CV di situs resmi Ditjen AHU Online Kemenkumham.
               </li>
               <li>
-                <strong>Bandingkan Gaji dengan UMP:</strong> Bila gaji yang dijanjikan jauh di bawah atau tidak masuk akal di atas UMP daerah bersangkutan, lakukan konfirmasi ulang.
+                <strong>Bandingkan Gaji dengan UMP:</strong> Bila gaji yang
+                dijanjikan jauh di bawah atau tidak masuk akal di atas UMP
+                daerah bersangkutan, lakukan konfirmasi ulang.
               </li>
               <li>
-                <strong>Hindari Jalur Kontak WA Pribadi:</strong> Utamakan pendaftaran melalui portal karir resmi perusahaan atau job portal terverifikasi.
+                <strong>Hindari Jalur Kontak WA Pribadi:</strong> Utamakan
+                pendaftaran melalui portal karir resmi perusahaan atau job
+                portal terverifikasi.
               </li>
               <li>
-                <strong>Jangan Pernah Mentransfer Uang:</strong> Proses rekrutmen tidak pernah meminta biaya apa pun dari pelamar kerja.
+                <strong>Jangan Pernah Mentransfer Uang:</strong> Proses
+                rekrutmen tidak pernah meminta biaya apa pun dari pelamar kerja.
               </li>
             </ol>
           </section>
 
           {/* CTA Banner */}
-          <div className="flex flex-col items-center justify-between gap-6 rounded-3xl bg-slate-950 p-8 sm:p-12 text-center sm:text-left sm:flex-row shadow-xl">
+          <div className="flex flex-col items-center justify-between gap-6 rounded-3xl bg-slate-950 p-8 text-center shadow-xl sm:flex-row sm:p-12 sm:text-left">
             <div>
               <h3 className="text-xl font-black text-white sm:text-2xl">
                 Punya iklan lowongan yang mencurigakan?
@@ -211,7 +236,7 @@ export default function HalamanEdukasi() {
             </div>
             <Link
               href="/cek"
-              className="rounded-full bg-emerald-500 px-7 py-3.5 text-sm font-bold text-slate-950 transition-all hover:bg-emerald-400 shrink-0"
+              className="shrink-0 rounded-full bg-blue-500 px-7 py-3.5 text-sm font-bold text-slate-950 transition-all hover:bg-blue-400"
             >
               Periksa Sekarang
             </Link>

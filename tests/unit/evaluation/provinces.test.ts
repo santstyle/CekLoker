@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { matchProvinsi, PROVINSI, type Provinsi } from "@/lib/evaluation/provinces";
+import {
+  matchProvinsi,
+  PROVINSI,
+  type Provinsi,
+} from "@/lib/evaluation/provinces";
 
 describe("PROVINSI", () => {
   it("memuat 38 provinsi tanpa duplikasi", () => {
@@ -22,13 +26,21 @@ type KasusProvinsi = {
 };
 
 const KASUS_PROVINSI: readonly KasusProvinsi[] = [
-  { nama: "nama resmi DKI Jakarta", masukan: "DKI Jakarta", harapan: "DKI Jakarta" },
+  {
+    nama: "nama resmi DKI Jakarta",
+    masukan: "DKI Jakarta",
+    harapan: "DKI Jakarta",
+  },
   { nama: "kota Jakarta", masukan: "Jakarta Selatan", harapan: "DKI Jakarta" },
   { nama: "singkatan jkt", masukan: "JKT", harapan: "DKI Jakarta" },
   { nama: "singkatan dki", masukan: "dki", harapan: "DKI Jakarta" },
   { nama: "jabodetabek", masukan: "Jabodetabek", harapan: "DKI Jakarta" },
   { nama: "kota Bandung", masukan: "Kota Bandung", harapan: "Jawa Barat" },
-  { nama: "Bandung dengan provinsi", masukan: "Bandung, Jawa Barat", harapan: "Jawa Barat" },
+  {
+    nama: "Bandung dengan provinsi",
+    masukan: "Bandung, Jawa Barat",
+    harapan: "Jawa Barat",
+  },
   { nama: "singkatan jabar", masukan: "Jabar", harapan: "Jawa Barat" },
   { nama: "kota Bekasi", masukan: "Bekasi", harapan: "Jawa Barat" },
   { nama: "kota Depok", masukan: "Depok", harapan: "Jawa Barat" },
@@ -40,7 +52,11 @@ const KASUS_PROVINSI: readonly KasusProvinsi[] = [
   { nama: "kota Semarang", masukan: "Semarang", harapan: "Jawa Tengah" },
   { nama: "kota Solo", masukan: "Solo", harapan: "Jawa Tengah" },
   { nama: "kota Surakarta", masukan: "Surakarta", harapan: "Jawa Tengah" },
-  { nama: "nama resmi DI Yogyakarta", masukan: "DI Yogyakarta", harapan: "DI Yogyakarta" },
+  {
+    nama: "nama resmi DI Yogyakarta",
+    masukan: "DI Yogyakarta",
+    harapan: "DI Yogyakarta",
+  },
   { nama: "sebutan Jogja", masukan: "Jogja", harapan: "DI Yogyakarta" },
   { nama: "kota Yogyakarta", masukan: "Yogyakarta", harapan: "DI Yogyakarta" },
   { nama: "kota Denpasar", masukan: "Denpasar", harapan: "Bali" },
@@ -56,14 +72,34 @@ const KASUS_PROVINSI: readonly KasusProvinsi[] = [
   { nama: "kota Pekanbaru", masukan: "Pekanbaru", harapan: "Riau" },
   { nama: "kota Banda Aceh", masukan: "Banda Aceh", harapan: "Aceh" },
   { nama: "kota Batam", masukan: "Batam", harapan: "Kepulauan Riau" },
-  { nama: "kota Tanjungpinang", masukan: "Tanjungpinang", harapan: "Kepulauan Riau" },
-  { nama: "kota Pangkalpinang", masukan: "Pangkalpinang", harapan: "Kepulauan Bangka Belitung" },
-  { nama: "kota Bandar Lampung", masukan: "Bandar Lampung", harapan: "Lampung" },
+  {
+    nama: "kota Tanjungpinang",
+    masukan: "Tanjungpinang",
+    harapan: "Kepulauan Riau",
+  },
+  {
+    nama: "kota Pangkalpinang",
+    masukan: "Pangkalpinang",
+    harapan: "Kepulauan Bangka Belitung",
+  },
+  {
+    nama: "kota Bandar Lampung",
+    masukan: "Bandar Lampung",
+    harapan: "Lampung",
+  },
   { nama: "kota Tangerang", masukan: "Tangerang", harapan: "Banten" },
   { nama: "kota Serang", masukan: "Serang", harapan: "Banten" },
   { nama: "kota Pontianak", masukan: "Pontianak", harapan: "Kalimantan Barat" },
-  { nama: "kota Banjarmasin", masukan: "Banjarmasin", harapan: "Kalimantan Selatan" },
-  { nama: "kota Balikpapan", masukan: "Balikpapan", harapan: "Kalimantan Timur" },
+  {
+    nama: "kota Banjarmasin",
+    masukan: "Banjarmasin",
+    harapan: "Kalimantan Selatan",
+  },
+  {
+    nama: "kota Balikpapan",
+    masukan: "Balikpapan",
+    harapan: "Kalimantan Timur",
+  },
   { nama: "kota Samarinda", masukan: "Samarinda", harapan: "Kalimantan Timur" },
   { nama: "kota Tarakan", masukan: "Tarakan", harapan: "Kalimantan Utara" },
   { nama: "singkatan kaltim", masukan: "Kaltim", harapan: "Kalimantan Timur" },
@@ -83,7 +119,11 @@ const KASUS_PROVINSI: readonly KasusProvinsi[] = [
   { nama: "kota Merauke", masukan: "Merauke", harapan: "Papua Selatan" },
   { nama: "huruf besar", masukan: "SURABAYA", harapan: "Jawa Timur" },
   { nama: "tanda baca", masukan: "Surabaya.", harapan: "Jawa Timur" },
-  { nama: "spasi berlebih dan emoji", masukan: "  😀 Jakarta   Pusat  ", harapan: "DKI Jakarta" },
+  {
+    nama: "spasi berlebih dan emoji",
+    masukan: "  😀 Jakarta   Pusat  ",
+    harapan: "DKI Jakarta",
+  },
 ];
 
 describe("matchProvinsi", () => {
@@ -123,7 +163,9 @@ describe("matchProvinsi", () => {
   });
 
   it("mengenali nama resmi dan singkatan Kepulauan Bangka Belitung", () => {
-    expect(matchProvinsi("Kepulauan Bangka Belitung")).toBe("Kepulauan Bangka Belitung");
+    expect(matchProvinsi("Kepulauan Bangka Belitung")).toBe(
+      "Kepulauan Bangka Belitung",
+    );
     expect(matchProvinsi("Babel")).toBe("Kepulauan Bangka Belitung");
     expect(matchProvinsi("Bangka Belitung")).toBeNull();
   });

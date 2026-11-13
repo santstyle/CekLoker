@@ -1,8 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Suspense } from "react";
 
 import { Navigasi } from "@/components/situs/navigasi";
-import { NAV } from "@/components/situs/nav";
+import { NAV, NAV_LEGAL } from "@/components/situs/nav";
 import { Container } from "@/components/ui/container";
 import { TautanTombol } from "@/components/ui/tombol";
 
@@ -17,12 +18,15 @@ export default function LayoutPublik({
         <Container className="flex h-16 items-center justify-between gap-4 sm:h-20">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xl font-extrabold tracking-tight text-slate-900 transition-opacity hover:opacity-90"
+            className="inline-flex items-center transition-opacity hover:opacity-90"
           >
-            CekLoker
-            <span
-              aria-hidden="true"
-              className="size-2 shrink-0 rounded-full bg-emerald-500"
+            <Image
+              src="/logo-header.png"
+              alt="CekLoker"
+              width={146}
+              height={56}
+              priority
+              sizes="146px"
             />
           </Link>
 
@@ -44,29 +48,52 @@ export default function LayoutPublik({
 
       <footer className="border-t border-slate-200 bg-slate-50/70">
         <Container className="py-12 md:py-16">
-          <nav
-            aria-label="Navigasi footer"
-            className="mb-8 flex flex-wrap gap-x-6 gap-y-3 md:hidden"
-          >
-            {NAV.map((butir) => (
-              <Link
-                key={butir.href}
-                href={butir.href}
-                className="inline-flex min-h-11 items-center text-sm font-medium text-slate-700 hover:text-emerald-600"
-              >
-                {butir.label}
-              </Link>
-            ))}
-          </nav>
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+              <div className="flex max-w-2xl flex-col gap-2">
+                <p className="text-sm leading-relaxed text-slate-600">
+                  CekLoker memberikan rentang risiko berbasis aturan, bukan
+                  vonis. Keputusan akhir tetap di tangan Anda — verifikasi
+                  selalu ke sumber resmi.
+                </p>
+                <p className="text-xs text-slate-500">
+                  Teks lowongan yang Anda tempel tidak disimpan di server.
+                </p>
+              </div>
 
-          <div className="flex flex-col gap-2">
-            <p className="max-w-2xl text-sm leading-relaxed text-slate-600">
-              CekLoker memberikan rentang risiko berbasis aturan, bukan vonis.
-              Keputusan akhir tetap di tangan Anda — verifikasi selalu ke sumber
-              resmi.
-            </p>
-            <p className="max-w-2xl text-xs text-slate-500">
-              Teks lowongan yang Anda tempel tidak disimpan di server.
+              <nav
+                aria-label="Navigasi legal"
+                className="flex flex-wrap gap-x-6 gap-y-3"
+              >
+                {NAV_LEGAL.map((butir) => (
+                  <Link
+                    key={butir.href}
+                    href={butir.href}
+                    className="inline-flex min-h-11 items-center text-sm font-medium text-slate-700 transition-colors hover:text-blue-600"
+                  >
+                    {butir.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+
+            <nav
+              aria-label="Navigasi footer"
+              className="flex flex-wrap gap-x-6 gap-y-3 border-t border-slate-200 pt-6 md:hidden"
+            >
+              {NAV.map((butir) => (
+                <Link
+                  key={butir.href}
+                  href={butir.href}
+                  className="inline-flex min-h-11 items-center text-sm font-medium text-slate-700 transition-colors hover:text-blue-600"
+                >
+                  {butir.label}
+                </Link>
+              ))}
+            </nav>
+
+            <p className="border-t border-slate-200 pt-6 text-xs text-slate-500 md:border-t-0 md:pt-0">
+              © 2026 Tim CekLoker · Kode sumber dirilis dengan lisensi MIT.
             </p>
           </div>
         </Container>

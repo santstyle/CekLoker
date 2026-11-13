@@ -10,11 +10,10 @@ const GAYA_DASAR =
 
 const GAYA_VARIAN: Record<Varian, string> = {
   primer:
-    "bg-emerald-600 text-white shadow-sm hover:bg-emerald-700 hover:shadow hover:-translate-y-0.5 active:translate-y-0 active:shadow-none",
+    "bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow hover:-translate-y-0.5 active:translate-y-0 active:shadow-none",
   sekunder:
     "border border-slate-200 bg-white text-slate-800 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 hover:-translate-y-0.5 active:translate-y-0 active:shadow-none",
-  hantu:
-    "text-slate-600 hover:text-slate-900 hover:bg-slate-100",
+  hantu: "text-slate-600 hover:text-slate-900 hover:bg-slate-100",
 };
 
 type TombolProps = ComponentPropsWithoutRef<"button"> & { varian?: Varian };

@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { DATA_UPAH, cariUpahUntukLokasi, getUpahMinimum } from "@/lib/evaluation/wages";
+import {
+  CATATAN_DATA_UPAH,
+  DATA_UPAH,
+  DATA_UPAH_TERSEDIA,
+  cariUpahUntukLokasi,
+  getUpahMinimum,
+} from "@/lib/evaluation/wages";
 import type { RegionalWage } from "@/lib/evaluation/types";
 
 const DATA_CONTOH: readonly RegionalWage[] = [
@@ -67,7 +73,11 @@ describe("getUpahMinimum", () => {
     const kedua = getUpahMinimum("Jawa Timur", DATA_CONTOH);
 
     expect(pertama).not.toBeNull();
-    expect(pertama).toEqual({ provinsi: "Jawa Timur", upahBulanan: 2_100_000, tahun: 2025 });
+    expect(pertama).toEqual({
+      provinsi: "Jawa Timur",
+      upahBulanan: 2_100_000,
+      tahun: 2025,
+    });
     expect(kedua).toEqual(pertama);
   });
 
@@ -85,6 +95,14 @@ describe("getUpahMinimum", () => {
 describe("DATA_UPAH", () => {
   it("sengaja kosong sampai sumber resmi terverifikasi", () => {
     expect(DATA_UPAH).toHaveLength(0);
+  });
+
+  it("menandai data upah belum tersedia", () => {
+    expect(DATA_UPAH_TERSEDIA).toBe(false);
+  });
+
+  it("menyatakan keterbatasan pada catatan antarmuka", () => {
+    expect(CATATAN_DATA_UPAH).toContain("belum aktif");
   });
 
   it("membuat pencarian dengan data bawaan selalu null", () => {
