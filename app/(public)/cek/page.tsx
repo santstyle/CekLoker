@@ -7,6 +7,7 @@ import { PilihLokasi } from "@/components/check/pilih-lokasi";
 import { UnggahPoster } from "@/components/check/unggah-poster";
 import { Container } from "@/components/ui/container";
 import { kunciSimpananHasil, type ResponsEvaluasi } from "@/lib/api/evaluasi";
+import { CATATAN_DATA_UPAH } from "@/lib/evaluation/wages";
 
 const MINIMAL_KARAKTER = 30;
 
@@ -317,9 +318,8 @@ export default function HalamanCek() {
                   placeholder="Ketik nama kota atau provinsi, mis. Surabaya, Bandung, Bali..."
                 />
                 <p className="text-xs text-slate-500">
-                  Pilih dari daftar saran agar lokasi dikenali sistem. Kolom ini
-                  membantu membandingkan tawaran upah terhadap batas Upah
-                  Minimum Provinsi (UMP/UMK) daerah bersangkutan.
+                  Pilih dari daftar saran agar lokasi dikenali sistem.{" "}
+                  {CATATAN_DATA_UPAH}
                 </p>
               </div>
 

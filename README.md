@@ -27,6 +27,7 @@ Rentang ditentukan secara deterministik dari pemeriksaan berbasis aturan, bukan 
 - Antarmuka publik dengan sistem desain utilitas Tailwind murni (aktif)
 - Halaman edukasi hak pekerja dan panduan verifikasi mandiri (aktif)
 - Alur pembacaan poster lowongan (OCR peramban)
+- Perbandingan upah terhadap UMP/UMK (belum aktif — menunggu data upah resmi terverifikasi)
 
 ## Teknologi
 

@@ -6,6 +6,7 @@ import { RULES } from "@/lib/evaluation/rules";
 import { labelRujukan } from "@/lib/evaluation/rujukan";
 import { BATAS_BAND } from "@/lib/evaluation/score";
 import { KEKUATAN_NILAI, type KategoriRule } from "@/lib/evaluation/types";
+import { CATATAN_DATA_UPAH } from "@/lib/evaluation/wages";
 import { metadataHalaman } from "@/lib/situs";
 
 const LABEL_KATEGORI: Record<KategoriRule, string> = {
@@ -88,7 +89,7 @@ export default function HalamanMetodologi() {
                     Pemeriksaan Aturan (Pattern Matching &amp; Threshold):{" "}
                   </strong>
                   Setiap aturan memindai pola linguistik dan ambang kuantitatif
-                  (seperti perbandingan nominal gaji terhadap UMP).
+                  pada teks lowongan.
                 </li>
                 <li>
                   <strong className="text-slate-950">
@@ -112,6 +113,9 @@ export default function HalamanMetodologi() {
                   objektif (Rendah, Perlu Dicek, Tinggi).
                 </li>
               </ol>
+              <p className="mt-6 rounded-2xl border border-amber-200 bg-amber-50/70 px-4 py-3 text-xs leading-relaxed text-amber-900">
+                {CATATAN_DATA_UPAH}
+              </p>
             </div>
           </section>
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
+import { DATA_UPAH_TERSEDIA } from "@/lib/evaluation/wages";
 import { DESKRIPSI_SITUS, metadataHalaman } from "@/lib/situs";
 
 export const metadata: Metadata = metadataHalaman({
@@ -289,9 +290,9 @@ export default function Beranda() {
                     18+ Aturan Ketenagakerjaan Terprogram
                   </h3>
                   <p className="mt-3 max-w-lg text-sm leading-relaxed text-slate-600 sm:text-base">
-                    Memindai anomali upah di bawah batas minimum (UMP), pungutan
-                    biaya terselubung, manipulasi jam kerja lembur, hingga pola
-                    rekrutmen berantai yang merugikan.
+                    Memindai pola berisiko seperti pungutan biaya terselubung,
+                    manipulasi jam kerja lembur, hingga pola rekrutmen berantai
+                    yang merugikan pelamar.
                   </p>
                 </div>
 
@@ -301,6 +302,7 @@ export default function Beranda() {
                   </span>
                   <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
                     Ambang Upah Minimum (UMP)
+                    {DATA_UPAH_TERSEDIA ? "" : " — belum aktif"}
                   </span>
                   <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
                     Kanal Kontak Pribadi

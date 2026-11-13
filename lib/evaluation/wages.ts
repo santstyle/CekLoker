@@ -12,6 +12,19 @@ import type { RegionalWage } from "./types";
 
 export const DATA_UPAH: readonly RegionalWage[] = [];
 
+/** Apakah data upah minimum resmi sudah dimuat dan siap dipakai. */
+export const DATA_UPAH_TERSEDIA = DATA_UPAH.length > 0;
+
+/**
+ * Keterangan status data upah untuk ditampilkan di antarmuka.
+ *
+ * Menjaga agar aplikasi tidak menyiratkan perbandingan UMP yang belum
+ * benar-benar dijalankan.
+ */
+export const CATATAN_DATA_UPAH = DATA_UPAH_TERSEDIA
+  ? "Perbandingan upah terhadap UMP/UMK aktif memakai data resmi yang terverifikasi."
+  : "Perbandingan upah terhadap UMP/UMK belum aktif karena data upah resmi belum dimuat, sehingga hasil hanya mencakup indikator lain.";
+
 /** Memilih data terbaru; bila tahun sama, nominal tertinggi yang dipakai. */
 export function getUpahMinimum(
   provinsi: string | null | undefined,

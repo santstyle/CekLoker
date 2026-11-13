@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  CATATAN_DATA_UPAH,
   DATA_UPAH,
+  DATA_UPAH_TERSEDIA,
   cariUpahUntukLokasi,
   getUpahMinimum,
 } from "@/lib/evaluation/wages";
@@ -93,6 +95,14 @@ describe("getUpahMinimum", () => {
 describe("DATA_UPAH", () => {
   it("sengaja kosong sampai sumber resmi terverifikasi", () => {
     expect(DATA_UPAH).toHaveLength(0);
+  });
+
+  it("menandai data upah belum tersedia", () => {
+    expect(DATA_UPAH_TERSEDIA).toBe(false);
+  });
+
+  it("menyatakan keterbatasan pada catatan antarmuka", () => {
+    expect(CATATAN_DATA_UPAH).toContain("belum aktif");
   });
 
   it("membuat pencarian dengan data bawaan selalu null", () => {
