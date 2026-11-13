@@ -19,7 +19,7 @@ export default function HalamanHasil() {
       fallback={
         <Bagian>
           <Container>
-            <p className="text-body text-muted">Memuat hasil...</p>
+            <p className="text-muted">Memuat hasil...</p>
           </Container>
         </Bagian>
       }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface UnggahPosterProps {
   onTeksTerbaca: (teks: string) => void;
@@ -14,8 +14,10 @@ const TIPE_MIME_DIIZINKAN = ["image/png", "image/jpeg", "image/webp"];
 /**
  * Melakukan pra-proses gambar pada elemen canvas (grayscale & penajaman kontras)
  * untuk meningkatkan akurasi pembacaan karakter Tesseract OCR.
+ * Mengembalikan data URL hasil canvas; bila canvas 2D tidak tersedia,
+ * mengembalikan berkas asli (Blob) yang juga bisa dibaca oleh Tesseract.
  */
-async function praProsesGambar(file: Blob): Promise<string> {
+async function praProsesGambar(file: Blob): Promise<string | Blob> {
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file);
     const img = new Image();
@@ -26,7 +28,8 @@ async function praProsesGambar(file: Blob): Promise<string> {
       const ctx = canvas.getContext("2d");
 
       if (!ctx) {
-        resolve(url);
+        // Bukan URL yang sudah dicabut — kembalikan berkas asli.
+        resolve(file);
         return;
       }
 
@@ -58,7 +61,8 @@ async function praProsesGambar(file: Blob): Promise<string> {
         ctx.putImageData(imgData, 0, 0);
         resolve(canvas.toDataURL("image/png"));
       } catch {
-        resolve(canvas.toDataURL("image/png"));
+        // Canvas bermasalah di tengah jalan; biarkan Tesseract membaca berkas asli.
+        resolve(file);
       }
     };
 
@@ -80,18 +84,86 @@ export function UnggahPoster({
   const [progress, setProgress] = useState(0);
   const [pesanStatus, setPesanStatus] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [pratinjauUrl, setPratinjauUrl] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Bersihkan object URL saat unmount
-  useEffect(() => {
-    return () => {
-      if (pratinjauUrl && pratinjauUrl.startsWith("blob:")) {
-        URL.revokeObjectURL(pratinjauUrl);
+  const prosesGambar = useCallback(
+    async (file: Blob) => {
+      if (disabled || sedangMemproses) return;
+
+      // Validasi ukuran
+      if (file.size > MAKSIMAL_UKURAN_BYTE) {
+        setPesanStatus(
+          "Ukuran berkas terlalu besar. Maksimal ukuran adalah 8 MB.",
+        );
+        return;
       }
-    };
-  }, [pratinjauUrl]);
+
+      // Validasi tipe
+      if (file.type && !TIPE_MIME_DIIZINKAN.includes(file.type)) {
+        setPesanStatus(
+          "Format berkas tidak didukung. Harap gunakan PNG, JPEG, atau WebP.",
+        );
+        return;
+      }
+
+      setPesanStatus(null);
+      setSedangMemproses(true);
+      setProgress(5);
+      onMulaiMemproses?.();
+
+      try {
+        setPesanStatus("Mengoptimalkan kontras gambar untuk pembacaan...");
+        const hasilPraProses = await praProsesGambar(file);
+        setProgress(20);
+
+        setPesanStatus("Memuat mesin pembaca teks OCR...");
+        const { createWorker } = await import("tesseract.js");
+
+        const worker = await createWorker(["ind", "eng"], 1, {
+          workerPath: "/tesseract/worker.min.js",
+          corePath: "/tesseract",
+          langPath: "/tesseract",
+          logger: (m) => {
+            if (m.status === "recognizing text") {
+              const p = Math.round(20 + m.progress * 75);
+              setProgress(p);
+              setPesanStatus(
+                `Membaca teks dari poster... (${Math.round(m.progress * 100)}%)`,
+              );
+            }
+          },
+        });
+
+        let teksHasil = "";
+        try {
+          const { data } = await worker.recognize(hasilPraProses);
+          teksHasil = data.text.trim();
+        } finally {
+          // Pastikan worker OCR selalu dimatikan, walau recognize gagal.
+          await worker.terminate();
+        }
+
+        setProgress(100);
+
+        if (!teksHasil || teksHasil.length < 15) {
+          setPesanStatus(
+            "Teks poster tidak dapat terbaca dengan jelas. Anda dapat mengetik atau menempel isi lowongan secara manual.",
+          );
+        } else {
+          setPesanStatus("Teks berhasil diekstraksi dari poster!");
+          onTeksTerbaca(teksHasil);
+        }
+      } catch {
+        setPesanStatus(
+          "Terjadi kendala saat memproses gambar poster. Silakan coba lagi atau tempel teks langsung.",
+        );
+      } finally {
+        setSedangMemproses(false);
+      }
+    },
+    [disabled, sedangMemproses, onMulaiMemproses, onTeksTerbaca],
+  );
 
   // Listener paste (Ctrl + V) pada jendela
   useEffect(() => {
@@ -113,83 +185,7 @@ export function UnggahPoster({
 
     window.addEventListener("paste", handlePaste);
     return () => window.removeEventListener("paste", handlePaste);
-  }, [disabled, sedangMemproses]);
-
-  async function prosesGambar(file: Blob) {
-    if (disabled || sedangMemproses) return;
-
-    // Validasi ukuran
-    if (file.size > MAKSIMAL_UKURAN_BYTE) {
-      setPesanStatus(
-        "Ukuran berkas terlalu besar. Maksimal ukuran adalah 8 MB.",
-      );
-      return;
-    }
-
-    // Validasi tipe
-    if (file.type && !TIPE_MIME_DIIZINKAN.includes(file.type)) {
-      setPesanStatus(
-        "Format berkas tidak didukung. Harap gunakan PNG, JPEG, atau WebP.",
-      );
-      return;
-    }
-
-    setPesanStatus(null);
-    setSedangMemproses(true);
-    setProgress(5);
-    onMulaiMemproses?.();
-
-    if (pratinjauUrl && pratinjauUrl.startsWith("blob:")) {
-      URL.revokeObjectURL(pratinjauUrl);
-    }
-    const blobUrl = URL.createObjectURL(file);
-    setPratinjauUrl(blobUrl);
-
-    try {
-      setPesanStatus("Mengoptimalkan kontras gambar untuk pembacaan...");
-      const hasilPraProses = await praProsesGambar(file);
-      setProgress(20);
-
-      setPesanStatus("Memuat mesin pembaca teks OCR...");
-      const { createWorker } = await import("tesseract.js");
-
-      const worker = await createWorker(["ind", "eng"], 1, {
-        workerPath: "/tesseract/worker.min.js",
-        corePath: "/tesseract",
-        langPath: "/tesseract",
-        logger: (m) => {
-          if (m.status === "recognizing text") {
-            const p = Math.round(20 + m.progress * 75);
-            setProgress(p);
-            setPesanStatus(
-              `Membaca teks dari poster... (${Math.round(m.progress * 100)}%)`,
-            );
-          }
-        },
-      });
-
-      const { data } = await worker.recognize(hasilPraProses);
-      await worker.terminate();
-
-      setProgress(100);
-      const teksHasil = data.text.trim();
-
-      if (!teksHasil || teksHasil.length < 15) {
-        setPesanStatus(
-          "Teks poster tidak dapat terbaca dengan jelas. Anda dapat mengetik atau menempel isi lowongan secara manual.",
-        );
-      } else {
-        setPesanStatus("Teks berhasil diekstraksi dari poster!");
-        onTeksTerbaca(teksHasil);
-      }
-    } catch {
-      setPesanStatus(
-        "Terjadi kendala saat memproses gambar poster. Silakan coba lagi atau tempel teks langsung.",
-      );
-    } finally {
-      setSedangMemproses(false);
-    }
-  }
+  }, [disabled, sedangMemproses, prosesGambar]);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];

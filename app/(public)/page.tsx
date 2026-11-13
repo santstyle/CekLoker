@@ -451,8 +451,8 @@ export default function Beranda() {
 
           <Reveal delay={220}>
             <p className="mt-10 text-center font-mono text-[0.62rem] tracking-[0.2em] text-muted uppercase">
-              Tanpa akun&ensp;·&ensp;Tanpa unggah berkas&ensp;·&ensp;Tanpa
-              penyimpanan teks
+              Tanpa akun&ensp;·&ensp;Poster diproses di
+              peramban&ensp;·&ensp;Tanpa penyimpanan teks
             </p>
           </Reveal>
         </Container>
