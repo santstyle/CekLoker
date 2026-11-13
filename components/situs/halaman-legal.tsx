@@ -14,23 +14,16 @@ export function HalamanLegal({
   children: ReactNode;
 }) {
   return (
-    <div className="relative overflow-hidden bg-white py-16 sm:py-24">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 -top-32 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl"
-      >
-        <div className="aspect-[1155/678] w-[65rem] flex-none bg-gradient-to-tr from-blue-400/20 to-indigo-400/15 opacity-60" />
-      </div>
-
+    <div className="border-b border-line bg-cream py-16 sm:py-24">
       <Container>
         <div className="mx-auto max-w-3xl">
-          <p className="text-xs font-semibold tracking-widest text-blue-600 uppercase">
+          <p className="text-[0.7rem] font-semibold tracking-[0.18em] text-aksen uppercase">
             Dokumen Legal
           </p>
-          <h1 className="mt-3 text-3xl font-black tracking-tight text-balance text-slate-950 sm:text-4xl">
+          <h1 className="mt-3 font-display text-3xl leading-tight font-medium tracking-tight text-balance text-ink sm:text-4xl">
             {judul}
           </h1>
-          <p className="mt-4 text-base leading-relaxed text-slate-600">
+          <p className="mt-4 text-base leading-relaxed text-muted">
             {ringkasan}
           </p>
           <p className="mt-3 text-xs text-slate-500">
@@ -53,7 +46,7 @@ export function BagianLegal({
 }) {
   return (
     <section className="flex flex-col gap-3">
-      <h2 className="text-lg font-bold tracking-tight text-slate-950 sm:text-xl">
+      <h2 className="text-lg font-bold tracking-tight text-ink sm:text-xl">
         {judul}
       </h2>
       <div className="flex flex-col gap-3 text-sm leading-relaxed text-slate-600 sm:text-base">

@@ -36,29 +36,16 @@ export const metadata: Metadata = metadataHalaman({
 
 export default function HalamanMetodologi() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-50/60 py-16 sm:py-24">
-      {/* Background Ambient Glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 -top-32 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl"
-      >
-        <div className="aspect-[1155/678] w-[65rem] flex-none bg-gradient-to-tr from-blue-400/20 to-indigo-400/15 opacity-60" />
-      </div>
-
+    <div className="bg-cream py-16 sm:py-24">
       <Container>
         <div className="mx-auto flex max-w-4xl flex-col gap-16 sm:gap-20">
           {/* Header */}
-          <div className="flex flex-col items-center gap-4 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/25 bg-blue-50 px-4 py-1 text-xs font-semibold text-blue-800 shadow-2xs">
-              <span className="size-1.5 animate-pulse rounded-full bg-blue-600" />
-              <span>Transparansi Algoritma</span>
-            </div>
-
-            <h1 className="text-4xl font-black tracking-tight text-balance text-slate-950 sm:text-5xl">
-              Metodologi Evaluasi Deterministik
+          <div className="flex flex-col gap-4 border-b border-line pb-10">
+            <h1 className="font-display text-4xl leading-[1.1] font-medium tracking-tight text-balance text-ink sm:text-5xl">
+              Metodologi, <em className="text-aksen italic">apa adanya.</em>
             </h1>
 
-            <p className="max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+            <p className="max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
               CekLoker beroperasi secara deterministik: masukan teks yang sama
               akan selalu menghasilkan skor, temuan, dan rentang risiko yang
               identik tanpa bias model generatif.

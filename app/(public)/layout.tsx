@@ -14,7 +14,7 @@ export default function LayoutPublik({
 }) {
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/85 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
         <Container className="flex h-16 items-center justify-between gap-4 sm:h-20">
           <Link
             href="/"
@@ -46,17 +46,17 @@ export default function LayoutPublik({
 
       <main className="flex-1">{children}</main>
 
-      <footer className="border-t border-slate-200 bg-slate-50/70">
+      <footer className="border-t border-line bg-cream">
         <Container className="py-12 md:py-16">
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex max-w-2xl flex-col gap-2">
-                <p className="text-sm leading-relaxed text-slate-600">
+                <p className="text-sm leading-relaxed text-muted">
                   CekLoker memberikan rentang risiko berbasis aturan, bukan
                   vonis. Keputusan akhir tetap di tangan Anda — verifikasi
                   selalu ke sumber resmi.
                 </p>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-muted">
                   Teks lowongan yang Anda tempel tidak disimpan di server.
                 </p>
               </div>
@@ -69,7 +69,7 @@ export default function LayoutPublik({
                   <Link
                     key={butir.href}
                     href={butir.href}
-                    className="inline-flex min-h-11 items-center text-sm font-medium text-slate-700 transition-colors hover:text-blue-600"
+                    className="inline-flex min-h-11 items-center text-sm font-medium text-ink transition-colors hover:text-aksen"
                   >
                     {butir.label}
                   </Link>
@@ -79,20 +79,20 @@ export default function LayoutPublik({
 
             <nav
               aria-label="Navigasi footer"
-              className="flex flex-wrap gap-x-6 gap-y-3 border-t border-slate-200 pt-6 md:hidden"
+              className="flex flex-wrap gap-x-6 gap-y-3 border-t border-line pt-6 md:hidden"
             >
               {NAV.map((butir) => (
                 <Link
                   key={butir.href}
                   href={butir.href}
-                  className="inline-flex min-h-11 items-center text-sm font-medium text-slate-700 transition-colors hover:text-blue-600"
+                  className="inline-flex min-h-11 items-center text-sm font-medium text-ink transition-colors hover:text-aksen"
                 >
                   {butir.label}
                 </Link>
               ))}
             </nav>
 
-            <p className="border-t border-slate-200 pt-6 text-xs text-slate-500 md:border-t-0 md:pt-0">
+            <p className="border-t border-line pt-6 text-xs text-muted md:border-t-0 md:pt-0">
               © 2026 Tim CekLoker · Kode sumber dirilis dengan lisensi MIT.
             </p>
           </div>
