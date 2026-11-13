@@ -77,6 +77,9 @@ export default function HalamanCek() {
   const [mengirim, setMengirim] = useState(false);
   const [pesan, setPesan] = useState<string | null>(null);
   const [sumberOcr, setSumberOcr] = useState(false);
+  const [contohAktif, setContohAktif] = useState<"tinggi" | "rendah" | null>(
+    null,
+  );
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -129,6 +132,7 @@ export default function HalamanCek() {
     setTeks(teksHasil);
     setSumberOcr(true);
     setPesan(null);
+    setContohAktif(null);
     // Pindahkan fokus ke textarea agar pengguna memeriksa hasil bacaan
     setTimeout(() => {
       textareaRef.current?.focus();
@@ -139,12 +143,17 @@ export default function HalamanCek() {
     }, 150);
   }
 
-  function isiContoh(teksContoh: string, lokasiContoh: string) {
+  function isiContoh(
+    teksContoh: string,
+    lokasiContoh: string,
+    contoh: "tinggi" | "rendah",
+  ) {
     setTabAktif("teks");
     setTeks(teksContoh);
     setLokasi(lokasiContoh);
     setSumberOcr(false);
     setPesan(null);
+    setContohAktif(contoh);
   }
 
   return (
@@ -164,8 +173,8 @@ export default function HalamanCek() {
       />
 
       <Container className="relative py-12 sm:py-16 lg:py-20">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-          {/* ---- Kolom editorial ---- */}
+        <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+          {/* ---- Kolom editorial (tetap di posisi sama, stabil saat tinggi kartu berubah) ---- */}
           <div className="flex flex-col gap-7 lg:col-span-5">
             <p className="inline-flex w-fit items-center gap-2.5 rounded-full border border-aksen/25 bg-aksen/5 px-4 py-1.5 font-mono text-[0.6rem] font-semibold tracking-[0.22em] text-aksen-pekat uppercase">
               <span
@@ -263,36 +272,58 @@ export default function HalamanCek() {
                   ))}
                 </div>
 
-                {/* Contoh cepat */}
+                {/* Muat contoh iklan */}
                 <div className="mt-4 flex flex-wrap items-center gap-2">
                   <span className="font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-muted uppercase">
-                    Coba contoh:
+                    Muat contoh iklan:
                   </span>
                   <button
                     type="button"
+                    aria-pressed={contohAktif === "tinggi"}
                     onClick={() =>
-                      isiContoh(CONTOH_LOWONGAN_MENCURIGAKAN, "Jakarta Pusat")
+                      isiContoh(
+                        CONTOH_LOWONGAN_MENCURIGAKAN,
+                        "Jakarta Pusat",
+                        "tinggi",
+                      )
                     }
-                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-amber-300/60 bg-amber-50 px-3 py-1.5 text-[0.7rem] font-semibold text-amber-900 transition-colors hover:border-amber-400 hover:bg-amber-100"
+                    className={`inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 text-[0.7rem] font-semibold transition-all duration-200 ${
+                      contohAktif === "tinggi"
+                        ? "border-rose-600 bg-rose-600 text-white shadow-sm ring-2 ring-rose-600/25"
+                        : "border-rose-300/70 bg-rose-50 text-rose-800 hover:border-rose-400 hover:bg-rose-100"
+                    }`}
                   >
                     <span
                       aria-hidden="true"
-                      className="size-1.5 rounded-full bg-amber-500"
+                      className={`size-1.5 rounded-full ${
+                        contohAktif === "tinggi" ? "bg-white" : "bg-rose-500"
+                      }`}
                     />
-                    Iklan mencurigakan
+                    Contoh Iklan Risiko Tinggi
                   </button>
                   <button
                     type="button"
+                    aria-pressed={contohAktif === "rendah"}
                     onClick={() =>
-                      isiContoh(CONTOH_LOWONGAN_WAJAR, "Jakarta Timur")
+                      isiContoh(
+                        CONTOH_LOWONGAN_WAJAR,
+                        "Jakarta Timur",
+                        "rendah",
+                      )
                     }
-                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-aksen/30 bg-aksen/5 px-3 py-1.5 text-[0.7rem] font-semibold text-aksen-pekat transition-colors hover:border-aksen/60 hover:bg-aksen/10"
+                    className={`inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 text-[0.7rem] font-semibold transition-all duration-200 ${
+                      contohAktif === "rendah"
+                        ? "border-aksen bg-aksen text-white shadow-sm ring-2 ring-aksen/25"
+                        : "border-aksen/30 bg-aksen/5 text-aksen-pekat hover:border-aksen/60 hover:bg-aksen/10"
+                    }`}
                   >
                     <span
                       aria-hidden="true"
-                      className="size-1.5 rounded-full bg-aksen"
+                      className={`size-1.5 rounded-full ${
+                        contohAktif === "rendah" ? "bg-white" : "bg-aksen"
+                      }`}
                     />
-                    Iklan wajar
+                    Contoh Iklan Risiko Rendah
                   </button>
                 </div>
 
@@ -379,6 +410,7 @@ export default function HalamanCek() {
                           onClick={() => {
                             setTeks("");
                             setSumberOcr(false);
+                            setContohAktif(null);
                           }}
                           className="absolute right-4 bottom-4 cursor-pointer rounded-lg bg-ink/5 px-2.5 py-1 text-[0.65rem] font-semibold text-muted transition-colors hover:bg-ink/10 hover:text-ink"
                         >
