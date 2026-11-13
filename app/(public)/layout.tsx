@@ -14,6 +14,10 @@ export default function LayoutPublik({
 }) {
   return (
     <div className="flex min-h-screen flex-col bg-cream">
+      <p className="bg-ink-deep py-1.5 text-center font-mono text-[0.58rem] font-medium tracking-[0.24em] text-slate-500 uppercase">
+        Gratis&ensp;·&ensp;Tanpa akun&ensp;·&ensp;Bukan
+        vonis&ensp;·&ensp;Inisiatif SDG 8
+      </p>
       <header className="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
         <Container className="flex h-16 items-center justify-between gap-4 sm:h-20">
           <Link
@@ -46,23 +50,26 @@ export default function LayoutPublik({
 
       <main className="flex-1">{children}</main>
 
-      <footer className="border-t border-line bg-cream">
-        <Container className="pt-14 pb-8 md:pt-20">
+      <footer className="relative overflow-hidden border-t border-ink-deep bg-ink-deep text-slate-400">
+        <div
+          aria-hidden="true"
+          className="pola-kisi-gelap absolute inset-0 opacity-60"
+        />
+        <Container className="relative pt-14 pb-8 md:pt-16">
           <div className="grid gap-10 md:grid-cols-12">
-            <div className="flex max-w-sm flex-col gap-3 md:col-span-5">
-              <Image
-                src="/logo-header.png"
-                alt="CekLoker"
-                width={146}
-                height={56}
-                sizes="146px"
-              />
-              <p className="text-sm leading-relaxed text-muted">
+            <div className="flex max-w-sm flex-col gap-4 md:col-span-5">
+              <p className="font-display text-2xl font-semibold tracking-tight text-white">
+                Cek<span className="text-[#60a5fa]">Loker</span>
+              </p>
+              <p className="font-mono text-[0.6rem] tracking-[0.22em] text-slate-500 uppercase">
+                Alat pra-lamaran · Ketenagakerjaan Indonesia
+              </p>
+              <p className="text-sm leading-relaxed text-slate-400">
                 CekLoker memberikan rentang risiko berbasis aturan, bukan vonis.
                 Keputusan akhir tetap di tangan Anda: verifikasi selalu ke
                 sumber resmi.
               </p>
-              <p className="text-xs text-muted">
+              <p className="text-xs text-slate-500">
                 Teks lowongan yang Anda tempel tidak disimpan di server.
               </p>
             </div>
@@ -71,14 +78,14 @@ export default function LayoutPublik({
               aria-label="Jelajah"
               className="flex flex-col gap-2 md:col-span-3"
             >
-              <p className="text-[0.7rem] font-semibold tracking-[0.18em] text-muted uppercase">
+              <p className="font-mono text-[0.6rem] font-semibold tracking-[0.22em] text-slate-500 uppercase">
                 Jelajah
               </p>
               {NAV.map((butir) => (
                 <Link
                   key={butir.href}
                   href={butir.href}
-                  className="inline-flex min-h-9 w-fit items-center text-sm font-medium text-ink transition-colors hover:text-aksen"
+                  className="inline-flex min-h-9 w-fit items-center text-sm font-medium text-slate-300 transition-colors hover:text-white"
                 >
                   {butir.label}
                 </Link>
@@ -89,14 +96,14 @@ export default function LayoutPublik({
               aria-label="Legal"
               className="flex flex-col gap-2 md:col-span-4"
             >
-              <p className="text-[0.7rem] font-semibold tracking-[0.18em] text-muted uppercase">
+              <p className="font-mono text-[0.6rem] font-semibold tracking-[0.22em] text-slate-500 uppercase">
                 Legal
               </p>
               {NAV_LEGAL.map((butir) => (
                 <Link
                   key={butir.href}
                   href={butir.href}
-                  className="inline-flex min-h-9 w-fit items-center text-sm font-medium text-ink transition-colors hover:text-aksen"
+                  className="inline-flex min-h-9 w-fit items-center text-sm font-medium text-slate-300 transition-colors hover:text-white"
                 >
                   {butir.label}
                 </Link>
@@ -104,9 +111,9 @@ export default function LayoutPublik({
             </nav>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-6 text-xs text-muted">
-            <p>© 2026 Tim CekLoker · Kode sumber dirilis dengan lisensi MIT.</p>
-            <p>Inisiatif SDG 8: Decent Work &amp; Economic Growth.</p>
+          <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6 font-mono text-[0.62rem] tracking-[0.14em] text-slate-500 uppercase">
+            <p>© 2026 Tim CekLoker · Lisensi MIT</p>
+            <p>Inisiatif SDG 8: Decent Work &amp; Economic Growth</p>
           </div>
         </Container>
       </footer>

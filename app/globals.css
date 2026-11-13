@@ -11,7 +11,11 @@
   --color-aksen: #2563eb;
   --color-aksen-pekat: #1d4ed8;
 
-  --font-display: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-space-grotesk), var(--font-inter-tight), ui-sans-serif,
+    system-ui, sans-serif;
+  --font-mono:
+    var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --radius-kartu: 1.25rem;
 
@@ -94,6 +98,45 @@
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+  }
+
+  /* Kata kunci headline di atas kanvas navy */
+  .teks-aksen-terang {
+    background-image: linear-gradient(
+      115deg,
+      #3b82f6 0%,
+      #60a5fa 50%,
+      #93c5fd 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* Tekstur titik ala cetak biru teknis, untuk kanvas navy */
+  .pola-kisi-gelap {
+    background-image: radial-gradient(
+      circle,
+      rgb(147 197 253 / 0.13) 1.1px,
+      transparent 1.3px
+    );
+    background-size: 26px 26px;
+  }
+
+  /* Cap/stempel mono ala dokumen resmi */
+  .stempel {
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid currentColor;
+    border-radius: 0.3rem;
+    padding: 0.32rem 0.75rem;
+    font-family:
+      var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    white-space: nowrap;
   }
 
   /* Strip marquee pola aturan: dua salinan konten, geser setengah lebar */
