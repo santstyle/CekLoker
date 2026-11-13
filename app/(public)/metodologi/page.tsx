@@ -41,8 +41,8 @@ export default function HalamanMetodologi() {
         <div className="mx-auto flex max-w-4xl flex-col gap-16 sm:gap-20">
           {/* Header */}
           <div className="flex flex-col gap-4 border-b border-line pb-10">
-            <h1 className="font-display text-4xl leading-[1.1] font-medium tracking-tight text-balance text-ink sm:text-5xl">
-              Metodologi, <em className="text-aksen italic">apa adanya.</em>
+            <h1 className="font-display text-4xl leading-[1.1] font-semibold tracking-tight text-balance text-ink sm:text-5xl">
+              Metodologi, <span className="teks-aksen">apa adanya.</span>
             </h1>
 
             <p className="max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
@@ -228,7 +228,7 @@ export default function HalamanMetodologi() {
                           {aturan.judul}
                         </td>
                         <td className="p-4 align-top text-slate-600">
-                          <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700">
+                          <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-700">
                             {LABEL_KATEGORI[aturan.kategori]}
                           </span>
                         </td>

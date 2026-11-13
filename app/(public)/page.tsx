@@ -47,9 +47,9 @@ export default function Beranda() {
       {/* Hero */}
       <section className="relative">
         <Container className="pt-14 pb-10 sm:pt-20 sm:pb-14">
-          <h1 className="mx-auto max-w-6xl text-center font-display text-[clamp(3rem,8.5vw,6.75rem)] leading-[1.02] font-medium tracking-tight text-balance text-ink">
+          <h1 className="mx-auto max-w-6xl text-center font-display text-[clamp(3rem,8.5vw,6.75rem)] leading-[1.02] font-semibold tracking-tight text-balance text-ink">
             Kerja yang layak dimulai dari iklan yang{" "}
-            <em className="text-aksen italic">jujur.</em>
+            <span className="teks-aksen">jujur.</span>
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-muted sm:text-xl">
@@ -103,7 +103,7 @@ export default function Beranda() {
                 </span>
               </p>
               <div className="mt-5 flex items-end gap-4">
-                <span className="font-display text-7xl leading-none font-medium text-white tabular-nums md:text-8xl">
+                <span className="font-display text-7xl leading-none font-semibold text-white tabular-nums md:text-8xl">
                   65
                 </span>
                 <span className="mb-1.5 text-xs leading-tight text-slate-400">
@@ -174,9 +174,9 @@ export default function Beranda() {
             <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-aksen uppercase">
               Bukan vonis
             </p>
-            <h2 className="mt-4 max-w-5xl font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.04] font-medium tracking-tight text-ink">
+            <h2 className="mt-4 max-w-5xl font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.04] font-semibold tracking-tight text-ink">
               Bukan angka hitam putih.{" "}
-              <em className="text-aksen italic">Rentang risiko</em>, dengan
+              <span className="teks-aksen">Rentang risiko</span>, dengan
               buktinya di meja Anda.
             </h2>
           </Reveal>
@@ -218,7 +218,7 @@ export default function Beranda() {
                 >
                   {band.label}
                 </span>
-                <h3 className="font-display text-2xl font-medium text-ink">
+                <h3 className="font-display text-2xl font-semibold text-ink">
                   {band.judul}
                 </h3>
                 <p className="text-sm leading-relaxed text-muted">
@@ -239,9 +239,9 @@ export default function Beranda() {
                 <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-aksen uppercase">
                   Cara kerja
                 </p>
-                <h2 className="mt-4 font-display text-[clamp(2.5rem,5vw,4rem)] leading-[1.05] font-medium tracking-tight text-ink">
+                <h2 className="mt-4 font-display text-[clamp(2.5rem,5vw,4rem)] leading-[1.05] font-semibold tracking-tight text-ink">
                   Tempel iklannya.{" "}
-                  <em className="text-aksen italic">Buktinya kembali.</em>
+                  <span className="teks-aksen">Buktinya kembali.</span>
                 </h2>
                 <p className="mt-5 max-w-md text-base leading-relaxed text-muted">
                   Tidak perlu daftar akun, tidak perlu unggah berkas. Teksnya
@@ -281,12 +281,12 @@ export default function Beranda() {
                 >
                   <span
                     aria-hidden="true"
-                    className="font-display text-5xl leading-none font-medium text-ink/12 sm:text-6xl"
+                    className="font-display text-5xl leading-none font-semibold text-ink/12 sm:text-6xl"
                   >
                     {langkah.nomor}
                   </span>
                   <span>
-                    <span className="block font-display text-xl font-medium text-ink sm:text-2xl">
+                    <span className="block font-display text-xl font-semibold text-ink sm:text-2xl">
                       {langkah.judul}
                     </span>
                     <span className="mt-2 block max-w-lg text-sm leading-relaxed text-muted sm:text-[0.95rem]">
@@ -308,9 +308,9 @@ export default function Beranda() {
               <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-aksen uppercase">
                 Dasar hukum
               </p>
-              <h2 className="mt-4 font-display text-[clamp(2.5rem,5vw,4rem)] leading-[1.05] font-medium tracking-tight text-ink">
+              <h2 className="mt-4 font-display text-[clamp(2.5rem,5vw,4rem)] leading-[1.05] font-semibold tracking-tight text-ink">
                 Setiap temuan,{" "}
-                <em className="text-aksen italic">pasalnya ikut.</em>
+                <span className="teks-aksen">pasalnya ikut.</span>
               </h2>
               <p className="mt-5 max-w-md text-base leading-relaxed text-muted">
                 Tidak ada aturan karangan. Setiap indikator terhubung ke
@@ -378,8 +378,8 @@ export default function Beranda() {
               <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-aksen uppercase">
                 FAQ
               </p>
-              <h2 className="mt-4 font-display text-[clamp(2.5rem,4.5vw,3.75rem)] leading-[1.05] font-medium tracking-tight text-ink">
-                Pertanyaan yang <em className="text-aksen italic">sering</em>{" "}
+              <h2 className="mt-4 font-display text-[clamp(2.5rem,4.5vw,3.75rem)] leading-[1.05] font-semibold tracking-tight text-ink">
+                Pertanyaan yang <span className="teks-aksen">sering</span>{" "}
                 diajukan.
               </h2>
             </div>
@@ -394,8 +394,8 @@ export default function Beranda() {
       <section className="bg-cream py-20 sm:py-28">
         <Container>
           <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
-            <h2 className="font-display text-[clamp(3rem,9vw,6.5rem)] leading-[1.02] font-medium tracking-tight text-balance text-ink">
-              Baca iklannya. <em className="text-aksen italic">Baru lamar.</em>
+            <h2 className="font-display text-[clamp(3rem,9vw,6.5rem)] leading-[1.02] font-semibold tracking-tight text-balance text-ink">
+              Baca iklannya. <span className="teks-aksen">Baru lamar.</span>
             </h2>
             <p className="mt-6 max-w-md text-base leading-relaxed text-muted">
               Gratis, tanpa daftar akun. Teks iklan Anda tidak pernah disimpan

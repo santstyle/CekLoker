@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  /* Token visual CekLoker — editorial, tenang, berbasis palet biru kita */
+  /* Token visual CekLoker — terang, bersih, palet biru kita (arah referensi: serko.ai) */
   --color-ink: #0f172a;
   --color-ink-deep: #020617;
   --color-paper: #ffffff;
-  --color-cream: #faf8f3;
-  --color-line: #e7e4dc;
-  --color-muted: #6b7280;
+  --color-cream: #f5f6fa;
+  --color-line: #e4e5ee;
+  --color-muted: #5b6472;
   --color-aksen: #2563eb;
   --color-aksen-pekat: #1d4ed8;
 
-  --font-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
 
   --radius-kartu: 1.25rem;
 
@@ -81,6 +81,19 @@
   .reveal.reveal-init.is-visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* Kata kunci headline: gradasi biru kita (bukan gradasi pelangi) */
+  .teks-aksen {
+    background-image: linear-gradient(
+      115deg,
+      #1d4ed8 0%,
+      #2563eb 48%,
+      #60a5fa 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
   }
 
   /* Strip marquee pola aturan: dua salinan konten, geser setengah lebar */

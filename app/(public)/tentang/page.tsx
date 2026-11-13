@@ -36,9 +36,9 @@ export default function HalamanTentang() {
         <div className="mx-auto flex max-w-4xl flex-col gap-16 sm:gap-20">
           {/* Header */}
           <div className="flex flex-col gap-4 border-b border-line pb-10">
-            <h1 className="font-display text-4xl leading-[1.1] font-medium tracking-tight text-balance text-ink sm:text-5xl">
+            <h1 className="font-display text-4xl leading-[1.1] font-semibold tracking-tight text-balance text-ink sm:text-5xl">
               Inisiatif terbuka untuk{" "}
-              <em className="text-aksen italic">pekerjaan layak.</em>
+              <span className="teks-aksen">pekerjaan layak.</span>
             </h1>
 
             <p className="max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
