@@ -10,7 +10,7 @@ const GAYA_DASAR =
 
 const GAYA_VARIAN: Record<Varian, string> = {
   primer:
-    "bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow hover:-translate-y-0.5 active:translate-y-0 active:shadow-none",
+    "bg-ink text-white shadow-sm hover:bg-ink-deep hover:-translate-y-0.5 active:translate-y-0",
   sekunder:
     "border border-slate-200 bg-white text-slate-800 shadow-sm hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 hover:-translate-y-0.5 active:translate-y-0 active:shadow-none",
   hantu: "text-slate-600 hover:text-slate-900 hover:bg-slate-100",

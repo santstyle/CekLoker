@@ -39,290 +39,188 @@ const FAQ = [
   },
 ] as const;
 
+const POLA = RULES.map((aturan) => aturan.judul);
+
 export default function Beranda() {
   return (
     <div className="relative overflow-hidden bg-cream text-ink">
       {/* Hero */}
-      <section className="relative border-b border-line">
-        <Container className="pt-16 pb-16 sm:pt-24 sm:pb-20">
-          <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-            <Reveal>
-              <h1 className="font-display text-[2.75rem] leading-[1.08] font-medium tracking-tight text-balance text-ink sm:text-6xl lg:text-[4.5rem]">
-                Periksa dulu iklannya,{" "}
-                <em className="text-aksen italic">sebelum</em> melamar.
-              </h1>
-            </Reveal>
+      <section className="relative">
+        <Container className="pt-14 pb-10 sm:pt-20 sm:pb-14">
+          <h1 className="mx-auto max-w-6xl text-center font-display text-[clamp(3rem,8.5vw,6.75rem)] leading-[1.02] font-medium tracking-tight text-balance text-ink">
+            Kerja yang layak dimulai dari iklan yang{" "}
+            <em className="text-aksen italic">jujur.</em>
+          </h1>
 
-            <Reveal delay={120}>
-              <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-xl">
-                CekLoker memindai iklan lowongan terhadap aturan baku
-                ketenagakerjaan Indonesia. Anda dapat kutipan bukti, rujukan
-                pasal, dan rentang risiko. Bukan vonis, dan tidak ada model yang
-                mereka-reka jawaban.
-              </p>
-            </Reveal>
+          <p className="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-muted sm:text-xl">
+            Tempel iklan lowongan Anda. CekLoker membacanya dengan{" "}
+            {JUMLAH_ATURAN} aturan baku ketenagakerjaan Indonesia dan menjawab
+            dengan bukti, rujukan pasal, dan rentang risiko.
+          </p>
 
-            <Reveal delay={220}>
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-                <Link
-                  href="/cek"
-                  className="inline-flex min-h-12 items-center rounded-full bg-ink px-7 text-base font-semibold text-white transition-colors duration-200 hover:bg-ink-deep"
-                >
-                  Cek lowongan sekarang
-                </Link>
-                <Link
-                  href="/metodologi"
-                  className="inline-flex min-h-12 items-center rounded-full border border-line bg-paper px-6 text-base font-semibold text-ink transition-colors duration-200 hover:border-ink hover:text-ink"
-                >
-                  Cara kerja
-                </Link>
-              </div>
-            </Reveal>
-
-            <Reveal delay={300}>
-              <p className="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs font-medium text-muted sm:text-[0.8rem]">
-                <span>Deterministik, bukan tebakan</span>
-                <span aria-hidden="true" className="text-line">
-                  |
-                </span>
-                <span>Teks Anda tidak disimpan</span>
-                <span aria-hidden="true" className="text-line">
-                  |
-                </span>
-                <span>Rujukan UU &amp; Permenaker</span>
-              </p>
-            </Reveal>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/cek"
+              className="inline-flex min-h-13 items-center rounded-full bg-ink px-8 text-base font-semibold text-white transition-colors duration-200 hover:bg-ink-deep"
+            >
+              Cek lowongan sekarang
+            </Link>
+            <Link
+              href="/metodologi"
+              className="inline-flex min-h-13 items-center rounded-full border border-line bg-paper px-7 text-base font-semibold text-ink transition-colors duration-200 hover:border-ink"
+            >
+              Cara kerjanya
+            </Link>
           </div>
 
-          {/* Kartu contoh hasil; ilustrasi, bukan data pengguna */}
-          <Reveal delay={350} className="relative mt-14 sm:mt-20">
-            <figure
-              className="relative mx-auto max-w-3xl -rotate-1 rounded-kartu border border-line bg-paper p-5 shadow-kartu sm:p-7"
-              aria-label="Ilustrasi contoh hasil evaluasi CekLoker"
-            >
-              <figcaption className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
-                <span className="text-[0.7rem] font-semibold tracking-[0.14em] text-muted uppercase">
-                  Contoh hasil evaluasi
-                </span>
-                <span className="rounded-full border border-amber-300/70 bg-amber-50 px-3 py-1 text-[0.7rem] font-semibold text-amber-800">
+          {/* Panggung kartu: tiga kartu produk melayang ala referensi */}
+          <div className="mx-auto mt-14 grid w-full max-w-6xl gap-5 sm:mt-16 md:grid-cols-[1fr_1.15fr_1fr] md:items-center md:gap-0">
+            {/* Kartu temuan, kiri */}
+            <div className="rounded-kartu border border-line bg-paper p-5 shadow-kartu md:-mr-4 md:translate-y-6 md:-rotate-[5deg] md:p-6">
+              <p className="flex items-center gap-2 text-[0.68rem] font-semibold tracking-[0.16em] text-amber-800 uppercase">
+                <span
+                  aria-hidden="true"
+                  className="flex size-2 rounded-full bg-amber-500"
+                />
+                Temuan berisiko
+              </p>
+              <blockquote className="mt-4 font-display text-lg leading-snug text-ink italic">
+                &ldquo;Biaya seragam dan administrasi berkas: Rp 150.000, wajib
+                lunas saat tes.&rdquo;
+              </blockquote>
+              <p className="mt-4 border-t border-line pt-3 text-[0.72rem] leading-relaxed text-muted">
+                Pungutan biaya sebelum penempatan, bertentangan dengan Pasal 38
+                ayat (1) UU No. 13/2003.
+              </p>
+            </div>
+
+            {/* Kartu hasil, tengah */}
+            <div className="z-10 rounded-kartu bg-ink-deep p-6 text-white shadow-2xl md:-translate-y-2 md:p-8">
+              <p className="flex items-center justify-between gap-3 text-[0.68rem] font-semibold tracking-[0.16em] text-slate-400 uppercase">
+                Contoh hasil CekLoker
+                <span className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2.5 py-0.5 text-[0.65rem] font-semibold text-amber-300 normal-case">
                   Perlu dicek
                 </span>
-              </figcaption>
-
-              <blockquote className="mt-5 border-l-2 border-amber-400 pl-4 font-display text-lg leading-snug text-ink italic sm:text-2xl">
-                “Biaya seragam, ID card, dan administrasi berkas: Rp 150.000,
-                wajib lunas saat tes.”
-              </blockquote>
-
-              <div className="mt-5 flex flex-col gap-2 text-xs text-muted sm:text-[0.8rem]">
-                <p>
-                  <span className="font-semibold text-ink">
-                    Temuan 1 dari 3.
-                  </span>{" "}
-                  Pungutan biaya sebelum penempatan, bertentangan dengan Pasal
-                  38 ayat (1) UU No. 13/2003.
-                </p>
-                <p>
-                  Ilustrasi di atas memakai iklan contoh, bukan data Anda. Hasil
-                  nyata muncul setelah Anda menempel teks lowongan di halaman
-                  Cek.
-                </p>
-              </div>
-
-              <div className="mt-6 flex items-center gap-4">
-                <span className="font-display text-4xl font-medium text-ink tabular-nums sm:text-5xl">
+              </p>
+              <div className="mt-5 flex items-end gap-4">
+                <span className="font-display text-7xl leading-none font-medium text-white tabular-nums md:text-8xl">
                   65
                 </span>
-                <div className="flex-1">
-                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-cream">
-                    <div
-                      className="h-full rounded-full bg-amber-500"
-                      style={{ width: "65%" }}
-                    />
-                  </div>
-                  <p className="mt-1.5 text-[0.7rem] text-muted">
-                    Skor risiko dari 100. Ambang band lihat Metodologi.
-                  </p>
-                </div>
+                <span className="mb-1.5 text-xs leading-tight text-slate-400">
+                  dari 100
+                  <br />
+                  skor risiko
+                </span>
               </div>
-            </figure>
-          </Reveal>
+              <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-white/10">
+                <div
+                  className="h-full rounded-full bg-amber-400"
+                  style={{ width: "65%" }}
+                />
+              </div>
+              <ul className="mt-5 space-y-2 text-[0.78rem] leading-snug text-slate-300">
+                <li>1 dari 3 temuan: pungutan biaya di muka</li>
+                <li>Kutipan asli teks iklan selalu disertakan</li>
+                <li>Keputusan tetap di tangan Anda</li>
+              </ul>
+              <p className="mt-5 border-t border-white/10 pt-3 text-[0.65rem] text-slate-500">
+                Ilustrasi memakai iklan contoh, bukan data pengguna.
+              </p>
+            </div>
+
+            {/* Kartu pasal, kanan */}
+            <div className="rounded-kartu border border-line bg-paper p-5 shadow-kartu md:-ml-4 md:translate-y-8 md:rotate-[5deg] md:p-6">
+              <p className="text-[0.68rem] font-semibold tracking-[0.16em] text-muted uppercase">
+                Rujukan pasal
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-ink">
+                &ldquo;Pelaksana penempatan tenaga kerja dilarang memungut biaya
+                penempatan, baik langsung maupun tidak langsung, sebagian atau
+                keseluruhan kepada tenaga kerja.&rdquo;
+              </p>
+              <p className="mt-4 border-t border-line pt-3 text-[0.72rem] text-muted">
+                UU No. 13/2003 tentang Ketenagakerjaan
+              </p>
+            </div>
+          </div>
         </Container>
       </section>
 
-      {/* Cara kerja */}
-      <section className="bg-cream py-16 sm:py-24">
+      {/* Strip pola yang dikenali */}
+      <div
+        aria-label="Contoh pola yang dikenali mesin CekLoker"
+        className="overflow-hidden border-y border-line bg-paper py-3.5"
+      >
+        <div className="animate-marquee flex w-max items-center gap-0 whitespace-nowrap">
+          {[...POLA, ...POLA].map((pola, i) => (
+            <span
+              key={i}
+              aria-hidden={i >= POLA.length}
+              className="flex items-center text-[0.7rem] font-semibold tracking-[0.18em] text-ink uppercase"
+            >
+              <span className="px-5">{pola}</span>
+              <span aria-hidden="true" className="text-aksen">
+                &#9679;
+              </span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Rentang risiko */}
+      <section className="py-16 sm:py-24">
         <Container>
           <Reveal>
-            <h2 className="font-display text-3xl font-medium tracking-tight text-ink sm:text-5xl">
-              Cara kerjanya <em className="text-aksen italic">langsung</em>.
+            <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-aksen uppercase">
+              Bukan vonis
+            </p>
+            <h2 className="mt-4 max-w-5xl font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.04] font-medium tracking-tight text-ink">
+              Bukan angka hitam putih.{" "}
+              <em className="text-aksen italic">Rentang risiko</em>, dengan
+              buktinya di meja Anda.
             </h2>
           </Reveal>
 
-          <ol className="mt-12 grid gap-10 border-t border-line pt-10 sm:grid-cols-3 sm:gap-8">
-            {[
-              {
-                nomor: "01",
-                judul: "Tempel iklannya",
-                teks: "Salin teks iklan lowongan dari mana pun Anda menemukannya. Tidak perlu daftar akun, tidak perlu unggah berkas.",
-              },
-              {
-                nomor: "02",
-                judul: "Aturan baku memindai",
-                teks: `${JUMLAH_ATURAN} aturan ketenagakerjaan memeriksa pola berisiko: pungutan biaya, kontak pribadi, jam kerja tidak wajar, dan lainnya.`,
-              },
-              {
-                nomor: "03",
-                judul: "Anda terima buktinya",
-                teks: "Bukan skor mentah saja: kutipan asli dari iklan, pasal yang relevan, dan rentang risiko. Keputusan tetap di tangan Anda.",
-              },
-            ].map((langkah, i) => (
-              <li
-                key={langkah.nomor}
-                className="border-t border-line pt-6 sm:border-t-0 sm:pt-0"
-              >
-                <Reveal delay={i * 120} className="flex h-full flex-col gap-3">
-                  <span
-                    aria-hidden="true"
-                    className="font-display text-5xl leading-none font-medium text-ink/10"
-                  >
-                    {langkah.nomor}
-                  </span>
-                  <h3 className="text-lg font-bold text-ink">
-                    {langkah.judul}
-                  </h3>
-                  <p className="max-w-sm text-sm leading-relaxed text-muted">
-                    {langkah.teks}
-                  </p>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
-        </Container>
-      </section>
-
-      {/* Apa yang kami cari */}
-      <section className="border-y border-line bg-paper py-16 sm:py-24">
-        <Container>
-          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
-              <Reveal>
-                <h2 className="font-display text-3xl leading-tight font-medium tracking-tight text-ink sm:text-4xl">
-                  Hal yang <em className="text-aksen italic">jarang</em> ditulis
-                  di iklan, tapi menentukan.
-                </h2>
-                <p className="mt-5 max-w-md text-base leading-relaxed text-muted">
-                  Perekrut yang wajar tidak memungut biaya sebelum Anda
-                  diterima, dan tidak meminta ijazah asli Anda. CekLoker mencari
-                  pola-pola seperti ini secara harfiah, bukan lewat dugaan.
-                </p>
-                <Link
-                  href="/metodologi"
-                  className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-aksen underline-offset-4 hover:underline"
-                >
-                  {JUMLAH_ATURAN} aturan dan dasar hukumnya
-                  <span aria-hidden="true">&rarr;</span>
-                </Link>
-              </Reveal>
-            </div>
-
-            <div className="lg:col-span-7">
-              <ul className="divide-y divide-line border-y border-line">
-                {[
-                  {
-                    pasal: "Pasal 38 ayat (1) UU No. 13/2003",
-                    teks: "Pungutan biaya penempatan kepada tenaga kerja dilarang dalam bentuk apa pun.",
-                  },
-                  {
-                    pasal: "Permenaker No. 39/2016",
-                    teks: "Penyelenggara pameran kesempatan kerja dilarang memungut biaya dari pencari kerja.",
-                  },
-                  {
-                    pasal: "Pasal 77 ayat (2) UU No. 13/2003",
-                    teks: "Batas waktu kerja 40 jam seminggu tanpa upah lembur yang sah menjadi indikator pelanggaran.",
-                  },
-                  {
-                    pasal: "UU No. 27/2022 (PDP)",
-                    teks: "Permintaan dokumen sensitif di awal proses, di luar kebutuhan seleksi yang wajar.",
-                  },
-                  ...(DATA_UPAH_TERSEDIA
-                    ? []
-                    : [
-                        {
-                          pasal: "Upah Minimum (UMP/UMK)",
-                          teks: "Perbandingan kisaran upah terhadap upah minimum provinsi. Belum aktif, menunggu data resmi.",
-                        },
-                      ]),
-                ].map((item) => (
-                  <li
-                    key={item.pasal}
-                    className="grid gap-1 py-5 sm:grid-cols-[1fr_1.4fr] sm:gap-6"
-                  >
-                    <span className="text-xs leading-snug font-semibold text-ink">
-                      {item.pasal}
-                    </span>
-                    <span className="text-sm leading-relaxed text-muted">
-                      {item.teks}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* Tiga rentang risiko */}
-      <section className="bg-cream py-16 sm:py-24">
-        <Container>
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <h2 className="max-w-xl font-display text-3xl leading-tight font-medium tracking-tight text-ink sm:text-5xl">
-              Bukan vonis. <em className="text-aksen italic">Rentang.</em>
-            </h2>
-            <p className="max-w-sm text-sm leading-relaxed text-muted">
-              Tiga pita yang jelas, dengan label teks dan ikon pembeda, bukan
-              warna sendirian.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-px overflow-hidden rounded-kartu border border-line bg-line sm:grid-cols-3">
+          <div className="mt-12 grid gap-4 sm:grid-cols-3">
             {[
               {
                 label: "Rendah",
                 judul: "Indikator aman",
-                teks: "Tidak ditemukan indikator bermasalah pada teks. Tetap verifikasi kanal resmi perusahaan sebelum mengirim berkas.",
+                teks: "Tidak ditemukan indikator bermasalah. Tetap verifikasi kanal resmi perusahaan sebelum mengirim berkas.",
                 garis: "bg-blue-600",
-                chip: "bg-blue-50 text-blue-800 border-blue-200",
+                chip: "border-blue-600/30 bg-blue-50 text-blue-800",
               },
               {
                 label: "Perlu dicek",
                 judul: "Perlu konfirmasi",
                 teks: "Ada indikator yang perlu dikonfirmasi langsung: kisaran upah, jam kerja, atau kontak pribadi perorangan.",
                 garis: "bg-amber-500",
-                chip: "bg-amber-50 text-amber-800 border-amber-200",
+                chip: "border-amber-500/40 bg-amber-50 text-amber-800",
               },
               {
                 label: "Tinggi",
                 judul: "Kewaspadaan penuh",
                 teks: "Kombinasi indikator berisiko: permintaan transfer, ijazah ditahan, janji kerja instan tanpa seleksi.",
                 garis: "bg-rose-600",
-                chip: "bg-rose-50 text-rose-800 border-rose-200",
+                chip: "border-rose-600/30 bg-rose-50 text-rose-800",
               },
             ].map((band) => (
               <div
                 key={band.label}
-                className="flex flex-col gap-4 bg-paper p-6 sm:p-8"
+                className="flex flex-col gap-4 rounded-kartu border border-line bg-paper p-6 sm:p-8"
               >
                 <span
                   aria-hidden="true"
-                  className={`h-1 w-14 rounded-full ${band.garis}`}
+                  className={`h-1 w-12 rounded-full ${band.garis}`}
                 />
                 <span
                   className={`inline-flex w-fit rounded-full border px-3 py-1 text-xs font-semibold ${band.chip}`}
                 >
                   {band.label}
                 </span>
-                <h3 className="text-xl font-bold text-ink">{band.judul}</h3>
+                <h3 className="font-display text-2xl font-medium text-ink">
+                  {band.judul}
+                </h3>
                 <p className="text-sm leading-relaxed text-muted">
                   {band.teks}
                 </p>
@@ -332,27 +230,160 @@ export default function Beranda() {
         </Container>
       </section>
 
+      {/* Cara kerja: sticky split */}
+      <section className="border-y border-line bg-paper py-16 sm:py-24">
+        <Container>
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-20">
+            <div className="lg:col-span-5">
+              <div className="lg:sticky lg:top-28">
+                <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-aksen uppercase">
+                  Cara kerja
+                </p>
+                <h2 className="mt-4 font-display text-[clamp(2.5rem,5vw,4rem)] leading-[1.05] font-medium tracking-tight text-ink">
+                  Tempel iklannya.{" "}
+                  <em className="text-aksen italic">Buktinya kembali.</em>
+                </h2>
+                <p className="mt-5 max-w-md text-base leading-relaxed text-muted">
+                  Tidak perlu daftar akun, tidak perlu unggah berkas. Teksnya
+                  diolah saat itu juga dan tidak pernah disimpan di server kami.
+                </p>
+                <Link
+                  href="/cek"
+                  className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-aksen underline-offset-4 hover:underline"
+                >
+                  Coba sekarang, gratis
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
+              </div>
+            </div>
+
+            <ol className="lg:col-span-7">
+              {[
+                {
+                  nomor: "01",
+                  judul: "Tempel teksnya",
+                  teks: "Salin iklan lowongan dari mana pun Anda menemukannya, lalu tempel ke kotak di halaman Cek.",
+                },
+                {
+                  nomor: "02",
+                  judul: "Mesin membaca",
+                  teks: `${JUMLAH_ATURAN} aturan baku ketenagakerjaan memindai pola: pungutan biaya, kontak pribadi, jam kerja melebihi batas, dan lainnya.`,
+                },
+                {
+                  nomor: "03",
+                  judul: "Anda terima jawabannya",
+                  teks: "Kutipan asli dari iklan, pasal yang dilanggar, dan rentang risiko. Keputusan akhir tetap di tangan Anda.",
+                },
+              ].map((langkah) => (
+                <li
+                  key={langkah.nomor}
+                  className="grid grid-cols-[auto_1fr] items-baseline gap-6 border-b border-line py-7 last:border-b-0 sm:gap-10"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="font-display text-5xl leading-none font-medium text-ink/12 sm:text-6xl"
+                  >
+                    {langkah.nomor}
+                  </span>
+                  <span>
+                    <span className="block font-display text-xl font-medium text-ink sm:text-2xl">
+                      {langkah.judul}
+                    </span>
+                    <span className="mt-2 block max-w-lg text-sm leading-relaxed text-muted sm:text-[0.95rem]">
+                      {langkah.teks}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Container>
+      </section>
+
+      {/* Dasar hukum */}
+      <section className="py-16 sm:py-24">
+        <Container>
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-20">
+            <div className="lg:col-span-5">
+              <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-aksen uppercase">
+                Dasar hukum
+              </p>
+              <h2 className="mt-4 font-display text-[clamp(2.5rem,5vw,4rem)] leading-[1.05] font-medium tracking-tight text-ink">
+                Setiap temuan,{" "}
+                <em className="text-aksen italic">pasalnya ikut.</em>
+              </h2>
+              <p className="mt-5 max-w-md text-base leading-relaxed text-muted">
+                Tidak ada aturan karangan. Setiap indikator terhubung ke
+                peraturan ketenagakerjaan Indonesia yang berlaku, dan Anda bisa
+                membacanya sendiri.
+              </p>
+              <Link
+                href="/metodologi"
+                className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-aksen underline-offset-4 hover:underline"
+              >
+                Metodologi dan katalog {JUMLAH_ATURAN} aturan
+                <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </div>
+
+            <ul className="divide-y divide-line border-y border-line lg:col-span-7">
+              {[
+                {
+                  pasal: "Pasal 38 ayat (1) UU No. 13/2003",
+                  teks: "Pungutan biaya penempatan kepada tenaga kerja dilarang dalam bentuk apa pun.",
+                },
+                {
+                  pasal: "Permenaker No. 39/2016",
+                  teks: "Penyelenggara pameran kesempatan kerja dilarang memungut biaya dari pencari kerja.",
+                },
+                {
+                  pasal: "Pasal 77 ayat (2) UU No. 13/2003",
+                  teks: "Batas waktu kerja 40 jam seminggu tanpa upah lembur yang sah menjadi indikator pelanggaran.",
+                },
+                {
+                  pasal: "UU No. 27/2022 (PDP)",
+                  teks: "Permintaan dokumen sensitif di awal proses, di luar kebutuhan seleksi yang wajar.",
+                },
+                ...(DATA_UPAH_TERSEDIA
+                  ? []
+                  : [
+                      {
+                        pasal: "Upah Minimum (UMP/UMK)",
+                        teks: "Perbandingan kisaran upah terhadap upah minimum. Belum aktif, menunggu data resmi.",
+                      },
+                    ]),
+              ].map((item) => (
+                <li
+                  key={item.pasal}
+                  className="grid gap-1.5 py-5 sm:grid-cols-[1fr_1.5fr] sm:gap-6"
+                >
+                  <span className="text-xs leading-snug font-semibold text-ink">
+                    {item.pasal}
+                  </span>
+                  <span className="text-sm leading-relaxed text-muted">
+                    {item.teks}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Container>
+      </section>
+
       {/* FAQ */}
       <section className="border-t border-line bg-paper py-16 sm:py-24">
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-4">
-              <h2 className="font-display text-3xl leading-tight font-medium tracking-tight text-ink sm:text-4xl">
+            <div className="lg:col-span-5">
+              <p className="text-[0.7rem] font-semibold tracking-[0.2em] text-aksen uppercase">
+                FAQ
+              </p>
+              <h2 className="mt-4 font-display text-[clamp(2.5rem,4.5vw,3.75rem)] leading-[1.05] font-medium tracking-tight text-ink">
                 Pertanyaan yang <em className="text-aksen italic">sering</em>{" "}
                 diajukan.
               </h2>
-              <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
-                Jawaban singkat dan apa adanya. Selebihnya ada di{" "}
-                <Link
-                  href="/metodologi"
-                  className="font-semibold text-ink underline underline-offset-4 hover:text-aksen"
-                >
-                  Metodologi
-                </Link>
-                .
-              </p>
             </div>
-            <div className="lg:col-span-8">
+            <div className="lg:col-span-7">
               <Faq butir={FAQ} />
             </div>
           </div>
@@ -360,20 +391,19 @@ export default function Beranda() {
       </section>
 
       {/* CTA penutup */}
-      <section className="bg-ink-deep">
-        <Container className="py-16 sm:py-24">
-          <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-            <h2 className="font-display text-3xl leading-tight font-medium text-balance text-white sm:text-5xl">
-              Lowongan berikutnya layak{" "}
-              <em className="text-blue-400 italic">diperiksa</em>.
+      <section className="bg-cream py-20 sm:py-28">
+        <Container>
+          <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
+            <h2 className="font-display text-[clamp(3rem,9vw,6.5rem)] leading-[1.02] font-medium tracking-tight text-balance text-ink">
+              Baca iklannya. <em className="text-aksen italic">Baru lamar.</em>
             </h2>
-            <p className="mt-5 max-w-md text-base leading-relaxed text-slate-400">
-              Lima detik sekarang lebih murah daripada satu bulan di tempat yang
-              salah.
+            <p className="mt-6 max-w-md text-base leading-relaxed text-muted">
+              Gratis, tanpa daftar akun. Teks iklan Anda tidak pernah disimpan
+              di server kami.
             </p>
             <Link
               href="/cek"
-              className="mt-9 inline-flex min-h-13 items-center rounded-full bg-aksen px-8 text-base font-semibold text-white transition-colors duration-200 hover:bg-aksen-pekat"
+              className="mt-10 inline-flex min-h-14 items-center rounded-full bg-ink px-10 text-lg font-semibold text-white transition-colors duration-200 hover:bg-ink-deep"
             >
               Cek lowongan sekarang
             </Link>

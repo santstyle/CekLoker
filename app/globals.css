@@ -5,9 +5,9 @@
   --color-ink: #0f172a;
   --color-ink-deep: #020617;
   --color-paper: #ffffff;
-  --color-cream: #f8fafc;
-  --color-line: #e2e8f0;
-  --color-muted: #64748b;
+  --color-cream: #faf8f3;
+  --color-line: #e7e4dc;
+  --color-muted: #6b7280;
   --color-aksen: #2563eb;
   --color-aksen-pekat: #1d4ed8;
 
@@ -64,10 +64,12 @@
 
 @layer components {
   /*
-   * Reveal saat scroll: satu kali jalan, tanpa loop.
-   * Dipicu oleh komponen Reveal (IntersectionObserver) yang menambah .is-visible.
+   * Reveal saat scroll: sekali jalan, tanpa loop.
+   * Default konten terlihat penuh (aman untuk no-JS dan screenshot);
+   * komponen Reveal menambah .reveal-init hanya pada elemen di bawah
+   * layar sebelum paint, lalu .is-visible saat masuk viewport.
    */
-  .reveal {
+  .reveal.reveal-init {
     opacity: 0;
     transform: translateY(1.25rem);
     transition:
@@ -76,16 +78,34 @@
     transition-delay: var(--reveal-delay, 0ms);
   }
 
-  .reveal.is-visible {
+  .reveal.reveal-init.is-visible {
     opacity: 1;
     transform: translateY(0);
   }
 
+  /* Strip marquee pola aturan: dua salinan konten, geser setengah lebar */
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 55s linear infinite;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .reveal {
+    .reveal.reveal-init {
       opacity: 1;
       transform: none;
       transition: none;
+    }
+
+    .animate-marquee {
+      animation: none;
     }
   }
 }

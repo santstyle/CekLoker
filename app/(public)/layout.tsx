@@ -13,7 +13,7 @@ export default function LayoutPublik({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-cream">
       <header className="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
         <Container className="flex h-16 items-center justify-between gap-4 sm:h-20">
           <Link
@@ -47,54 +47,66 @@ export default function LayoutPublik({
       <main className="flex-1">{children}</main>
 
       <footer className="border-t border-line bg-cream">
-        <Container className="py-12 md:py-16">
-          <div className="flex flex-col gap-8">
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-              <div className="flex max-w-2xl flex-col gap-2">
-                <p className="text-sm leading-relaxed text-muted">
-                  CekLoker memberikan rentang risiko berbasis aturan, bukan
-                  vonis. Keputusan akhir tetap di tangan Anda — verifikasi
-                  selalu ke sumber resmi.
-                </p>
-                <p className="text-xs text-muted">
-                  Teks lowongan yang Anda tempel tidak disimpan di server.
-                </p>
-              </div>
-
-              <nav
-                aria-label="Navigasi legal"
-                className="flex flex-wrap gap-x-6 gap-y-3"
-              >
-                {NAV_LEGAL.map((butir) => (
-                  <Link
-                    key={butir.href}
-                    href={butir.href}
-                    className="inline-flex min-h-11 items-center text-sm font-medium text-ink transition-colors hover:text-aksen"
-                  >
-                    {butir.label}
-                  </Link>
-                ))}
-              </nav>
+        <Container className="pt-14 pb-8 md:pt-20">
+          <div className="grid gap-10 md:grid-cols-12">
+            <div className="flex max-w-sm flex-col gap-3 md:col-span-5">
+              <Image
+                src="/logo-header.png"
+                alt="CekLoker"
+                width={146}
+                height={56}
+                sizes="146px"
+              />
+              <p className="text-sm leading-relaxed text-muted">
+                CekLoker memberikan rentang risiko berbasis aturan, bukan vonis.
+                Keputusan akhir tetap di tangan Anda: verifikasi selalu ke
+                sumber resmi.
+              </p>
+              <p className="text-xs text-muted">
+                Teks lowongan yang Anda tempel tidak disimpan di server.
+              </p>
             </div>
 
             <nav
-              aria-label="Navigasi footer"
-              className="flex flex-wrap gap-x-6 gap-y-3 border-t border-line pt-6 md:hidden"
+              aria-label="Jelajah"
+              className="flex flex-col gap-2 md:col-span-3"
             >
+              <p className="text-[0.7rem] font-semibold tracking-[0.18em] text-muted uppercase">
+                Jelajah
+              </p>
               {NAV.map((butir) => (
                 <Link
                   key={butir.href}
                   href={butir.href}
-                  className="inline-flex min-h-11 items-center text-sm font-medium text-ink transition-colors hover:text-aksen"
+                  className="inline-flex min-h-9 w-fit items-center text-sm font-medium text-ink transition-colors hover:text-aksen"
                 >
                   {butir.label}
                 </Link>
               ))}
             </nav>
 
-            <p className="border-t border-line pt-6 text-xs text-muted md:border-t-0 md:pt-0">
-              © 2026 Tim CekLoker · Kode sumber dirilis dengan lisensi MIT.
-            </p>
+            <nav
+              aria-label="Legal"
+              className="flex flex-col gap-2 md:col-span-4"
+            >
+              <p className="text-[0.7rem] font-semibold tracking-[0.18em] text-muted uppercase">
+                Legal
+              </p>
+              {NAV_LEGAL.map((butir) => (
+                <Link
+                  key={butir.href}
+                  href={butir.href}
+                  className="inline-flex min-h-9 w-fit items-center text-sm font-medium text-ink transition-colors hover:text-aksen"
+                >
+                  {butir.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-6 text-xs text-muted">
+            <p>© 2026 Tim CekLoker · Kode sumber dirilis dengan lisensi MIT.</p>
+            <p>Inisiatif SDG 8: Decent Work &amp; Economic Growth.</p>
           </div>
         </Container>
       </footer>
