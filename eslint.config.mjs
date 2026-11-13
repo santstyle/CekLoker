@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Aset statis & pustaka pihak ketiga (mis. tesseract.js worker) tidak untuk di-lint:
+    "public/**",
   ]),
 ]);
 
