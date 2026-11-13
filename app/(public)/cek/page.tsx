@@ -175,7 +175,7 @@ export default function HalamanCek() {
               Pemeriksaan deterministik
             </p>
 
-            <h1 className="font-display text-[clamp(2.5rem,5.6vw,4rem)] leading-[1.02] font-semibold tracking-tight text-balance text-ink">
+            <h1 className="font-display text-[clamp(2.5rem,5.6vw,4rem)] leading-[1.02] font-extrabold tracking-tight text-balance text-ink">
               Tempel iklannya.{" "}
               <span className="teks-gradasi">Risikonya terbaca.</span>
             </h1>

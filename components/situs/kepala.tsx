@@ -36,7 +36,7 @@ export function Kepala({
           />
           {kicker}
         </p>
-        <h1 className="mt-4 max-w-4xl font-display text-4xl leading-[1.05] font-semibold tracking-tight text-balance text-white sm:text-5xl">
+        <h1 className="mt-4 max-w-4xl font-display text-4xl leading-[1.05] font-extrabold tracking-tight text-balance text-white sm:text-5xl">
           {judul}
         </h1>
         <div className="mt-4 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">

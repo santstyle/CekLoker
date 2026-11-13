@@ -11,9 +11,7 @@
   --color-aksen: #2563eb;
   --color-aksen-pekat: #1d4ed8;
 
-  --font-display:
-    var(--font-space-grotesk), var(--font-inter-tight), ui-sans-serif,
-    system-ui, sans-serif;
+  --font-display: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
   --font-mono:
     var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
