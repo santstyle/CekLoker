@@ -247,7 +247,7 @@ export const RULES: readonly Rule[] = [
     bobot: 8,
     kekuatan: "kuat",
     hasilJikaCocok: "perlu_dicek",
-    rujukanHukumIds: ["permenaker-18-2024"],
+    rujukanHukumIds: ["uu-13-2003-pasal-89"],
     pola: [],
     ambangBatas: 1,
   },
@@ -261,7 +261,7 @@ export const RULES: readonly Rule[] = [
     bobot: 6,
     kekuatan: "kuat",
     hasilJikaCocok: "perlu_dicek",
-    rujukanHukumIds: ["uu-13-2003-pasal-6"],
+    rujukanHukumIds: ["uu-13-2003-pasal-77"],
     pola: POLA_WAKTU_BERLEBIH,
     ambangBatas: null,
   },
@@ -275,7 +275,7 @@ export const RULES: readonly Rule[] = [
     bobot: 10,
     kekuatan: "kuat",
     hasilJikaCocok: "tinggi",
-    rujukanHukumIds: ["se-menaker-m6-hk04-v-2025"],
+    rujukanHukumIds: ["uu-13-2003-pasal-38", "permenaker-39-2016"],
     pola: POLA_PUNGUTAN,
     ambangBatas: null,
   },
@@ -360,7 +360,11 @@ export const RULES: readonly Rule[] = [
     kekuatan: "kuat",
     hasilJikaCocok: "tinggi",
     rujukanHukumIds: ["uu-27-2022"],
-    pola: [...POLA_DOKUMEN_BANK, ...POLA_DOKUMEN_PRIBADI, ...PENANDA_SEBELUM_SELEKSI],
+    pola: [
+      ...POLA_DOKUMEN_BANK,
+      ...POLA_DOKUMEN_PRIBADI,
+      ...PENANDA_SEBELUM_SELEKSI,
+    ],
     ambangBatas: null,
   },
   {
@@ -401,7 +405,7 @@ export const RULES: readonly Rule[] = [
     bobot: 4,
     kekuatan: "sedang",
     hasilJikaCocok: "perlu_dicek",
-    rujukanHukumIds: ["uu-13-2003-pasal-5"],
+    rujukanHukumIds: ["uu-13-2003-pasal-5", "uu-13-2003-pasal-6"],
     pola: POLA_DISKRIMINASI,
     ambangBatas: null,
   },
@@ -457,7 +461,7 @@ export const RULES: readonly Rule[] = [
     bobot: 4,
     kekuatan: "sedang",
     hasilJikaCocok: "perlu_dicek",
-    rujukanHukumIds: ["kep-230-men-2003"],
+    rujukanHukumIds: ["uu-13-2003-pasal-78"],
     pola: POLA_LEMBUR,
     ambangBatas: null,
   },
@@ -501,7 +505,8 @@ export const DETEKTOR: readonly Detektor[] = [
   {
     ruleId: "upah_dibawah_umr",
     deteksi: (konteks) => {
-      if (konteks.gajiBulanan === null || konteks.upahMinimum === null) return [];
+      if (konteks.gajiBulanan === null || konteks.upahMinimum === null)
+        return [];
       if (konteks.gajiBulanan >= konteks.upahMinimum.upahBulanan) return [];
       return [
         `upah ${formatRupiah(konteks.gajiBulanan)}`,
@@ -535,8 +540,12 @@ export const DETEKTOR: readonly Detektor[] = [
 
       if (tertinggi >= 40_000_000) return [`gaji ${formatRupiah(tertinggi)}`];
       if (tertinggi >= 25_000_000) {
-        const penanda = containsAny(konteks.teks, POLA_GAJI_TINGGI_TANPA_SYARAT);
-        if (penanda.length > 0) return [`gaji ${formatRupiah(tertinggi)}`, ...penanda];
+        const penanda = containsAny(
+          konteks.teks,
+          POLA_GAJI_TINGGI_TANPA_SYARAT,
+        );
+        if (penanda.length > 0)
+          return [`gaji ${formatRupiah(tertinggi)}`, ...penanda];
       }
       return [];
     },
@@ -595,7 +604,8 @@ export const DETEKTOR: readonly Detektor[] = [
     ruleId: "upah_tidak_diungkap",
     deteksi: (konteks) => {
       if (extractSalaries(konteks.teks).length > 0) return [];
-      if (containsAny(konteks.teks, PENANDA_UPAH_TERSIRAT).length > 0) return [];
+      if (containsAny(konteks.teks, PENANDA_UPAH_TERSIRAT).length > 0)
+        return [];
       return ["nominal upah tidak disebutkan"];
     },
   },
@@ -603,7 +613,8 @@ export const DETEKTOR: readonly Detektor[] = [
     ruleId: "lokasi_tidak_jelas",
     deteksi: (konteks) => {
       if (konteks.provinsi !== null) return [];
-      if (containsAny(konteks.teks, PENANDA_KERJA_JARAK_JAUH).length > 0) return [];
+      if (containsAny(konteks.teks, PENANDA_KERJA_JARAK_JAUH).length > 0)
+        return [];
       return ["lokasi kerja tidak disebutkan"];
     },
   },

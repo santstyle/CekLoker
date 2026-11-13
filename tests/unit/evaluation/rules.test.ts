@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { normalizeText } from "@/lib/evaluation/normalize";
 import { DETEKTOR, RULES } from "@/lib/evaluation/rules";
+import { LABEL_RUJUKAN, labelRujukan } from "@/lib/evaluation/rujukan";
 import {
   BAND,
   KATEGORI_RULE,
@@ -13,11 +14,13 @@ import type { KonteksDeteksi, RegionalWage } from "@/lib/evaluation/types";
 const ID_RUJUKAN_SAHSIH: readonly string[] = [
   "uu-13-2003-pasal-5",
   "uu-13-2003-pasal-6",
-  "permenaker-18-2024",
-  "se-menaker-m6-hk04-v-2025",
+  "uu-13-2003-pasal-38",
+  "uu-13-2003-pasal-77",
+  "uu-13-2003-pasal-78",
+  "uu-13-2003-pasal-89",
+  "permenaker-39-2016",
   "uu-27-2022",
   "uu-18-2017",
-  "kep-230-men-2003",
 ];
 
 const UMP_CONTOH: RegionalWage = {
@@ -76,7 +79,9 @@ describe("metadata aturan", () => {
       expect(BAND).toContain(rule.hasilJikaCocok);
     }
 
-    expect(rule.rujukanHukumIds.length).toBe(new Set(rule.rujukanHukumIds).size);
+    expect(rule.rujukanHukumIds.length).toBe(
+      new Set(rule.rujukanHukumIds).size,
+    );
     for (const id of rule.rujukanHukumIds) {
       expect(ID_RUJUKAN_SAHSIH).toContain(id);
     }
@@ -90,6 +95,14 @@ describe("metadata aturan", () => {
       expect(rule.ambangBatas).not.toBeNull();
     } else {
       expect(rule.ambangBatas).toBeNull();
+    }
+  });
+
+  it("setiap rujukan hukum punya label manusiawi", () => {
+    const ids = [...new Set(RULES.flatMap((rule) => rule.rujukanHukumIds))];
+    for (const id of ids) {
+      expect(LABEL_RUJUKAN[id]).toBeDefined();
+      expect(labelRujukan(id)).not.toBe(id);
     }
   });
 
@@ -259,7 +272,9 @@ describe("detektor per aturan", () => {
   describe("email_gratis", () => {
     it("menandai email domain gratis", () => {
       expect(
-        cariDetektor("email_gratis").deteksi(konteks("kirim cv ke hr@gmail.com")),
+        cariDetektor("email_gratis").deteksi(
+          konteks("kirim cv ke hr@gmail.com"),
+        ),
       ).toEqual(["gmail.com"]);
     });
 
