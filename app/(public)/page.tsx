@@ -154,15 +154,15 @@ export default function Beranda() {
         >
           <defs>
             <linearGradient id="kubah" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#2563eb" />
-              <stop offset="30%" stop-color="#3b82f6" />
-              <stop offset="58%" stop-color="#60a5fa" />
-              <stop offset="82%" stop-color="#93c5fd" />
-              <stop offset="100%" stop-color="#e0f2fe" />
+              <stop offset="0%" stopColor="#2563eb" />
+              <stop offset="30%" stopColor="#3b82f6" />
+              <stop offset="58%" stopColor="#60a5fa" />
+              <stop offset="82%" stopColor="#93c5fd" />
+              <stop offset="100%" stopColor="#e0f2fe" />
             </linearGradient>
             <radialGradient id="cahayaHorizon" cx="50%" cy="100%" r="75%">
-              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85" />
-              <stop offset="55%" stop-color="#ffffff" stop-opacity="0" />
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
+              <stop offset="55%" stopColor="#ffffff" stopOpacity="0" />
             </radialGradient>
             <pattern
               id="titikKubah"
@@ -328,123 +328,133 @@ export default function Beranda() {
             </div>
           </Reveal>
 
-          <div
-            aria-hidden="true"
-            className="mt-10 h-2.5 w-full rounded-full bg-[linear-gradient(90deg,#2563eb_0%,#2563eb_15%,#f59e0b_15%,#f59e0b_45%,#e11d48_45%,#e11d48_100%)]"
-          />
-          <div
-            aria-hidden="true"
-            className="mt-2 flex justify-between font-mono text-[0.6rem] tracking-[0.16em] text-muted uppercase"
-          >
-            <span className="w-[15%] text-center">0–14</span>
-            <span className="w-[30%] text-center">15–44</span>
-            <span className="w-[55%] text-center">45–100</span>
-          </div>
+          <Reveal delay={120}>
+            <div
+              aria-hidden="true"
+              className="mt-10 h-2.5 w-full rounded-full bg-[linear-gradient(90deg,#2563eb_0%,#2563eb_15%,#f59e0b_15%,#f59e0b_45%,#e11d48_45%,#e11d48_100%)]"
+            />
+            <div
+              aria-hidden="true"
+              className="mt-2 flex justify-between font-mono text-[0.6rem] tracking-[0.16em] text-muted uppercase"
+            >
+              <span className="w-[15%] text-center">0–14</span>
+              <span className="w-[30%] text-center">15–44</span>
+              <span className="w-[55%] text-center">45–100</span>
+            </div>
+          </Reveal>
 
-          <ul className="mt-8 grid gap-5 md:grid-cols-3">
-            {RENTANG.map((band) => (
-              <li
-                key={band.label}
-                className={`group flex flex-col rounded-3xl bg-gradient-to-b p-6 ring-1 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_48px_-20px_rgb(15_23_42/0.25)] sm:p-7 ${band.kartu}`}
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <span
-                    className={`inline-flex rounded-full px-4 py-1.5 font-mono text-[0.65rem] font-semibold tracking-[0.18em] uppercase ${band.chip}`}
-                  >
-                    {band.label}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="font-display text-5xl leading-none font-semibold text-ink/10 transition-colors duration-300 group-hover:text-ink/20"
-                  >
-                    {band.nomor}
-                  </span>
-                </div>
-                <p className="mt-5 font-mono text-[0.6rem] tracking-[0.18em] text-muted uppercase">
-                  {band.skor}
-                </p>
-                <h3 className="mt-2 font-display text-xl font-semibold text-ink sm:text-2xl">
-                  {band.status}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                  {band.saran}
-                </p>
-              </li>
-            ))}
-          </ul>
+          <Reveal delay={220}>
+            <ul className="mt-8 grid gap-5 md:grid-cols-3">
+              {RENTANG.map((band) => (
+                <li
+                  key={band.label}
+                  className={`group flex flex-col rounded-3xl bg-gradient-to-b p-6 ring-1 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_48px_-20px_rgb(15_23_42/0.25)] sm:p-7 ${band.kartu}`}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <span
+                      className={`inline-flex rounded-full px-4 py-1.5 font-mono text-[0.65rem] font-semibold tracking-[0.18em] uppercase ${band.chip}`}
+                    >
+                      {band.label}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className="font-display text-5xl leading-none font-semibold text-ink/10 transition-colors duration-300 group-hover:text-ink/20"
+                    >
+                      {band.nomor}
+                    </span>
+                  </div>
+                  <p className="mt-5 font-mono text-[0.6rem] tracking-[0.18em] text-muted uppercase">
+                    {band.skor}
+                  </p>
+                  <h3 className="mt-2 font-display text-xl font-semibold text-ink sm:text-2xl">
+                    {band.status}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                    {band.saran}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         </Container>
       </section>
 
       {/* ============ Cara kerja: tiga kartu gradasi ============ */}
       <section className="border-y border-line bg-paper py-16 sm:py-24">
         <Container ukuran="penuh">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
-                Cara kerja
-              </p>
-              <h2 className="mt-4 font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.02] font-semibold tracking-tight text-ink">
-                Tempel iklannya.{" "}
-                <span className="teks-gradasi">Buktinya kembali.</span>
-              </h2>
-            </div>
-            <Link
-              href="/cek"
-              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-ink px-7 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#1e293b]"
-            >
-              Coba sekarang
-              <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-
-          <ol className="mt-12 grid gap-5 md:grid-cols-3">
-            {[
-              {
-                nomor: "01",
-                tag: "Masukan",
-                judul: "Tempel teksnya",
-                teks: "Salin iklan lowongan dari mana pun Anda menemukannya, lalu tempel ke kotak di halaman Cek.",
-              },
-              {
-                nomor: "02",
-                tag: "Proses",
-                judul: "Mesin membaca",
-                teks: `${JUMLAH_ATURAN} aturan baku ketenagakerjaan memindai pola: pungutan biaya, kontak pribadi, jam kerja melebihi batas, dan lainnya.`,
-              },
-              {
-                nomor: "03",
-                tag: "Keluaran",
-                judul: "Anda terima jawabannya",
-                teks: "Kutipan asli dari iklan, pasal yang dilanggar, dan rentang risiko. Keputusan akhir tetap di tangan Anda.",
-              },
-            ].map((langkah) => (
-              <li
-                key={langkah.nomor}
-                className="group flex flex-col rounded-3xl bg-white p-7 shadow-[0_1px_2px_rgb(15_23_42/0.04),0_16px_40px_-20px_rgb(15_23_42/0.18)] ring-1 ring-line transition-all duration-300 hover:-translate-y-1.5"
+          <Reveal>
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <div>
+                <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
+                  Cara kerja
+                </p>
+                <h2 className="mt-4 font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.02] font-semibold tracking-tight text-ink">
+                  Tempel iklannya.{" "}
+                  <span className="teks-gradasi">Buktinya kembali.</span>
+                </h2>
+              </div>
+              <Link
+                href="/cek"
+                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-ink px-7 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#1e293b]"
               >
-                <span
-                  aria-hidden="true"
-                  className="flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-blue-700 font-mono text-sm font-semibold text-white shadow-lg"
-                >
-                  {langkah.nomor}
-                </span>
-                <h3 className="mt-5 font-display text-2xl font-semibold text-ink">
-                  {langkah.judul}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">
-                  {langkah.teks}
-                </p>
-                <p className="teks-gradasi mt-auto pt-6 font-mono text-[0.62rem] font-semibold tracking-[0.24em] uppercase">
-                  {langkah.tag}
-                </p>
-              </li>
-            ))}
-          </ol>
+                Coba sekarang
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </Reveal>
 
-          <p className="mt-10 text-center font-mono text-[0.62rem] tracking-[0.2em] text-muted uppercase">
-            Tanpa akun&ensp;·&ensp;Tanpa unggah berkas&ensp;·&ensp;Tanpa
-            penyimpanan teks
-          </p>
+          <Reveal delay={140}>
+            <ol className="mt-12 grid gap-5 md:grid-cols-3">
+              {[
+                {
+                  nomor: "01",
+                  tag: "Masukan",
+                  judul: "Tempel teksnya",
+                  teks: "Salin iklan lowongan dari mana pun Anda menemukannya, lalu tempel ke kotak di halaman Cek.",
+                },
+                {
+                  nomor: "02",
+                  tag: "Proses",
+                  judul: "Mesin membaca",
+                  teks: `${JUMLAH_ATURAN} aturan baku ketenagakerjaan memindai pola: pungutan biaya, kontak pribadi, jam kerja melebihi batas, dan lainnya.`,
+                },
+                {
+                  nomor: "03",
+                  tag: "Keluaran",
+                  judul: "Anda terima jawabannya",
+                  teks: "Kutipan asli dari iklan, pasal yang dilanggar, dan rentang risiko. Keputusan akhir tetap di tangan Anda.",
+                },
+              ].map((langkah) => (
+                <li
+                  key={langkah.nomor}
+                  className="group flex flex-col rounded-3xl bg-white p-7 shadow-[0_1px_2px_rgb(15_23_42/0.04),0_16px_40px_-20px_rgb(15_23_42/0.18)] ring-1 ring-line transition-all duration-300 hover:-translate-y-1.5"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-blue-700 font-mono text-sm font-semibold text-white shadow-lg"
+                  >
+                    {langkah.nomor}
+                  </span>
+                  <h3 className="mt-5 font-display text-2xl font-semibold text-ink">
+                    {langkah.judul}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">
+                    {langkah.teks}
+                  </p>
+                  <p className="teks-gradasi mt-auto pt-6 font-mono text-[0.62rem] font-semibold tracking-[0.24em] uppercase">
+                    {langkah.tag}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+
+          <Reveal delay={220}>
+            <p className="mt-10 text-center font-mono text-[0.62rem] tracking-[0.2em] text-muted uppercase">
+              Tanpa akun&ensp;·&ensp;Tanpa unggah berkas&ensp;·&ensp;Tanpa
+              penyimpanan teks
+            </p>
+          </Reveal>
         </Container>
       </section>
 
@@ -452,43 +462,47 @@ export default function Beranda() {
       <section className="py-16 sm:py-24">
         <Container ukuran="penuh">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-4">
-              <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
-                Dasar hukum
-              </p>
-              <h2 className="mt-4 font-display text-[clamp(2.25rem,4.5vw,4rem)] leading-[1.02] font-semibold tracking-tight text-ink">
-                Setiap temuan,{" "}
-                <span className="teks-gradasi">pasalnya ikut.</span>
-              </h2>
-              <p className="mt-5 max-w-md text-base leading-relaxed text-muted">
-                Tidak ada aturan karangan. Setiap indikator terhubung ke
-                peraturan ketenagakerjaan Indonesia yang berlaku, dan Anda bisa
-                membacanya sendiri.
-              </p>
-              <Link
-                href="/metodologi"
-                className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-7 text-sm font-semibold text-ink ring-1 ring-ink/15 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
-              >
-                Katalog {JUMLAH_ATURAN} aturan
-                <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-
-            <ol className="divide-y divide-slate-100 overflow-hidden rounded-3xl bg-white shadow-[0_1px_2px_rgb(15_23_42/0.04),0_16px_40px_-20px_rgb(15_23_42/0.18)] ring-1 ring-line lg:col-span-8">
-              {PASAL.map((item) => (
-                <li
-                  key={item.pasal}
-                  className="grid gap-2 p-6 transition-colors hover:bg-slate-50 sm:grid-cols-12 sm:gap-6"
+            <Reveal className="lg:col-span-4">
+              <div>
+                <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
+                  Dasar hukum
+                </p>
+                <h2 className="mt-4 font-display text-[clamp(2.25rem,4.5vw,4rem)] leading-[1.02] font-semibold tracking-tight text-ink">
+                  Setiap temuan,{" "}
+                  <span className="teks-gradasi">pasalnya ikut.</span>
+                </h2>
+                <p className="mt-5 max-w-md text-base leading-relaxed text-muted">
+                  Tidak ada aturan karangan. Setiap indikator terhubung ke
+                  peraturan ketenagakerjaan Indonesia yang berlaku, dan Anda
+                  bisa membacanya sendiri.
+                </p>
+                <Link
+                  href="/metodologi"
+                  className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-7 text-sm font-semibold text-ink ring-1 ring-ink/15 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
                 >
-                  <span className="font-mono text-[0.72rem] leading-snug font-semibold text-aksen sm:col-span-4">
-                    {item.pasal}
-                  </span>
-                  <span className="text-sm leading-relaxed text-slate-600 sm:col-span-8">
-                    {item.teks}
-                  </span>
-                </li>
-              ))}
-            </ol>
+                  Katalog {JUMLAH_ATURAN} aturan
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+            </Reveal>
+
+            <Reveal delay={150} className="lg:col-span-8">
+              <ol className="divide-y divide-slate-100 overflow-hidden rounded-3xl bg-white shadow-[0_1px_2px_rgb(15_23_42/0.04),0_16px_40px_-20px_rgb(15_23_42/0.18)] ring-1 ring-line">
+                {PASAL.map((item) => (
+                  <li
+                    key={item.pasal}
+                    className="grid gap-2 p-6 transition-colors hover:bg-slate-50 sm:grid-cols-12 sm:gap-6"
+                  >
+                    <span className="font-mono text-[0.72rem] leading-snug font-semibold text-aksen sm:col-span-4">
+                      {item.pasal}
+                    </span>
+                    <span className="text-sm leading-relaxed text-slate-600 sm:col-span-8">
+                      {item.teks}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -497,18 +511,22 @@ export default function Beranda() {
       <section className="border-t border-line bg-paper py-16 sm:py-24">
         <Container ukuran="penuh">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-4">
-              <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
-                FAQ
-              </p>
-              <h2 className="mt-4 font-display text-[clamp(2.25rem,4.2vw,3.5rem)] leading-[1.02] font-semibold tracking-tight text-ink">
-                Pertanyaan yang <span className="teks-gradasi">sering</span>{" "}
-                diajukan.
-              </h2>
-            </div>
-            <div className="lg:col-span-8">
-              <Faq butir={FAQ} />
-            </div>
+            <Reveal className="lg:col-span-4">
+              <div>
+                <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
+                  FAQ
+                </p>
+                <h2 className="mt-4 font-display text-[clamp(2.25rem,4.2vw,3.5rem)] leading-[1.02] font-semibold tracking-tight text-ink">
+                  Pertanyaan yang <span className="teks-gradasi">sering</span>{" "}
+                  diajukan.
+                </h2>
+              </div>
+            </Reveal>
+            <Reveal delay={150} className="lg:col-span-8">
+              <div>
+                <Faq butir={FAQ} />
+              </div>
+            </Reveal>
           </div>
         </Container>
       </section>
@@ -519,24 +537,26 @@ export default function Beranda() {
           ukuran="penuh"
           className="relative flex flex-col items-center text-center"
         >
-          <p className="font-mono text-[0.62rem] font-semibold tracking-[0.26em] text-blue-200/90 uppercase">
-            Cek dulu, baru lamar
-          </p>
-          <h2 className="mt-5 font-display text-[clamp(3rem,8.5vw,6rem)] leading-[1.0] font-semibold tracking-tight text-balance">
-            Baca iklannya.
-            <br />
-            <span className="teks-gradasi-terang">Baru lamar.</span>
-          </h2>
-          <p className="mt-6 max-w-md text-base leading-relaxed text-blue-100/90">
-            Gratis, tanpa daftar akun. Teks iklan Anda tidak pernah disimpan di
-            server kami.
-          </p>
-          <Link
-            href="/cek"
-            className="mt-10 inline-flex min-h-14 items-center rounded-full bg-white px-10 text-lg font-semibold text-ink shadow-[0_10px_40px_-10px_rgb(255_255_255/0.6)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-50"
-          >
-            Cek lowongan sekarang
-          </Link>
+          <Reveal>
+            <p className="font-mono text-[0.62rem] font-semibold tracking-[0.26em] text-blue-200/90 uppercase">
+              Cek dulu, baru lamar
+            </p>
+            <h2 className="mt-5 font-display text-[clamp(3rem,8.5vw,6rem)] leading-[1.0] font-semibold tracking-tight text-balance">
+              Baca iklannya.
+              <br />
+              <span className="teks-gradasi-terang">Baru lamar.</span>
+            </h2>
+            <p className="mt-6 max-w-md text-base leading-relaxed text-blue-100/90">
+              Gratis, tanpa daftar akun. Teks iklan Anda tidak pernah disimpan
+              di server kami.
+            </p>
+            <Link
+              href="/cek"
+              className="mt-10 inline-flex min-h-14 items-center rounded-full bg-white px-10 text-lg font-semibold text-ink shadow-[0_10px_40px_-10px_rgb(255_255_255/0.6)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-50"
+            >
+              Cek lowongan sekarang
+            </Link>
+          </Reveal>
         </Container>
       </section>
     </div>

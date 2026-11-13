@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import { Container } from "@/components/ui/container";
 import { Kepala } from "@/components/situs/kepala";
+import { Reveal } from "@/components/situs/reveal";
 
 export function HalamanLegal({
   judul,
@@ -39,13 +40,15 @@ export function BagianLegal({
   children: ReactNode;
 }) {
   return (
-    <section className="flex flex-col gap-3 border-l-2 border-transparent pl-0 transition-colors hover:border-sky-300 sm:pl-5">
-      <h2 className="font-display text-lg font-semibold tracking-tight text-ink sm:text-xl">
-        {judul}
-      </h2>
-      <div className="flex flex-col gap-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-        {children}
-      </div>
-    </section>
+    <Reveal>
+      <section className="flex flex-col gap-3 border-l-2 border-transparent pl-0 transition-colors hover:border-sky-300 sm:pl-5">
+        <h2 className="font-display text-lg font-semibold tracking-tight text-ink sm:text-xl">
+          {judul}
+        </h2>
+        <div className="flex flex-col gap-3 text-sm leading-relaxed text-slate-600 sm:text-base">
+          {children}
+        </div>
+      </section>
+    </Reveal>
   );
 }
