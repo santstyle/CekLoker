@@ -358,12 +358,12 @@ const KASUS_FORMAT: readonly KasusFormat[] = [
 ];
 
 describe("normalizeText", () => {
-  it.each(KASUS_NORMALISASI)("menyeragamkan teks: $nama", ({
-    masukan,
-    harapan,
-  }) => {
-    expect(normalizeText(masukan)).toBe(harapan);
-  });
+  it.each(KASUS_NORMALISASI)(
+    "menyeragamkan teks: $nama",
+    ({ masukan, harapan }) => {
+      expect(normalizeText(masukan)).toBe(harapan);
+    },
+  );
 
   it("idempoten saat dipanggil berulang", () => {
     const masukan = "  Ｈａｌｏ 😀   Dunia\tKerja  ";
@@ -373,13 +373,12 @@ describe("normalizeText", () => {
 });
 
 describe("containsPhrase", () => {
-  it.each(KASUS_FRASA)("mencocokkan frasa: $nama", ({
-    teks,
-    frasa,
-    harapan,
-  }) => {
-    expect(containsPhrase(teks, frasa)).toBe(harapan);
-  });
+  it.each(KASUS_FRASA)(
+    "mencocokkan frasa: $nama",
+    ({ teks, frasa, harapan }) => {
+      expect(containsPhrase(teks, frasa)).toBe(harapan);
+    },
+  );
 
   it("hasilnya konsisten pada pemanggilan berulang", () => {
     const hasil = Array.from({ length: 5 }, () =>
@@ -390,13 +389,12 @@ describe("containsPhrase", () => {
 });
 
 describe("containsAny", () => {
-  it.each(KASUS_KANDIDAT)("mengumpulkan frasa cocok: $nama", ({
-    teks,
-    kandidat,
-    harapan,
-  }) => {
-    expect(containsAny(teks, kandidat)).toEqual(harapan);
-  });
+  it.each(KASUS_KANDIDAT)(
+    "mengumpulkan frasa cocok: $nama",
+    ({ teks, kandidat, harapan }) => {
+      expect(containsAny(teks, kandidat)).toEqual(harapan);
+    },
+  );
 
   it("memerlukan teks yang sudah dinormalisasi", () => {
     expect(containsAny("Biaya", ["biaya"])).toEqual([]);
@@ -404,10 +402,7 @@ describe("containsAny", () => {
 });
 
 describe("extractSalaries", () => {
-  it.each(KASUS_NOMINAL)("membaca nominal: $nama", ({
-    masukan,
-    harapan,
-  }) => {
+  it.each(KASUS_NOMINAL)("membaca nominal: $nama", ({ masukan, harapan }) => {
     expect(extractSalaries(masukan)).toEqual(harapan);
   });
 
@@ -424,10 +419,7 @@ describe("extractSalaries", () => {
 });
 
 describe("formatRupiah", () => {
-  it.each(KASUS_FORMAT)("memformat nominal: $nama", ({
-    masukan,
-    harapan,
-  }) => {
+  it.each(KASUS_FORMAT)("memformat nominal: $nama", ({ masukan, harapan }) => {
     expect(formatRupiah(masukan)).toBe(harapan);
   });
 

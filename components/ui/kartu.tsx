@@ -9,9 +9,9 @@ export function Kartu({ unggulan = false, className, ...props }: KartuProps) {
     <div
       {...props}
       className={cn(
-        "rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-7 shadow-sm transition-all duration-200",
+        "rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all duration-200 sm:p-7",
         unggulan
-          ? "border-emerald-500/40 bg-gradient-to-b from-white to-emerald-50/20 shadow-md ring-1 ring-emerald-500/10"
+          ? "border-blue-500/40 bg-gradient-to-b from-white to-blue-50/20 shadow-md ring-1 ring-blue-500/10"
           : "hover:border-slate-300 hover:shadow-md",
         className,
       )}

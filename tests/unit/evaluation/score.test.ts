@@ -6,7 +6,12 @@ import {
   bandTerburuk,
   hitungSkor,
 } from "@/lib/evaluation/score";
-import type { Band, KategoriRule, Kekuatan, Temuan } from "@/lib/evaluation/types";
+import type {
+  Band,
+  KategoriRule,
+  Kekuatan,
+  Temuan,
+} from "@/lib/evaluation/types";
 
 function buatTemuan(kontribusi: number): Temuan {
   return {
@@ -78,7 +83,11 @@ type KasusBandDariSkor = {
 
 const KASUS_BAND_DARI_SKOR: readonly KasusBandDariSkor[] = [
   { nama: "skor 0 berada di rentang rendah", skor: 0, harapan: "rendah" },
-  { nama: "skor di bawah batas pertama masih rendah", skor: 14, harapan: "rendah" },
+  {
+    nama: "skor di bawah batas pertama masih rendah",
+    skor: 14,
+    harapan: "rendah",
+  },
   {
     nama: "skor tepat di batas pertama masuk perlu dicek",
     skor: 15,
@@ -95,7 +104,11 @@ const KASUS_BAND_DARI_SKOR: readonly KasusBandDariSkor[] = [
     harapan: "tinggi",
   },
   { nama: "skor maksimal tetap tinggi", skor: 100, harapan: "tinggi" },
-  { nama: "skor negatif diperlakukan sebagai rendah", skor: -1, harapan: "rendah" },
+  {
+    nama: "skor negatif diperlakukan sebagai rendah",
+    skor: -1,
+    harapan: "rendah",
+  },
 ];
 
 describe("bandDariSkor", () => {

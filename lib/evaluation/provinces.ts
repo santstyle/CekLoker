@@ -130,14 +130,19 @@ const ALIAS: readonly (readonly [string, Provinsi])[] = [
   ...ALIAS_TAMBAHAN,
 ];
 
-const ALIAS_TERURUT = ALIAS.map(([alias, provinsi]) => ({ alias, provinsi })).sort(
+const ALIAS_TERURUT = ALIAS.map(([alias, provinsi]) => ({
+  alias,
+  provinsi,
+})).sort(
   (a, b) =>
     b.alias.length - a.alias.length ||
     (a.alias < b.alias ? -1 : a.alias > b.alias ? 1 : 0),
 );
 
 /** Mengembalikan provinsi pertama yang cocok, atau null bila tak dikenali. */
-export function matchProvinsi(mentah: string | null | undefined): Provinsi | null {
+export function matchProvinsi(
+  mentah: string | null | undefined,
+): Provinsi | null {
   if (!mentah) return null;
 
   const teks = normalizeText(mentah);

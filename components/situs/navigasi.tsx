@@ -25,14 +25,16 @@ export function Navigasi() {
             aria-current={aktif ? "page" : undefined}
             className={cn(
               "relative inline-flex min-h-11 items-center text-sm font-medium transition-colors duration-150",
-              aktif ? "font-semibold text-slate-900" : "text-slate-600 hover:text-slate-900",
+              aktif
+                ? "font-semibold text-slate-900"
+                : "text-slate-600 hover:text-slate-900",
             )}
           >
             {butir.label}
             <span
               aria-hidden="true"
               className={cn(
-                "absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-emerald-600 transition-opacity duration-150",
+                "absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-blue-600 transition-opacity duration-150",
                 aktif ? "opacity-100" : "opacity-0",
               )}
             />

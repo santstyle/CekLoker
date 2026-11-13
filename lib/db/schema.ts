@@ -106,20 +106,17 @@ export const rules = pgTable(
   (table) => [index("rules_category_idx").on(table.category)],
 );
 
-export const legalBasis = pgTable(
-  "legal_basis",
-  {
-    id: text("id").primaryKey(),
-    title: text("title").notNull(),
-    type: text("type").notNull(),
-    summary: text("summary").notNull(),
-    sourceUrl: text("source_url").notNull(),
-    verificationStatus: statusVerifikasi("verification_status")
-      .notNull()
-      .default("needs_verification"),
-    verifiedAt: timestamp("verified_at", { withTimezone: true }),
-  },
-);
+export const legalBasis = pgTable("legal_basis", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  type: text("type").notNull(),
+  summary: text("summary").notNull(),
+  sourceUrl: text("source_url").notNull(),
+  verificationStatus: statusVerifikasi("verification_status")
+    .notNull()
+    .default("needs_verification"),
+  verifiedAt: timestamp("verified_at", { withTimezone: true }),
+});
 
 export const regionalWages = pgTable(
   "regional_wages",
@@ -164,7 +161,10 @@ export const checks = pgTable(
     region: text("region"),
     band: bandRisiko("band").notNull(),
     score: integer("score").notNull(),
-    triggeredRuleCodes: text("triggered_rule_codes").array().notNull().default([]),
+    triggeredRuleCodes: text("triggered_rule_codes")
+      .array()
+      .notNull()
+      .default([]),
     usedAi: boolean("used_ai").notNull().default(false),
     inputLength: integer("input_length").notNull(),
   },

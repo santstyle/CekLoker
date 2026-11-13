@@ -3,7 +3,10 @@ import { nanoid } from "nanoid";
 
 import { getDb } from "@/lib/db/client";
 import { checks } from "@/lib/db/schema";
-import { evaluasiLowongan, skemaInputEvaluasi } from "@/lib/evaluation/evaluate";
+import {
+  evaluasiLowongan,
+  skemaInputEvaluasi,
+} from "@/lib/evaluation/evaluate";
 
 export async function POST(request: Request) {
   let body: unknown;

@@ -120,13 +120,17 @@ export function UnggahPoster({
 
     // Validasi ukuran
     if (file.size > MAKSIMAL_UKURAN_BYTE) {
-      setPesanStatus("Ukuran berkas terlalu besar. Maksimal ukuran adalah 8 MB.");
+      setPesanStatus(
+        "Ukuran berkas terlalu besar. Maksimal ukuran adalah 8 MB.",
+      );
       return;
     }
 
     // Validasi tipe
     if (file.type && !TIPE_MIME_DIIZINKAN.includes(file.type)) {
-      setPesanStatus("Format berkas tidak didukung. Harap gunakan PNG, JPEG, atau WebP.");
+      setPesanStatus(
+        "Format berkas tidak didukung. Harap gunakan PNG, JPEG, atau WebP.",
+      );
       return;
     }
 
@@ -157,7 +161,9 @@ export function UnggahPoster({
           if (m.status === "recognizing text") {
             const p = Math.round(20 + m.progress * 75);
             setProgress(p);
-            setPesanStatus(`Membaca teks dari poster... (${Math.round(m.progress * 100)}%)`);
+            setPesanStatus(
+              `Membaca teks dari poster... (${Math.round(m.progress * 100)}%)`,
+            );
           }
         },
       });
@@ -177,7 +183,9 @@ export function UnggahPoster({
         onTeksTerbaca(teksHasil);
       }
     } catch {
-      setPesanStatus("Terjadi kendala saat memproses gambar poster. Silakan coba lagi atau tempel teks langsung.");
+      setPesanStatus(
+        "Terjadi kendala saat memproses gambar poster. Silakan coba lagi atau tempel teks langsung.",
+      );
     } finally {
       setSedangMemproses(false);
     }
@@ -238,14 +246,14 @@ export function UnggahPoster({
             fileInputRef.current?.click();
           }
         }}
-        className={`group relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed p-6 text-center transition-all duration-200 cursor-pointer ${
+        className={`group relative flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-6 text-center transition-all duration-200 ${
           isDragging
-            ? "border-emerald-500 bg-emerald-50/60 ring-4 ring-emerald-500/10"
-            : "border-slate-200/90 bg-slate-50/50 hover:border-emerald-500/50 hover:bg-slate-50"
+            ? "border-blue-500 bg-blue-50/60 ring-4 ring-blue-500/10"
+            : "border-slate-200/90 bg-slate-50/50 hover:border-blue-500/50 hover:bg-slate-50"
         } ${disabled || sedangMemproses ? "pointer-events-none opacity-60" : ""}`}
       >
         <div className="flex flex-col items-center gap-3">
-          <div className="flex size-12 items-center justify-center rounded-2xl bg-white shadow-xs border border-slate-200/80 text-emerald-600 transition-transform group-hover:scale-105">
+          <div className="flex size-12 items-center justify-center rounded-2xl border border-slate-200/80 bg-white text-blue-600 shadow-xs transition-transform group-hover:scale-105">
             <svg
               className="size-6"
               fill="none"
@@ -267,10 +275,13 @@ export function UnggahPoster({
             </p>
             <p className="text-xs text-slate-500">
               Tarik gambar ke sini, tempel dari clipboard (Ctrl+V), atau{" "}
-              <span className="font-semibold text-emerald-600 underline">pilih berkas</span>
+              <span className="font-semibold text-blue-600 underline">
+                pilih berkas
+              </span>
             </p>
             <p className="text-[11px] text-slate-400">
-              Format PNG, JPG, WebP (Maksimal 8 MB &bull; Diproses 100% di peramban)
+              Format PNG, JPG, WebP (Maksimal 8 MB &bull; Diproses 100% di
+              peramban)
             </p>
           </div>
         </div>
@@ -278,13 +289,13 @@ export function UnggahPoster({
         {/* Progress Bar & Status */}
         {sedangMemproses && (
           <div className="mt-4 w-full max-w-xs">
-            <div className="flex items-center justify-between text-xs font-semibold text-slate-600 mb-1.5">
+            <div className="mb-1.5 flex items-center justify-between text-xs font-semibold text-slate-600">
               <span>{pesanStatus}</span>
               <span>{progress}%</span>
             </div>
             <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200">
               <div
-                className="h-full rounded-full bg-emerald-500 transition-all duration-200"
+                className="h-full rounded-full bg-blue-500 transition-all duration-200"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -294,14 +305,12 @@ export function UnggahPoster({
 
       {/* Action / Help strip */}
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-        <span className="text-slate-500">
-          Belum punya poster?
-        </span>
+        <span className="text-slate-500">Belum punya poster?</span>
         <button
           type="button"
           onClick={muatContohPoster}
           disabled={sedangMemproses || disabled}
-          className="font-bold text-emerald-600 hover:text-emerald-700 hover:underline cursor-pointer disabled:opacity-50"
+          className="cursor-pointer font-bold text-blue-600 hover:text-blue-700 hover:underline disabled:opacity-50"
         >
           Coba Ekstrak Contoh Poster Lowongan &rarr;
         </button>
@@ -319,4 +328,3 @@ export function UnggahPoster({
     </div>
   );
 }
-

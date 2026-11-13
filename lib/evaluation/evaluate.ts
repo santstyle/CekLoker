@@ -25,10 +25,7 @@ import { getUpahMinimum } from "./wages";
 export const EVALUATOR_VERSION = "1.0.0";
 
 export const skemaInputEvaluasi = z.object({
-  teksLowongan: z
-    .string()
-    .trim()
-    .min(30, "Teks lowongan minimal 30 karakter."),
+  teksLowongan: z.string().trim().min(30, "Teks lowongan minimal 30 karakter."),
   lokasi: z
     .string()
     .trim()
@@ -146,9 +143,12 @@ export function evaluasiLowongan(
 ): HasilEvaluasi {
   const teksMentah = input.teksLowongan;
   const teks = normalizeText(teksMentah);
-  const lokasi = input.lokasi && input.lokasi.length > 0 ? input.lokasi : undefined;
+  const lokasi =
+    input.lokasi && input.lokasi.length > 0 ? input.lokasi : undefined;
   const perusahaan =
-    input.perusahaan && input.perusahaan.length > 0 ? input.perusahaan : undefined;
+    input.perusahaan && input.perusahaan.length > 0
+      ? input.perusahaan
+      : undefined;
 
   const provinsiFromLokasi = matchProvinsi(lokasi);
   const provinsi = provinsiFromLokasi ?? matchProvinsi(teksMentah);

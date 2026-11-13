@@ -1,5 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter_Tight } from "next/font/google";
+
+import {
+  ambilUrlSitus,
+  DESKRIPSI_SITUS,
+  JUDUL_SITUS,
+  NAMA_SITUS,
+} from "@/lib/situs";
+
 import "./globals.css";
 
 const interTight = Inter_Tight({
@@ -9,9 +17,64 @@ const interTight = Inter_Tight({
 });
 
 export const metadata: Metadata = {
-  title: "CekLoker",
-  description:
-    "Evaluasi cepat lowongan kerja terhadap standar ketenagakerjaan Indonesia.",
+  metadataBase: ambilUrlSitus(),
+  title: {
+    default: JUDUL_SITUS,
+    template: `%s — ${NAMA_SITUS}`,
+  },
+  description: DESKRIPSI_SITUS,
+  applicationName: NAMA_SITUS,
+  category: "ketenagakerjaan",
+  keywords: [
+    "cek lowongan kerja",
+    "lowongan kerja berisiko",
+    "indikator penipuan lowongan",
+    "hak pekerja Indonesia",
+    "upah minimum",
+    "ketenagakerjaan",
+  ],
+  authors: [{ name: NAMA_SITUS }],
+  creator: NAMA_SITUS,
+  publisher: NAMA_SITUS,
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    siteName: NAMA_SITUS,
+    title: JUDUL_SITUS,
+    description: DESKRIPSI_SITUS,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: JUDUL_SITUS,
+    description: DESKRIPSI_SITUS,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-48x48.png", type: "image/png", sizes: "48x48" },
+      { url: "/favicon-64x64.png", type: "image/png", sizes: "64x64" },
+      { url: "/favicon-128x128.png", type: "image/png", sizes: "128x128" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" },
+    ],
+  },
+};
+
+export const viewport: Viewport = {
+  colorScheme: "light",
+  themeColor: "#2563eb",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

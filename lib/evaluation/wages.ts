@@ -20,7 +20,9 @@ export function getUpahMinimum(
   if (!provinsi) return null;
 
   const kunci = normalizeText(provinsi);
-  const kandidat = data.filter((baris) => normalizeText(baris.provinsi) === kunci);
+  const kandidat = data.filter(
+    (baris) => normalizeText(baris.provinsi) === kunci,
+  );
   if (kandidat.length === 0) return null;
 
   const terurut = [...kandidat].sort((a, b) => {

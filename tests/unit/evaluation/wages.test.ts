@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { DATA_UPAH, cariUpahUntukLokasi, getUpahMinimum } from "@/lib/evaluation/wages";
+import {
+  DATA_UPAH,
+  cariUpahUntukLokasi,
+  getUpahMinimum,
+} from "@/lib/evaluation/wages";
 import type { RegionalWage } from "@/lib/evaluation/types";
 
 const DATA_CONTOH: readonly RegionalWage[] = [
@@ -67,7 +71,11 @@ describe("getUpahMinimum", () => {
     const kedua = getUpahMinimum("Jawa Timur", DATA_CONTOH);
 
     expect(pertama).not.toBeNull();
-    expect(pertama).toEqual({ provinsi: "Jawa Timur", upahBulanan: 2_100_000, tahun: 2025 });
+    expect(pertama).toEqual({
+      provinsi: "Jawa Timur",
+      upahBulanan: 2_100_000,
+      tahun: 2025,
+    });
     expect(kedua).toEqual(pertama);
   });
 
