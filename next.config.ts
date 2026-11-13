@@ -23,6 +23,7 @@ const HEADER_KEAMANAN = [
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
+  poweredByHeader: false,
   async headers() {
     return [
       {

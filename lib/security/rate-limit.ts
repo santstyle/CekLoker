@@ -109,15 +109,26 @@ export function buatPembatasJendelaTetap(opsi: OpsiPembatas): PembatasLaju {
 /**
  * Menyusun kunci klien dari header permintaan.
  *
- * Di belakang proxy seperti Vercel, `x-forwarded-for` memuat alamat asli klien
- * sebagai entri pertama. Bila header tidak ada, dipakai `x-real-ip`, lalu
- * penanda umum agar permintaan tanpa identitas tetap dibatasi bersama.
+ * Di belakang proxy tepercaya seperti Vercel, entri PALING KANAN pada
+ * `x-forwarded-for` adalah alamat yang ditambahkan proxy itu sendiri, sehingga
+ * tidak dapat dipalsukan oleh klien; entri yang lebih kiri bisa saja kiriman
+ * klien. Karena itu kunci diambil dari entri terakhir, bukan entri pertama.
+ *
+ * Catatan: tanpa proxy di depan (akses langsung ke server), seluruh header ini
+ * sepenuhnya dikendalikan klien dan tidak layak dipercaya — tetapi pembatasan
+ * tetap berlaku karena tiap klien tetap terikat pada satu kunci yang konsisten
+ * selama header itu tidak diputar. Bila header tidak ada, dipakai `x-real-ip`,
+ * lalu penanda umum agar permintaan tanpa identitas tetap dibatasi bersama.
  */
 export function ambilKunciKlien(request: Request): string {
   const diteruskan = request.headers.get("x-forwarded-for");
   if (diteruskan) {
-    const pertama = diteruskan.split(",")[0]?.trim();
-    if (pertama) return pertama;
+    const entri = diteruskan
+      .split(",")
+      .map((bagian) => bagian.trim())
+      .filter((bagian) => bagian.length > 0);
+    const terakhir = entri[entri.length - 1];
+    if (terakhir) return terakhir;
   }
 
   const alamatNyata = request.headers.get("x-real-ip")?.trim();

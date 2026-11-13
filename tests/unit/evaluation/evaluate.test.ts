@@ -94,6 +94,39 @@ describe("validasi masukan", () => {
     expect(hasil.success).toBe(false);
   });
 
+  it("menolak teks lebih dari 20.000 karakter dengan pesan Indonesia", () => {
+    const hasil = skemaInputEvaluasi.safeParse({
+      teksLowongan: "a".repeat(20_001),
+    });
+    expect(hasil.success).toBe(false);
+    if (!hasil.success) {
+      expect(hasil.error.issues[0]?.message).toContain("20.000 karakter");
+    }
+  });
+
+  it("menerima teks tepat 20.000 karakter", () => {
+    const hasil = skemaInputEvaluasi.safeParse({
+      teksLowongan: "a".repeat(20_000),
+    });
+    expect(hasil.success).toBe(true);
+  });
+
+  it("menolak body yang bukan objek dengan pesan Indonesia", () => {
+    const hasil = skemaInputEvaluasi.safeParse("bukan objek");
+    expect(hasil.success).toBe(false);
+    if (!hasil.success) {
+      expect(hasil.error.issues[0]?.message).toContain("objek JSON");
+    }
+  });
+
+  it("menolak field wajib yang hilang dengan pesan Indonesia", () => {
+    const hasil = skemaInputEvaluasi.safeParse({});
+    expect(hasil.success).toBe(false);
+    if (!hasil.success) {
+      expect(hasil.error.issues[0]?.message).toContain("wajib diisi");
+    }
+  });
+
   it("menerima teks valid dengan lokasi opsional", () => {
     const hasil = skemaInputEvaluasi.safeParse({
       teksLowongan:

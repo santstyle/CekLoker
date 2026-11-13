@@ -147,16 +147,18 @@ describe("ambilKunciKlien", () => {
     });
   }
 
-  it("memakai alamat pertama dari x-forwarded-for", () => {
+  it("memakai entri terakhir dari x-forwarded-for (ditulis proxy, bukan klien)", () => {
     const request = permintaanDengan({
       "x-forwarded-for": "203.0.113.7, 70.41.3.18, 150.172.238.178",
     });
 
-    expect(ambilKunciKlien(request)).toBe("203.0.113.7");
+    expect(ambilKunciKlien(request)).toBe("150.172.238.178");
   });
 
-  it("memangkas spasi pada x-forwarded-for", () => {
-    const request = permintaanDengan({ "x-forwarded-for": "  198.51.100.4  " });
+  it("memangkas spasi dan entri kosong pada x-forwarded-for", () => {
+    const request = permintaanDengan({
+      "x-forwarded-for": " ,  198.51.100.4  ",
+    });
     expect(ambilKunciKlien(request)).toBe("198.51.100.4");
   });
 

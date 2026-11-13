@@ -10,6 +10,7 @@ import { kunciSimpananHasil, type ResponsEvaluasi } from "@/lib/api/evaluasi";
 import { CATATAN_DATA_UPAH } from "@/lib/evaluation/wages";
 
 const MINIMAL_KARAKTER = 30;
+const MAKSIMAL_KARAKTER = 20_000;
 
 const CONTOH_LOWONGAN_MENCURIGAKAN = `LOWONGAN KERJA URGENT STAFF ADMIN & DATA ENTRY
 PT Sentosa Maju Bersama — Jakarta Pusat
@@ -63,7 +64,10 @@ export default function HalamanCek() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const panjangTeks = teks.trim().length;
-  const bolehKirim = panjangTeks >= MINIMAL_KARAKTER && !mengirim;
+  const bolehKirim =
+    panjangTeks >= MINIMAL_KARAKTER &&
+    panjangTeks <= MAKSIMAL_KARAKTER &&
+    !mengirim;
 
   async function kirim(peristiwa: React.FormEvent<HTMLFormElement>) {
     peristiwa.preventDefault();
@@ -264,12 +268,15 @@ export default function HalamanCek() {
                   </label>
                   <span
                     className={`text-xs font-semibold transition-colors ${
-                      panjangTeks >= MINIMAL_KARAKTER
-                        ? "text-slate-400"
-                        : "text-amber-600"
+                      panjangTeks > MAKSIMAL_KARAKTER
+                        ? "text-rose-600"
+                        : panjangTeks >= MINIMAL_KARAKTER
+                          ? "text-slate-400"
+                          : "text-amber-600"
                     }`}
                   >
-                    {panjangTeks} karakter (minimal {MINIMAL_KARAKTER})
+                    {panjangTeks} / {MAKSIMAL_KARAKTER.toLocaleString("id-ID")}{" "}
+                    karakter (minimal {MINIMAL_KARAKTER})
                   </span>
                 </div>
 
@@ -281,6 +288,7 @@ export default function HalamanCek() {
                     onChange={(perubahan) => setTeks(perubahan.target.value)}
                     rows={11}
                     required
+                    maxLength={MAKSIMAL_KARAKTER}
                     placeholder="Tempel seluruh isi teks lowongan kerja di sini... Sertakan rincian posisi, syarat kualifikasi, nominal gaji, jam kerja, atau kontak perekrut untuk hasil evaluasi yang paling akurat."
                     className="w-full rounded-2xl border border-slate-200 bg-slate-50/40 p-5 text-sm leading-relaxed font-normal text-slate-900 transition-all duration-200 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:outline-none sm:text-base"
                   />
