@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
+import { UnggahPoster } from "@/components/check/unggah-poster";
 import { Container } from "@/components/ui/container";
 import { kunciSimpananHasil, type ResponsEvaluasi } from "@/lib/api/evaluasi";
 
@@ -46,12 +47,18 @@ Kompensasi & Hak Kerja:
 Pendaftaran:
 Kirimkan CV dan portofolio Anda melalui email resmi rekrutmen: karir@nusantaraberkat.co.id dengan subjek "Posisi Akuntan - [Nama Anda]". Proses seleksi bebas biaya apa pun.`;
 
+type TabMode = "teks" | "poster";
+
 export default function HalamanCek() {
   const router = useRouter();
+  const [tabAktif, setTabAktif] = useState<TabMode>("teks");
   const [teks, setTeks] = useState("");
   const [lokasi, setLokasi] = useState("");
   const [mengirim, setMengirim] = useState(false);
   const [pesan, setPesan] = useState<string | null>(null);
+  const [sumberOcr, setSumberOcr] = useState(false);
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const panjangTeks = teks.trim().length;
   const bolehKirim = panjangTeks >= MINIMAL_KARAKTER && !mengirim;
@@ -95,6 +102,17 @@ export default function HalamanCek() {
     }
   }
 
+  function handleTeksOcr(teksHasil: string) {
+    setTeks(teksHasil);
+    setSumberOcr(true);
+    setPesan(null);
+    // Pindahkan fokus ke textarea agar pengguna memeriksa hasil bacaan
+    setTimeout(() => {
+      textareaRef.current?.focus();
+      textareaRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 150);
+  }
+
   return (
     <div className="relative min-h-[calc(100vh-80px)] overflow-hidden bg-slate-50/60 py-12 sm:py-16 lg:py-20">
       {/* Background Glow */}
@@ -119,7 +137,7 @@ export default function HalamanCek() {
             </h1>
 
             <p className="max-w-2xl text-base text-slate-600 sm:text-lg">
-              Tempel teks iklan lowongan apa adanya. Sistem memindai indikator risiko dan mengonfirmasikannya dengan standar ketenagakerjaan.
+              Tempel teks iklan atau unggah poster lowongan. Sistem memindai indikator risiko dan mengonfirmasikannya dengan standar ketenagakerjaan.
             </p>
 
             {/* Quick Demo Buttons */}
@@ -128,8 +146,10 @@ export default function HalamanCek() {
               <button
                 type="button"
                 onClick={() => {
+                  setTabAktif("teks");
                   setTeks(CONTOH_LOWONGAN_MENCURIGAKAN);
                   setLokasi("Jakarta Pusat");
+                  setSumberOcr(false);
                   setPesan(null);
                 }}
                 className="rounded-full border border-amber-200 bg-amber-50 px-3.5 py-1.5 text-xs font-semibold text-amber-800 transition-all hover:bg-amber-100 active:scale-95"
@@ -139,8 +159,10 @@ export default function HalamanCek() {
               <button
                 type="button"
                 onClick={() => {
+                  setTabAktif("teks");
                   setTeks(CONTOH_LOWONGAN_WAJAR);
                   setLokasi("Jakarta Timur");
+                  setSumberOcr(false);
                   setPesan(null);
                 }}
                 className="rounded-full border border-emerald-200 bg-emerald-50 px-3.5 py-1.5 text-xs font-semibold text-emerald-800 transition-all hover:bg-emerald-100 active:scale-95"
@@ -152,7 +174,61 @@ export default function HalamanCek() {
 
           {/* Form Card */}
           <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-10 shadow-xl">
+            {/* Tab Selection */}
+            <div className="mb-8 flex rounded-2xl border border-slate-200 bg-slate-100/70 p-1">
+              <button
+                type="button"
+                onClick={() => setTabAktif("teks")}
+                className={`flex-1 rounded-xl py-2.5 text-xs font-bold transition-all sm:text-sm cursor-pointer ${
+                  tabAktif === "teks"
+                    ? "bg-white text-slate-950 shadow-sm"
+                    : "text-slate-500 hover:text-slate-900"
+                }`}
+              >
+                Tempel Teks Iklan
+              </button>
+              <button
+                type="button"
+                onClick={() => setTabAktif("poster")}
+                className={`flex-1 rounded-xl py-2.5 text-xs font-bold transition-all sm:text-sm cursor-pointer ${
+                  tabAktif === "poster"
+                    ? "bg-white text-slate-950 shadow-sm"
+                    : "text-slate-500 hover:text-slate-900"
+                }`}
+              >
+                Pindai Gambar Poster (OCR)
+              </button>
+            </div>
+
+            {/* Poster Upload Section */}
+            {tabAktif === "poster" && (
+              <div className="mb-8 rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs">
+                <UnggahPoster
+                  onTeksTerbaca={handleTeksOcr}
+                  onMulaiMemproses={() => setPesan(null)}
+                  disabled={mengirim}
+                />
+              </div>
+            )}
+
             <form onSubmit={kirim} className="flex flex-col gap-8">
+              {/* OCR Notice */}
+              {sumberOcr && (
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50/80 p-4 text-xs sm:text-sm text-emerald-950"
+                >
+                  <svg className="size-5 shrink-0 text-emerald-600 mt-0.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+                  <div>
+                    <span className="font-bold">Teks hasil bacaan mesin (OCR): </span>
+                    Periksa dan perbaiki bila ada ejaan kata, nominal gaji, atau nomor telepon yang kurang tepat sebelum Anda mengirim evaluasi.
+                  </div>
+                </div>
+              )}
+
               {/* Text Input Group */}
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between">
@@ -175,6 +251,7 @@ export default function HalamanCek() {
 
                 <div className="relative">
                   <textarea
+                    ref={textareaRef}
                     id="teks-lowongan"
                     value={teks}
                     onChange={(perubahan) => setTeks(perubahan.target.value)}
@@ -186,8 +263,11 @@ export default function HalamanCek() {
                   {teks.length > 0 && (
                     <button
                       type="button"
-                      onClick={() => setTeks("")}
-                      className="absolute right-4 bottom-4 rounded-lg bg-slate-200/80 px-2.5 py-1 text-xs font-semibold text-slate-600 transition-all hover:bg-slate-300"
+                      onClick={() => {
+                        setTeks("");
+                        setSumberOcr(false);
+                      }}
+                      className="absolute right-4 bottom-4 rounded-lg bg-slate-200/80 px-2.5 py-1 text-xs font-semibold text-slate-600 transition-all hover:bg-slate-300 cursor-pointer"
                     >
                       Bersihkan
                     </button>
