@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
+import { Kepala } from "@/components/situs/kepala";
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
 import { RULES } from "@/lib/evaluation/rules";
 import { labelRujukan } from "@/lib/evaluation/rujukan";
@@ -36,22 +37,19 @@ export const metadata: Metadata = metadataHalaman({
 
 export default function HalamanMetodologi() {
   return (
-    <div className="bg-cream py-16 sm:py-24">
-      <Container>
+    <div className="bg-cream">
+      <Kepala
+        kicker="Metodologi · Transparan"
+        judul={
+          <>
+            Metodologi, <span className="teks-gradasi-terang">apa adanya.</span>
+          </>
+        }
+        deskripsi="CekLoker beroperasi secara deterministik: masukan teks yang sama akan selalu menghasilkan skor, temuan, dan rentang risiko yang identik tanpa bias model generatif."
+      />
+
+      <Container className="py-16 sm:py-20">
         <div className="mx-auto flex max-w-4xl flex-col gap-16 sm:gap-20">
-          {/* Header */}
-          <div className="flex flex-col gap-4 border-b border-line pb-10">
-            <h1 className="font-display text-4xl leading-[1.1] font-medium tracking-tight text-balance text-ink sm:text-5xl">
-              Metodologi, <em className="text-aksen italic">apa adanya.</em>
-            </h1>
-
-            <p className="max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-              CekLoker beroperasi secara deterministik: masukan teks yang sama
-              akan selalu menghasilkan skor, temuan, dan rentang risiko yang
-              identik tanpa bias model generatif.
-            </p>
-          </div>
-
           {/* Alur Pemeriksaan */}
           <section className="flex flex-col gap-6">
             <div className="flex flex-col gap-1">
@@ -228,7 +226,7 @@ export default function HalamanMetodologi() {
                           {aturan.judul}
                         </td>
                         <td className="p-4 align-top text-slate-600">
-                          <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700">
+                          <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-700">
                             {LABEL_KATEGORI[aturan.kategori]}
                           </span>
                         </td>

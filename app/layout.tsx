@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter_Tight, Newsreader } from "next/font/google";
+import { IBM_Plex_Mono, Inter_Tight, Space_Grotesk } from "next/font/google";
 
 import {
   ambilUrlSitus,
@@ -10,18 +10,25 @@ import {
 
 import "./globals.css";
 
+// Sistem tiga keluarga: Space Grotesk untuk display, Inter Tight untuk body,
+// IBM Plex Mono untuk label/data ala dokumen resmi.
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
   subsets: ["latin"],
   display: "swap",
 });
 
-// Display editorial: serif opsz dengan italic, dipakai untuk headline halaman publik.
-// Body tetap Inter Tight; kontras serif/sans memberi karakter tanpa meninggalkan palet.
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
-  style: ["normal", "italic"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -90,7 +97,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="id"
-      className={`${interTight.variable} ${newsreader.variable} h-full antialiased`}
+      className={`${interTight.variable} ${spaceGrotesk.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">{children}</body>
     </html>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
+import { Kepala } from "@/components/situs/kepala";
 import { EVALUATOR_VERSION } from "@/lib/evaluation/evaluate";
 import { metadataHalaman } from "@/lib/situs";
 
@@ -13,16 +14,19 @@ export const metadata: Metadata = metadataHalaman({
 
 const PRINSIP = [
   {
+    nomor: "01",
     judul: "Tanpa Vonis Sepihak",
     uraian:
       "CekLoker tidak pernah menghakimi secara mutlak sebuah lowongan 'penipuan' atau 'asli'. Kami menyajikan rentang risiko terukur beserta kutipan bukti dan rujukan hukum resmi agar pencari kerja dapat mengambil keputusan secara mandiri dan bijak.",
   },
   {
+    nomor: "02",
     judul: "Deterministik Murni",
     uraian:
       "Hasil evaluasi dihitung oleh sekumpulan aturan baku ketenagakerjaan, bukan opini acak model generatif. Teks iklan yang sama akan selalu menghasilkan skor dan rentang risiko yang konsisten.",
   },
   {
+    nomor: "03",
     judul: "Privasi Tanpa Kompromi",
     uraian:
       "Teks iklan lowongan yang Anda tempel dianalisis saat itu juga dan tidak pernah disimpan di basis data server kami. Kami menghormati kerahasiaan data pencari kerja sepenuhnya.",
@@ -31,23 +35,20 @@ const PRINSIP = [
 
 export default function HalamanTentang() {
   return (
-    <div className="bg-cream py-16 sm:py-24">
-      <Container>
+    <div className="bg-cream">
+      <Kepala
+        kicker="Tentang Inisiatif · SDG 8"
+        judul={
+          <>
+            Inisiatif terbuka untuk{" "}
+            <span className="teks-gradasi-terang">pekerjaan layak.</span>
+          </>
+        }
+        deskripsi="CekLoker dibangun untuk mendukung SDG 8 (Decent Work & Economic Growth), mendampingi pencari kerja di Indonesia dari indikator risiko dan pelanggaran hak kerja."
+      />
+
+      <Container className="py-16 sm:py-20">
         <div className="mx-auto flex max-w-4xl flex-col gap-16 sm:gap-20">
-          {/* Header */}
-          <div className="flex flex-col gap-4 border-b border-line pb-10">
-            <h1 className="font-display text-4xl leading-[1.1] font-medium tracking-tight text-balance text-ink sm:text-5xl">
-              Inisiatif terbuka untuk{" "}
-              <em className="text-aksen italic">pekerjaan layak.</em>
-            </h1>
-
-            <p className="max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-              CekLoker dibangun untuk mendukung SDG 8 (Decent Work &amp;
-              Economic Growth), mendampingi pencari kerja di Indonesia dari
-              indikator risiko dan pelanggaran hak kerja.
-            </p>
-          </div>
-
           {/* 3 Prinsip Utama */}
           <section className="flex flex-col gap-6">
             <div className="flex flex-col gap-1">
@@ -66,7 +67,12 @@ export default function HalamanTentang() {
                   className="flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs transition-all hover:shadow-md"
                 >
                   <div className="flex flex-col gap-3">
-                    <span className="size-2 rounded-full bg-blue-500" />
+                    <span
+                      aria-hidden="true"
+                      className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-sky-400 to-blue-700 font-mono text-[0.65rem] font-semibold text-white shadow-md"
+                    >
+                      {prinsip.nomor}
+                    </span>
                     <h3 className="text-lg font-bold text-slate-950">
                       {prinsip.judul}
                     </h3>

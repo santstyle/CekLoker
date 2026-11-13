@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 
 import { cn } from "@/components/ui/cn";
 
 /**
  * Reveal sekali jalan saat elemen masuk viewport.
- * Murni presentasional: konten tetap ada di DOM tanpa JS,
- * dan prefers-reduced-motion mematikan animasi sepenuhnya lewat CSS.
+ * Konten terlihat penuh secara default (aman untuk no-JS); .reveal-init
+ * hanya ditambahkan sebelum paint pada elemen di bawah layar, lalu
+ * .is-visible menambahinya saat masuk viewport.
+ * prefers-reduced-motion mematikan animasi sepenuhnya lewat CSS.
  */
 export function Reveal({
   children,
@@ -21,9 +23,18 @@ export function Reveal({
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    // Elemen di dalam layar saat mount tetap terlihat, tanpa animasi.
+    if (el.getBoundingClientRect().top < window.innerHeight * 0.92) {
+      return;
+    }
+
+    el.classList.add("reveal-init");
+
+    const tampilkan = () => el.classList.add("is-visible");
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -38,7 +49,13 @@ export function Reveal({
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
+
+    // Cadangan: konten tidak boleh tertinggal tak terlihat.
+    const cadangan = window.setTimeout(tampilkan, 1600);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(cadangan);
+    };
   }, []);
 
   return (

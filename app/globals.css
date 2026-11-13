@@ -1,17 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  /* Token visual CekLoker — editorial, tenang, berbasis palet biru kita */
+  /* Token visual CekLoker — terang, bersih, palet biru kita (arah referensi: serko.ai) */
   --color-ink: #0f172a;
   --color-ink-deep: #020617;
   --color-paper: #ffffff;
-  --color-cream: #f8fafc;
-  --color-line: #e2e8f0;
-  --color-muted: #64748b;
+  --color-cream: #f5f6fa;
+  --color-line: #e4e5ee;
+  --color-muted: #5b6472;
   --color-aksen: #2563eb;
   --color-aksen-pekat: #1d4ed8;
 
-  --font-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-display:
+    var(--font-space-grotesk), var(--font-inter-tight), ui-sans-serif,
+    system-ui, sans-serif;
+  --font-mono:
+    var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --radius-kartu: 1.25rem;
 
@@ -64,10 +68,12 @@
 
 @layer components {
   /*
-   * Reveal saat scroll: satu kali jalan, tanpa loop.
-   * Dipicu oleh komponen Reveal (IntersectionObserver) yang menambah .is-visible.
+   * Reveal saat scroll: sekali jalan, tanpa loop.
+   * Default konten terlihat penuh (aman untuk no-JS dan screenshot);
+   * komponen Reveal menambah .reveal-init hanya pada elemen di bawah
+   * layar sebelum paint, lalu .is-visible saat masuk viewport.
    */
-  .reveal {
+  .reveal.reveal-init {
     opacity: 0;
     transform: translateY(1.25rem);
     transition:
@@ -76,16 +82,166 @@
     transition-delay: var(--reveal-delay, 0ms);
   }
 
-  .reveal.is-visible {
+  .reveal.reveal-init.is-visible {
     opacity: 1;
     transform: translateY(0);
   }
 
+  /* Kata kunci headline: gradasi biru kita (bukan gradasi pelangi) */
+  .teks-aksen {
+    background-image: linear-gradient(
+      115deg,
+      #1d4ed8 0%,
+      #2563eb 48%,
+      #60a5fa 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* Kata kunci headline di atas kanvas navy */
+  .teks-aksen-terang {
+    background-image: linear-gradient(
+      115deg,
+      #3b82f6 0%,
+      #60a5fa 50%,
+      #93c5fd 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* Tekstur titik ala cetak biru teknis, untuk kanvas navy */
+  .pola-kisi-gelap {
+    background-image: radial-gradient(
+      circle,
+      rgb(147 197 253 / 0.13) 1.1px,
+      transparent 1.3px
+    );
+    background-size: 26px 26px;
+  }
+
+  /* Cap/stempel mono ala dokumen resmi */
+  .stempel {
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid currentColor;
+    border-radius: 0.3rem;
+    padding: 0.32rem 0.75rem;
+    font-family:
+      var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Kata kunci headline: gradasi biru langit -> azure -> navy (serasi logo) */
+  .teks-gradasi {
+    background-image: linear-gradient(
+      115deg,
+      #1e40af 0%,
+      #2563eb 45%,
+      #38bdf8 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* Kata kunci di atas kanvas gelap: gradasi langit yang lebih terang */
+  .teks-gradasi-terang {
+    background-image: linear-gradient(
+      115deg,
+      #7dd3fc 0%,
+      #60a5fa 45%,
+      #bfdbfe 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* Panel penutup CTA: gradasi samudra dalam, bukan flat */
+  .gradien-samudra {
+    background-image:
+      radial-gradient(
+        60rem 34rem at 12% -20%,
+        rgb(56 189 248 / 0.38),
+        transparent 60%
+      ),
+      radial-gradient(
+        55rem 34rem at 88% 120%,
+        rgb(125 211 252 / 0.28),
+        transparent 60%
+      ),
+      linear-gradient(115deg, #081c3f 0%, #0f2f5e 45%, #1d4ed8 100%);
+  }
+
+  /* Garis hairline gradasi di bawah header */
+  .garis-gradasi {
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      #38bdf8 20%,
+      #2563eb 50%,
+      #38bdf8 80%,
+      transparent 100%
+    );
+  }
+
+  /* Bingkai kartu dengan border gradasi halus */
+  .kartu-bingkai-gradasi {
+    border: 1.5px solid transparent;
+    background:
+      linear-gradient(#ffffff, #ffffff) padding-box,
+      linear-gradient(135deg, #bfdbfe, #60a5fa 45%, #dbeafe) border-box;
+  }
+
+  /* Transisi masuk halaman (app/(public)/template.tsx) */
+  @keyframes masuk-halaman {
+    from {
+      opacity: 0;
+      transform: translateY(1rem);
+      filter: blur(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
+
+  .transisi-halaman {
+    animation: masuk-halaman 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* Strip marquee pola aturan: dua salinan konten, geser setengah lebar */
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 55s linear infinite;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .reveal {
+    .reveal.reveal-init {
       opacity: 1;
       transform: none;
       transition: none;
+    }
+
+    .animate-marquee {
+      animation: none;
     }
   }
 }
