@@ -16,11 +16,14 @@ export const DESKRIPSI_SITUS =
 export const ALT_GAMBAR_OG =
   "CekLoker — Cek risiko lowongan kerja Indonesia sebelum melamar";
 
-const URL_FALLBACK = "http://localhost:3000";
+// Domain produksi (Vercel). Dipakai bila NEXT_PUBLIC_SITE_URL tidak diisi,
+// sehingga sitemap/robots/canonical/OG tetap benar di deployment produksi.
+// Pengembang lokal mengisi NEXT_PUBLIC_SITE_URL=http://localhost:3000 di .env.
+const URL_FALLBACK = "https://ceklokerkita.vercel.app";
 
 /**
  * URL absolut situs dari `NEXT_PUBLIC_SITE_URL`. Bila kosong atau tidak valid,
- * dipakai fallback lokal agar build dan pratinjau tetap berjalan.
+ * fallback ke domain produksi agar metadata di build produksi tetap benar.
  */
 export function ambilUrlSitus(): URL {
   const mentah = process.env.NEXT_PUBLIC_SITE_URL?.trim();

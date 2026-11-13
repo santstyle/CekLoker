@@ -51,14 +51,14 @@ describe("ambilUrlSitus", () => {
     expect(ambilUrlSitus().toString()).toBe("https://cekloker.id/");
   });
 
-  it("jatuh ke localhost bila variabel kosong", () => {
+  it("jatuh ke domain produksi bila variabel kosong", () => {
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "");
-    expect(ambilUrlSitus().origin).toBe("http://localhost:3000");
+    expect(ambilUrlSitus().origin).toBe("https://ceklokerkita.vercel.app");
   });
 
-  it("jatuh ke localhost bila variabel tidak valid", () => {
+  it("jatuh ke domain produksi bila variabel tidak valid", () => {
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "bukan-url");
-    expect(ambilUrlSitus().origin).toBe("http://localhost:3000");
+    expect(ambilUrlSitus().origin).toBe("https://ceklokerkita.vercel.app");
   });
 });
 
