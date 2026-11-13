@@ -173,8 +173,8 @@ export default function HalamanCek() {
       />
 
       <Container className="relative py-12 sm:py-16 lg:py-20">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-          {/* ---- Kolom editorial ---- */}
+        <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+          {/* ---- Kolom editorial (tetap di posisi sama, stabil saat tinggi kartu berubah) ---- */}
           <div className="flex flex-col gap-7 lg:col-span-5">
             <p className="inline-flex w-fit items-center gap-2.5 rounded-full border border-aksen/25 bg-aksen/5 px-4 py-1.5 font-mono text-[0.6rem] font-semibold tracking-[0.22em] text-aksen-pekat uppercase">
               <span
