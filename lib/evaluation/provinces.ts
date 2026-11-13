@@ -51,7 +51,11 @@ export const PROVINSI = [
 
 export type Provinsi = (typeof PROVINSI)[number];
 
-const ALIAS_TAMBAHAN: readonly (readonly [string, Provinsi])[] = [
+/**
+ * Singkatan dan nama alternatif tingkat provinsi. Dipakai untuk pencocokan
+ * teks bebas sekaligus sebagai kunci pencarian pada pemilih lokasi.
+ */
+export const SINGKATAN_PROVINSI: readonly (readonly [string, Provinsi])[] = [
   ["jakarta", "DKI Jakarta"],
   ["jkt", "DKI Jakarta"],
   ["dki", "DKI Jakarta"],
@@ -79,6 +83,10 @@ const ALIAS_TAMBAHAN: readonly (readonly [string, Provinsi])[] = [
   ["ntb", "Nusa Tenggara Barat"],
   ["ntt", "Nusa Tenggara Timur"],
   ["malut", "Maluku Utara"],
+];
+
+/** Nama kota/kabupaten yang lazim muncul pada iklan lowongan kerja. */
+export const KOTA_ALIAS: readonly (readonly [string, Provinsi])[] = [
   ["medan", "Sumatera Utara"],
   ["padang", "Sumatera Barat"],
   ["pekanbaru", "Riau"],
@@ -89,8 +97,14 @@ const ALIAS_TAMBAHAN: readonly (readonly [string, Provinsi])[] = [
   ["pangkalpinang", "Kepulauan Bangka Belitung"],
   ["bandar lampung", "Lampung"],
   ["tangerang", "Banten"],
+  ["tangerang selatan", "Banten"],
   ["serang", "Banten"],
   ["cilegon", "Banten"],
+  ["jakarta pusat", "DKI Jakarta"],
+  ["jakarta selatan", "DKI Jakarta"],
+  ["jakarta barat", "DKI Jakarta"],
+  ["jakarta timur", "DKI Jakarta"],
+  ["jakarta utara", "DKI Jakarta"],
   ["bandung", "Jawa Barat"],
   ["bekasi", "Jawa Barat"],
   ["depok", "Jawa Barat"],
@@ -123,6 +137,11 @@ const ALIAS_TAMBAHAN: readonly (readonly [string, Provinsi])[] = [
   ["timika", "Papua Tengah"],
   ["wamena", "Papua Pegunungan"],
   ["merauke", "Papua Selatan"],
+];
+
+const ALIAS_TAMBAHAN: readonly (readonly [string, Provinsi])[] = [
+  ...SINGKATAN_PROVINSI,
+  ...KOTA_ALIAS,
 ];
 
 const ALIAS: readonly (readonly [string, Provinsi])[] = [

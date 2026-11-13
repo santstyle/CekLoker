@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
+import { PilihLokasi } from "@/components/check/pilih-lokasi";
 import { UnggahPoster } from "@/components/check/unggah-poster";
 import { Container } from "@/components/ui/container";
 import { kunciSimpananHasil, type ResponsEvaluasi } from "@/lib/api/evaluasi";
@@ -308,16 +309,16 @@ export default function HalamanCek() {
                   </label>
                   <span className="text-xs text-slate-400">Opsional</span>
                 </div>
-                <input
+                <PilihLokasi
                   id="lokasi"
-                  type="text"
-                  value={lokasi}
-                  onChange={(perubahan) => setLokasi(perubahan.target.value)}
-                  placeholder="Contoh: DKI Jakarta, Surabaya, Jawa Barat, Bali..."
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50/40 px-4 py-3.5 text-sm text-slate-900 transition-all duration-200 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:outline-none sm:text-base"
+                  nilai={lokasi}
+                  onUbah={setLokasi}
+                  disabled={mengirim}
+                  placeholder="Ketik nama kota atau provinsi, mis. Surabaya, Bandung, Bali..."
                 />
                 <p className="text-xs text-slate-500">
-                  Membantu sistem membandingkan tawaran upah terhadap batas Upah
+                  Pilih dari daftar saran agar lokasi dikenali sistem. Kolom ini
+                  membantu membandingkan tawaran upah terhadap batas Upah
                   Minimum Provinsi (UMP/UMK) daerah bersangkutan.
                 </p>
               </div>
