@@ -14,11 +14,11 @@ export default function LayoutPublik({
 }) {
   return (
     <div className="flex min-h-screen flex-col bg-cream">
-      <p className="bg-ink-deep py-1.5 text-center font-mono text-[0.58rem] font-medium tracking-[0.24em] text-slate-500 uppercase">
-        Gratis&ensp;·&ensp;Tanpa akun&ensp;·&ensp;Bukan
-        vonis&ensp;·&ensp;Inisiatif SDG 8
-      </p>
       <header className="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
+        <div
+          aria-hidden="true"
+          className="garis-gradasi absolute inset-x-0 bottom-0 h-[2px] opacity-80"
+        />
         <Container className="flex h-16 items-center justify-between gap-4 sm:h-20">
           <Link
             href="/"
@@ -50,16 +50,24 @@ export default function LayoutPublik({
 
       <main className="flex-1">{children}</main>
 
-      <footer className="relative overflow-hidden border-t border-ink-deep bg-ink-deep text-slate-400">
+      <footer className="relative overflow-hidden border-t border-white/5 bg-ink-deep text-slate-400">
         <div
           aria-hidden="true"
           className="pola-kisi-gelap absolute inset-0 opacity-60"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-40 -left-40 size-[34rem] rounded-full bg-[radial-gradient(circle,rgb(37_99_235/0.28),transparent_65%)] blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-40 -bottom-40 size-[34rem] rounded-full bg-[radial-gradient(circle,rgb(219_39_119/0.22),transparent_65%)] blur-3xl"
         />
         <Container className="relative pt-14 pb-8 md:pt-16">
           <div className="grid gap-10 md:grid-cols-12">
             <div className="flex max-w-sm flex-col gap-4 md:col-span-5">
               <p className="font-display text-2xl font-semibold tracking-tight text-white">
-                Cek<span className="text-[#60a5fa]">Loker</span>
+                Cek<span className="teks-gradasi-terang">Loker</span>
               </p>
               <p className="font-mono text-[0.6rem] tracking-[0.22em] text-slate-500 uppercase">
                 Alat pra-lamaran · Ketenagakerjaan Indonesia

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { Container } from "@/components/ui/container";
+import { Kepala } from "@/components/situs/kepala";
 
 export function HalamanLegal({
   judul,
@@ -14,19 +15,12 @@ export function HalamanLegal({
   children: ReactNode;
 }) {
   return (
-    <div className="border-b border-line bg-cream py-16 sm:py-24">
-      <Container>
+    <div className="bg-cream">
+      <Kepala kicker="Dokumen Legal" judul={judul} deskripsi={ringkasan} />
+
+      <Container className="py-16 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <p className="text-[0.7rem] font-semibold tracking-[0.18em] text-aksen uppercase">
-            Dokumen Legal
-          </p>
-          <h1 className="mt-3 font-display text-3xl leading-tight font-medium tracking-tight text-balance text-ink sm:text-4xl">
-            {judul}
-          </h1>
-          <p className="mt-4 text-base leading-relaxed text-muted">
-            {ringkasan}
-          </p>
-          <p className="mt-3 text-xs text-slate-500">
+          <p className="font-mono text-[0.6rem] font-medium tracking-[0.2em] text-muted uppercase">
             Terakhir diperbarui: {diperbarui}
           </p>
 
@@ -45,8 +39,8 @@ export function BagianLegal({
   children: ReactNode;
 }) {
   return (
-    <section className="flex flex-col gap-3">
-      <h2 className="text-lg font-bold tracking-tight text-ink sm:text-xl">
+    <section className="flex flex-col gap-3 border-l-2 border-transparent pl-0 transition-colors hover:border-violet-300 sm:pl-5">
+      <h2 className="font-display text-lg font-semibold tracking-tight text-ink sm:text-xl">
         {judul}
       </h2>
       <div className="flex flex-col gap-3 text-sm leading-relaxed text-slate-600 sm:text-base">

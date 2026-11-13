@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
+import { Kepala } from "@/components/situs/kepala";
 import { metadataHalaman } from "@/lib/situs";
 
 export const metadata: Metadata = metadataHalaman({
@@ -84,35 +85,20 @@ const HAK_DASAR = [
 
 export default function HalamanEdukasi() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-50/60 py-16 sm:py-24">
-      {/* Background Ambient Glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 -top-32 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl"
-      >
-        <div className="aspect-[1155/678] w-[65rem] flex-none bg-gradient-to-tr from-blue-400/20 to-indigo-400/15 opacity-60" />
-      </div>
+    <div className="bg-cream">
+      <Kepala
+        kicker="Pusat Literasi Pencari Kerja"
+        judul={
+          <>
+            Kenali hak kerja,{" "}
+            <span className="teks-gradasi-terang">waspadai risikonya.</span>
+          </>
+        }
+        deskripsi="Panduan praktis berbasis peraturan perundang-undangan ketenagakerjaan Indonesia untuk membekali pencari kerja sebelum melamar."
+      />
 
-      <Container>
+      <Container className="py-16 sm:py-20">
         <div className="mx-auto flex max-w-4xl flex-col gap-16 sm:gap-20">
-          {/* Header */}
-          <div className="flex flex-col items-center gap-4 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/25 bg-blue-50 px-4 py-1 text-xs font-semibold text-blue-800 shadow-2xs">
-              <span className="size-1.5 animate-pulse rounded-full bg-blue-600" />
-              <span>Pusat Literasi Pencari Kerja</span>
-            </div>
-
-            <h1 className="text-4xl font-black tracking-tight text-balance text-slate-950 sm:text-5xl">
-              Kenali Hak Kerja &amp; Waspadai Risiko
-            </h1>
-
-            <p className="max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-              Panduan praktis berbasis peraturan perundang-undangan
-              ketenagakerjaan Indonesia untuk membekali pencari kerja sebelum
-              melamar.
-            </p>
-          </div>
-
           {/* Section 1: Hak Dasar Pekerja */}
           <section className="flex flex-col gap-6">
             <div className="flex flex-col gap-1">
@@ -225,18 +211,18 @@ export default function HalamanEdukasi() {
           </section>
 
           {/* CTA Banner */}
-          <div className="flex flex-col items-center justify-between gap-6 rounded-3xl bg-slate-950 p-8 text-center shadow-xl sm:flex-row sm:p-12 sm:text-left">
+          <div className="gradien-senja flex flex-col items-center justify-between gap-6 rounded-3xl p-8 text-center shadow-xl sm:flex-row sm:p-12 sm:text-left">
             <div>
-              <h3 className="text-xl font-black text-white sm:text-2xl">
+              <h3 className="font-display text-xl font-semibold text-white sm:text-2xl">
                 Punya iklan lowongan yang mencurigakan?
               </h3>
-              <p className="mt-1 text-sm text-slate-400">
+              <p className="mt-1 text-sm text-blue-100/90">
                 Uji langsung menggunakan mesin evaluasi CekLoker secara instan.
               </p>
             </div>
             <Link
               href="/cek"
-              className="shrink-0 rounded-full bg-blue-500 px-7 py-3.5 text-sm font-bold text-slate-950 transition-all hover:bg-blue-400"
+              className="shrink-0 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-ink transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-50"
             >
               Periksa Sekarang
             </Link>
