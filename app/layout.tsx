@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter_Tight } from "next/font/google";
+import { Inter_Tight, Newsreader } from "next/font/google";
 
 import {
   ambilUrlSitus,
@@ -13,6 +13,15 @@ import "./globals.css";
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
   subsets: ["latin"],
+  display: "swap",
+});
+
+// Display editorial: serif opsz dengan italic, dipakai untuk headline halaman publik.
+// Body tetap Inter Tight; kontras serif/sans memberi karakter tanpa meninggalkan palet.
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -79,7 +88,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="id" className={`${interTight.variable} h-full antialiased`}>
+    <html
+      lang="id"
+      className={`${interTight.variable} ${newsreader.variable} h-full antialiased`}
+    >
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

@@ -1,13 +1,32 @@
 @import "tailwindcss";
 
+@theme {
+  /* Token visual CekLoker — editorial, tenang, berbasis palet biru kita */
+  --color-ink: #0f172a;
+  --color-ink-deep: #020617;
+  --color-paper: #ffffff;
+  --color-cream: #f8fafc;
+  --color-line: #e2e8f0;
+  --color-muted: #64748b;
+  --color-aksen: #2563eb;
+  --color-aksen-pekat: #1d4ed8;
+
+  --font-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+
+  --radius-kartu: 1.25rem;
+
+  --shadow-kartu:
+    0 1px 2px rgb(15 23 42 / 0.04), 0 12px 32px -12px rgb(15 23 42 / 0.12);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    background-color: #ffffff;
-    color: #0f172a;
+    background-color: var(--color-cream);
+    color: var(--color-ink);
     font-family:
       var(--font-inter-tight),
       ui-sans-serif,
@@ -39,6 +58,34 @@
       animation-duration: 0ms !important;
       animation-iteration-count: 1 !important;
       scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /*
+   * Reveal saat scroll: satu kali jalan, tanpa loop.
+   * Dipicu oleh komponen Reveal (IntersectionObserver) yang menambah .is-visible.
+   */
+  .reveal {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
     }
   }
 }
