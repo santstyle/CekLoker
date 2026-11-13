@@ -29,7 +29,8 @@ export const skemaInputEvaluasi = z.object(
     teksLowongan: z
       .string("Teks lowongan wajib diisi.")
       .trim()
-      .min(30, "Teks lowongan minimal 30 karakter."),
+      .min(30, "Teks lowongan minimal 30 karakter.")
+      .max(20_000, "Teks lowongan maksimal 20.000 karakter."),
     lokasi: z
       .string("Lokasi harus berupa teks.")
       .trim()
