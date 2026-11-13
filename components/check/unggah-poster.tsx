@@ -244,12 +244,12 @@ export function UnggahPoster({
         }}
         className={`group relative flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-6 text-center transition-all duration-200 ${
           isDragging
-            ? "border-blue-500 bg-blue-50/60 ring-4 ring-blue-500/10"
-            : "border-slate-200/90 bg-slate-50/50 hover:border-blue-500/50 hover:bg-slate-50"
+            ? "border-aksen bg-aksen/5 ring-4 ring-aksen/10"
+            : "border-line bg-cream/60 hover:border-aksen/50 hover:bg-cream"
         } ${disabled || sedangMemproses ? "pointer-events-none opacity-60" : ""}`}
       >
         <div className="flex flex-col items-center gap-3">
-          <div className="flex size-12 items-center justify-center rounded-2xl border border-slate-200/80 bg-white text-blue-600 shadow-xs transition-transform group-hover:scale-105">
+          <div className="flex size-12 items-center justify-center rounded-2xl border border-line bg-white text-aksen shadow-xs transition-transform group-hover:scale-105">
             <svg
               className="size-6"
               fill="none"
@@ -266,16 +266,16 @@ export function UnggahPoster({
           </div>
 
           <div className="flex flex-col gap-1">
-            <p className="text-sm font-bold text-slate-900">
+            <p className="text-sm font-bold text-ink">
               Unggah Poster Lowongan Kerja
             </p>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-muted">
               Tarik gambar ke sini, tempel dari clipboard (Ctrl+V), atau{" "}
-              <span className="font-semibold text-blue-600 underline">
+              <span className="font-semibold text-aksen underline">
                 pilih berkas
               </span>
             </p>
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] text-muted">
               Format PNG, JPG, WebP (Maksimal 8 MB &bull; Diproses 100% di
               peramban)
             </p>
@@ -285,13 +285,13 @@ export function UnggahPoster({
         {/* Progress Bar & Status */}
         {sedangMemproses && (
           <div className="mt-4 w-full max-w-xs">
-            <div className="mb-1.5 flex items-center justify-between text-xs font-semibold text-slate-600">
+            <div className="mb-1.5 flex items-center justify-between gap-3 font-mono text-[0.65rem] font-semibold text-muted">
               <span>{pesanStatus}</span>
               <span>{progress}%</span>
             </div>
-            <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200">
+            <div className="h-2 w-full overflow-hidden rounded-full bg-line">
               <div
-                className="h-full rounded-full bg-blue-500 transition-all duration-200"
+                className="h-full rounded-full bg-gradient-to-r from-aksen to-sky-400 transition-all duration-200"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -301,12 +301,12 @@ export function UnggahPoster({
 
       {/* Action / Help strip */}
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-        <span className="text-slate-500">Belum punya poster?</span>
+        <span className="text-muted">Belum punya poster?</span>
         <button
           type="button"
           onClick={muatContohPoster}
           disabled={sedangMemproses || disabled}
-          className="cursor-pointer font-bold text-blue-600 hover:text-blue-700 hover:underline disabled:opacity-50"
+          className="cursor-pointer font-bold text-aksen transition-colors hover:text-aksen-pekat hover:underline disabled:opacity-50"
         >
           Coba Ekstrak Contoh Poster Lowongan &rarr;
         </button>
@@ -316,7 +316,7 @@ export function UnggahPoster({
         <div
           role="status"
           aria-live="polite"
-          className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600"
+          className="rounded-xl border border-line bg-cream/60 p-3 text-xs text-muted"
         >
           {pesanStatus}
         </div>

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Token visual CekLoker — terang, bersih, palet biru kita (arah referensi: serko.ai) */
+  /* Token visual CekLoker — terang, bersih, palet biru kita (serif editorial + grotesk + mono) */
   --color-ink: #0f172a;
   --color-ink-deep: #020617;
   --color-paper: #ffffff;
@@ -11,9 +11,7 @@
   --color-aksen: #2563eb;
   --color-aksen-pekat: #1d4ed8;
 
-  --font-display:
-    var(--font-space-grotesk), var(--font-inter-tight), ui-sans-serif,
-    system-ui, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
   --font-mono:
     var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
@@ -128,6 +126,16 @@
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+  }
+
+  /* Tekstur titik halus untuk kanvas terang */
+  .pola-titik {
+    background-image: radial-gradient(
+      circle,
+      rgb(15 23 42 / 0.055) 1px,
+      transparent 1.2px
+    );
+    background-size: 22px 22px;
   }
 
   /* Tekstur titik ala cetak biru teknis, untuk kanvas navy */
