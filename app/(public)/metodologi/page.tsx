@@ -7,7 +7,11 @@ import { RULES } from "@/lib/evaluation/rules";
 import { labelRujukan } from "@/lib/evaluation/rujukan";
 import { BATAS_BAND } from "@/lib/evaluation/score";
 import { KEKUATAN_NILAI, type KategoriRule } from "@/lib/evaluation/types";
-import { CATATAN_DATA_UPAH } from "@/lib/evaluation/wages";
+import {
+  CATATAN_DATA_UPAH,
+  DATA_UPAH_TERSEDIA,
+  LABEL_DATA_UPAH_BELUM_TERSEDIA,
+} from "@/lib/evaluation/wages";
 import { metadataHalaman } from "@/lib/situs";
 import { Reveal } from "@/components/situs/reveal";
 
@@ -37,6 +41,11 @@ export const metadata: Metadata = metadataHalaman({
 });
 
 export default function HalamanMetodologi() {
+  // Hanya aturan upah_dibawah_umr yang bergantung pada data upah; hitungan
+  // aturan aktif dihitung dari data, bukan di-hardcode.
+  const aturanUpahAktif = DATA_UPAH_TERSEDIA;
+  const jumlahAturanAktif = aturanUpahAktif ? RULES.length : RULES.length - 1;
+
   return (
     <div className="bg-cream">
       <Kepala
@@ -218,11 +227,14 @@ export default function HalamanMetodologi() {
             <section className="flex flex-col gap-6">
               <div className="flex flex-col gap-1">
                 <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
-                  Katalog {RULES.length} Aturan Evaluasi Aktif
+                  Katalog {RULES.length} Aturan Evaluasi
                 </h2>
                 <p className="text-sm text-muted">
                   Setiap aturan dirumuskan dari perundang-undangan resmi
-                  Republik Indonesia.
+                  Republik Indonesia.{" "}
+                  {aturanUpahAktif
+                    ? `Seluruh ${RULES.length} aturan aktif.`
+                    : `${jumlahAturanAktif} aturan aktif; aturan perbandingan upah menunggu data resmi.`}
                 </p>
               </div>
 
@@ -243,6 +255,7 @@ export default function HalamanMetodologi() {
                         <th className="p-4 font-bold text-slate-900">
                           Rujukan Hukum
                         </th>
+                        <th className="p-4 font-bold text-slate-900">Status</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
@@ -268,6 +281,18 @@ export default function HalamanMetodologi() {
                                   .map(labelRujukan)
                                   .join(", ")
                               : "—"}
+                          </td>
+                          <td className="p-4 align-top">
+                            {aturan.id === "upah_dibawah_umr" &&
+                            !aturanUpahAktif ? (
+                              <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap text-amber-700">
+                                {LABEL_DATA_UPAH_BELUM_TERSEDIA}
+                              </span>
+                            ) : (
+                              <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700">
+                                Aktif
+                              </span>
+                            )}
                           </td>
                         </tr>
                       ))}

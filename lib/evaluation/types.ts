@@ -87,6 +87,10 @@ export interface RegionalWage {
   upahBulanan: number;
   tahun: number;
   sumberRujukan?: string;
+  /** URL sumber resmi nilai upah; kosong bila belum diverifikasi. */
+  sumberUrl?: string;
+  /** Tanggal verifikasi sumber, format ISO YYYY-MM-DD; kosong bila belum. */
+  tanggalVerifikasi?: string;
 }
 
 /** Konteks yang diteruskan ke setiap detektor aturan. */

@@ -1,5 +1,5 @@
 /**
- * Definisi 17 aturan pemeriksaan beserta detektornya.
+ * Definisi aturan pemeriksaan beserta detektornya.
  *
  * Semua fungsi deteksi murni: membaca KonteksDeteksi, mengembalikan daftar
  * bukti pendek. Daftar kosong berarti aturan tidak menyala.
