@@ -53,6 +53,32 @@ test.describe("Alur inti: /cek → /hasil/<id>", () => {
     ).toBeVisible();
   });
 
+  test("kembali dari hasil: tombol submit tidak terjebak loading", async ({
+    page,
+  }) => {
+    await page.goto("/cek");
+    await page
+      .locator("#teks-lowongan")
+      .fill("Dibutuhkan staf administrasi. Upah Rp 2.000.000 per bulan.");
+
+    await Promise.all([
+      page.waitForURL(/\/hasil\/uji-e2e-00001/),
+      page.getByRole("button", { name: "Periksa lowongan sekarang" }).click(),
+    ]);
+
+    // Kembali ke formulir lewat tombol "Periksa Lowongan Baru"
+    // (soft navigation — state komponen berpotensi terjaga).
+    await page.getByRole("link", { name: "Periksa Lowongan Baru" }).click();
+    await page.waitForURL(/\/cek/);
+
+    const tombol = page.getByRole("button", {
+      name: "Periksa lowongan sekarang",
+    });
+    await expect(tombol).toBeVisible();
+    await expect(page.getByText("Sedang memeriksa...")).toHaveCount(0);
+    await expect(page.locator(".animate-spin")).toHaveCount(0);
+  });
+
   test("tombol contoh mengisi textarea dan state aktif terlihat", async ({
     page,
   }) => {
