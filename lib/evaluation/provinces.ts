@@ -7,6 +7,7 @@
  */
 
 import { containsPhrase, normalizeText } from "./normalize";
+import { WILAYAH_KAB_KOTA } from "./wilayah";
 
 export const PROVINSI = [
   "Aceh",
@@ -139,24 +140,69 @@ export const KOTA_ALIAS: readonly (readonly [string, Provinsi])[] = [
   ["merauke", "Papua Selatan"],
 ];
 
-const ALIAS_TAMBAHAN: readonly (readonly [string, Provinsi])[] = [
+/**
+ * Alias tingkat kabupaten/kota dibangun dari daftar wilayah resmi
+ * (WILAYAH_KAB_KOTA):
+ * - nama telanjang ("sorong") hanya disertakan bila unik untuk satu provinsi
+ *   ("banjar" ambigu: Kota Banjar Jawa Barat vs Kabupaten Banjar Kalimantan
+ *   Selatan — alias telanjang itu dibuang);
+ * - nama berprefiks ("kabupaten sorong", "kota sorong") selalu disertakan
+ *   karena tidak pernah ambigu.
+ */
+const ALIAS_KAB_KOTA: readonly (readonly [string, Provinsi])[] = (() => {
+  const SET_PROVINSI = new Set<string>(PROVINSI);
+  const pemilikPerDasar = new Map<string, Set<string>>();
+  for (const wilayah of WILAYAH_KAB_KOTA) {
+    const dasar = normalizeText(wilayah.nama.replace(/^(Kabupaten|Kota) /, ""));
+    const set = pemilikPerDasar.get(dasar);
+    if (set) set.add(wilayah.provinsi);
+    else pemilikPerDasar.set(dasar, new Set([wilayah.provinsi]));
+  }
+
+  const alias: [string, Provinsi][] = [];
+  for (const wilayah of WILAYAH_KAB_KOTA) {
+    if (!SET_PROVINSI.has(wilayah.provinsi)) continue; // dijaga tes unit
+    const provinsi = wilayah.provinsi as Provinsi;
+    const dasar = normalizeText(wilayah.nama.replace(/^(Kabupaten|Kota) /, ""));
+    const jenis = wilayah.nama.startsWith("Kota ") ? "kota" : "kabupaten";
+    alias.push([`${jenis} ${dasar}`, provinsi]);
+    if (pemilikPerDasar.get(dasar)?.size === 1) alias.push([dasar, provinsi]);
+  }
+  return alias;
+})();
+
+/**
+ * Semua alias digabung lalu didedup: alias yang sama dari beberapa sumber
+ * dengan provinsi yang sama disatukan; alias yang menunjuk provinsi berbeda
+ * dibuang sepenuhnya (lebih baik tidak dikenali daripada salah kenali).
+ */
+const ALIAS_MENTAH: readonly (readonly [string, string])[] = [
+  ...PROVINSI.map((provinsi) => [provinsi, provinsi] as const),
   ...SINGKATAN_PROVINSI,
   ...KOTA_ALIAS,
+  ...ALIAS_KAB_KOTA,
 ];
 
-const ALIAS: readonly (readonly [string, Provinsi])[] = [
-  ...PROVINSI.map((provinsi) => [provinsi, provinsi] as const),
-  ...ALIAS_TAMBAHAN,
-];
+const PETA_ALIAS = new Map<string, Provinsi | null>();
+for (const [alias, provinsi] of ALIAS_MENTAH) {
+  const target = provinsi as Provinsi;
+  const ada = PETA_ALIAS.get(alias);
+  if (ada === null) continue;
+  if (ada !== undefined && ada !== target) {
+    PETA_ALIAS.set(alias, null); // ambigu antar sumber
+    continue;
+  }
+  PETA_ALIAS.set(alias, target);
+}
 
-const ALIAS_TERURUT = ALIAS.map(([alias, provinsi]) => ({
-  alias,
-  provinsi,
-})).sort(
-  (a, b) =>
-    b.alias.length - a.alias.length ||
-    (a.alias < b.alias ? -1 : a.alias > b.alias ? 1 : 0),
-);
+const ALIAS_TERURUT = [...PETA_ALIAS]
+  .filter((entry): entry is [string, Provinsi] => entry[1] !== null)
+  .map(([alias, provinsi]) => ({ alias, provinsi }))
+  .sort(
+    (a, b) =>
+      b.alias.length - a.alias.length ||
+      (a.alias < b.alias ? -1 : a.alias > b.alias ? 1 : 0),
+  );
 
 /** Mengembalikan provinsi pertama yang cocok, atau null bila tak dikenali. */
 export function matchProvinsi(

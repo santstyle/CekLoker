@@ -3,7 +3,8 @@
  *
  * Setiap opsi dijamin dikenali `matchProvinsi`, sehingga lokasi yang dipilih
  * pengguna selalu dapat dibandingkan dengan batas upah minimum daerah. Opsi
- * dibentuk dari 38 provinsi resmi ditambah nama kota/kabupaten yang lazim
+ * dibentuk dari 38 provinsi resmi, 514 kabupaten/kota
+ * (lib/evaluation/wilayah.ts), ditambah nama kota/singkatan yang lazim
  * muncul pada iklan lowongan kerja.
  */
 
@@ -15,6 +16,7 @@ import {
   SINGKATAN_PROVINSI,
   type Provinsi,
 } from "./provinces";
+import { WILAYAH_KAB_KOTA } from "./wilayah";
 
 export type JenisLokasi = "provinsi" | "kota";
 
@@ -73,6 +75,28 @@ for (const [alias, provinsi] of KOTA_ALIAS) {
   });
 }
 
+// Seluruh kabupaten/kota resmi (514 entri dari data Kemendagri) turut
+// menjadi opsi, dengan label baku berprefiks ("Kabupaten X"/"Kota X")
+// agar tidak pernah disalahartikan dengan nama provinsi.
+function keProvinsi(nama: string): Provinsi {
+  if (!(PROVINSI as readonly string[]).includes(nama)) {
+    throw new Error(`Provinsi tak dikenal pada data wilayah: ${nama}`);
+  }
+  return nama as Provinsi;
+}
+
+for (const wilayah of WILAYAH_KAB_KOTA) {
+  if (NAMA_TERPAKAI.has(wilayah.nama)) continue;
+  NAMA_TERPAKAI.add(wilayah.nama);
+  OPSI_KOTA.push({
+    nilai: wilayah.nama,
+    label: wilayah.nama,
+    provinsi: keProvinsi(wilayah.provinsi),
+    jenis: "kota",
+    kunci: normalizeText(wilayah.nama),
+  });
+}
+
 /** Seluruh pilihan lokasi, terurut menurut label agar mudah ditelusuri. */
 export const OPSI_LOKASI: readonly OpsiLokasi[] = [
   ...OPSI_PROVINSI,
@@ -89,13 +113,16 @@ export function cariOpsiLokasi(nilai: string): OpsiLokasi | undefined {
 /**
  * Menyaring pilihan lokasi berdasarkan ketikan pengguna.
  *
- * Pencocokan memakai potongan teks (bukan hanya awalan) agar "jatim" atau
- * "jkt" tetap menemukan provinsi yang tepat. Opsi yang labelnya berawalan
- * kueri ditampilkan lebih dulu.
+ * Kueri kosong hanya mengembalikan 38 opsi provinsi (tanpa 514 opsi
+ * kabupaten/kota) agar daftar tidak membanjiri layar; cukup ketik satu
+ * karakter untuk mulai mencari di semua opsi. Pencocokan memakai potongan
+ * teks (bukan hanya awalan) agar "jatim" atau "jkt" tetap menemukan
+ * provinsi yang tepat. Opsi yang labelnya berawalan kueri ditampilkan
+ * lebih dulu.
  */
 export function filterOpsiLokasi(kueri: string): OpsiLokasi[] {
   const kunci = normalizeText(kueri);
-  if (!kunci) return [...OPSI_LOKASI];
+  if (!kunci) return [...OPSI_PROVINSI];
 
   const cocok: { opsi: OpsiLokasi; peringkat: number }[] = [];
   for (const opsi of OPSI_LOKASI) {

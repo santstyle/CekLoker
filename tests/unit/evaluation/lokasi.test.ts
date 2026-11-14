@@ -60,9 +60,14 @@ describe("OPSI_LOKASI", () => {
 });
 
 describe("filterOpsiLokasi", () => {
-  it("mengembalikan seluruh opsi saat kueri kosong", () => {
-    expect(filterOpsiLokasi("")).toHaveLength(OPSI_LOKASI.length);
-    expect(filterOpsiLokasi("   ")).toHaveLength(OPSI_LOKASI.length);
+  it("mengembalikan hanya provinsi saat kueri kosong", () => {
+    // Daftar kabupaten/kota (514 entri) tidak boleh membanjiri layar;
+    // cukup ketik satu karakter untuk mencarinya.
+    for (const kueri of ["", "   "]) {
+      const hasil = filterOpsiLokasi(kueri);
+      expect(hasil).toHaveLength(PROVINSI.length);
+      expect(hasil.every((opsi) => opsi.jenis === "provinsi")).toBe(true);
+    }
   });
 
   it("tidak membedakan huruf besar dan kecil", () => {
@@ -92,6 +97,11 @@ describe("filterOpsiLokasi", () => {
     expect(filterOpsiLokasi("sulsel").map((opsi) => opsi.label)).toContain(
       "Sulawesi Selatan",
     );
+  });
+
+  it("menemukan kabupaten/kota dengan ketikan singkat", () => {
+    const label = filterOpsiLokasi("tual").map((opsi) => opsi.label);
+    expect(label).toContain("Kota Tual");
   });
 
   it("mengembalikan daftar kosong untuk kueri tak dikenal", () => {

@@ -167,7 +167,10 @@ describe("matchProvinsi", () => {
       "Kepulauan Bangka Belitung",
     );
     expect(matchProvinsi("Babel")).toBe("Kepulauan Bangka Belitung");
-    expect(matchProvinsi("Bangka Belitung")).toBeNull();
+    // Sejak nama resmi 514 kabupaten/kota dijadikan alias (Kabupaten Bangka
+    // dan Kabupaten Belitung, keduanya di Kepulauan Bangka Belitung), teks
+    // "Bangka Belitung" dikenali sebagai provinsi itu — bukan lagi null.
+    expect(matchProvinsi("Bangka Belitung")).toBe("Kepulauan Bangka Belitung");
   });
 
   it("hanya mengembalikan nilai yang ada di daftar PROVINSI", () => {
