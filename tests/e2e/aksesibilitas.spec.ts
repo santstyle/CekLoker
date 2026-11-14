@@ -3,8 +3,12 @@ import { AxeBuilder } from "@axe-core/playwright";
 
 /**
  * Gerbang aksesibilitas WCAG 2.2 AA untuk rute publik utama.
- * Halaman digulir sampai bawah agar elemen .reveal terlihat penuh
- * sebelum axe memindai (mencegah pelanggaran semu dari opacity: 0).
+ *
+ * Deterministik terhadap animasi reveal: reduced-motion membuat transisi
+ * CSS instan, lalu halaman digulir sampai bawah dan ditunggu hingga
+ * semua .reveal-init mendapat .is-visible sebelum axe memindai. Tanpa
+ * ini, axe sempat membaca elemen beroOpacity di tengah transisi dan
+ * melaporkan color-contrast palsu.
  */
 const RUTE = ["/", "/cek", "/edukasi"] as const;
 
@@ -13,8 +17,13 @@ for (const rute of RUTE) {
     page,
   }) => {
     await page.goto(rute);
+    await page.emulateMedia({ reducedMotion: "reduce" });
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(1200);
+    await page.waitForFunction(
+      () =>
+        document.querySelectorAll(".reveal-init:not(.is-visible)").length === 0,
+      { timeout: 10_000 },
+    );
 
     const hasil = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
