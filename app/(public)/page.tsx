@@ -115,7 +115,7 @@ const RENTANG = [
     saran:
       "Konfirmasi upah, jam kerja, dan identitas perusahaan lewat sumber resmi.",
     kartu: "from-amber-50 to-white ring-amber-200/80",
-    chip: "bg-amber-500 text-white",
+    chip: "bg-amber-700 text-white",
   },
   {
     nomor: "03",
@@ -195,7 +195,7 @@ export default function Beranda() {
               Lihat metodologi
             </Link>
           </div>
-          <p className="mt-6 font-mono text-[0.62rem] tracking-[0.2em] text-slate-500 uppercase">
+          <p className="mt-6 font-mono text-[0.62rem] tracking-[0.2em] text-muted uppercase">
             {JUMLAH_ATURAN} aturan baku&ensp;·&ensp;0 akun&ensp;·&ensp;0 teks
             disimpan
           </p>

@@ -57,7 +57,7 @@ export default function HalamanTentang() {
                 <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
                   Prinsip Integritas Produk
                 </h2>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-muted">
                   Landasan etika dalam setiap baris kode CekLoker.
                 </p>
               </div>
@@ -94,7 +94,7 @@ export default function HalamanTentang() {
               <h2 className="text-2xl font-black text-slate-950">
                 Spesifikasi Teknologi Terverifikasi
               </h2>
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 text-sm text-muted">
                 Fondasi arsitektur perangkat lunak yang andal, aman, dan dapat
                 diuji.
               </p>

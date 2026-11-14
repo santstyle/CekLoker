@@ -58,7 +58,7 @@ export default function HalamanMetodologi() {
                 <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
                   Alur Pemeriksaan Sistem
                 </h2>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-muted">
                   5 tahapan evaluasi data yang dijalankan oleh mesin CekLoker.
                 </p>
               </div>
@@ -127,7 +127,7 @@ export default function HalamanMetodologi() {
                 <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
                   Formula Perhitungan Skor
                 </h2>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-muted">
                   Rumus matematis baku tanpa campur tangan kecerdasan buatan
                   opini.
                 </p>
@@ -157,7 +157,7 @@ export default function HalamanMetodologi() {
                 <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
                   Batas Ambang Rentang Risiko
                 </h2>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-muted">
                   Kriteria penetapan status evaluasi berdasarkan akumulasi skor.
                 </p>
               </div>
@@ -220,7 +220,7 @@ export default function HalamanMetodologi() {
                 <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
                   Katalog {RULES.length} Aturan Evaluasi Aktif
                 </h2>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-muted">
                   Setiap aturan dirumuskan dari perundang-undangan resmi
                   Republik Indonesia.
                 </p>
