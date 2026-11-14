@@ -395,9 +395,10 @@ export default function HalamanCek() {
                         ref={textareaRef}
                         id="teks-lowongan"
                         value={teks}
-                        onChange={(perubahan) =>
-                          setTeks(perubahan.target.value)
-                        }
+                        onChange={(perubahan) => {
+                          setTeks(perubahan.target.value);
+                          setContohAktif(null);
+                        }}
                         rows={11}
                         required
                         maxLength={MAKSIMAL_KARAKTER}

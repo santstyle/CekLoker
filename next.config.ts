@@ -3,9 +3,14 @@ import type { NextConfig } from "next";
 /**
  * Header keamanan yang dipasang untuk seluruh rute.
  *
- * CSP ketat belum dipasang karena aset OCR (tesseract.js) dan berkas statis
- * perlu diuji lebih dulu di peramban nyata agar tidak mematahkan pemuatan.
+ * CSP diterapkan hanya di production. React development mode memakai
+ * `eval()` untuk fitur debugging, jadi CSP dilonggarkan saat `next dev`.
+ * Di production CSP ketat berjalan: worker WASM tesseract dimuat dari
+ * origin sendiri (blob + self), `'wasm-unsafe-eval'` diperlukan untuk
+ * kompilasi WebAssembly.
  */
+const isProduction = process.env.NODE_ENV === "production";
+
 const HEADER_KEAMANAN = [
   {
     key: "Strict-Transport-Security",
@@ -18,6 +23,25 @@ const HEADER_KEAMANAN = [
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
   },
+  ...(isProduction
+    ? [
+        {
+          key: "Content-Security-Policy",
+          value: [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
+            "style-src 'self' 'unsafe-inline'",
+            "img-src 'self' data: blob:",
+            "font-src 'self'",
+            "connect-src 'self'",
+            "worker-src 'self' blob:",
+            "frame-ancestors 'none'",
+            "base-uri 'self'",
+            "form-action 'self'",
+          ].join("; "),
+        },
+      ]
+    : []),
 ];
 
 const nextConfig: NextConfig = {
