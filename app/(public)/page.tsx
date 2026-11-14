@@ -41,6 +41,62 @@ const FAQ = [
 
 const POLA = RULES.map((aturan) => aturan.judul);
 
+/** Empat liputan nyata; kutipan diambil apa adanya dari sumbernya. */
+const KASUS = [
+  {
+    nomor: "01",
+    sumber: "Tribratanews Polda Jabar",
+    tanggal: "30 Juni 2026",
+    judul:
+      "Ungkap Sindikat Penipuan Online, Polda Jabar Imbau Masyarakat Waspada Lowongan Kerja Palsu di Media Sosial",
+    ringkas:
+      "“…modus penawaran lowongan kerja palsu serta skema tugas berbayar melalui media sosial.” Empat laporan diterima; total kerugian Rp801.794.698 menurut Direktorat Siber, korban terbesar merugi Rp696 juta. Empat tersangka ditangkap 26 Juni 2026.",
+    aturan: ["Pungutan biaya kepada pelamar", "Rekrutmen lewat pesan pribadi"],
+    tautan:
+      "https://tribratanews.jabar.polri.go.id/ungkap-sindikat-penipuan-online-polda-jabar-imbau-masyarakat-waspada-lowongan-kerja-palsu-di-media-sosial/",
+  },
+  {
+    nomor: "02",
+    sumber: "Liputan6.com",
+    tanggal: "7 April 2026",
+    judul:
+      "Lowongan Kerja Pos Indonesia Palsu Beredar Dalam Berbagai Bentuk, Simak Jalur Resmi Rekrutmennya",
+    ringkas:
+      "“…mengarahkan korban untuk mengisi data pribadi atau membayar sejumlah biaya.” PT Pos Indonesia (Persero) mencatat namanya dicatut lewat video, postingan, dan tautan akun tidak resmi; rekrutmen resmi hanya diumumkan via kanal perusahaan dan tidak dipungut biaya.",
+    aturan: [
+      "Pungutan biaya kepada pelamar",
+      "Permintaan dokumen sensitif di awal proses",
+    ],
+    tautan:
+      "https://www.liputan6.com/cek-fakta/read/6311354/lowongan-kerja-pos-indonesia-palsu-beredar-dalam-berbagai-bentuk-simak-jalur-resmi-rekrutmennya",
+  },
+  {
+    nomor: "03",
+    sumber: "CNBC Indonesia",
+    tanggal: "7 November 2025",
+    judul: "Penipuan Lowongan Kerja di LinkedIn, Pelamar Rugi Rp32 Juta",
+    ringkas:
+      "Identity Theft Resource Center: “…para pelaku kini menggunakan domain palsu, email hasil peretasan, dan profil rekrutmen tiruan agar tampak resmi.” FTC mencatat kerugian rata-rata sekitar US$2.000 (±Rp32 juta) per korban pada paruh pertama 2025, naik 19% dari tahun sebelumnya.",
+    aturan: [
+      "Rekrutmen lewat pesan pribadi",
+      "Permintaan dokumen sensitif di awal proses",
+    ],
+    tautan:
+      "https://www.cnbcindonesia.com/lifestyle/20251107132730-33-683210/penipuan-lowongan-kerja-di-linkedin-pelamar-rugi-rp32-juta",
+  },
+  {
+    nomor: "04",
+    sumber: "detikFinance",
+    tanggal: "31 Mei 2025",
+    judul: "Waspada! Marak Modus Penipuan Lowongan Admin e-Commerce",
+    ringkas:
+      "Wawancara via Telegram, lalu diberi akses akun berisi saldo untuk membeli dan mengirim barang; imbalan Rp 49.000 disebut “profit”, lalu diminta menambah dana dan diancam COD ke rumahnya. Glints TapLoker mencatat laporan dugaan lowongan kerja palsu naik hingga 4 kali lipat.",
+    aturan: ["Rekrutmen lewat pesan pribadi", "Pungutan biaya kepada pelamar"],
+    tautan:
+      "https://finance.detik.com/tips-dan-trik/d-7941714/waspada-marak-modus-penipuan-lowongan-admin-e-commerce",
+  },
+] as const;
+
 const RENTANG = [
   {
     nomor: "01",
@@ -307,6 +363,110 @@ export default function Beranda() {
         </div>
       </div>
 
+      {/* ============ Kasus lapangan: liputan nyata ============ */}
+      <section className="py-16 sm:py-24">
+        <Container ukuran="penuh">
+          <Reveal>
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <div>
+                <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
+                  Dari lapangan
+                </p>
+                <h2 className="mt-4 max-w-3xl font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.02] font-extrabold tracking-tight text-ink">
+                  Iklannya beda-beda.{" "}
+                  <span className="teks-gradasi">Polanya persis sama.</span>
+                </h2>
+              </div>
+              <p className="max-w-md text-sm leading-relaxed text-muted">
+                Bukan ilustrasi karangan: empat liputan nyata, dikutip apa
+                adanya dengan tautan ke artikel aslinya. CekLoker tidak pernah
+                menilai kasus-kasus ini.
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={140}>
+            <ul className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+              {KASUS.map((kasus) => (
+                <li
+                  key={kasus.nomor}
+                  className="group flex flex-col rounded-3xl bg-white p-6 shadow-[0_1px_2px_rgb(15_23_42/0.04),0_16px_40px_-20px_rgb(15_23_42/0.18)] ring-1 ring-line transition-all duration-300 hover:-translate-y-1.5 sm:p-7"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="font-mono text-[0.56rem] leading-snug font-semibold tracking-[0.12em] text-muted uppercase">
+                      {kasus.nomor} · {kasus.sumber}
+                    </span>
+                    <span className="shrink-0 font-mono text-[0.56rem] leading-snug font-medium tracking-[0.12em] text-muted uppercase">
+                      {kasus.tanggal}
+                    </span>
+                  </div>
+                  <blockquote className="mt-4 text-[1.02rem] leading-snug font-extrabold text-ink">
+                    “{kasus.judul}”
+                  </blockquote>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                    {kasus.ringkas}
+                  </p>
+                  <div className="mt-5 border-t border-slate-100 pt-4">
+                    <p className="font-mono text-[0.58rem] font-semibold tracking-[0.18em] text-muted uppercase">
+                      Aturan yang membaca pola ini
+                    </p>
+                    <ul className="mt-2 flex flex-col gap-1.5">
+                      {kasus.aturan.map((aturan) => (
+                        <li
+                          key={aturan}
+                          className="flex items-start gap-2 text-xs leading-snug text-slate-600"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="mt-1.5 size-1 shrink-0 rounded-full bg-blue-500"
+                          />
+                          {aturan}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mt-auto pt-5">
+                    <a
+                      href={kasus.tautan}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-aksen underline-offset-4 transition-colors hover:underline"
+                    >
+                      Baca liputan asli
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          <Reveal delay={220}>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+              <Link
+                href="/cek"
+                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-ink px-7 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#1e293b]"
+              >
+                Cek iklan seperti ini
+                <span aria-hidden="true">→</span>
+              </Link>
+              <Link
+                href="/edukasi"
+                className="inline-flex min-h-12 items-center rounded-full bg-white px-7 text-sm font-semibold text-slate-700 ring-1 ring-ink/15 transition-all duration-200 hover:-translate-y-0.5 hover:bg-cream"
+              >
+                Baca 6 pola lengkapnya
+              </Link>
+            </div>
+            <p className="mx-auto mt-5 max-w-xl text-center text-xs leading-relaxed text-muted">
+              Judul dan kutipan di kartu diambil apa adanya dari sumber yang
+              disebutkan. Pemetaan aturan di atas bersifat kurasi editorial,
+              bukan hasil pemindaian mesin atas kasus-kasus ini — keputusan
+              akhir selalu di tangan Anda.
+            </p>
+          </Reveal>
+        </Container>
+      </section>
+
       {/* ============ Rentang risiko: kartu gradasi lembut ============ */}
       <section className="py-16 sm:py-24">
         <Container ukuran="penuh">
@@ -546,7 +706,7 @@ export default function Beranda() {
               <br />
               <span className="teks-gradasi-terang">Baru lamar.</span>
             </h2>
-            <p className="mt-6 max-w-md text-base leading-relaxed text-blue-100/90">
+            <p className="mx-auto mt-6 max-w-md text-base leading-relaxed text-blue-100/90">
               Gratis, tanpa daftar akun. Teks iklan Anda tidak pernah disimpan
               di server kami.
             </p>
