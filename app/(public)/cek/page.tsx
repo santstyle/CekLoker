@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { PilihLokasi } from "@/components/check/pilih-lokasi";
 import { UnggahPoster } from "@/components/check/unggah-poster";
@@ -83,6 +83,18 @@ export default function HalamanCek() {
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  // BFCache browser memulihkan status JavaScript apa adanya. Tanpa ini,
+  // kembali ke halaman setelah periksa sukses membuat tombol terjebak
+  // "Sedang memeriksa..." meski formulir kosong.
+  useEffect(() => {
+    function saatHalamanDikembalikan(event: PageTransitionEvent) {
+      if (event.persisted) setMengirim(false);
+    }
+    window.addEventListener("pageshow", saatHalamanDikembalikan);
+    return () =>
+      window.removeEventListener("pageshow", saatHalamanDikembalikan);
+  }, []);
+
   const panjangTeks = teks.trim().length;
   const bolehKirim =
     panjangTeks >= MINIMAL_KARAKTER &&
@@ -119,6 +131,10 @@ export default function HalamanCek() {
         kunciSimpananHasil(id),
         JSON.stringify({ id, hasil }),
       );
+      // App Router mempertahankan state komponen pada soft navigation
+      // kembali ke /cek; tanpa reset ini tombol terjebak "Sedang
+      // memeriksa..." walau formulir kosong.
+      setMengirim(false);
       router.push(`/hasil/${id}`);
     } catch {
       setPesan(
