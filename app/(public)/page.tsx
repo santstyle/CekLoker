@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
+import { IlustrasiKasus } from "@/components/situs/ilustrasi-kasus";
 import { Faq } from "@/components/situs/faq";
 import { Reveal } from "@/components/situs/reveal";
 import { RULES } from "@/lib/evaluation/rules";
@@ -54,6 +55,7 @@ const KASUS = [
     aturan: ["Pungutan biaya kepada pelamar", "Rekrutmen lewat pesan pribadi"],
     tautan:
       "https://tribratanews.jabar.polri.go.id/ungkap-sindikat-penipuan-online-polda-jabar-imbau-masyarakat-waspada-lowongan-kerja-palsu-di-media-sosial/",
+    alt: "Ilustrasi ponsel menampilkan pesan penawaran kerja dengan perisai peringatan di sekelilingnya",
   },
   {
     nomor: "02",
@@ -69,6 +71,7 @@ const KASUS = [
     ],
     tautan:
       "https://www.liputan6.com/cek-fakta/read/6311354/lowongan-kerja-pos-indonesia-palsu-beredar-dalam-berbagai-bentuk-simak-jalur-resmi-rekrutmennya",
+    alt: "Ilustrasi truk pengiriman dan surat yang dicap X, diperiksa dengan kaca pembesar",
   },
   {
     nomor: "03",
@@ -83,6 +86,7 @@ const KASUS = [
     ],
     tautan:
       "https://www.cnbcindonesia.com/lifestyle/20251107132730-33-683210/penipuan-lowongan-kerja-di-linkedin-pelamar-rugi-rp32-juta",
+    alt: "Ilustrasi laptop dengan profil perekrut abstrak dan rantai tautan yang patah",
   },
   {
     nomor: "04",
@@ -94,8 +98,13 @@ const KASUS = [
     aturan: ["Rekrutmen lewat pesan pribadi", "Pungutan biaya kepada pelamar"],
     tautan:
       "https://finance.detik.com/tips-dan-trik/d-7941714/waspada-marak-modus-penipuan-lowongan-admin-e-commerce",
+    alt: "Ilustrasi ponsel dengan obrolan, keranjang belanja, dan koin berpita peringatan",
   },
 ] as const;
+
+/** Pencarian Google News — hasil nyata dari mesin pencari, bukan daftar karangan. */
+const CARI_GOOGLE_NEWS =
+  "https://news.google.com/search?q=penipuan+lowongan+kerja&hl=id&gl=ID&ceid=ID:id";
 
 const RENTANG = [
   {
@@ -378,9 +387,9 @@ export default function Beranda() {
                 </h2>
               </div>
               <p className="max-w-md text-sm leading-relaxed text-muted">
-                Bukan ilustrasi karangan: empat liputan nyata, dikutip apa
-                adanya dengan tautan ke artikel aslinya. CekLoker tidak pernah
-                menilai kasus-kasus ini.
+                Empat liputan nyata — kutipan diambil apa adanya dari artikel
+                aslinya. Gambar pada kartu hanyalah ilustrasi, bukan foto
+                liputan. CekLoker tidak pernah menilai kasus-kasus ini.
               </p>
             </div>
           </Reveal>
@@ -390,55 +399,81 @@ export default function Beranda() {
               {KASUS.map((kasus) => (
                 <li
                   key={kasus.nomor}
-                  className="group flex flex-col rounded-3xl bg-white p-6 shadow-[0_1px_2px_rgb(15_23_42/0.04),0_16px_40px_-20px_rgb(15_23_42/0.18)] ring-1 ring-line transition-all duration-300 hover:-translate-y-1.5 sm:p-7"
+                  className="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-[0_1px_2px_rgb(15_23_42/0.04),0_16px_40px_-20px_rgb(15_23_42/0.18)] ring-1 ring-line transition-all duration-300 hover:-translate-y-1.5"
                 >
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="font-mono text-[0.56rem] leading-snug font-semibold tracking-[0.12em] text-muted uppercase">
-                      {kasus.nomor} · {kasus.sumber}
-                    </span>
-                    <span className="shrink-0 font-mono text-[0.56rem] leading-snug font-medium tracking-[0.12em] text-muted uppercase">
-                      {kasus.tanggal}
+                  <div className="relative">
+                    <IlustrasiKasus
+                      nomor={kasus.nomor}
+                      className="aspect-[16/9] w-full"
+                      aria-label={kasus.alt}
+                    />
+                    <span className="absolute bottom-3 left-3 rounded-full bg-ink/70 px-2.5 py-0.5 font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-white uppercase backdrop-blur-sm">
+                      Ilustrasi
                     </span>
                   </div>
-                  <blockquote className="mt-4 text-[1.02rem] leading-snug font-extrabold text-ink">
-                    “{kasus.judul}”
-                  </blockquote>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                    {kasus.ringkas}
-                  </p>
-                  <div className="mt-5 border-t border-slate-100 pt-4">
-                    <p className="font-mono text-[0.58rem] font-semibold tracking-[0.18em] text-muted uppercase">
-                      Aturan yang membaca pola ini
+                  <div className="flex flex-1 flex-col p-6 sm:p-7">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="font-mono text-[0.56rem] leading-snug font-semibold tracking-[0.12em] text-muted uppercase">
+                        {kasus.nomor} · {kasus.sumber}
+                      </span>
+                      <span className="shrink-0 font-mono text-[0.56rem] leading-snug font-medium tracking-[0.12em] text-muted uppercase">
+                        {kasus.tanggal}
+                      </span>
+                    </div>
+                    <blockquote className="mt-4 text-[1.02rem] leading-snug font-extrabold text-ink">
+                      “{kasus.judul}”
+                    </blockquote>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                      {kasus.ringkas}
                     </p>
-                    <ul className="mt-2 flex flex-col gap-1.5">
-                      {kasus.aturan.map((aturan) => (
-                        <li
-                          key={aturan}
-                          className="flex items-start gap-2 text-xs leading-snug text-slate-600"
-                        >
-                          <span
-                            aria-hidden="true"
-                            className="mt-1.5 size-1 shrink-0 rounded-full bg-blue-500"
-                          />
-                          {aturan}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="mt-auto pt-5">
-                    <a
-                      href={kasus.tautan}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-aksen underline-offset-4 transition-colors hover:underline"
-                    >
-                      Baca liputan asli
-                      <span aria-hidden="true">↗</span>
-                    </a>
+                    <div className="mt-5 border-t border-slate-100 pt-4">
+                      <p className="font-mono text-[0.58rem] font-semibold tracking-[0.18em] text-muted uppercase">
+                        Aturan yang membaca pola ini
+                      </p>
+                      <ul className="mt-2 flex flex-col gap-1.5">
+                        {kasus.aturan.map((aturan) => (
+                          <li
+                            key={aturan}
+                            className="flex items-start gap-2 text-xs leading-snug text-slate-600"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="mt-1.5 size-1 shrink-0 rounded-full bg-blue-500"
+                            />
+                            {aturan}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="mt-auto pt-5">
+                      <a
+                        href={kasus.tautan}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-aksen underline-offset-4 transition-colors hover:underline"
+                      >
+                        Baca liputan asli
+                        <span aria-hidden="true">↗</span>
+                      </a>
+                    </div>
                   </div>
                 </li>
               ))}
             </ul>
+            <div className="mt-10 flex flex-col items-center gap-2.5">
+              <a
+                href={CARI_GOOGLE_NEWS}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-12 items-center gap-2 rounded-full border border-aksen/30 bg-blue-50 px-7 text-sm font-semibold text-aksen-pekat transition-colors hover:border-aksen/50 hover:bg-blue-100"
+              >
+                Lihat lebih banyak liputan
+                <span aria-hidden="true">↗</span>
+              </a>
+              <p className="font-mono text-[0.58rem] tracking-[0.18em] text-muted uppercase">
+                Membuka Google News · pencarian “penipuan lowongan kerja”
+              </p>
+            </div>
           </Reveal>
 
           <Reveal delay={220}>
