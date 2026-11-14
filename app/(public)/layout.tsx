@@ -17,7 +17,7 @@ export default function LayoutPublik({
     <div className="flex min-h-screen flex-col bg-cream">
       <a
         href="#konten-utama"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
       >
         Lewati ke konten
       </a>
@@ -56,7 +56,9 @@ export default function LayoutPublik({
         </Container>
       </header>
 
-      <main id="konten-utama" className="flex-1">{children}</main>
+      <main id="konten-utama" className="flex-1">
+        {children}
+      </main>
 
       <footer className="relative overflow-hidden border-t border-white/5 bg-ink-deep text-slate-400">
         <div
