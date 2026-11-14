@@ -3,8 +3,9 @@ import type { NextConfig } from "next";
 /**
  * Header keamanan yang dipasang untuk seluruh rute.
  *
- * CSP ketat belum dipasang karena aset OCR (tesseract.js) dan berkas statis
- * perlu diuji lebih dulu di peramban nyata agar tidak mematahkan pemuatan.
+ * CSP ketat sudah dipasang setelah aset OCR (tesseract.js) diuji di peramban
+ * nyata: worker WASM dimuat dari origin sendiri (blob + self), sehingga
+ * `script-src`, `worker-src`, `img-src`, dan `connect-src` dibatasi ke self.
  */
 const HEADER_KEAMANAN = [
   {
@@ -17,6 +18,21 @@ const HEADER_KEAMANAN = [
   {
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+  },
+  {
+    key: "Content-Security-Policy",
+    value: [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob:",
+      "font-src 'self'",
+      "connect-src 'self'",
+      "worker-src 'self' blob:",
+      "frame-ancestors 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+    ].join("; "),
   },
 ];
 
