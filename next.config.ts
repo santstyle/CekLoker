@@ -3,10 +3,14 @@ import type { NextConfig } from "next";
 /**
  * Header keamanan yang dipasang untuk seluruh rute.
  *
- * CSP ketat sudah dipasang setelah aset OCR (tesseract.js) diuji di peramban
- * nyata: worker WASM dimuat dari origin sendiri (blob + self), sehingga
- * `script-src`, `worker-src`, `img-src`, dan `connect-src` dibatasi ke self.
+ * CSP diterapkan hanya di production. React development mode memakai
+ * `eval()` untuk fitur debugging, jadi CSP dilonggarkan saat `next dev`.
+ * Di production CSP ketat berjalan: worker WASM tesseract dimuat dari
+ * origin sendiri (blob + self), `'wasm-unsafe-eval'` diperlukan untuk
+ * kompilasi WebAssembly.
  */
+const isProduction = process.env.NODE_ENV === "production";
+
 const HEADER_KEAMANAN = [
   {
     key: "Strict-Transport-Security",
@@ -19,21 +23,25 @@ const HEADER_KEAMANAN = [
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
   },
-  {
-    key: "Content-Security-Policy",
-    value: [
-      "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
-      "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob:",
-      "font-src 'self'",
-      "connect-src 'self'",
-      "worker-src 'self' blob:",
-      "frame-ancestors 'none'",
-      "base-uri 'self'",
-      "form-action 'self'",
-    ].join("; "),
-  },
+  ...(isProduction
+    ? [
+        {
+          key: "Content-Security-Policy",
+          value: [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
+            "style-src 'self' 'unsafe-inline'",
+            "img-src 'self' data: blob:",
+            "font-src 'self'",
+            "connect-src 'self'",
+            "worker-src 'self' blob:",
+            "frame-ancestors 'none'",
+            "base-uri 'self'",
+            "form-action 'self'",
+          ].join("; "),
+        },
+      ]
+    : []),
 ];
 
 const nextConfig: NextConfig = {
