@@ -8,7 +8,7 @@ import { UnggahPoster } from "@/components/check/unggah-poster";
 import { Container } from "@/components/ui/container";
 import { kunciSimpananHasil, type ResponsEvaluasi } from "@/lib/api/evaluasi";
 import { RULES } from "@/lib/evaluation/rules";
-import { CATATAN_DATA_UPAH } from "@/lib/evaluation/wages";
+import { CATATAN_DATA_UPAH, statusDataUpah } from "@/lib/evaluation/wages";
 
 const MINIMAL_KARAKTER = 30;
 const MAKSIMAL_KARAKTER = 20_000;
@@ -446,7 +446,9 @@ export default function HalamanCek() {
                     />
                     <p className="text-[0.65rem] text-muted">
                       Pilih dari saran agar lokasi dikenali sistem.{" "}
-                      {CATATAN_DATA_UPAH}
+                      {lokasi.trim()
+                        ? statusDataUpah(lokasi)
+                        : CATATAN_DATA_UPAH}
                     </p>
                   </div>
 

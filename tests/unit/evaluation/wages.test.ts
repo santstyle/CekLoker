@@ -1,11 +1,16 @@
 import { describe, expect, it } from "vitest";
 
+import { PROVINSI } from "@/lib/evaluation/provinces";
+import { DATA_UPAH_MENTAH, barisAktif } from "@/lib/evaluation/data-upah";
+import type { BarisDataUpah } from "@/lib/evaluation/data-upah";
 import {
   CATATAN_DATA_UPAH,
   DATA_UPAH,
   DATA_UPAH_TERSEDIA,
+  LABEL_DATA_UPAH_BELUM_TERSEDIA,
   cariUpahUntukLokasi,
   getUpahMinimum,
+  statusDataUpah,
 } from "@/lib/evaluation/wages";
 import type { RegionalWage } from "@/lib/evaluation/types";
 
@@ -136,5 +141,100 @@ describe("cariUpahUntukLokasi", () => {
     expect(cariUpahUntukLokasi("", DATA_CONTOH)).toBeNull();
     expect(cariUpahUntukLokasi(null, DATA_CONTOH)).toBeNull();
     expect(cariUpahUntukLokasi(undefined, DATA_CONTOH)).toBeNull();
+  });
+});
+
+describe("DATA_UPAH_MENTAH (kerangka TODO)", () => {
+  it("mencakup satu baris per provinsi kanonik", () => {
+    expect(DATA_UPAH_MENTAH).toHaveLength(PROVINSI.length);
+
+    const nama = new Set(DATA_UPAH_MENTAH.map((baris) => baris.provinsi));
+    for (const provinsi of PROVINSI) {
+      expect(nama.has(provinsi)).toBe(true);
+    }
+  });
+
+  it("belum diisi: seluruh nilai masih TODO (null), tanpa angka tebakan", () => {
+    for (const baris of DATA_UPAH_MENTAH) {
+      expect(baris.upahBulanan).toBeNull();
+      expect(baris.tahun).toBeNull();
+      expect(baris.sumberUrl).toBeNull();
+      expect(baris.tanggalVerifikasi).toBeNull();
+    }
+  });
+});
+
+describe("barisAktif", () => {
+  it("menyaring baris TODO dan mempertahankan baris lengkap", () => {
+    const mentah: readonly BarisDataUpah[] = [
+      {
+        provinsi: "Contoh A",
+        upahBulanan: null,
+        tahun: null,
+        sumberUrl: null,
+        tanggalVerifikasi: null,
+      },
+      {
+        provinsi: "Contoh B",
+        upahBulanan: 1_000_000,
+        tahun: 2025,
+        sumberUrl: null,
+        tanggalVerifikasi: null,
+      },
+    ];
+
+    expect(barisAktif(mentah)).toEqual([
+      { provinsi: "Contoh B", upahBulanan: 1_000_000, tahun: 2025 },
+    ]);
+  });
+
+  it("membawa sumberUrl dan tanggalVerifikasi bila terisi", () => {
+    const mentah: readonly BarisDataUpah[] = [
+      {
+        provinsi: "Contoh B",
+        upahBulanan: 1_000_000,
+        tahun: 2025,
+        sumberUrl: "https://sumber-resmi.contoh/ump-2025",
+        tanggalVerifikasi: "2026-01-01",
+      },
+    ];
+
+    expect(barisAktif(mentah)[0]).toMatchObject({
+      sumberUrl: "https://sumber-resmi.contoh/ump-2025",
+      tanggalVerifikasi: "2026-01-01",
+    });
+  });
+});
+
+describe("statusDataUpah", () => {
+  it("menyatakan data belum tersedia bila lokasi tidak dikenali", () => {
+    expect(statusDataUpah("Antah Berantah")).toBe(
+      LABEL_DATA_UPAH_BELUM_TERSEDIA,
+    );
+  });
+
+  it("menyatakan data belum tersedia untuk provinsi yang datanya masih kosong", () => {
+    const status = statusDataUpah("Bandung");
+    expect(status).toContain(LABEL_DATA_UPAH_BELUM_TERSEDIA);
+    expect(status).toContain("Jawa Barat");
+  });
+
+  it("menyatakan tersedia bila datanya lengkap", () => {
+    const data: readonly RegionalWage[] = [
+      { provinsi: "Jawa Barat", upahBulanan: 2_000_000, tahun: 2025 },
+    ];
+    expect(statusDataUpah("Bandung", data)).toContain("tersedia");
+  });
+
+  it("tetap jujur saat data sengaja kosong", () => {
+    expect(statusDataUpah("Jakarta Selatan", [])).toContain(
+      LABEL_DATA_UPAH_BELUM_TERSEDIA,
+    );
+  });
+});
+
+describe("kejujuran klaim data upah", () => {
+  it("catatan antarmuka memakai frasa data belum tersedia", () => {
+    expect(CATATAN_DATA_UPAH).toContain("data belum tersedia");
   });
 });
