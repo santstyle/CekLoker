@@ -140,12 +140,15 @@ export default function KontenHasil() {
               tertutup atau Anda membuka dari peramban lain, data dihapus
               otomatis demi menjaga privasi Anda.
             </p>
-            <Link
+            {/* Hard navigation: mulai dari awal harus benar-benar bersih
+                (teks lama & status loading ikut terhapus), jadi tidak pakai
+                next/link yang mempertahankan status komponen /cek. */}
+            <a
               href="/cek"
               className="mt-6 rounded-full bg-slate-950 px-7 py-3 text-sm font-bold text-white transition-all hover:bg-slate-800"
             >
               Periksa Lowongan Baru
-            </Link>
+            </a>
           </div>
         </Container>
       </div>
@@ -353,12 +356,12 @@ export default function KontenHasil() {
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
-              <Link
+              <a
                 href="/cek"
                 className="rounded-full bg-slate-950 px-6 py-3 text-xs font-bold text-white transition-all hover:bg-slate-800"
               >
                 Periksa Lowongan Baru
-              </Link>
+              </a>
               <Link
                 href="/edukasi"
                 className="rounded-full border border-slate-200 bg-white px-5 py-3 text-xs font-bold text-slate-700 transition-all hover:bg-slate-50"
