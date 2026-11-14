@@ -67,7 +67,7 @@ test.describe("Alur inti: /cek → /hasil/<id>", () => {
     ]);
 
     // Kembali ke formulir lewat tombol "Periksa Lowongan Baru"
-    // (soft navigation — state komponen berpotensi terjaga).
+    // (hard navigation — status lama harus hilang seluruhnya).
     await page.getByRole("link", { name: "Periksa Lowongan Baru" }).click();
     await page.waitForURL(/\/cek/);
 
@@ -77,6 +77,10 @@ test.describe("Alur inti: /cek → /hasil/<id>", () => {
     await expect(tombol).toBeVisible();
     await expect(page.getByText("Sedang memeriksa...")).toHaveCount(0);
     await expect(page.locator(".animate-spin")).toHaveCount(0);
+
+    // Formulir benar-benar bersih: tidak ada sisa teks maupun lokasi.
+    await expect(page.locator("#teks-lowongan")).toHaveValue("");
+    await expect(page.locator("#lokasi")).toHaveValue("");
   });
 
   test("tombol contoh mengisi textarea dan state aktif terlihat", async ({
