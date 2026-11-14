@@ -107,7 +107,7 @@ export default function HalamanEdukasi() {
                 <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
                   Hak Dasar yang Wajib Anda Peroleh
                 </h2>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-muted">
                   Standar minimum yang dijamin oleh regulasi pemerintah Republik
                   Indonesia.
                 </p>
@@ -143,7 +143,7 @@ export default function HalamanEdukasi() {
                 <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
                   Pola Risiko yang Sering Terjadi
                 </h2>
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-muted">
                   Pola-pola rekrutmen yang berpotensi merugikan atau melanggar
                   hak pelamar.
                 </p>
@@ -185,7 +185,7 @@ export default function HalamanEdukasi() {
               <h2 className="text-2xl font-black text-slate-950">
                 5 Langkah Mandiri Sebelum Mengirim Lamaran
               </h2>
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 text-sm text-muted">
                 Gunakan daftar periksa ini untuk memastikan legalitas perekrut.
               </p>
 

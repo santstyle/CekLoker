@@ -104,7 +104,7 @@ export default function KontenHasil() {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 bg-slate-50/50">
         <span className="size-10 animate-spin rounded-full border-3 border-slate-200 border-t-blue-600" />
-        <p className="text-sm font-medium text-slate-500">
+        <p className="text-sm font-medium text-muted">
           Memuat analisis hasil evaluasi...
         </p>
       </div>
@@ -118,7 +118,7 @@ export default function KontenHasil() {
           <div className="mx-auto flex max-w-lg flex-col items-center text-center">
             <div className="rounded-full bg-slate-200/60 p-3">
               <svg
-                className="size-6 text-slate-500"
+                className="size-6 text-muted"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="2"
@@ -161,7 +161,7 @@ export default function KontenHasil() {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <Link
               href="/cek"
-              className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-slate-900"
+              className="inline-flex items-center gap-2 text-xs font-bold text-muted hover:text-slate-900"
             >
               <svg
                 className="size-4"
@@ -235,7 +235,7 @@ export default function KontenHasil() {
                 <h2 className="text-xl font-bold text-slate-950 sm:text-2xl">
                   Temuan Indikator ({hasil.temuan.length})
                 </h2>
-                <p className="text-xs text-slate-500 sm:text-sm">
+                <p className="text-xs text-muted sm:text-sm">
                   Kutipan spesifik dan aturan yang teridentifikasi dalam teks
                   lowongan.
                 </p>
@@ -284,7 +284,7 @@ export default function KontenHasil() {
                       <span className="rounded-full bg-slate-100 px-3 py-0.5 text-xs font-semibold text-slate-700">
                         {LABEL_KATEGORI[temuan.kategori]}
                       </span>
-                      <span className="rounded-full bg-slate-100 px-3 py-0.5 text-xs font-medium text-slate-500">
+                      <span className="rounded-full bg-slate-100 px-3 py-0.5 text-xs font-medium text-muted">
                         {LABEL_KEKUATAN[temuan.kekuatan]}
                       </span>
                     </div>
@@ -321,7 +321,7 @@ export default function KontenHasil() {
             <h2 className="text-xl font-bold text-slate-950">
               Saran Langkah Sebelum Melamar
             </h2>
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-muted">
               Rekomendasi tindakan preventif berdasarkan hasil evaluasi lowongan
               ini.
             </p>

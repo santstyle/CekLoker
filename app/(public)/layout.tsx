@@ -15,6 +15,12 @@ export default function LayoutPublik({
 }) {
   return (
     <div className="flex min-h-screen flex-col bg-cream">
+      <a
+        href="#konten-utama"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        Lewati ke konten
+      </a>
       <GarisProgresGulir />
       <header className="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
         <div
@@ -50,7 +56,7 @@ export default function LayoutPublik({
         </Container>
       </header>
 
-      <main className="flex-1">{children}</main>
+      <main id="konten-utama" className="flex-1">{children}</main>
 
       <footer className="relative overflow-hidden border-t border-white/5 bg-ink-deep text-slate-400">
         <div
@@ -71,7 +77,7 @@ export default function LayoutPublik({
               <p className="font-display text-2xl font-extrabold tracking-tight text-white">
                 Cek<span className="teks-gradasi-terang">Loker</span>
               </p>
-              <p className="font-mono text-[0.6rem] tracking-[0.22em] text-slate-500 uppercase">
+              <p className="font-mono text-[0.6rem] tracking-[0.22em] text-slate-400 uppercase">
                 Alat pra-lamaran · Ketenagakerjaan Indonesia
               </p>
               <p className="text-sm leading-relaxed text-slate-400">
@@ -79,7 +85,7 @@ export default function LayoutPublik({
                 Keputusan akhir tetap di tangan Anda: verifikasi selalu ke
                 sumber resmi.
               </p>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-400">
                 Teks lowongan yang Anda tempel tidak disimpan di server.
               </p>
             </div>
@@ -88,7 +94,7 @@ export default function LayoutPublik({
               aria-label="Jelajah"
               className="flex flex-col gap-2 md:col-span-3"
             >
-              <p className="font-mono text-[0.6rem] font-semibold tracking-[0.22em] text-slate-500 uppercase">
+              <p className="font-mono text-[0.6rem] font-semibold tracking-[0.22em] text-slate-400 uppercase">
                 Jelajah
               </p>
               {NAV.map((butir) => (
@@ -106,7 +112,7 @@ export default function LayoutPublik({
               aria-label="Legal"
               className="flex flex-col gap-2 md:col-span-4"
             >
-              <p className="font-mono text-[0.6rem] font-semibold tracking-[0.22em] text-slate-500 uppercase">
+              <p className="font-mono text-[0.6rem] font-semibold tracking-[0.22em] text-slate-400 uppercase">
                 Legal
               </p>
               {NAV_LEGAL.map((butir) => (
@@ -121,7 +127,7 @@ export default function LayoutPublik({
             </nav>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6 font-mono text-[0.62rem] tracking-[0.14em] text-slate-500 uppercase">
+          <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6 font-mono text-[0.62rem] tracking-[0.14em] text-slate-400 uppercase">
             <p>© 2026 Tim CekLoker · Lisensi MIT</p>
             <p>Inisiatif SDG 8: Decent Work &amp; Economic Growth</p>
           </div>

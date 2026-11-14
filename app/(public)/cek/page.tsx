@@ -382,7 +382,7 @@ export default function HalamanCek() {
                             ? "text-rose-600"
                             : panjangTeks >= MINIMAL_KARAKTER
                               ? "text-muted"
-                              : "text-amber-600"
+                              : "text-amber-700"
                         }`}
                       >
                         {panjangTeks} /{" "}
