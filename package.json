@@ -21,6 +21,7 @@
     "@neondatabase/serverless": "^1.2.0",
     "drizzle-orm": "^0.45.4",
     "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1",
     "nanoid": "^6.0.2",
     "next": "16.4.6",
     "react": "19.3.0",

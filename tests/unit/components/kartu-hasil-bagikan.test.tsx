@@ -34,7 +34,7 @@ describe("KartuHasilBagikan", () => {
     const tombolBagikan = screen.getByTestId("tombol-bagikan");
     expect(tombolBagikan).toBeEnabled();
 
-    const tombolUnduh = screen.getByTestId("tombol-unduh-png");
+    const tombolUnduh = screen.getByTestId("tombol-unduh-pdf");
     expect(tombolUnduh).toBeEnabled();
 
     const tombolCetak = screen.getByTestId("tombol-cetak");
@@ -45,7 +45,7 @@ describe("KartuHasilBagikan", () => {
     const user = userEvent.setup();
     render(<KartuHasilBagikan hasil={hasilContoh()} id="sesi-02" />);
 
-    const tombolUnduh = screen.getByTestId("tombol-unduh-png");
+    const tombolUnduh = screen.getByTestId("tombol-unduh-pdf");
 
     await user.click(tombolUnduh);
     // Setelah diklik komponen masuk ke state "menyiapkan" dan tombol disabled.

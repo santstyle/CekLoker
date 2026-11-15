@@ -29,7 +29,7 @@ const RESPONS_MOCK = {
   },
 };
 
-test.describe("Kartu hasil: Unduh PNG / Bagikan / Cetak", () => {
+test.describe("Kartu hasil: Unduh PDF / Bagikan / Cetak", () => {
   test.beforeEach(async ({ page }) => {
     await page.route("**/api/evaluasi", async (rute) => {
       await rute.fulfill({
@@ -52,7 +52,7 @@ test.describe("Kartu hasil: Unduh PNG / Bagikan / Cetak", () => {
       page.getByRole("button", { name: "Periksa lowongan sekarang" }).click(),
     ]);
 
-    await expect(page.getByTestId("tombol-unduh-png")).toBeVisible();
+    await expect(page.getByTestId("tombol-unduh-pdf")).toBeVisible();
     await expect(page.getByTestId("tombol-bagikan")).toBeVisible();
     await expect(page.getByTestId("tombol-cetak")).toBeVisible();
 
@@ -63,7 +63,7 @@ test.describe("Kartu hasil: Unduh PNG / Bagikan / Cetak", () => {
     ).toBeVisible();
   });
 
-  test("mengunduh berkas PNG setelah tombol Unduh diklik", async ({ page }) => {
+  test("mengunduh berkas PDF setelah tombol Unduh diklik", async ({ page }) => {
     await page.goto("/cek");
     await page
       .locator("#teks-lowongan")
@@ -75,13 +75,13 @@ test.describe("Kartu hasil: Unduh PNG / Bagikan / Cetak", () => {
       page.getByRole("button", { name: "Periksa lowongan sekarang" }).click(),
     ]);
 
-    // Tangkap peristiwa unduh berkas; html2canvas butuh beberapa detik.
+    // Tangkap peristiwa unduh berkas; html2canvas + jsPDF butuh beberapa detik.
     const unduhan = page.waitForEvent("download", { timeout: 60000 });
-    await page.getByTestId("tombol-unduh-png").click();
+    await page.getByTestId("tombol-unduh-pdf").click();
     const berkas = await unduhan;
 
     expect(berkas.suggestedFilename()).toMatch(
-      /^cekloker-hasil-perlu_dicek-\d{8}-\d{4}-ujie2e00\.png$/,
+      /^cekloker-hasil-perlu_dicek-\d{8}-\d{4}-ujie2e00\.pdf$/,
     );
   });
 
