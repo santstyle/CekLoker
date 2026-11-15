@@ -218,6 +218,31 @@ export default function HalamanEdukasi() {
             </section>
           </Reveal>
 
+          {/* CTA Kuis */}
+          <Reveal>
+            <section className="flex flex-col items-start justify-between gap-6 rounded-3xl border border-slate-200/90 bg-white p-8 shadow-xs sm:flex-row sm:items-center sm:p-10">
+              <div className="flex flex-col gap-2">
+                <span className="inline-flex w-fit items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
+                  Kuis Mandiri
+                </span>
+                <h2 className="text-xl font-black text-slate-950 sm:text-2xl">
+                  Seberapa siap Anda menghadapi iklan lowongan?
+                </h2>
+                <p className="max-w-xl text-sm leading-relaxed text-muted">
+                  Tujuh soal singkat seputar hak kerja dan pola rekrutmen
+                  berisiko. Berjalan sepenuhnya di peramban — tidak ada jawaban
+                  yang dikirim atau disimpan.
+                </p>
+              </div>
+              <Link
+                href="/edukasi/kuis"
+                className="shrink-0 rounded-full bg-ink px-7 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-ink-deep"
+              >
+                Ikuti Kuis
+              </Link>
+            </section>
+          </Reveal>
+
           {/* CTA Banner */}
           <Reveal>
             <div className="gradien-samudra flex flex-col items-center justify-between gap-6 rounded-3xl p-8 text-center shadow-xl sm:flex-row sm:p-12 sm:text-left">

@@ -10,7 +10,14 @@ import { AxeBuilder } from "@axe-core/playwright";
  * ini, axe sempat membaca elemen beroOpacity di tengah transisi dan
  * melaporkan color-contrast palsu.
  */
-const RUTE = ["/", "/cek", "/edukasi", "/uji-akurasi", "/tren"] as const;
+const RUTE = [
+  "/",
+  "/cek",
+  "/edukasi",
+  "/edukasi/kuis",
+  "/uji-akurasi",
+  "/tren",
+] as const;
 
 for (const rute of RUTE) {
   test(`aksesibilitas: ${rute} bebas pelanggaran WCAG 2.2 AA`, async ({
