@@ -3,3 +3,4 @@ allowBuilds:
   unrs-resolver: false
   esbuild: false
   tesseract.js: true
+  core-js: true

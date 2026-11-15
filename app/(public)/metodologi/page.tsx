@@ -109,7 +109,7 @@ export default function HalamanMetodologi() {
                       Penetapan Rentang Risiko:{" "}
                     </strong>
                     Hasil akhir diklasifikasikan ke dalam 3 rentang risiko
-                    objektif (Rendah, Perlu Dicek, Tinggi).
+                    objektif (Rendah, Perlu dicek, Tinggi).
                   </li>
                   <li>
                     <strong className="text-slate-950">
@@ -173,7 +173,7 @@ export default function HalamanMetodologi() {
 
               <div className="grid gap-6 sm:grid-cols-3">
                 <div className="rounded-3xl border border-blue-200 bg-blue-50/60 p-6 text-blue-950 shadow-2xs">
-                  <span className="text-xs font-bold tracking-wider uppercase opacity-75">
+                  <span className="text-xs font-bold tracking-wider uppercase">
                     Rentang 1
                   </span>
                   <p className="mt-2 text-2xl font-black">
@@ -189,7 +189,7 @@ export default function HalamanMetodologi() {
                 </div>
 
                 <div className="rounded-3xl border border-amber-200 bg-amber-50/60 p-6 text-amber-950 shadow-2xs">
-                  <span className="text-xs font-bold tracking-wider uppercase opacity-75">
+                  <span className="text-xs font-bold tracking-wider uppercase">
                     Rentang 2
                   </span>
                   <p className="mt-2 text-2xl font-black">
@@ -204,7 +204,7 @@ export default function HalamanMetodologi() {
                 </div>
 
                 <div className="rounded-3xl border border-rose-200 bg-rose-50/60 p-6 text-rose-950 shadow-2xs">
-                  <span className="text-xs font-bold tracking-wider uppercase opacity-75">
+                  <span className="text-xs font-bold tracking-wider uppercase">
                     Rentang 3
                   </span>
                   <p className="mt-2 text-2xl font-black">

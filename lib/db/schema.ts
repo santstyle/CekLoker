@@ -4,6 +4,9 @@
  * Prinsip:
  * - Tabel `checks` menyimpan hanya data agregat dan anonim. Tidak ada kolom
  *   teks lowongan mentah, nomor telepon, email, atau nomor rekening.
+ * - Tabel `masukan_hasil` menyimpan masukan kategorikal atas hasil evaluasi
+ *   (alasan terpilih + kode temuan opsional). Tidak ada catatan bebas, sehingga
+ *   teks iklan pengguna tetap tidak pernah tersimpan di server.
  * - Enum nilai mengikuti spesifikasi §6; kategori aturan mengikuti
  *   `KATEGORI_RULE` di `lib/evaluation/types.ts` agar konsisten dengan mesin.
  * - `rules.legal_basis_ids` berbentuk array id `legal_basis.id`; integritas
@@ -71,6 +74,14 @@ export const jenisWilayah = pgEnum("jenis_wilayah", [
 ]);
 
 export const jenisUpah = pgEnum("jenis_upah", ["UMK", "UMP"]);
+
+export const alasanMasukan = pgEnum("alasan_masukan", [
+  "temuan_keliru",
+  "temuan_terlewat",
+  "kutipan_tidak_sesuai",
+  "rentang_tidak_sesuai",
+  "alasan_lain",
+]);
 
 export const rules = pgTable(
   "rules",
@@ -175,6 +186,24 @@ export const checks = pgTable(
   ],
 );
 
+export const masukanHasil = pgTable(
+  "masukan_hasil",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    checkId: text("check_id").notNull(),
+    alasan: alasanMasukan("alasan").notNull(),
+    ruleCode: text("rule_code"),
+  },
+  (table) => [
+    index("masukan_hasil_created_at_idx").on(table.createdAt),
+    index("masukan_hasil_alasan_idx").on(table.alasan),
+    index("masukan_hasil_check_id_idx").on(table.checkId),
+  ],
+);
+
 export const adminAuditLog = pgTable(
   "admin_audit_log",
   {
@@ -209,6 +238,7 @@ export const schema = {
   regionalWages,
   scamPatterns,
   checks,
+  masukanHasil,
   adminAuditLog,
   adminUsers,
 };

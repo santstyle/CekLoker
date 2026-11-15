@@ -80,7 +80,10 @@ const POLA_GAJI_TINGGI_TANPA_SYARAT = [
   "no experience",
 ] as const;
 
-const DOMAIN_EMAIL_GRATIS = [
+// Sumber tunggal daftar domain layanan email gratis. Diimpor oleh mesin
+// evaluasi (aturan `email_gratis`) dan pemeriksaan kontak di peramban
+// (lib/evaluation/kontak-domain.ts) — jangan diduplikasi di tempat lain.
+export const DOMAIN_EMAIL_GRATIS = [
   "gmail.com",
   "yahoo.com",
   "ymail.com",
@@ -231,9 +234,14 @@ const PENANDA_PERUSAHAAN = [
   "firma",
 ] as const;
 
-const POLA_TELEPON = /(?:\+62|62|0)8[1-9][0-9]{7,11}/g;
-const POLA_EMAIL = /[\w.+-]+@[\w-]+\.[\w.]+/;
-const POLA_SITUS = /https?:\/\/|www\./;
+/**
+ * Pola kontak yang dipakai bersama mesin evaluasi dan pemeriksaan klien.
+ * Catatan: `POLA_TELEPON` memakai flag `g` untuk `matchAll`; selalu buat
+ * instance baru (atau gunakan `matchAll`) agar state `lastIndex` tidak bocor.
+ */
+export const POLA_TELEPON = /(?:\+62|62|0)8[1-9][0-9]{7,11}/g;
+export const POLA_EMAIL = /[\w.+-]+@[\w-]+\.[\w.]+/;
+export const POLA_SITUS = /https?:\/\/|www\./;
 
 /** Metadata aturan; dipakai untuk menyusun temuan dan rujukan hukum. */
 export const RULES: readonly Rule[] = [

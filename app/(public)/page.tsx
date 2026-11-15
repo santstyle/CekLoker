@@ -6,6 +6,7 @@ import { IlustrasiKasus } from "@/components/situs/ilustrasi-kasus";
 import { Faq } from "@/components/situs/faq";
 import { Reveal } from "@/components/situs/reveal";
 import { RULES } from "@/lib/evaluation/rules";
+import { BATAS_BAND } from "@/lib/evaluation/score";
 import { DATA_UPAH_TERSEDIA } from "@/lib/evaluation/wages";
 import { DESKRIPSI_SITUS, metadataHalaman } from "@/lib/situs";
 
@@ -110,7 +111,7 @@ const RENTANG = [
   {
     nomor: "01",
     label: "Rendah",
-    skor: "Skor < 15",
+    skor: `Skor < ${BATAS_BAND.perluDicek}`,
     status: "Tidak ada indikator bermasalah",
     saran: "Tetap verifikasi kanal resmi perusahaan sebelum mengirim berkas.",
     kartu: "from-blue-50 to-white ring-blue-200/80",
@@ -119,7 +120,7 @@ const RENTANG = [
   {
     nomor: "02",
     label: "Perlu dicek",
-    skor: "Skor 15 – 44",
+    skor: `Skor ${BATAS_BAND.perluDicek} – ${BATAS_BAND.tinggi - 1}`,
     status: "Indikator ambigu, perlu konfirmasi",
     saran:
       "Konfirmasi upah, jam kerja, dan identitas perusahaan lewat sumber resmi.",
@@ -129,7 +130,7 @@ const RENTANG = [
   {
     nomor: "03",
     label: "Tinggi",
-    skor: "Skor ≥ 45",
+    skor: `Skor ≥ ${BATAS_BAND.tinggi}`,
     status: "Kombinasi indikator berisiko",
     saran:
       "Jangan kirim berkas apa pun sampai identitas dan legalitasnya terverifikasi.",

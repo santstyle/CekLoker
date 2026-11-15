@@ -7,11 +7,13 @@
  *
  * Kanal resmi disimpan sebagai data. Karena belum ada URL resmi yang
  * diverifikasi (tidak ada di repo dan belum diberikan pemilik), seluruh
- * kanal berstatus perlu_verifikasi dengan url null; antarmuka menampilkan
- * statusnya, bukan tautan karangan.
+ * kanal memiliki `url` dan `tanggalVerifikasi` bernilai null sehingga
+ * berstatus "perlu verifikasi" menurut aturan di `lib/verifikasi.ts`;
+ * antarmuka menampilkan statusnya, bukan tautan karangan.
  */
 
 import type { Band } from "@/lib/evaluation/types";
+import type { SumberVerifikasi } from "@/lib/verifikasi";
 
 export interface LangkahSelanjutnya {
   /** Tindakan singkat yang bisa langsung dilakukan pengguna. */
@@ -52,16 +54,22 @@ export const LANGKAH_SELANJUTNYA: Readonly<Record<Band, LangkahSelanjutnya>> = {
   },
 } as const;
 
-export interface KanalResmi {
+/**
+ * Satu kanal resmi verifikasi/pengaduan.
+ *
+ * Status verifikasi tidak disimpan sebagai bidang terpisah — ia diturunkan
+ * dari `url` dan `tanggalVerifikasi` lewat `statusVerifikasi()` di
+ * `lib/verifikasi.ts`. Dengan begitu data tidak mungkin menyatakan
+ * "terverifikasi" sementara URL-nya belum ada.
+ */
+export interface KanalResmi extends SumberVerifikasi {
   id: string;
   nama: string;
   keterangan: string;
-  /** TODO: isi URL kanal resmi yang sudah diverifikasi; null bila belum. */
+  /** URL kanal resmi yang sudah diverifikasi; null bila belum. */
   url: string | null;
-  /** Selalu true sampai URL diverifikasi oleh pemilik proyek. */
-  perlu_verifikasi: true;
   /** Tanggal verifikasi URL, format ISO YYYY-MM-DD; null bila belum. */
-  tanggal_verifikasi: string | null;
+  tanggalVerifikasi: string | null;
 }
 
 export const KANAL_RESMI: readonly KanalResmi[] = [
@@ -71,16 +79,14 @@ export const KANAL_RESMI: readonly KanalResmi[] = [
     keterangan:
       "Kanal resmi pemerintah untuk pengaduan dan sengketa ketenagakerjaan.",
     url: null,
-    perlu_verifikasi: true,
-    tanggal_verifikasi: null, // TODO: isi setelah URL resmi diverifikasi
+    tanggalVerifikasi: null, // TODO: isi setelah URL resmi diverifikasi
   },
   {
     id: "kepolisian-siber",
     nama: "Kepolisian siber",
     keterangan: "Laporan dugaan tindak pidana penipuan daring.",
     url: null,
-    perlu_verifikasi: true,
-    tanggal_verifikasi: null, // TODO: isi setelah URL resmi diverifikasi
+    tanggalVerifikasi: null, // TODO: isi setelah URL resmi diverifikasi
   },
   {
     id: "cek-rekening",
@@ -88,15 +94,13 @@ export const KANAL_RESMI: readonly KanalResmi[] = [
     keterangan:
       "Verifikasi nama pemilik rekening sebelum melakukan transfer apa pun.",
     url: null,
-    perlu_verifikasi: true,
-    tanggal_verifikasi: null, // TODO: isi setelah URL resmi diverifikasi
+    tanggalVerifikasi: null, // TODO: isi setelah URL resmi diverifikasi
   },
   {
     id: "cek-badan-usaha",
     nama: "Cek badan usaha",
     keterangan: "Verifikasi keberadaan badan usaha dan izin usahanya.",
     url: null,
-    perlu_verifikasi: true,
-    tanggal_verifikasi: null, // TODO: isi setelah URL resmi diverifikasi
+    tanggalVerifikasi: null, // TODO: isi setelah URL resmi diverifikasi
   },
 ] as const;

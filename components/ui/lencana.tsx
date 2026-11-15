@@ -1,12 +1,7 @@
 import type { Band } from "@/lib/evaluation/types";
+import { LABEL_BAND } from "@/lib/evaluation/evaluate";
 
 import { cn } from "./cn";
-
-const LABEL: Record<Band, string> = {
-  rendah: "Rendah",
-  perlu_dicek: "Perlu dicek",
-  tinggi: "Tinggi",
-};
 
 const GAYA_BAND: Record<Band, string> = {
   rendah: "border-blue-200 bg-blue-50 text-blue-800",
@@ -92,7 +87,7 @@ export function Lencana({
       )}
     >
       <IkonBand band={band} />
-      <span>{LABEL[band]}</span>
+      <span>{LABEL_BAND[band]}</span>
     </span>
   );
 }

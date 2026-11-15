@@ -2,6 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import { KANAL_RESMI, LANGKAH_SELANJUTNYA } from "@/lib/langkah-selanjutnya";
 import type { Band } from "@/lib/evaluation/types";
+import {
+  LABEL_STATUS_VERIFIKASI,
+  statusVerifikasi,
+  urlTerverifikasi,
+} from "@/lib/verifikasi";
 
 const BAND: readonly Band[] = ["rendah", "perlu_dicek", "tinggi"];
 
@@ -54,11 +59,20 @@ describe("KANAL_RESMI", () => {
     expect(KANAL_RESMI).toHaveLength(4);
   });
 
-  it("seluruh kanal berstatus perlu_verifikasi dengan url null (belum diverifikasi)", () => {
+  it("seluruh kanal belum punya url maupun tanggal verifikasi", () => {
     for (const kanal of KANAL_RESMI) {
-      expect(kanal.perlu_verifikasi).toBe(true);
       expect(kanal.url).toBeNull();
-      expect(kanal.tanggal_verifikasi).toBeNull();
+      expect(kanal.tanggalVerifikasi).toBeNull();
+    }
+  });
+
+  it("seluruh kanal berstatus perlu_verifikasi menurut aturan bersama", () => {
+    for (const kanal of KANAL_RESMI) {
+      expect(statusVerifikasi(kanal)).toBe("perlu_verifikasi");
+      expect(urlTerverifikasi(kanal)).toBeNull();
+      expect(LABEL_STATUS_VERIFIKASI[statusVerifikasi(kanal)]).toBe(
+        "Perlu verifikasi",
+      );
     }
   });
 

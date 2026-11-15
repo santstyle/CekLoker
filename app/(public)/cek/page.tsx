@@ -3,10 +3,16 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+import { PeriksaKontak } from "@/components/check/periksa-kontak";
 import { PilihLokasi } from "@/components/check/pilih-lokasi";
 import { UnggahPoster } from "@/components/check/unggah-poster";
 import { Container } from "@/components/ui/container";
-import { kunciSimpananHasil, type ResponsEvaluasi } from "@/lib/api/evaluasi";
+import {
+  kunciSimpananHasil,
+  kunciSimpananMeta,
+  type MetaSesi,
+  type ResponsEvaluasi,
+} from "@/lib/api/evaluasi";
 import { RULES } from "@/lib/evaluation/rules";
 import { CATATAN_DATA_UPAH, statusDataUpah } from "@/lib/evaluation/wages";
 
@@ -15,7 +21,7 @@ const MAKSIMAL_KARAKTER = 20_000;
 const JUMLAH_ATURAN = RULES.length;
 
 const CONTOH_LOWONGAN_MENCURIGAKAN = `LOWONGAN KERJA URGENT STAFF ADMIN & DATA ENTRY
-PT Sentosa Maju Bersama — Jakarta Pusat
+PT Contoh Maju Bersama — Jakarta Pusat
 
 Kualifikasi:
 - Pria/Wanita usia 18 - 35 tahun
@@ -30,10 +36,10 @@ Fasilitas & Gaji:
 
 Catatan Penting:
 - Wajib membayar biaya administrasi berkas & seragam kerja sebesar Rp 150.000 yang ditransfer sebelum jadwal wawancara kerja.
-- Kirim data diri langsung melalui pesan WhatsApp pribadi HRD: 0812-9876-5432 (Tidak menerima telepon).`;
+- Kirim data diri langsung melalui pesan WhatsApp pribadi HRD: 0812-0000-0000 (Tidak menerima telepon).`;
 
 const CONTOH_LOWONGAN_WAJAR = `LOWONGAN PEKERJAAN: JUNIOR ACCOUNTANT
-PT Nusantara Berkat Abadi (Kawasan Industri Pulogadung, Jakarta Timur)
+PT Contoh Berkat Abadi (Kawasan Industri Pulogadung, Jakarta Timur)
 
 Tanggung Jawab:
 - Melakukan pencatatan jurnal transaksi harian dan rekonsiliasi kas/bank.
@@ -50,7 +56,7 @@ Kompensasi & Hak Kerja:
 - Jam kerja: Senin - Jumat, 08.30 - 17.30 WIB (40 jam per minggu).
 
 Pendaftaran:
-Kirimkan CV dan portofolio Anda melalui email resmi rekrutmen: karir@nusantaraberkat.co.id dengan subjek "Posisi Akuntan - [Nama Anda]". Proses seleksi bebas biaya apa pun.`;
+Kirimkan CV dan portofolio Anda melalui email resmi rekrutmen: karir@contohberkat.example dengan subjek "Posisi Akuntan - [Nama Anda]". Proses seleksi bebas biaya apa pun.`;
 
 type TabMode = "teks" | "poster";
 
@@ -74,6 +80,7 @@ export default function HalamanCek() {
   const [tabAktif, setTabAktif] = useState<TabMode>("teks");
   const [teks, setTeks] = useState("");
   const [lokasi, setLokasi] = useState("");
+  const [perusahaan, setPerusahaan] = useState("");
   const [mengirim, setMengirim] = useState(false);
   const [pesan, setPesan] = useState<string | null>(null);
   const [sumberOcr, setSumberOcr] = useState(false);
@@ -113,6 +120,7 @@ export default function HalamanCek() {
         body: JSON.stringify({
           teksLowongan: teks,
           ...(lokasi.trim() ? { lokasi: lokasi.trim() } : {}),
+          ...(perusahaan.trim() ? { perusahaan: perusahaan.trim() } : {}),
         }),
       });
       const data: unknown = await respons.json();
@@ -130,6 +138,16 @@ export default function HalamanCek() {
       window.sessionStorage.setItem(
         kunciSimpananHasil(id),
         JSON.stringify({ id, hasil }),
+      );
+      // Meta iklan (lokasi & cara teks diperoleh) hanya disimpan di peramban
+      // agar laporan PDF bisa mencantumkannya. Tidak pernah dikirim ke server.
+      const meta: MetaSesi = {
+        ...(lokasi.trim() ? { lokasi: lokasi.trim() } : {}),
+        sumber: sumberOcr ? "Gambar iklan (OCR)" : "Teks yang ditempel",
+      };
+      window.sessionStorage.setItem(
+        kunciSimpananMeta(id),
+        JSON.stringify(meta),
       );
       // App Router mempertahankan state komponen pada soft navigation
       // kembali ke /cek; tanpa reset ini tombol terjebak "Sedang
@@ -167,6 +185,7 @@ export default function HalamanCek() {
     setTabAktif("teks");
     setTeks(teksContoh);
     setLokasi(lokasiContoh);
+    setPerusahaan("");
     setSumberOcr(false);
     setPesan(null);
     setContohAktif(contoh);
@@ -342,6 +361,11 @@ export default function HalamanCek() {
                     Contoh Iklan Risiko Rendah
                   </button>
                 </div>
+                <p className="mt-2 text-[0.65rem] text-muted">
+                  Seluruh contoh iklan di halaman ini fiktif — nama perusahaan,
+                  domain email, dan nomor telepon tidak merujuk pada pihak mana
+                  pun.
+                </p>
 
                 {tabAktif === "poster" && (
                   <div className="mt-5 rounded-2xl border border-line bg-cream/50 p-5">
@@ -444,6 +468,38 @@ export default function HalamanCek() {
                   <div className="flex flex-col gap-2">
                     <div className="flex items-baseline justify-between gap-4">
                       <label
+                        htmlFor="perusahaan"
+                        className="text-sm font-bold text-ink"
+                      >
+                        Nama perusahaan
+                      </label>
+                      <span className="font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-muted uppercase">
+                        Opsional
+                      </span>
+                    </div>
+                    <input
+                      id="perusahaan"
+                      name="perusahaan"
+                      type="text"
+                      value={perusahaan}
+                      onChange={(perubahan) =>
+                        setPerusahaan(perubahan.target.value)
+                      }
+                      maxLength={200}
+                      autoComplete="organization"
+                      disabled={mengirim}
+                      placeholder="Mis. PT Contoh Berkat Abadi"
+                      className="w-full rounded-2xl border border-line bg-cream/60 px-4 py-3 text-sm text-ink transition-all duration-200 placeholder:text-slate-400 focus:border-aksen focus:bg-paper focus:ring-4 focus:ring-aksen/10 focus:outline-none disabled:opacity-50 sm:text-base"
+                    />
+                    <p className="text-[0.65rem] text-muted">
+                      Dipakai di peramban untuk memeriksa kesesuaian domain
+                      email, dan dikirim bersama evaluasi; tidak disimpan.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-baseline justify-between gap-4">
+                      <label
                         htmlFor="lokasi"
                         className="text-sm font-bold text-ink"
                       >
@@ -467,6 +523,8 @@ export default function HalamanCek() {
                         : CATATAN_DATA_UPAH}
                     </p>
                   </div>
+
+                  <PeriksaKontak teks={teks} perusahaan={perusahaan} />
 
                   {pesan && (
                     <div
