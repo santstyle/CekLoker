@@ -6,6 +6,7 @@ import { useSyncExternalStore } from "react";
 
 import { Container } from "@/components/ui/container";
 import { KartuLangkahSelanjutnya } from "@/components/hasil/kartu-langkah-selanjutnya";
+import { KartuHasilBagikan } from "@/components/hasil/kartu-hasil-bagikan";
 import { kunciSimpananHasil } from "@/lib/api/evaluasi";
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
 import type {
@@ -346,6 +347,9 @@ export default function KontenHasil() {
 
           {/* Langkah Selanjutnya Section */}
           <KartuLangkahSelanjutnya band={hasil.band} />
+
+          {/* Bagikan & Cetak Section */}
+          <KartuHasilBagikan hasil={hasil} id={id} />
 
           {/* Disclaimer & Nav Buttons */}
           <div className="flex flex-col gap-6 border-t border-slate-200/80 pt-6 sm:flex-row sm:items-center sm:justify-between">
