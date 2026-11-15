@@ -44,7 +44,10 @@ export const skemaMasukan = z.object(
       .string("Id sesi wajib diisi.")
       .trim()
       .min(1, "Id sesi wajib diisi.")
-      .max(64, "Id sesi tidak valid."),
+      .max(64, "Id sesi tidak valid.")
+      // Alfabet nanoid: id yang dibuat mesin evaluasi hanya memakai
+      // A-Z, a-z, 0-9, "-", dan "_". Karakter lain ditolak.
+      .regex(/^[A-Za-z0-9_-]{1,64}$/, "Id sesi tidak valid."),
     alasan: z.enum(ALASAN_MASUKAN, {
       error: "Pilih salah satu alasan yang tersedia.",
     }),

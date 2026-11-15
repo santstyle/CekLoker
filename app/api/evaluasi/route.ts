@@ -13,10 +13,14 @@ import {
   type HasilPembatas,
   type PembatasLaju,
 } from "@/lib/security/rate-limit";
+import { periksaUkuranBody } from "@/lib/security/ukuran-body";
 
 /** Kuota permintaan evaluasi per klien dalam satu menit. */
 const BATAS_PER_MENIT = 20;
 const JENDELA_MS = 60_000;
+
+/** Batas maksimum body permintaan evaluasi dalam byte (64 KB). */
+const BATAS_BODY_BYTE = 64 * 1024;
 
 const globalForPembatas = globalThis as unknown as {
   __ceklokerPembatasEvaluasi?: PembatasLaju;
@@ -44,6 +48,11 @@ function headerPembatas(hasil: HasilPembatas): Record<string, string> {
 }
 
 export async function POST(request: Request) {
+  const bodyTerlaluBesar = periksaUkuranBody(request, BATAS_BODY_BYTE);
+  if (bodyTerlaluBesar) {
+    return bodyTerlaluBesar;
+  }
+
   const kuota = pembatasEvaluasi().periksa(ambilKunciKlien(request));
   if (!kuota.diizinkan) {
     return NextResponse.json(

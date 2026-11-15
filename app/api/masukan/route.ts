@@ -10,10 +10,14 @@ import {
   type HasilPembatas,
   type PembatasLaju,
 } from "@/lib/security/rate-limit";
+import { periksaUkuranBody } from "@/lib/security/ukuran-body";
 
 /** Kuota kiriman masukan per klien dalam satu menit. */
 const BATAS_PER_MENIT = 10;
 const JENDELA_MS = 60_000;
+
+/** Batas maksimum body permintaan masukan dalam byte (16 KB). */
+const BATAS_BODY_BYTE = 16 * 1024;
 
 /** Kode temuan yang dikenal mesin evaluasi; masukan hanya boleh menunjuk ini. */
 const ID_RULE_DIKENAL: ReadonlySet<string> = new Set(
@@ -46,6 +50,11 @@ function headerPembatas(hasil: HasilPembatas): Record<string, string> {
 }
 
 export async function POST(request: Request) {
+  const bodyTerlaluBesar = periksaUkuranBody(request, BATAS_BODY_BYTE);
+  if (bodyTerlaluBesar) {
+    return bodyTerlaluBesar;
+  }
+
   const kuota = pembatasMasukan().periksa(ambilKunciKlien(request));
   if (!kuota.diizinkan) {
     return NextResponse.json(
