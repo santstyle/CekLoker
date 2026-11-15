@@ -4,6 +4,11 @@ import { useState } from "react";
 
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
 import { KANAL_RESMI, LANGKAH_SELANJUTNYA } from "@/lib/langkah-selanjutnya";
+import {
+  LABEL_STATUS_VERIFIKASI,
+  statusVerifikasi,
+  urlTerverifikasi,
+} from "@/lib/verifikasi";
 import type { Band } from "@/lib/evaluation/types";
 
 /**
@@ -92,38 +97,43 @@ export function KartuLangkahSelanjutnya({ band }: { band: Band }) {
         Kanal resmi verifikasi &amp; pengaduan
       </h3>
       <ul className="mt-3 flex flex-col gap-2.5">
-        {KANAL_RESMI.map((kanal) => (
-          <li
-            key={kanal.id}
-            className="flex items-start justify-between gap-4 rounded-2xl border border-slate-200/80 bg-slate-50/50 px-4 py-3"
-          >
-            <div>
-              <p className="text-sm font-bold text-slate-900">{kanal.nama}</p>
-              <p className="mt-0.5 text-xs leading-relaxed text-slate-600">
-                {kanal.keterangan}
-              </p>
-              {kanal.tanggal_verifikasi ? (
-                <p className="mt-1 font-mono text-[0.6rem] tracking-[0.15em] text-slate-400 uppercase">
-                  Diverifikasi {kanal.tanggal_verifikasi}
+        {KANAL_RESMI.map((kanal) => {
+          const url = urlTerverifikasi(kanal);
+          const terverifikasi = statusVerifikasi(kanal) === "terverifikasi";
+
+          return (
+            <li
+              key={kanal.id}
+              className="flex items-start justify-between gap-4 rounded-2xl border border-slate-200/80 bg-slate-50/50 px-4 py-3"
+            >
+              <div>
+                <p className="text-sm font-bold text-slate-900">{kanal.nama}</p>
+                <p className="mt-0.5 text-xs leading-relaxed text-slate-600">
+                  {kanal.keterangan}
                 </p>
-              ) : null}
-            </div>
-            {kanal.url ? (
-              <a
-                href={kanal.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex shrink-0 items-center gap-1 rounded-full border border-aksen/30 bg-blue-50 px-3.5 py-1.5 text-xs font-bold text-blue-800 transition-colors hover:bg-blue-100"
-              >
-                Buka kanal <span aria-hidden="true">↗</span>
-              </a>
-            ) : (
-              <span className="shrink-0 rounded-full bg-amber-50 px-2.5 py-1 text-[0.6rem] font-bold tracking-[0.15em] text-amber-700 uppercase">
-                Perlu verifikasi
-              </span>
-            )}
-          </li>
-        ))}
+                {terverifikasi ? (
+                  <p className="mt-1 font-mono text-[0.6rem] tracking-[0.15em] text-slate-400 uppercase">
+                    Diverifikasi {kanal.tanggalVerifikasi}
+                  </p>
+                ) : null}
+              </div>
+              {url ? (
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex shrink-0 items-center gap-1 rounded-full border border-aksen/30 bg-blue-50 px-3.5 py-1.5 text-xs font-bold text-blue-800 transition-colors hover:bg-blue-100"
+                >
+                  Buka kanal <span aria-hidden="true">↗</span>
+                </a>
+              ) : (
+                <span className="shrink-0 rounded-full bg-amber-50 px-2.5 py-1 text-[0.6rem] font-bold tracking-[0.15em] text-amber-700 uppercase">
+                  {LABEL_STATUS_VERIFIKASI.perlu_verifikasi}
+                </span>
+              )}
+            </li>
+          );
+        })}
       </ul>
       <p className="mt-3 text-[0.65rem] leading-relaxed text-slate-400">
         Tautan kanal resmi belum dipasang sampai URL-nya diverifikasi dari

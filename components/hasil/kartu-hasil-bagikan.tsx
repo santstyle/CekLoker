@@ -2,17 +2,11 @@
 
 import { useCallback, useState } from "react";
 
+import { LABEL_BAND } from "@/lib/evaluation/evaluate";
 import type { HasilEvaluasi } from "@/lib/evaluation/types";
 import { unduhLaporanPdf } from "@/lib/hasil/pdf";
 import type { MetaLaporan } from "@/lib/hasil/laporan";
-
-type Band = "rendah" | "perlu_dicek" | "tinggi";
-
-const LABEL_BAND_TAMPIL: Record<Band, string> = {
-  rendah: "Rendah",
-  perlu_dicek: "Perlu dicek",
-  tinggi: "Tinggi",
-};
+import type { Band } from "@/lib/evaluation/types";
 
 function normalisasiBand(band: string): Band {
   if (band === "rendah" || band === "tinggi") return band;
@@ -49,7 +43,7 @@ export function KartuHasilBagikan({
   const [sertakanKutipan, setSertakanKutipan] = useState(false);
 
   const band = normalisasiBand(hasil.band);
-  const labelBand = LABEL_BAND_TAMPIL[band];
+  const labelBand = LABEL_BAND[band];
 
   const tanganiUnduh = useCallback(async () => {
     setStatus("menyiapkan");
