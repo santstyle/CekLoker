@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+import { PeriksaKontak } from "@/components/check/periksa-kontak";
 import { PilihLokasi } from "@/components/check/pilih-lokasi";
 import { UnggahPoster } from "@/components/check/unggah-poster";
 import { Container } from "@/components/ui/container";
@@ -79,6 +80,7 @@ export default function HalamanCek() {
   const [tabAktif, setTabAktif] = useState<TabMode>("teks");
   const [teks, setTeks] = useState("");
   const [lokasi, setLokasi] = useState("");
+  const [perusahaan, setPerusahaan] = useState("");
   const [mengirim, setMengirim] = useState(false);
   const [pesan, setPesan] = useState<string | null>(null);
   const [sumberOcr, setSumberOcr] = useState(false);
@@ -118,6 +120,7 @@ export default function HalamanCek() {
         body: JSON.stringify({
           teksLowongan: teks,
           ...(lokasi.trim() ? { lokasi: lokasi.trim() } : {}),
+          ...(perusahaan.trim() ? { perusahaan: perusahaan.trim() } : {}),
         }),
       });
       const data: unknown = await respons.json();
@@ -182,6 +185,7 @@ export default function HalamanCek() {
     setTabAktif("teks");
     setTeks(teksContoh);
     setLokasi(lokasiContoh);
+    setPerusahaan("");
     setSumberOcr(false);
     setPesan(null);
     setContohAktif(contoh);
@@ -459,6 +463,38 @@ export default function HalamanCek() {
                   <div className="flex flex-col gap-2">
                     <div className="flex items-baseline justify-between gap-4">
                       <label
+                        htmlFor="perusahaan"
+                        className="text-sm font-bold text-ink"
+                      >
+                        Nama perusahaan
+                      </label>
+                      <span className="font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-muted uppercase">
+                        Opsional
+                      </span>
+                    </div>
+                    <input
+                      id="perusahaan"
+                      name="perusahaan"
+                      type="text"
+                      value={perusahaan}
+                      onChange={(perubahan) =>
+                        setPerusahaan(perubahan.target.value)
+                      }
+                      maxLength={200}
+                      autoComplete="organization"
+                      disabled={mengirim}
+                      placeholder="Mis. PT Nusantara Berkat Abadi"
+                      className="w-full rounded-2xl border border-line bg-cream/60 px-4 py-3 text-sm text-ink transition-all duration-200 placeholder:text-slate-400 focus:border-aksen focus:bg-paper focus:ring-4 focus:ring-aksen/10 focus:outline-none disabled:opacity-50 sm:text-base"
+                    />
+                    <p className="text-[0.65rem] text-muted">
+                      Dipakai di peramban untuk memeriksa kesesuaian domain
+                      email, dan dikirim bersama evaluasi; tidak disimpan.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-baseline justify-between gap-4">
+                      <label
                         htmlFor="lokasi"
                         className="text-sm font-bold text-ink"
                       >
@@ -482,6 +518,8 @@ export default function HalamanCek() {
                         : CATATAN_DATA_UPAH}
                     </p>
                   </div>
+
+                  <PeriksaKontak teks={teks} perusahaan={perusahaan} />
 
                   {pesan && (
                     <div
