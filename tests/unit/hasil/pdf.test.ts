@@ -53,10 +53,7 @@ function fetchPublik(input: string | URL): Promise<Response> {
 }
 
 beforeEach(() => {
-  vi.stubGlobal(
-    "fetch",
-    vi.fn(fetchPublik) as unknown as typeof fetch,
-  );
+  vi.stubGlobal("fetch", vi.fn(fetchPublik) as unknown as typeof fetch);
 });
 
 afterEach(() => {
