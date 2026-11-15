@@ -35,13 +35,13 @@ test.describe("Pemeriksaan kontak & domain di klien", () => {
     await page
       .locator("#teks-lowongan")
       .fill(
-        "Dibutuhkan staf administrasi untuk PT Sentosa Maju Bersama. Lamar ke rekrut.sentosa@gmail.com atau hubungi 0812-9876-5432.",
+        "Dibutuhkan staf administrasi untuk PT Contoh Maju Bersama. Lamar ke contoh.rekrutmen@gmail.com atau hubungi 0812-0000-0000.",
       );
 
     const panel = page.locator("#periksa-kontak");
     await expect(panel.getByText("Domain layanan gratis")).toBeVisible();
-    await expect(panel.getByText("rekrut.sentosa@gmail.com")).toBeVisible();
-    await expect(panel.getByText("081298765432")).toBeVisible();
+    await expect(panel.getByText("contoh.rekrutmen@gmail.com")).toBeVisible();
+    await expect(panel.getByText("081200000000")).toBeVisible();
   });
 
   test("mengecek kesesuaian domain dengan nama perusahaan yang diketik", async ({
@@ -52,10 +52,10 @@ test.describe("Pemeriksaan kontak & domain di klien", () => {
     await page
       .getByRole("button", { name: "Contoh Iklan Risiko Rendah" })
       .click();
-    await page.locator("#perusahaan").fill("PT Nusantara Berkat Abadi");
+    await page.locator("#perusahaan").fill("PT Contoh Berkat Abadi");
 
     const panel = page.locator("#periksa-kontak");
-    await expect(panel.getByText("karir@nusantaraberkat.co.id")).toBeVisible();
+    await expect(panel.getByText("karir@contohberkat.example")).toBeVisible();
     await expect(
       panel.getByText("Domain menyerupai nama perusahaan"),
     ).toBeVisible();
@@ -69,7 +69,7 @@ test.describe("Pemeriksaan kontak & domain di klien", () => {
     await page
       .locator("#teks-lowongan")
       .fill(
-        "Dibutuhkan kurir area Jakarta. Hubungi 0813-1111-2222 setiap hari kerja pukul 08 sampai 17.",
+        "Dibutuhkan kurir area Jakarta. Hubungi 0813-0000-0000 setiap hari kerja pukul 08 sampai 17.",
       );
 
     await expect(page.getByRole("status")).toContainText(
@@ -90,11 +90,11 @@ test.describe("Pemeriksaan kontak & domain di klien", () => {
 
     await page.goto("/cek");
 
-    await page.locator("#perusahaan").fill("PT Nusantara Berkat Abadi");
+    await page.locator("#perusahaan").fill("PT Contoh Berkat Abadi");
     await page
       .locator("#teks-lowongan")
       .fill(
-        "Dibutuhkan staf data entry. Lamar ke karir@nusantaraberkat.co.id atau www.nusantaraberkat.co.id/karir.",
+        "Dibutuhkan staf data entry. Lamar ke karir@contohberkat.example atau www.contohberkat.example/karir.",
       );
 
     await expect(

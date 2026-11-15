@@ -85,7 +85,7 @@ export function domainGratis(domain: string): boolean {
  * Apakah domain email menyerupai nama perusahaan.
  *
  * Perbandingan bersifat substring pada domain tanpa titik, sehingga
- * subdomain (mis. `karir.nusantara.co.id`) tetap terhitung. Token dengan
+ * subdomain (mis. `karir.contoh.example`) tetap terhitung. Token dengan
  * panjang >= 4 yang cukup khas dipakai; bila seluruh token pendek (< 4
  * huruf), kecocokan mengharuskan SEMUA token muncul agar tidak terlalu longgar.
  *
@@ -126,7 +126,7 @@ export function ekstrakEmail(teks: string): string[] {
 
 /** Nomor telepon unik di teks, dalam bentuk rapat. */
 export function ekstrakTelepon(teks: string): string[] {
-  // Rapatkan dulu: 0812-9876-5432 → 081298765432 (sama seperti mesin evaluasi).
+  // Rapatkan dulu: 0812-0000-0000 → 081200000000 (sama seperti mesin evaluasi).
   const rapat = teks.replace(/[\s().-]/g, "");
   const hasil: string[] = [];
   const terlihat = new Set<string>();

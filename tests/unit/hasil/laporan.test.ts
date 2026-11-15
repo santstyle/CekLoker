@@ -47,7 +47,7 @@ function hasilContoh(band: Band, skor: number): HasilEvaluasi {
         kekuatan: "lemah",
         faktor: 0.5,
         kontribusi: 3,
-        bukti: ["mitra.niaga@gmail.com"],
+        bukti: ["contoh.mitra@gmail.com"],
         penjelasan: "Kontak memakai domain email gratis.",
       },
     ],

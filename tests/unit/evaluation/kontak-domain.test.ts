@@ -15,16 +15,18 @@ import {
 describe("ekstrakEmail", () => {
   it("mengambil seluruh email unik dalam huruf kecil", () => {
     expect(
-      ekstrakEmail("Hubungi HRD@Contoh.Co.Id atau hr@example.com"),
-    ).toEqual(["hrd@contoh.co.id", "hr@example.com"]);
+      ekstrakEmail("Hubungi HRD@Contoh.Example atau hr@example.com"),
+    ).toEqual(["hrd@contoh.example", "hr@example.com"]);
   });
 
   it("membuang titik di ujung alamat", () => {
-    expect(ekstrakEmail("kirim ke a@b.co.id.")).toEqual(["a@b.co.id"]);
+    expect(ekstrakEmail("kirim ke a@b.example.")).toEqual(["a@b.example"]);
   });
 
   it("mengabaikan kemunculan ganda", () => {
-    expect(ekstrakEmail("a@b.co.id dan A@B.co.id")).toEqual(["a@b.co.id"]);
+    expect(ekstrakEmail("a@b.example dan A@B.example")).toEqual([
+      "a@b.example",
+    ]);
   });
 
   it("mengembalikan kosong bila tidak ada email", () => {
@@ -34,14 +36,14 @@ describe("ekstrakEmail", () => {
 
 describe("ekstrakTelepon", () => {
   it("merapikan nomor yang terputus tanda hubung dan spasi", () => {
-    expect(ekstrakTelepon("Hubungi 0812-9876-5432 atau 0813 123 4567")).toEqual(
-      ["081298765432", "08131234567"],
+    expect(ekstrakTelepon("Hubungi 0812-0000-0000 atau 0813 000 0000")).toEqual(
+      ["081200000000", "08130000000"],
     );
   });
 
   it("mengenali awalan +62", () => {
-    expect(ekstrakTelepon("WhatsApp +62 812-9876-5432")).toEqual([
-      "+6281298765432",
+    expect(ekstrakTelepon("WhatsApp +62 812-0000-0000")).toEqual([
+      "+6281200000000",
     ]);
   });
 
@@ -54,14 +56,14 @@ describe("ekstrakSitus", () => {
   it("mengambil URL lengkap dan bentuk www", () => {
     expect(
       ekstrakSitus(
-        "Lamar via https://karir.contoh.co.id/page atau www.cekloker.id",
+        "Lamar via https://karir.contoh.example/page atau www.contoh.example",
       ),
-    ).toEqual(["https://karir.contoh.co.id/page", "www.cekloker.id"]);
+    ).toEqual(["https://karir.contoh.example/page", "www.contoh.example"]);
   });
 
   it("membuang tanda baca di ujung URL", () => {
-    expect(ekstrakSitus("kunjungi https://contoh.co.id.")).toEqual([
-      "https://contoh.co.id",
+    expect(ekstrakSitus("kunjungi https://contoh.example.")).toEqual([
+      "https://contoh.example",
     ]);
   });
 });
@@ -82,7 +84,7 @@ describe("domainGratis", () => {
   });
 
   it("bukan domain gratis bila berbeda", () => {
-    expect(domainGratis("nusantaraberkat.co.id")).toBe(false);
+    expect(domainGratis("contohberkat.example")).toBe(false);
     expect(domainGratis("contoh.go.id")).toBe(false);
   });
 
@@ -93,8 +95,8 @@ describe("domainGratis", () => {
 
 describe("tokenNamaPerusahaan", () => {
   it("membuang kata bentuk badan usaha dan token pendek", () => {
-    expect(tokenNamaPerusahaan("PT Nusantara Berkat Abadi (Persero)")).toEqual([
-      "nusantara",
+    expect(tokenNamaPerusahaan("PT Contoh Berkat Abadi (Persero)")).toEqual([
+      "contoh",
       "berkat",
       "abadi",
     ]);
@@ -113,27 +115,27 @@ describe("domainMenyerupaiPerusahaan", () => {
   it("cocok bila domain memuat token nama perusahaan", () => {
     expect(
       domainMenyerupaiPerusahaan(
-        "nusantaraberkat.co.id",
-        "PT Nusantara Berkat Abadi",
+        "contohberkat.example",
+        "PT Contoh Berkat Abadi",
       ),
     ).toBe(true);
   });
 
   it("cocok pada subdomain", () => {
     expect(
-      domainMenyerupaiPerusahaan("karir.nusantara.co.id", "PT Nusantara"),
+      domainMenyerupaiPerusahaan("karir.contoh.example", "PT Contoh"),
     ).toBe(true);
   });
 
   it("tidak cocok bila tidak ada kaitan", () => {
     expect(
-      domainMenyerupaiPerusahaan("gmail.com", "PT Nusantara Berkat Abadi"),
+      domainMenyerupaiPerusahaan("gmail.com", "PT Contoh Berkat Abadi"),
     ).toBe(false);
   });
 
   it("mengembalikan null bila nama perusahaan kosong", () => {
-    expect(domainMenyerupaiPerusahaan("nusantara.co.id", "")).toBeNull();
-    expect(domainMenyerupaiPerusahaan("nusantara.co.id", "PT")).toBeNull();
+    expect(domainMenyerupaiPerusahaan("contoh.example", "")).toBeNull();
+    expect(domainMenyerupaiPerusahaan("contoh.example", "PT")).toBeNull();
   });
 
   it("menyaratkan seluruh token pendek muncul agar tidak longgar", () => {
@@ -147,28 +149,28 @@ describe("domainMenyerupaiPerusahaan", () => {
 describe("analisisKontak", () => {
   it("merangkum email, telepon, dan situs sekaligus", () => {
     const hasil = analisisKontak(
-      "Lamar ke hrd@nusantaraberkat.co.id atau 0812-9876-5432, www.nusantara.co.id",
-      "PT Nusantara Berkat Abadi",
+      "Lamar ke hrd@contohberkat.example atau 0812-0000-0000, www.contoh.example",
+      "PT Contoh Berkat Abadi",
     );
 
     expect(hasil.email).toHaveLength(1);
-    expect(hasil.email[0].domain).toBe("nusantaraberkat.co.id");
+    expect(hasil.email[0].domain).toBe("contohberkat.example");
     expect(hasil.email[0].domainGratis).toBe(false);
     expect(hasil.email[0].menyerupaiPerusahaan).toBe(true);
-    expect(hasil.telepon).toEqual(["081298765432"]);
-    expect(hasil.situs).toEqual(["www.nusantara.co.id"]);
+    expect(hasil.telepon).toEqual(["081200000000"]);
+    expect(hasil.situs).toEqual(["www.contoh.example"]);
     expect(hasil.hanyaTelepon).toBe(false);
     expect(hasil.domainGratis).toBe(false);
   });
 
   it("menandai email layanan gratis", () => {
-    const hasil = analisisKontak("Kirim lamaran ke rekrut@gmail.com");
+    const hasil = analisisKontak("Kirim lamaran ke contoh.rekrutmen@gmail.com");
     expect(hasil.email[0].domainGratis).toBe(true);
     expect(hasil.domainGratis).toBe(true);
   });
 
   it("menandai hanyaTelepon bila hanya ada nomor", () => {
-    const hasil = analisisKontak("Hubungi 0812-9876-5432 segera.");
+    const hasil = analisisKontak("Hubungi 0812-0000-0000 segera.");
     expect(hasil.hanyaTelepon).toBe(true);
     expect(hasil.email).toEqual([]);
     expect(hasil.situs).toEqual([]);
@@ -176,22 +178,22 @@ describe("analisisKontak", () => {
 
   it("bukan hanyaTelepon bila ada email", () => {
     const hasil = analisisKontak(
-      "Hubungi 0812-9876-5432 atau email hr@firma.co.id",
+      "Hubungi 0812-0000-0000 atau email hr@contohfirma.example",
     );
     expect(hasil.hanyaTelepon).toBe(false);
   });
 
   it("menyerupaiPerusahaan null bila nama perusahaan tidak diisi", () => {
-    const hasil = analisisKontak("hubungi hr@firma.co.id");
+    const hasil = analisisKontak("hubungi hr@contohfirma.example");
     expect(hasil.email[0].menyerupaiPerusahaan).toBeNull();
   });
 });
 
 describe("adaKontak", () => {
   it("benar bila ada email, telepon, atau situs", () => {
-    expect(adaKontak("email a@b.co.id")).toBe(true);
-    expect(adaKontak("telepon 0812-3456-7890")).toBe(true);
-    expect(adaKontak("buka www.contoh.co.id")).toBe(true);
+    expect(adaKontak("email a@b.example")).toBe(true);
+    expect(adaKontak("telepon 0812-0000-0000")).toBe(true);
+    expect(adaKontak("buka www.contoh.example")).toBe(true);
   });
 
   it("salah bila teks tanpa kontak", () => {
@@ -201,6 +203,6 @@ describe("adaKontak", () => {
 
 describe("domainDariEmail", () => {
   it("mengambil domain setelah @ dalam huruf kecil", () => {
-    expect(domainDariEmail("HRD@ContoH.Co.Id")).toBe("contoh.co.id");
+    expect(domainDariEmail("HRD@Contoh.Example")).toBe("contoh.example");
   });
 });

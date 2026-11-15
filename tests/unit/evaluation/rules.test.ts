@@ -247,15 +247,15 @@ describe("detektor per aturan", () => {
     it("menandai lowongan dengan nomor telepon saja", () => {
       expect(
         cariDetektor("kontak_whatsapp_saja").deteksi(
-          konteks("hubungi 081234567890"),
+          konteks("hubungi 081200000000"),
         ),
-      ).toEqual(["081234567890"]);
+      ).toEqual(["081200000000"]);
     });
 
     it("tidak menandai bila ada email resmi", () => {
       expect(
         cariDetektor("kontak_whatsapp_saja").deteksi(
-          konteks("hubungi 081234567890 atau email hr@gmail.com"),
+          konteks("hubungi 081200000000 atau email hr@gmail.com"),
         ),
       ).toEqual([]);
     });
@@ -281,7 +281,7 @@ describe("detektor per aturan", () => {
     it("tidak menandai email domain resmi", () => {
       expect(
         cariDetektor("email_gratis").deteksi(
-          konteks("kirim cv ke hr@perusahaan.co.id"),
+          konteks("kirim cv ke hr@contoh-perusahaan.example"),
         ),
       ).toEqual([]);
     });
@@ -505,7 +505,7 @@ describe("detektor per aturan", () => {
     it("tidak menandai kanal resmi", () => {
       expect(
         cariDetektor("rekrut_via_dm_samar").deteksi(
-          konteks("kirim email ke hrd@perusahaan.co.id"),
+          konteks("kirim email ke hrd@contoh-perusahaan.example"),
         ),
       ).toEqual([]);
     });

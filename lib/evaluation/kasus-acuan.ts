@@ -17,6 +17,11 @@ import type { Band } from "./types";
  *
  * Tidak ada teks lowongan pengguna di berkas ini: seluruh teks adalah contoh
  * sintetis yang ditulis untuk pengujian.
+ *
+ * Seluruh nama perusahaan, domain email, dan nomor telepon di sini fiktif dan
+ * sengaja dibuat tidak mungkin milik pihak mana pun: nama diawali "Contoh",
+ * domain memakai TLD cadangan .example (RFC 2606), dan nomor telepon
+ * berakhiran 0000-0000. Jangan mengembalikannya ke nama atau nomor nyata.
  */
 export type KasusAcuan = {
   id: string;
@@ -33,7 +38,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   // --- rendah: diharapkan tanpa temuan ---
   {
     id: "c1_software_engineer",
-    teks: "PT Sinar Teknologi membuka lowongan Software Engineer. Gaji Rp 8.000.000 per bulan. Kirim CV ke hr@sinarteknologi.co.id.",
+    teks: "PT Contoh Teknologi membuka lowongan Software Engineer. Gaji Rp 8.000.000 per bulan. Kirim CV ke hr@contoh-teknologi.example.",
     lokasi: "Jakarta",
     expectedBand: "rendah",
     expectedRuleIds: [],
@@ -43,7 +48,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "c2_admin_keuangan",
-    teks: "PT Rasa Nusantara mencari Admin Keuangan. Gaji Rp 5.000.000 per bulan. Lamar melalui rekrutmen@rasanusantara.co.id.",
+    teks: "PT Contoh Rasa Nusantara mencari Admin Keuangan. Gaji Rp 5.000.000 per bulan. Lamar melalui rekrutmen@contoh-rasanusantara.example.",
     lokasi: "Bandung, Jawa Barat",
     expectedBand: "rendah",
     expectedRuleIds: [],
@@ -52,7 +57,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "c3_staff_marketing",
-    teks: "PT Karya Logistik membuka posisi Staff Marketing. Gaji Rp 6.500.000 per bulan. Kirim CV ke karir@karyalogistik.co.id.",
+    teks: "PT Contoh Karya Logistik membuka posisi Staff Marketing. Gaji Rp 6.500.000 per bulan. Kirim CV ke karir@contoh-karyalogistik.example.",
     lokasi: "Surabaya, Jawa Timur",
     expectedBand: "rendah",
     expectedRuleIds: [],
@@ -61,7 +66,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "c4_data_analyst_remote",
-    teks: "PT Data Cerdas mencari Data Analyst, remote WFH. Gaji Rp 9.500.000 per bulan. Lamar via talent@datacerdas.co.id.",
+    teks: "PT Contoh Data Cerdas mencari Data Analyst, remote WFH. Gaji Rp 9.500.000 per bulan. Lamar via talent@contoh-datacerdas.example.",
     lokasi: "Jakarta",
     expectedBand: "rendah",
     expectedRuleIds: [],
@@ -70,7 +75,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "c5_staff_gudang",
-    teks: "PT Gudang Sejahtera membuka lowongan Staff Gudang. Gaji Rp 4.200.000 per bulan. Kirim CV ke hrd@gudangsejahtera.co.id.",
+    teks: "PT Contoh Gudang Sejahtera membuka lowongan Staff Gudang. Gaji Rp 4.200.000 per bulan. Kirim CV ke hrd@contoh-gudangsejahtera.example.",
     lokasi: "Semarang, Jawa Tengah",
     expectedBand: "rendah",
     expectedRuleIds: [],
@@ -79,7 +84,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "c6_customer_service",
-    teks: "PT Layanan Prima mencari Customer Service. Gaji Rp 4.500.000 per bulan. Lamar melalui rekrutmen@layananprima.co.id.",
+    teks: "PT Contoh Layanan Prima mencari Customer Service. Gaji Rp 4.500.000 per bulan. Lamar melalui rekrutmen@contoh-layananprima.example.",
     lokasi: "Medan, Sumatera Utara",
     expectedBand: "rendah",
     expectedRuleIds: [],
@@ -88,7 +93,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "c7_desainer_grafis",
-    teks: "PT Kreasi Visual membuka posisi Desainer Grafis. Gaji Rp 5.500.000 per bulan. Kirim portofolio ke karir@kreasivisual.co.id.",
+    teks: "PT Contoh Kreasi Visual membuka posisi Desainer Grafis. Gaji Rp 5.500.000 per bulan. Kirim portofolio ke karir@contoh-kreasivisual.example.",
     lokasi: "Yogyakarta, DI Yogyakarta",
     expectedBand: "rendah",
     expectedRuleIds: [],
@@ -97,7 +102,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "c8_barista",
-    teks: "PT Kopi Bali Jaya mencari Barista. Gaji Rp 3.800.000 per bulan. Lamar melalui rekrutmen@kopibalijaya.co.id.",
+    teks: "PT Contoh Kopi Bali Jaya mencari Barista. Gaji Rp 3.800.000 per bulan. Lamar melalui rekrutmen@contoh-kopibalijaya.example.",
     lokasi: "Denpasar, Bali",
     expectedBand: "rendah",
     expectedRuleIds: [],
@@ -106,7 +111,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "c9_perawat",
-    teks: "PT Medika Sehat membuka lowongan Perawat Klinik. Gaji Rp 5.200.000 per bulan. Kirim lamaran ke rekrutmen@medikasehat.co.id.",
+    teks: "PT Contoh Medika Sehat membuka lowongan Perawat Klinik. Gaji Rp 5.200.000 per bulan. Kirim lamaran ke rekrutmen@contoh-medikasehat.example.",
     lokasi: "Bekasi, Jawa Barat",
     expectedBand: "rendah",
     expectedRuleIds: [],
@@ -115,7 +120,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "c10_guru",
-    teks: "PT Cerdas Edukasi mencari Guru Matematika SMA. Gaji Rp 6.000.000 per bulan. Lamar melalui karir@cerdasedukasi.co.id.",
+    teks: "PT Contoh Cerdas Edukasi mencari Guru Matematika SMA. Gaji Rp 6.000.000 per bulan. Lamar melalui karir@contoh-cerdasedukasi.example.",
     lokasi: "Malang, Jawa Timur",
     expectedBand: "rendah",
     expectedRuleIds: [],
@@ -124,7 +129,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "c11_supervisor",
-    teks: "PT Ritel Modern membuka posisi Supervisor Toko. Gaji Rp 7.500.000 per bulan. Kirim CV ke hrd@ritelmodern.co.id.",
+    teks: "PT Contoh Ritel Modern membuka posisi Supervisor Toko. Gaji Rp 7.500.000 per bulan. Kirim CV ke hrd@contoh-ritelmodern.example.",
     lokasi: "Tangerang, Banten",
     expectedBand: "rendah",
     expectedRuleIds: [],
@@ -133,7 +138,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "c12_teknisi",
-    teks: "PT Agro Lestari mencari Teknisi Mesin. Gaji Rp 6.800.000 per bulan. Lamar via rekrutmen@agrolestari.co.id.",
+    teks: "PT Contoh Agro Lestari mencari Teknisi Mesin. Gaji Rp 6.800.000 per bulan. Lamar via rekrutmen@contoh-agrolestari.example.",
     lokasi: "Palembang, Sumatera Selatan",
     expectedBand: "rendah",
     expectedRuleIds: [],
@@ -142,7 +147,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "c13_tour_guide",
-    teks: "PT Wisata Bahari membuka lowongan Tour Guide. Gaji Rp 4.800.000 per bulan. Kirim CV ke karir@wisatabahari.co.id.",
+    teks: "PT Contoh Wisata Bahari membuka lowongan Tour Guide. Gaji Rp 4.800.000 per bulan. Kirim CV ke karir@contoh-wisatabahari.example.",
     lokasi: "Denpasar, Bali",
     expectedBand: "rendah",
     expectedRuleIds: [],
@@ -153,7 +158,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   // --- perlu dicek: indikator yang perlu dikonfirmasi ---
   {
     id: "d1_admin_online_shop",
-    teks: "Lowongan admin online shop. Gaji menarik, kuota terbatas. Hubungi WhatsApp 0812-3456-7890 sekarang.",
+    teks: "Lowongan admin online shop. Gaji menarik, kuota terbatas. Hubungi WhatsApp 0812-0000-0000 sekarang.",
     expectedBand: "perlu_dicek",
     expectedRuleIds: [
       "kontak_whatsapp_saja",
@@ -167,7 +172,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "d2_operator_produksi",
-    teks: "PT Baja Perkasa membuka lowongan Operator Produksi. Jam kerja 12 jam per hari, lembur wajib. Kuota terbatas.",
+    teks: "PT Contoh Baja Perkasa membuka lowongan Operator Produksi. Jam kerja 12 jam per hari, lembur wajib. Kuota terbatas.",
     lokasi: "Jakarta",
     expectedBand: "perlu_dicek",
     expectedRuleIds: [
@@ -198,7 +203,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "d4_helper_pabrik",
-    teks: "Dicari helper pabrik. Lembur wajib, shift malam. Hubungi WhatsApp 0857-1122-3344 untuk informasi.",
+    teks: "Dicari helper pabrik. Lembur wajib, shift malam. Hubungi WhatsApp 0857-0000-0000 untuk informasi.",
     expectedBand: "perlu_dicek",
     expectedRuleIds: [
       "kontak_whatsapp_saja",
@@ -212,7 +217,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "d5_kurir",
-    teks: "PT Cahaya Abadi membuka lowongan Kurir. Jam kerja 12 jam tanpa hari libur. Lamar via WhatsApp 0813-9988-7766.",
+    teks: "PT Contoh Cahaya Abadi membuka lowongan Kurir. Jam kerja 12 jam tanpa hari libur. Lamar via WhatsApp 0813-0000-0000.",
     lokasi: "Jakarta",
     expectedBand: "perlu_dicek",
     expectedRuleIds: [
@@ -226,7 +231,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "d6_sales_gratis_email",
-    teks: "PT Mitra Niaga mencari Sales, khusus pria. Jam kerja 12 jam per hari. Lamar ke mitra.niaga@gmail.com, kuota terbatas.",
+    teks: "PT Contoh Mitra Niaga mencari Sales, khusus pria. Jam kerja 12 jam per hari. Lamar ke contoh.mitra@gmail.com, kuota terbatas.",
     lokasi: "Jawa Barat",
     expectedBand: "perlu_dicek",
     expectedRuleIds: [
@@ -242,7 +247,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "d7_staff_produksi",
-    teks: "PT Sumber Makmur mencari Staff Produksi, khusus pria. Jam kerja 12 jam tanpa hari libur, lembur wajib.",
+    teks: "PT Contoh Sumber Makmur mencari Staff Produksi, khusus pria. Jam kerja 12 jam tanpa hari libur, lembur wajib.",
     lokasi: "Surabaya, Jawa Timur",
     expectedBand: "perlu_dicek",
     expectedRuleIds: [
@@ -256,7 +261,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "d8_kasir_minimarket",
-    teks: "Dicari kasir minimarket. Gaji belum ditentukan, kuota terbatas. Hubungi WhatsApp 0899-8877-6655.",
+    teks: "Dicari kasir minimarket. Gaji belum ditentukan, kuota terbatas. Hubungi WhatsApp 0899-0000-0000.",
     expectedBand: "perlu_dicek",
     expectedRuleIds: [
       "kontak_whatsapp_saja",
@@ -284,7 +289,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "d10_loker_online",
-    teks: "Loker online! Kerja dari rumah, gaji besar tanpa batas. Info lebih lanjut hubungi WA 0812-1111-2222.",
+    teks: "Loker online! Kerja dari rumah, gaji besar tanpa batas. Info lebih lanjut hubungi WA 0815-0000-0000.",
     expectedBand: "perlu_dicek",
     expectedRuleIds: [
       "kontak_whatsapp_saja",
@@ -297,7 +302,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "d11_satpam",
-    teks: "PT Sinar Abadi membuka lowongan Satpam. Shift malam, jam kerja 12 jam per hari. Gaji Rp 3.500.000 per bulan.",
+    teks: "PT Contoh Sinar Abadi membuka lowongan Satpam. Shift malam, jam kerja 12 jam per hari. Gaji Rp 3.500.000 per bulan.",
     lokasi: "Jakarta",
     expectedBand: "perlu_dicek",
     expectedRuleIds: ["lembur_tanpa_batas", "waktu_kerja_berlebih"],
@@ -307,7 +312,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "d12_spg_wanita",
-    teks: "Lowongan SPG diutamakan wanita, menarik. Kirim lamaran ke spg.loker@gmail.com.",
+    teks: "Lowongan SPG diutamakan wanita, menarik. Kirim lamaran ke contoh.spg@gmail.com.",
     expectedBand: "perlu_dicek",
     expectedRuleIds: [
       "email_gratis",
@@ -321,7 +326,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "d13_content_writer",
-    teks: "Dicari Content Writer, diutamakan wanita. Gaji Rp 5.000.000 per bulan. Kirim portofolio ke kreasidigital.hr@gmail.com.",
+    teks: "Dicari Content Writer, diutamakan wanita. Gaji Rp 5.000.000 per bulan. Kirim portofolio ke contoh.kreasi@gmail.com.",
     expectedBand: "perlu_dicek",
     expectedRuleIds: [
       "email_gratis",
@@ -334,7 +339,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "d14_mandor",
-    teks: "PT Bangun Jaya mencari Mandor Proyek. Lembur wajib tanpa batas. Hubungi WhatsApp 0856-2233-4455.",
+    teks: "PT Contoh Bangun Jaya mencari Mandor Proyek. Lembur wajib tanpa batas. Hubungi WhatsApp 0856-0000-0000.",
     lokasi: "Balikpapan, Kalimantan Timur",
     expectedBand: "perlu_dicek",
     expectedRuleIds: [
@@ -350,7 +355,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   // --- tinggi: kombinasi indikator risiko ---
   {
     id: "t1_biaya_administrasi",
-    teks: "PT Berkah Jaya membuka lowongan Staff Administrasi. Wajib bayar biaya administrasi Rp150.000 sebelum tes.",
+    teks: "PT Contoh Berkah Jaya membuka lowongan Staff Administrasi. Wajib bayar biaya administrasi Rp150.000 sebelum tes.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
     expectedRuleIds: ["pungutan_biaya", "upah_tidak_diungkap"],
@@ -359,7 +364,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "t2_penempatan_korea",
-    teks: "PT Global Mandiri membuka penempatan kerja Korea. Wajib paspor dan visa. Informasi lebih lanjut hubungi kantor kami.",
+    teks: "PT Contoh Global Mandiri membuka penempatan kerja Korea. Wajib paspor dan visa. Informasi lebih lanjut hubungi kantor kami.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
     expectedRuleIds: ["penempatan_luar_negeri_nonresmi", "upah_tidak_diungkap"],
@@ -368,7 +373,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "t3_dokumen_dini",
-    teks: "PT Sinar Rekrut mencari Staff Admin. Kirim scan KTP, kartu keluarga, dan buku tabungan sebelum interview.",
+    teks: "PT Contoh Rekrut mencari Staff Admin. Kirim scan KTP, kartu keluarga, dan buku tabungan sebelum interview.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
     expectedRuleIds: ["minta_dokumen_sensitif_dini", "upah_tidak_diungkap"],
@@ -377,7 +382,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "t4_langsung_diterima",
-    teks: "PT Andalan Cepat membuka kerja sampingan. Langsung diterima tanpa seleksi. Lamar ke andalancepat@gmail.com.",
+    teks: "PT Contoh Andalan Cepat membuka kerja sampingan. Langsung diterima tanpa seleksi. Lamar ke contoh.andalan@gmail.com.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
     expectedRuleIds: [
@@ -390,7 +395,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "t5_komisi_berantai",
-    teks: "PT Cuci Untung membuka lowongan. Skema komisi berantai dengan downline dan member get member, tanpa gaji tetap.",
+    teks: "PT Contoh Cuci Untung membuka lowongan. Skema komisi berantai dengan downline dan member get member, tanpa gaji tetap.",
     lokasi: "Jawa Barat",
     expectedBand: "tinggi",
     expectedRuleIds: ["skema_komisi_berantai", "upah_tidak_diungkap"],
@@ -399,7 +404,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "t6_gaji_tidak_wajar",
-    teks: "PT Prospek Emas mencari Sales Executive. Gaji Rp 50.000.000 per bulan untuk lulusan SMA tanpa pengalaman.",
+    teks: "PT Contoh Prospek Emas mencari Sales Executive. Gaji Rp 50.000.000 per bulan untuk lulusan SMA tanpa pengalaman.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
     expectedRuleIds: ["gaji_tidak_wajar_tinggi"],
@@ -408,7 +413,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "t7_transfer_biaya",
-    teks: "PT Anugerah Kerja membuka lowongan Staff Gudang. Wajib transfer biaya pelatihan Rp300.000 dan biaya seragam Rp150.000.",
+    teks: "PT Contoh Anugerah Kerja membuka lowongan Staff Gudang. Wajib transfer biaya pelatihan Rp300.000 dan biaya seragam Rp150.000.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
     expectedRuleIds: ["pungutan_biaya"],
@@ -417,7 +422,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "t8_biaya_pelatihan",
-    teks: "PT Pelatihan Cepat membuka lowongan. Wajib membayar biaya pelatihan Rp500.000 sebelum kerja.",
+    teks: "PT Contoh Pelatihan Cepat membuka lowongan. Wajib membayar biaya pelatihan Rp500.000 sebelum kerja.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
     expectedRuleIds: ["pungutan_biaya"],
@@ -426,7 +431,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "t9_taiwan",
-    teks: "PT Jasa Luar Negeri membuka penempatan kerja ke Taiwan. Wajib membayar biaya administrasi Rp2.000.000.",
+    teks: "PT Contoh Jasa Luar Negeri membuka penempatan kerja ke Taiwan. Wajib membayar biaya administrasi Rp2.000.000.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
     expectedRuleIds: ["pungutan_biaya", "upah_tidak_diungkap"],
@@ -435,7 +440,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "t10_ktp_rekening",
-    teks: "PT Rekrut Cepat mencari Staff. Kirim foto KTP dan buku rekening, lalu transfer biaya seragam Rp200.000.",
+    teks: "PT Contoh Rekrut Cepat mencari Staff. Kirim foto KTP dan buku rekening, lalu transfer biaya seragam Rp200.000.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
     expectedRuleIds: ["pungutan_biaya", "upah_tidak_diungkap"],
@@ -445,7 +450,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "t11_tanpa_interview",
-    teks: "PT Andalan Sukses membuka lowongan. Langsung diterima tanpa interview, hubungi andalansukses@gmail.com.",
+    teks: "PT Contoh Andalan Sukses membuka lowongan. Langsung diterima tanpa interview, hubungi contoh.sukses@gmail.com.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
     expectedRuleIds: [
@@ -459,7 +464,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "t12_downline",
-    teks: "PT Untung Terus membuka lowongan. Sistem komisi berantai, cari downline. Chat DM Instagram @untungterus.",
+    teks: "PT Contoh Untung Terus membuka lowongan. Sistem komisi berantai, cari downline. Chat DM Instagram @contohuntungterus.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
     expectedRuleIds: [
@@ -472,7 +477,7 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   },
   {
     id: "t13_cepat_kaya",
-    teks: "PT Cepat Kaya mencari Sales. Gaji Rp 40.000.000 per bulan tanpa pengalaman. Kuota terbatas.",
+    teks: "PT Contoh Cepat Kaya mencari Sales. Gaji Rp 40.000.000 per bulan tanpa pengalaman. Kuota terbatas.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
     expectedRuleIds: ["gaji_tidak_wajar_tinggi", "tekanan_mendesak"],

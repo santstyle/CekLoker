@@ -21,7 +21,7 @@ const MAKSIMAL_KARAKTER = 20_000;
 const JUMLAH_ATURAN = RULES.length;
 
 const CONTOH_LOWONGAN_MENCURIGAKAN = `LOWONGAN KERJA URGENT STAFF ADMIN & DATA ENTRY
-PT Sentosa Maju Bersama — Jakarta Pusat
+PT Contoh Maju Bersama — Jakarta Pusat
 
 Kualifikasi:
 - Pria/Wanita usia 18 - 35 tahun
@@ -36,10 +36,10 @@ Fasilitas & Gaji:
 
 Catatan Penting:
 - Wajib membayar biaya administrasi berkas & seragam kerja sebesar Rp 150.000 yang ditransfer sebelum jadwal wawancara kerja.
-- Kirim data diri langsung melalui pesan WhatsApp pribadi HRD: 0812-9876-5432 (Tidak menerima telepon).`;
+- Kirim data diri langsung melalui pesan WhatsApp pribadi HRD: 0812-0000-0000 (Tidak menerima telepon).`;
 
 const CONTOH_LOWONGAN_WAJAR = `LOWONGAN PEKERJAAN: JUNIOR ACCOUNTANT
-PT Nusantara Berkat Abadi (Kawasan Industri Pulogadung, Jakarta Timur)
+PT Contoh Berkat Abadi (Kawasan Industri Pulogadung, Jakarta Timur)
 
 Tanggung Jawab:
 - Melakukan pencatatan jurnal transaksi harian dan rekonsiliasi kas/bank.
@@ -56,7 +56,7 @@ Kompensasi & Hak Kerja:
 - Jam kerja: Senin - Jumat, 08.30 - 17.30 WIB (40 jam per minggu).
 
 Pendaftaran:
-Kirimkan CV dan portofolio Anda melalui email resmi rekrutmen: karir@nusantaraberkat.co.id dengan subjek "Posisi Akuntan - [Nama Anda]". Proses seleksi bebas biaya apa pun.`;
+Kirimkan CV dan portofolio Anda melalui email resmi rekrutmen: karir@contohberkat.example dengan subjek "Posisi Akuntan - [Nama Anda]". Proses seleksi bebas biaya apa pun.`;
 
 type TabMode = "teks" | "poster";
 
@@ -361,6 +361,11 @@ export default function HalamanCek() {
                     Contoh Iklan Risiko Rendah
                   </button>
                 </div>
+                <p className="mt-2 text-[0.65rem] text-muted">
+                  Seluruh contoh iklan di halaman ini fiktif — nama perusahaan,
+                  domain email, dan nomor telepon tidak merujuk pada pihak mana
+                  pun.
+                </p>
 
                 {tabAktif === "poster" && (
                   <div className="mt-5 rounded-2xl border border-line bg-cream/50 p-5">
@@ -483,7 +488,7 @@ export default function HalamanCek() {
                       maxLength={200}
                       autoComplete="organization"
                       disabled={mengirim}
-                      placeholder="Mis. PT Nusantara Berkat Abadi"
+                      placeholder="Mis. PT Contoh Berkat Abadi"
                       className="w-full rounded-2xl border border-line bg-cream/60 px-4 py-3 text-sm text-ink transition-all duration-200 placeholder:text-slate-400 focus:border-aksen focus:bg-paper focus:ring-4 focus:ring-aksen/10 focus:outline-none disabled:opacity-50 sm:text-base"
                     />
                     <p className="text-[0.65rem] text-muted">
