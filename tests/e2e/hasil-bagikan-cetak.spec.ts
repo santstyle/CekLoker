@@ -56,7 +56,12 @@ test.describe("Kartu hasil: Unduh PDF / Bagikan / Cetak", () => {
     await expect(page.getByTestId("tombol-bagikan")).toBeVisible();
     await expect(page.getByTestId("tombol-cetak")).toBeVisible();
 
-    // Ringkasan dan skor ikut tampil pada kartu yang akan diunduh.
+    // Opsi kutipan iklan tersedia dan mati secara bawaan.
+    const centang = page.getByTestId("centang-kutipan");
+    await expect(centang).toBeVisible();
+    await expect(centang).not.toBeChecked();
+
+    // Ringkasan dan skor ikut tampil pada bagian laporan.
     await expect(page.getByText(/Skor 42\/100/).first()).toBeVisible();
     await expect(
       page.getByText(/Estimasi risiko deterministik berbasis teks/i).first(),
@@ -75,13 +80,14 @@ test.describe("Kartu hasil: Unduh PDF / Bagikan / Cetak", () => {
       page.getByRole("button", { name: "Periksa lowongan sekarang" }).click(),
     ]);
 
-    // Tangkap peristiwa unduh berkas; html2canvas + jsPDF butuh beberapa detik.
+    // Tangkap peristiwa unduh berkas; penyusunan laporan + pengambilan font
+    // dan watermark butuh beberapa detik.
     const unduhan = page.waitForEvent("download", { timeout: 60000 });
     await page.getByTestId("tombol-unduh-pdf").click();
     const berkas = await unduhan;
 
     expect(berkas.suggestedFilename()).toMatch(
-      /^cekloker-hasil-perlu_dicek-\d{8}-\d{4}-ujie2e00\.pdf$/,
+      /^cekloker-laporan-\d{8}-\d{4}\.pdf$/,
     );
   });
 

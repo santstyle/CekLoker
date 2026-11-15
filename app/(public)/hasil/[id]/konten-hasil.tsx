@@ -7,7 +7,11 @@ import { useSyncExternalStore } from "react";
 import { Container } from "@/components/ui/container";
 import { KartuLangkahSelanjutnya } from "@/components/hasil/kartu-langkah-selanjutnya";
 import { KartuHasilBagikan } from "@/components/hasil/kartu-hasil-bagikan";
-import { kunciSimpananHasil } from "@/lib/api/evaluasi";
+import {
+  kunciSimpananHasil,
+  kunciSimpananMeta,
+  type MetaSesi,
+} from "@/lib/api/evaluasi";
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
 import type {
   Band,
@@ -94,12 +98,43 @@ function langgananKosong(): () => void {
   return () => {};
 }
 
+const CACHE_META = new Map<string, MetaSesi | null>();
+
+/**
+ * Meta iklan dari sessionStorage (ditulis saat pengiriman formulir /cek).
+ * Hasil disimpan di cache agar referensi objek stabil — syarat
+ * useSyncExternalStore agar tidak memicu render tanpa henti.
+ */
+function bacaMetaSesi(id: string): MetaSesi | null {
+  const tercache = CACHE_META.get(id);
+  if (tercache !== undefined) {
+    return tercache;
+  }
+  let meta: MetaSesi | null = null;
+  try {
+    const mentah = window.sessionStorage.getItem(kunciSimpananMeta(id));
+    if (mentah) {
+      const terurai = JSON.parse(mentah) as MetaSesi;
+      if (terurai && typeof terurai === "object") meta = terurai;
+    }
+  } catch {
+    meta = null;
+  }
+  CACHE_META.set(id, meta);
+  return meta;
+}
+
 export default function KontenHasil() {
   const { id } = useParams<{ id: string }>();
   const hasil = useSyncExternalStore<HasilEvaluasi | null | undefined>(
     langgananKosong,
     () => bacaHasilSesi(id),
     () => undefined,
+  );
+  const meta = useSyncExternalStore<MetaSesi | null>(
+    langgananKosong,
+    () => bacaMetaSesi(id),
+    () => null,
   );
 
   if (hasil === undefined) {
@@ -349,7 +384,7 @@ export default function KontenHasil() {
           <KartuLangkahSelanjutnya band={hasil.band} />
 
           {/* Bagikan & Cetak Section */}
-          <KartuHasilBagikan hasil={hasil} id={id} />
+          <KartuHasilBagikan hasil={hasil} id={id} meta={meta ?? undefined} />
 
           {/* Disclaimer & Nav Buttons */}
           <div className="flex flex-col gap-6 border-t border-slate-200/80 pt-6 sm:flex-row sm:items-center sm:justify-between">

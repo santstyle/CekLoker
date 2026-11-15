@@ -6,7 +6,12 @@ import { useEffect, useRef, useState } from "react";
 import { PilihLokasi } from "@/components/check/pilih-lokasi";
 import { UnggahPoster } from "@/components/check/unggah-poster";
 import { Container } from "@/components/ui/container";
-import { kunciSimpananHasil, type ResponsEvaluasi } from "@/lib/api/evaluasi";
+import {
+  kunciSimpananHasil,
+  kunciSimpananMeta,
+  type MetaSesi,
+  type ResponsEvaluasi,
+} from "@/lib/api/evaluasi";
 import { RULES } from "@/lib/evaluation/rules";
 import { CATATAN_DATA_UPAH, statusDataUpah } from "@/lib/evaluation/wages";
 
@@ -130,6 +135,16 @@ export default function HalamanCek() {
       window.sessionStorage.setItem(
         kunciSimpananHasil(id),
         JSON.stringify({ id, hasil }),
+      );
+      // Meta iklan (lokasi & cara teks diperoleh) hanya disimpan di peramban
+      // agar laporan PDF bisa mencantumkannya. Tidak pernah dikirim ke server.
+      const meta: MetaSesi = {
+        ...(lokasi.trim() ? { lokasi: lokasi.trim() } : {}),
+        sumber: sumberOcr ? "Gambar iklan (OCR)" : "Teks yang ditempel",
+      };
+      window.sessionStorage.setItem(
+        kunciSimpananMeta(id),
+        JSON.stringify(meta),
       );
       // App Router mempertahankan state komponen pada soft navigation
       // kembali ke /cek; tanpa reset ini tombol terjebak "Sedang

@@ -172,9 +172,6 @@ importers:
       drizzle-orm:
         specifier: ^0.45.4
         version: 0.45.4(@neondatabase/serverless@1.2.0)
-      html2canvas:
-        specifier: ^1.4.1
-        version: 1.4.1
       jspdf:
         specifier: ^4.2.1
         version: 4.2.1
@@ -4674,7 +4671,8 @@ snapshots:
 
   balanced-match@4.0.4: {}
 
-  base64-arraybuffer@1.0.2: {}
+  base64-arraybuffer@1.0.2:
+    optional: true
 
   baseline-browser-mapping@2.11.35: {}
 
@@ -4767,6 +4765,7 @@ snapshots:
   css-line-break@2.1.0:
     dependencies:
       utrie: 1.0.2
+    optional: true
 
   css.escape@1.5.1: {}
 
@@ -5450,6 +5449,7 @@ snapshots:
     dependencies:
       css-line-break: 2.1.0
       text-segmentation: 1.0.3
+    optional: true
 
   http-proxy-agent@7.0.2(supports-color@7.2.0):
     dependencies:
@@ -6372,6 +6372,7 @@ snapshots:
   text-segmentation@1.0.3:
     dependencies:
       utrie: 1.0.2
+    optional: true
 
   tinybench@6.2.3: {}
 
@@ -6518,6 +6519,7 @@ snapshots:
   utrie@1.0.2:
     dependencies:
       base64-arraybuffer: 1.0.2
+    optional: true
 
   vite@8.3.7(@types/node@20.19.43)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15):
     dependencies:
