@@ -36,6 +36,7 @@ const HEADER_KEAMANAN = [
             "connect-src 'self'",
             "worker-src 'self' blob:",
             "frame-ancestors 'none'",
+            "object-src 'none'",
             "base-uri 'self'",
             "form-action 'self'",
           ].join("; "),

@@ -22,13 +22,17 @@ function permintaan(
   alamat = "203.0.113.1",
   mentah = false,
 ): Request {
+  // Klien HTTP sungguhan (mis. curl) selalu mengirim content-length;
+  // undici tidak melakukannya otomatis, jadi di-set manual di sini.
+  const badan = mentah ? String(body) : JSON.stringify(body);
   return new Request("https://cekloker.example/api/evaluasi", {
     method: "POST",
     headers: {
       "content-type": "application/json",
       "x-forwarded-for": alamat,
+      "content-length": String(Buffer.byteLength(badan)),
     },
-    body: mentah ? String(body) : JSON.stringify(body),
+    body: badan,
   });
 }
 
@@ -145,5 +149,22 @@ describe("POST /api/evaluasi", () => {
     await POST(permintaan({ teksLowongan: TEKS_VALID }, alamat));
 
     expect(insert.mock.calls.length).toBe(sebelum);
+  });
+
+  it("membalas 413 sebelum kuota terpakai bila body melampaui batas", async () => {
+    const respons = await POST(
+      permintaan({ teksLowongan: "A".repeat(70_000) }, "203.0.113.55"),
+    );
+
+    expect(respons.status).toBe(413);
+    const json = await respons.json();
+    expect(json.error).toContain("64 KB");
+    expect(insert).not.toHaveBeenCalled();
+
+    // Guard berjalan sebelum pembatas laju: kuota klien tidak terkuras.
+    const lanjutan = await POST(
+      permintaan({ teksLowongan: TEKS_VALID }, "203.0.113.55"),
+    );
+    expect(lanjutan.status).toBe(201);
   });
 });
