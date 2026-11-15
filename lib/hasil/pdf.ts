@@ -54,10 +54,28 @@ const WARNA_STATUS: Record<StatusTemuan, RGB> = {
   Sesuai: WARNA.ok,
 };
 
-const WARNA_LEVEL: Record<Level, RGB> = {
-  Tinggi: WARNA.bad,
-  "Perlu dicek": WARNA.warn,
-  Rendah: WARNA.ok,
+/**
+ * Varian warna yang dipakai khusus untuk TEKS status/level. Isian (bar,
+ * chip, lingkaran) tetap memakai token WARNA, tetapi tulisan memakai
+ * varian gelap ini agar kontras tetap aman — termasuk pada teks kecil
+ * di atas chip/lingkaran berwarna status berkekuatan rendah (alfa 12%).
+ */
+const WARNA_TULIS = {
+  bad: [122, 30, 26] as RGB,
+  warn: [122, 74, 8] as RGB,
+  ok: [20, 96, 63] as RGB,
+} as const;
+
+const WARNA_STATUS_TULIS: Record<StatusTemuan, RGB> = {
+  Menyimpang: WARNA_TULIS.bad,
+  "Perlu dicek": WARNA_TULIS.warn,
+  Sesuai: WARNA_TULIS.ok,
+};
+
+const WARNA_LEVEL_TULIS: Record<Level, RGB> = {
+  Tinggi: WARNA_TULIS.bad,
+  "Perlu dicek": WARNA_TULIS.warn,
+  Rendah: WARNA_TULIS.ok,
 };
 
 /* ================================= Font ================================= */
@@ -505,7 +523,7 @@ function blokRingkasan(k: Konteks, laporan: LaporanLengkap): Blok {
   const tinggi = 122;
   const x = MARGIN;
   const w = LEBAR_KONTEN;
-  const warnaLevel = WARNA_LEVEL[laporan.level];
+  const warnaLevel = WARNA_LEVEL_TULIS[laporan.level];
 
   return {
     tinggi,
@@ -580,6 +598,7 @@ function gambarMeter(
       sampai: BATAS_BAND.perluDicek - 1,
       satuan: BATAS_BAND.perluDicek,
       warna: WARNA.ok,
+      warnaTulis: WARNA_TULIS.ok,
     },
     {
       nama: "Perlu dicek",
@@ -587,6 +606,7 @@ function gambarMeter(
       sampai: BATAS_BAND.tinggi - 1,
       satuan: BATAS_BAND.tinggi - BATAS_BAND.perluDicek,
       warna: WARNA.warn,
+      warnaTulis: WARNA_TULIS.warn,
     },
     {
       nama: "Tinggi",
@@ -594,6 +614,7 @@ function gambarMeter(
       sampai: 100,
       satuan: 100 - BATAS_BAND.tinggi,
       warna: WARNA.bad,
+      warnaTulis: WARNA_TULIS.bad,
     },
   ];
 
@@ -608,7 +629,7 @@ function gambarMeter(
     tulis(k, bagian.nama, kiri, y + tinggiBar + 11, {
       ukuran: 7.2,
       gaya: "medium",
-      warna: bagian.warna,
+      warna: bagian.warnaTulis,
     });
     tulis(k, `${bagian.dari}-${bagian.sampai}`, kiri, y + tinggiBar + 21, {
       ukuran: 6.8,
@@ -717,6 +738,7 @@ function blokTemuan(
   nomor: number,
 ): Blok {
   const warna = WARNA_STATUS[temuan.status];
+  const warnaTulis = WARNA_STATUS_TULIS[temuan.status];
   const judulBaris = bungkus(k, temuan.judul, 10.5, LEBAR_JUDUL_TEMUAN, "bold");
   const kutipanBaris = temuan.kutipan
     ? bungkus(k, temuan.kutipan, 8.8, LEBAR_KUTIPAN - 24, "italic")
@@ -766,7 +788,7 @@ function blokTemuan(
       tulis(k, String(nomor), pusatX, pusatY + 3.6, {
         ukuran: 10,
         gaya: "bold",
-        warna,
+        warna: warnaTulis,
         rata: "tengah",
       });
 
@@ -797,7 +819,7 @@ function blokTemuan(
       tulis(k, labelChip, chipX + 8 + 4.4 + 4, chipY + 7.5 + 2.6, {
         ukuran: 7.4,
         gaya: "medium",
-        warna,
+        warna: warnaTulis,
       });
 
       let bawah = y + 12 + judulBaris.length * 14;
