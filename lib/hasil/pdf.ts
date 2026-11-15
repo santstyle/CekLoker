@@ -537,13 +537,13 @@ function blokRingkasan(k: Konteks, laporan: LaporanLengkap): Blok {
         garisTebal: 0.8,
       });
 
-      // Bar kiri warna level, dipotong mengikuti sudut kartu.
-      pdf.saveGraphicsState();
-      pdf.roundedRect(x, y, w, tinggi, 12, 12, null);
-      pdf.clip();
+      // Bar kiri warna level. Sengaja TIDAK memakai clip(): jsPDF
+      // mengeluarkan operator clip tanpa "n", sehingga path berikutnya
+      // (rect kecil) ikut mengisi seluruh path akumulasi dan seluruh
+      // kartu tertutup cat warna status. Bar digambar sebagai kotak
+      // membulat kecil, sama seperti bar kartu temuan.
       pdf.setFillColor(warnaLevel[0], warnaLevel[1], warnaLevel[2]);
-      pdf.rect(x, y, 6, tinggi, "F");
-      pdf.restoreGraphicsState();
+      pdf.roundedRect(x, y, 6, tinggi, 3, 3, "F");
 
       tulis(k, "Skor risiko", x + 24, y + 24, {
         ukuran: 7.5,
