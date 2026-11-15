@@ -7,6 +7,7 @@ import { useSyncExternalStore } from "react";
 import { Container } from "@/components/ui/container";
 import { KartuLangkahSelanjutnya } from "@/components/hasil/kartu-langkah-selanjutnya";
 import { KartuHasilBagikan } from "@/components/hasil/kartu-hasil-bagikan";
+import { KartuMasukanHasil } from "@/components/hasil/kartu-masukan-hasil";
 import {
   kunciSimpananHasil,
   kunciSimpananMeta,
@@ -385,6 +386,9 @@ export default function KontenHasil() {
 
           {/* Bagikan & Cetak Section */}
           <KartuHasilBagikan hasil={hasil} id={id} meta={meta ?? undefined} />
+
+          {/* Masukan atas hasil Section */}
+          <KartuMasukanHasil hasil={hasil} id={id} />
 
           {/* Disclaimer & Nav Buttons */}
           <div className="flex flex-col gap-6 border-t border-slate-200/80 pt-6 sm:flex-row sm:items-center sm:justify-between">
