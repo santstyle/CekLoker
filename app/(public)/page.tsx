@@ -419,8 +419,9 @@ export default function Beranda() {
                   <Image
                     src={kasus.gambar}
                     alt={kasus.alt}
+                    quality={85}
                     className="aspect-[16/9] w-full"
-                    sizes="(min-width: 1280px) 288px, (min-width: 640px) 50vw, 100vw"
+                    sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
                   />
                   <span className="absolute bottom-3 left-3 rounded-full bg-ink/70 px-2.5 py-0.5 font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-white uppercase backdrop-blur-sm">
                     Ilustrasi
