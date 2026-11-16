@@ -2,6 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { gabungkanTeks, teksBermakna } from "@/lib/ocr/kualitas";
+import { prosesPiksel } from "@/lib/ocr/pra-proses";
+
 interface UnggahPosterProps {
   onTeksTerbaca: (teks: string) => void;
   onMulaiMemproses?: () => void;
@@ -10,10 +13,13 @@ interface UnggahPosterProps {
 
 const MAKSIMAL_UKURAN_BYTE = 8 * 1024 * 1024; // 8 MB
 const TIPE_MIME_DIIZINKAN = ["image/png", "image/jpeg", "image/webp"];
+const LEBAR_TARGET = 2000; // piksel; di bawah ini gambar di-upscale
+const SKALA_MAKS = 3;
 
 /**
- * Melakukan pra-proses gambar pada elemen canvas (grayscale & penajaman kontras)
- * untuk meningkatkan akurasi pembacaan karakter Tesseract OCR.
+ * Melakukan pra-proses gambar pada elemen canvas: upscale proporsional,
+ * bingkai putih, grayscale luminan, lalu biner Otsu (ambang menyesuaikan
+ * histogram gambar) supaya Tesseract membaca teks poster berlatar warna.
  * Mengembalikan data URL hasil canvas; bila canvas 2D tidak tersedia,
  * mengembalikan berkas asli (Blob) yang juga bisa dibaca oleh Tesseract.
  */
@@ -24,8 +30,7 @@ async function praProsesGambar(file: Blob): Promise<string | Blob> {
 
     img.onload = () => {
       URL.revokeObjectURL(url);
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
+      const ctx = document.createElement("canvas").getContext("2d");
 
       if (!ctx) {
         // Bukan URL yang sudah dicabut — kembalikan berkas asli.
@@ -33,32 +38,39 @@ async function praProsesGambar(file: Blob): Promise<string | Blob> {
         return;
       }
 
-      // Skala 2x jika gambar di bawah 1600px untuk meningkatkan ketajaman OCR
-      const skala = img.width < 1600 ? 1.8 : 1;
-      canvas.width = Math.round(img.width * skala);
-      canvas.height = Math.round(img.height * skala);
+      const skala = Math.min(Math.max(LEBAR_TARGET / img.width, 1), SKALA_MAKS);
+      const lebar = Math.round(img.width * skala);
+      const tinggi = Math.round(img.height * skala);
 
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      // Bingkai putih 2% (maks 120px): segmentasi Tesseract lebih stabil
+      // bila teks bukan menempel tepi.
+      const bingkai = Math.min(
+        120,
+        Math.max(20, Math.round(Math.min(lebar, tinggi) * 0.02)),
+      );
+
+      const canvas = document.createElement("canvas");
+      canvas.width = lebar + bingkai * 2;
+      canvas.height = tinggi + bingkai * 2;
+      const konteks = canvas.getContext("2d");
+
+      if (!konteks) {
+        resolve(file);
+        return;
+      }
+
+      konteks.fillStyle = "#ffffff";
+      konteks.fillRect(0, 0, canvas.width, canvas.height);
+      konteks.drawImage(img, bingkai, bingkai, lebar, tinggi);
 
       try {
-        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imgData.data;
-
-        // Konversi grayscale & kontras biner adaptif
-        for (let i = 0; i < data.length; i += 4) {
-          const r = data[i];
-          const g = data[i + 1];
-          const b = data[i + 2];
-          // Formula luminans
-          const abu = 0.299 * r + 0.587 * g + 0.114 * b;
-          // Penajaman kontras
-          const kontras = abu > 130 ? 255 : abu < 90 ? 0 : abu;
-          data[i] = kontras;
-          data[i + 1] = kontras;
-          data[i + 2] = kontras;
-        }
-
-        ctx.putImageData(imgData, 0, 0);
+        const imgData = konteks.getImageData(0, 0, canvas.width, canvas.height);
+        prosesPiksel({
+          data: imgData.data,
+          width: imgData.width,
+          height: imgData.height,
+        });
+        konteks.putImageData(imgData, 0, 0);
         resolve(canvas.toDataURL("image/png"));
       } catch {
         // Canvas bermasalah di tengah jalan; biarkan Tesseract membaca berkas asli.
@@ -137,8 +149,18 @@ export function UnggahPoster({
 
         let teksHasil = "";
         try {
+          // Dua pass selalu dijalankan: PSM AUTO sering melewatkan blok
+          // besar walau keyakinan rata-ratanya tinggi, sedangkan
+          // PSM SPARSE_TEXT menangkap blok-blok besar itu. Seluruh baris
+          // unik dari keduanya digabungkan; tidak ada satu pass yang
+          // menggantikan hasil pass lain.
           const { data } = await worker.recognize(hasilPraProses);
-          teksHasil = data.text.trim();
+          const { PSM } = await import("tesseract.js");
+          await worker.setParameters({
+            tessedit_pageseg_mode: PSM.SPARSE_TEXT,
+          });
+          const { data: dataKedua } = await worker.recognize(hasilPraProses);
+          teksHasil = gabungkanTeks(data.text, dataKedua.text);
         } finally {
           // Pastikan worker OCR selalu dimatikan, walau recognize gagal.
           await worker.terminate();
@@ -146,7 +168,7 @@ export function UnggahPoster({
 
         setProgress(100);
 
-        if (!teksHasil || teksHasil.length < 15) {
+        if (!teksBermakna(teksHasil)) {
           setPesanStatus(
             "Teks poster tidak dapat terbaca dengan jelas. Anda dapat mengetik atau menempel isi lowongan secara manual.",
           );
