@@ -13,6 +13,7 @@
 
 ## Spesifikasi
 
-- Rasio **16:9 landscape**, 1536×864 px, format JPEG (kualitas ±82)
+- Rasio **16:9 landscape**, 2048×1152 px, format JPEG (kualitas ±86, mozjpeg + penajaman ringan)
+- Kartu tampil penuh (container "penuh" ≈ 25vw di desktop) — gambar dilayani `next/image` dengan `quality={85}` dan `sizes` 25vw/50vw/100vw agar tidak di-upscale
 - Foto stok berlisensi Pexels — bebas pakai komersial, tanpa kewajiban kredit
 - Foto harus terbaca sebagai **ilustrasi** kasus, bukan dokumentasi asli; chip "ILUSTRASI" pada kartu dipertahankan
