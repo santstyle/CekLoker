@@ -86,18 +86,31 @@ test.describe("Kuis edukasi /edukasi/kuis", () => {
   });
 
   test("seed berbeda menampilkan susunan soal berbeda", async ({ page }) => {
+    const soalSeed1 = pilihSoalKuis(1);
+    const soalSeed2 = pilihSoalKuis(2);
+
+    // Hidrasi me-render dulu snapshot server (seed 0), lalu menerapkan
+    // seed dari URL — jadi tes menunggu soal seed yang sebenarnya tampil.
     await page.goto("/edukasi/kuis?set=1");
+    await expect(
+      page.getByRole("group", {
+        name: new RegExp(`Soal 1 dari ${SOAL_PER_KUIS}`),
+      }),
+    ).toContainText(soalSeed1[0]!.pertanyaan);
     const seed1 = await page
       .getByRole("group")
       .locator("p")
-      .first()
       .allTextContents();
 
     await page.goto("/edukasi/kuis?set=2");
+    await expect(
+      page.getByRole("group", {
+        name: new RegExp(`Soal 1 dari ${SOAL_PER_KUIS}`),
+      }),
+    ).toContainText(soalSeed2[0]!.pertanyaan);
     const seed2 = await page
       .getByRole("group")
       .locator("p")
-      .first()
       .allTextContents();
 
     expect(seed1).not.toEqual(seed2);
