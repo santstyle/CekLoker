@@ -14,11 +14,17 @@ import { cn } from "@/components/ui/cn";
 export function Reveal({
   children,
   delay = 0,
+  varian = "naik",
+  role,
   className,
 }: {
   children: ReactNode;
   /** Jeda stagger dalam milidetik. */
   delay?: number;
+  /** Arah masuk: naik (bawaan), dari kiri, dari kanan, atau zoom ringan. */
+  varian?: "naik" | "kiri" | "kanan" | "zoom";
+  /** Peran semantik, mis. "listitem" saat Reveal menggantikan li. */
+  role?: string;
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -61,7 +67,14 @@ export function Reveal({
   return (
     <div
       ref={ref}
-      className={cn("reveal", className)}
+      role={role}
+      className={cn(
+        "reveal",
+        varian === "kiri" && "reveal-var-kiri",
+        varian === "kanan" && "reveal-var-kanan",
+        varian === "zoom" && "reveal-var-zoom",
+        className,
+      )}
       style={{ "--reveal-delay": `${delay}ms` } as React.CSSProperties}
     >
       {children}

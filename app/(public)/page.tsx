@@ -7,6 +7,7 @@ import gambarKasus01 from "@/public/images/liputan/kasus-01.jpg";
 import gambarKasus02 from "@/public/images/liputan/kasus-02.jpg";
 import gambarKasus03 from "@/public/images/liputan/kasus-03.jpg";
 import gambarKasus04 from "@/public/images/liputan/kasus-04.jpg";
+import { AngkaHitung } from "@/components/situs/angka-hitung";
 import { Faq } from "@/components/situs/faq";
 import { Reveal } from "@/components/situs/reveal";
 import { RULES } from "@/lib/evaluation/rules";
@@ -214,8 +215,8 @@ export default function Beranda() {
             </Link>
           </div>
           <p className="mt-6 font-mono text-[0.62rem] tracking-[0.2em] text-muted uppercase">
-            {JUMLAH_ATURAN} aturan baku&ensp;·&ensp;0 akun&ensp;·&ensp;0 teks
-            disimpan
+            <AngkaHitung angka={JUMLAH_ATURAN} /> aturan baku&ensp;·&ensp;0
+            akun&ensp;·&ensp;0 teks disimpan
           </p>
         </Container>
 
@@ -384,7 +385,7 @@ export default function Beranda() {
       {/* ============ Kasus lapangan: liputan nyata ============ */}
       <section className="py-16 sm:py-24">
         <Container ukuran="penuh">
-          <Reveal>
+          <Reveal varian="kiri">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
                 <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
@@ -403,73 +404,78 @@ export default function Beranda() {
             </div>
           </Reveal>
 
-          <Reveal delay={140}>
-            <ul className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-              {KASUS.map((kasus) => (
-                <li
-                  key={kasus.nomor}
-                  className="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-[0_1px_2px_rgb(15_23_42/0.04),0_16px_40px_-20px_rgb(15_23_42/0.18)] ring-1 ring-line transition-all duration-300 hover:-translate-y-1.5"
-                >
-                  <div className="relative">
-                    <Image
-                      src={kasus.gambar}
-                      alt={kasus.alt}
-                      className="aspect-[16/9] w-full"
-                      sizes="(min-width: 1280px) 288px, (min-width: 640px) 50vw, 100vw"
-                    />
-                    <span className="absolute bottom-3 left-3 rounded-full bg-ink/70 px-2.5 py-0.5 font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-white uppercase backdrop-blur-sm">
-                      Ilustrasi
+          <div
+            role="list"
+            className="mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-4"
+          >
+            {KASUS.map((kasus, indeks) => (
+              <Reveal
+                key={kasus.nomor}
+                delay={indeks * 90}
+                role="listitem"
+                className="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-[0_1px_2px_rgb(15_23_42/0.04),0_16px_40px_-20px_rgb(15_23_42/0.18)] ring-1 ring-line transition-all duration-300 hover:-translate-y-1.5"
+              >
+                <div className="relative">
+                  <Image
+                    src={kasus.gambar}
+                    alt={kasus.alt}
+                    className="aspect-[16/9] w-full"
+                    sizes="(min-width: 1280px) 288px, (min-width: 640px) 50vw, 100vw"
+                  />
+                  <span className="absolute bottom-3 left-3 rounded-full bg-ink/70 px-2.5 py-0.5 font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-white uppercase backdrop-blur-sm">
+                    Ilustrasi
+                  </span>
+                </div>
+                <div className="flex flex-1 flex-col p-6 sm:p-7">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="font-mono text-[0.56rem] leading-snug font-semibold tracking-[0.12em] text-muted uppercase">
+                      {kasus.nomor} · {kasus.sumber}
+                    </span>
+                    <span className="shrink-0 font-mono text-[0.56rem] leading-snug font-medium tracking-[0.12em] text-muted uppercase">
+                      {kasus.tanggal}
                     </span>
                   </div>
-                  <div className="flex flex-1 flex-col p-6 sm:p-7">
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="font-mono text-[0.56rem] leading-snug font-semibold tracking-[0.12em] text-muted uppercase">
-                        {kasus.nomor} · {kasus.sumber}
-                      </span>
-                      <span className="shrink-0 font-mono text-[0.56rem] leading-snug font-medium tracking-[0.12em] text-muted uppercase">
-                        {kasus.tanggal}
-                      </span>
-                    </div>
-                    <blockquote className="mt-4 text-[1.02rem] leading-snug font-extrabold text-ink">
-                      “{kasus.judul}”
-                    </blockquote>
-                    <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                      {kasus.ringkas}
+                  <blockquote className="mt-4 text-[1.02rem] leading-snug font-extrabold text-ink">
+                    “{kasus.judul}”
+                  </blockquote>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                    {kasus.ringkas}
+                  </p>
+                  <div className="mt-5 border-t border-slate-100 pt-4">
+                    <p className="font-mono text-[0.58rem] font-semibold tracking-[0.18em] text-muted uppercase">
+                      Aturan yang membaca pola ini
                     </p>
-                    <div className="mt-5 border-t border-slate-100 pt-4">
-                      <p className="font-mono text-[0.58rem] font-semibold tracking-[0.18em] text-muted uppercase">
-                        Aturan yang membaca pola ini
-                      </p>
-                      <ul className="mt-2 flex flex-col gap-1.5">
-                        {kasus.aturan.map((aturan) => (
-                          <li
-                            key={aturan}
-                            className="flex items-start gap-2 text-xs leading-snug text-slate-600"
-                          >
-                            <span
-                              aria-hidden="true"
-                              className="mt-1.5 size-1 shrink-0 rounded-full bg-blue-500"
-                            />
-                            {aturan}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="mt-auto pt-5">
-                      <a
-                        href={kasus.tautan}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-aksen underline-offset-4 transition-colors hover:underline"
-                      >
-                        Baca liputan asli
-                        <span aria-hidden="true">↗</span>
-                      </a>
-                    </div>
+                    <ul className="mt-2 flex flex-col gap-1.5">
+                      {kasus.aturan.map((aturan) => (
+                        <li
+                          key={aturan}
+                          className="flex items-start gap-2 text-xs leading-snug text-slate-600"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="mt-1.5 size-1 shrink-0 rounded-full bg-blue-500"
+                          />
+                          {aturan}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </li>
-              ))}
-            </ul>
+                  <div className="mt-auto pt-5">
+                    <a
+                      href={kasus.tautan}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-aksen underline-offset-4 transition-colors hover:underline"
+                    >
+                      Baca liputan asli
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={360}>
             <div className="mt-10 flex flex-col items-center gap-2.5">
               <a
                 href={CARI_GOOGLE_NEWS}
@@ -515,7 +521,7 @@ export default function Beranda() {
       {/* ============ Rentang risiko: kartu gradasi lembut ============ */}
       <section className="py-16 sm:py-24">
         <Container ukuran="penuh">
-          <Reveal>
+          <Reveal varian="kiri">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
                 <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
@@ -536,7 +542,7 @@ export default function Beranda() {
           <Reveal delay={120}>
             <div
               aria-hidden="true"
-              className="mt-10 h-2.5 w-full rounded-full bg-[linear-gradient(90deg,#2563eb_0%,#2563eb_15%,#f59e0b_15%,#f59e0b_45%,#e11d48_45%,#e11d48_100%)]"
+              className="spektrum mt-10 h-2.5 w-full rounded-full bg-[linear-gradient(90deg,#2563eb_0%,#2563eb_15%,#f59e0b_15%,#f59e0b_45%,#e11d48_45%,#e11d48_100%)]"
             />
             <div
               aria-hidden="true"
@@ -548,39 +554,39 @@ export default function Beranda() {
             </div>
           </Reveal>
 
-          <Reveal delay={220}>
-            <ul className="mt-8 grid gap-5 md:grid-cols-3">
-              {RENTANG.map((band) => (
-                <li
-                  key={band.label}
-                  className={`group flex flex-col rounded-3xl bg-gradient-to-b p-6 ring-1 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_48px_-20px_rgb(15_23_42/0.25)] sm:p-7 ${band.kartu}`}
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <span
-                      className={`inline-flex rounded-full px-4 py-1.5 font-mono text-[0.65rem] font-semibold tracking-[0.18em] uppercase ${band.chip}`}
-                    >
-                      {band.label}
-                    </span>
-                    <span
-                      aria-hidden="true"
-                      className="font-display text-5xl leading-none font-extrabold text-ink/10 transition-colors duration-300 group-hover:text-ink/20"
-                    >
-                      {band.nomor}
-                    </span>
-                  </div>
-                  <p className="mt-5 font-mono text-[0.6rem] tracking-[0.18em] text-muted uppercase">
-                    {band.skor}
-                  </p>
-                  <h3 className="mt-2 font-display text-xl font-extrabold text-ink sm:text-2xl">
-                    {band.status}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                    {band.saran}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
+          <div role="list" className="mt-8 grid gap-5 md:grid-cols-3">
+            {RENTANG.map((band, indeks) => (
+              <Reveal
+                key={band.label}
+                delay={indeks * 100}
+                role="listitem"
+                className={`group flex flex-col rounded-3xl bg-gradient-to-b p-6 ring-1 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_48px_-20px_rgb(15_23_42/0.25)] sm:p-7 ${band.kartu}`}
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <span
+                    className={`inline-flex rounded-full px-4 py-1.5 font-mono text-[0.65rem] font-semibold tracking-[0.18em] uppercase ${band.chip}`}
+                  >
+                    {band.label}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="font-display text-5xl leading-none font-extrabold text-ink/10 transition-colors duration-300 group-hover:text-ink/20"
+                  >
+                    {band.nomor}
+                  </span>
+                </div>
+                <p className="mt-5 font-mono text-[0.6rem] tracking-[0.18em] text-muted uppercase">
+                  {band.skor}
+                </p>
+                <h3 className="mt-2 font-display text-xl font-extrabold text-ink sm:text-2xl">
+                  {band.status}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  {band.saran}
+                </p>
+              </Reveal>
+            ))}
+          </div>
         </Container>
       </section>
 
@@ -608,51 +614,51 @@ export default function Beranda() {
             </div>
           </Reveal>
 
-          <Reveal delay={140}>
-            <ol className="mt-12 grid gap-5 md:grid-cols-3">
-              {[
-                {
-                  nomor: "01",
-                  tag: "Masukan",
-                  judul: "Tempel teksnya",
-                  teks: "Salin iklan lowongan dari mana pun Anda menemukannya, lalu tempel ke kotak di halaman Cek.",
-                },
-                {
-                  nomor: "02",
-                  tag: "Proses",
-                  judul: "Mesin membaca",
-                  teks: `${JUMLAH_ATURAN} aturan baku ketenagakerjaan memindai pola: pungutan biaya, kontak pribadi, jam kerja melebihi batas, dan lainnya.`,
-                },
-                {
-                  nomor: "03",
-                  tag: "Keluaran",
-                  judul: "Anda terima jawabannya",
-                  teks: "Kutipan asli dari iklan, pasal yang dilanggar, dan rentang risiko. Keputusan akhir tetap di tangan Anda.",
-                },
-              ].map((langkah) => (
-                <li
-                  key={langkah.nomor}
-                  className="group flex flex-col rounded-3xl bg-white p-7 shadow-[0_1px_2px_rgb(15_23_42/0.04),0_16px_40px_-20px_rgb(15_23_42/0.18)] ring-1 ring-line transition-all duration-300 hover:-translate-y-1.5"
+          <div role="list" className="mt-12 grid gap-5 md:grid-cols-3">
+            {[
+              {
+                nomor: "01",
+                tag: "Masukan",
+                judul: "Tempel teksnya",
+                teks: "Salin iklan lowongan dari mana pun Anda menemukannya, lalu tempel ke kotak di halaman Cek.",
+              },
+              {
+                nomor: "02",
+                tag: "Proses",
+                judul: "Mesin membaca",
+                teks: `${JUMLAH_ATURAN} aturan baku ketenagakerjaan memindai pola: pungutan biaya, kontak pribadi, jam kerja melebihi batas, dan lainnya.`,
+              },
+              {
+                nomor: "03",
+                tag: "Keluaran",
+                judul: "Anda terima jawabannya",
+                teks: "Kutipan asli dari iklan, pasal yang dilanggar, dan rentang risiko. Keputusan akhir tetap di tangan Anda.",
+              },
+            ].map((langkah, indeks) => (
+              <Reveal
+                key={langkah.nomor}
+                delay={indeks * 100}
+                role="listitem"
+                className="group flex flex-col rounded-3xl bg-white p-7 shadow-[0_1px_2px_rgb(15_23_42/0.04),0_16px_40px_-20px_rgb(15_23_42/0.18)] ring-1 ring-line transition-all duration-300 hover:-translate-y-1.5"
+              >
+                <span
+                  aria-hidden="true"
+                  className="flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-blue-700 font-mono text-sm font-semibold text-white shadow-lg"
                 >
-                  <span
-                    aria-hidden="true"
-                    className="flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-blue-700 font-mono text-sm font-semibold text-white shadow-lg"
-                  >
-                    {langkah.nomor}
-                  </span>
-                  <h3 className="mt-5 font-display text-2xl font-extrabold text-ink">
-                    {langkah.judul}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">
-                    {langkah.teks}
-                  </p>
-                  <p className="teks-gradasi mt-auto pt-6 font-mono text-[0.62rem] font-semibold tracking-[0.24em] uppercase">
-                    {langkah.tag}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </Reveal>
+                  {langkah.nomor}
+                </span>
+                <h3 className="mt-5 font-display text-2xl font-extrabold text-ink">
+                  {langkah.judul}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  {langkah.teks}
+                </p>
+                <p className="teks-gradasi mt-auto pt-6 font-mono text-[0.62rem] font-semibold tracking-[0.24em] uppercase">
+                  {langkah.tag}
+                </p>
+              </Reveal>
+            ))}
+          </div>
 
           <Reveal delay={220}>
             <p className="mt-10 text-center font-mono text-[0.62rem] tracking-[0.2em] text-muted uppercase">
@@ -667,7 +673,7 @@ export default function Beranda() {
       <section className="py-16 sm:py-24">
         <Container ukuran="penuh">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <Reveal className="lg:col-span-4">
+            <Reveal varian="kiri" className="lg:col-span-4">
               <div>
                 <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
                   Dasar hukum
@@ -691,7 +697,7 @@ export default function Beranda() {
               </div>
             </Reveal>
 
-            <Reveal delay={150} className="lg:col-span-8">
+            <Reveal delay={150} varian="kanan" className="lg:col-span-8">
               <ol className="divide-y divide-slate-100 overflow-hidden rounded-3xl bg-white shadow-[0_1px_2px_rgb(15_23_42/0.04),0_16px_40px_-20px_rgb(15_23_42/0.18)] ring-1 ring-line">
                 {PASAL.map((item) => (
                   <li
@@ -716,7 +722,7 @@ export default function Beranda() {
       <section className="border-t border-line bg-paper py-16 sm:py-24">
         <Container ukuran="penuh">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-            <Reveal className="lg:col-span-4">
+            <Reveal varian="kiri" className="lg:col-span-4">
               <div>
                 <p className="font-mono text-[0.65rem] font-semibold tracking-[0.22em] text-aksen uppercase">
                   FAQ
@@ -727,7 +733,7 @@ export default function Beranda() {
                 </h2>
               </div>
             </Reveal>
-            <Reveal delay={150} className="lg:col-span-8">
+            <Reveal delay={150} varian="kanan" className="lg:col-span-8">
               <div>
                 <Faq butir={FAQ} />
               </div>
@@ -742,7 +748,7 @@ export default function Beranda() {
           ukuran="penuh"
           className="relative flex flex-col items-center text-center"
         >
-          <Reveal>
+          <Reveal varian="zoom">
             <p className="font-mono text-[0.62rem] font-semibold tracking-[0.26em] text-blue-200/90 uppercase">
               Cek dulu, baru lamar
             </p>

@@ -73,16 +73,44 @@
    */
   .reveal.reveal-init {
     opacity: 0;
-    transform: translateY(1.25rem);
+    transform: translateY(1.75rem);
     transition:
-      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
     transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal.reveal-init.reveal-var-kiri {
+    transform: translateX(-1.75rem);
+  }
+
+  .reveal.reveal-init.reveal-var-kanan {
+    transform: translateX(1.75rem);
+  }
+
+  .reveal.reveal-init.reveal-var-zoom {
+    transform: scale(0.94) translateY(0.75rem);
   }
 
   .reveal.reveal-init.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+  }
+
+  /*
+   * Garis spektrum skor: tergambar dari kiri setelah pembungkusnya
+   * selesai muncul (.is-visible pada induk .reveal-init).
+   * Var --reveal-delay diwarisi dari Reveal pembungkusnya.
+   */
+  .reveal-init .spektrum {
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1)
+      calc(var(--reveal-delay, 0ms) + 150ms);
+  }
+
+  .reveal-init.is-visible .spektrum {
+    transform: scaleX(1);
   }
 
   /*
@@ -259,8 +287,16 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .reveal.reveal-init {
+    .reveal.reveal-init,
+    .reveal.reveal-init.reveal-var-kiri,
+    .reveal.reveal-init.reveal-var-kanan,
+    .reveal.reveal-init.reveal-var-zoom {
       opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .reveal-init .spektrum {
       transform: none;
       transition: none;
     }
