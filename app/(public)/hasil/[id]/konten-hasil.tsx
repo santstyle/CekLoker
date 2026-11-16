@@ -327,8 +327,8 @@ export default function KontenHasil() {
                       <span className="rounded-full bg-slate-100 px-3 py-0.5 text-xs font-semibold text-slate-700">
                         {LABEL_KATEGORI[temuan.kategori]}
                       </span>
-                      <span className="rounded-full bg-slate-100 px-3 py-0.5 text-xs font-medium text-muted">
-                        {LABEL_KEKUATAN[temuan.kekuatan]}
+                      <span className="rounded-full bg-emerald-50 px-3 py-0.5 text-xs font-semibold text-emerald-700">
+                        Keyakinan: {LABEL_KEKUATAN[temuan.kekuatan]}
                       </span>
                     </div>
 
@@ -357,6 +357,51 @@ export default function KontenHasil() {
                 ))}
               </div>
             )}
+          </section>
+
+          {/* Yang Kami Cek dan Tidak Cek Section */}
+          <section className="flex flex-col gap-4 rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs sm:p-9">
+            <div>
+              <h2 className="text-xl font-bold text-slate-950 sm:text-2xl">
+                Yang kami cek dan tidak cek
+              </h2>
+              <p className="mt-1 text-xs text-muted sm:text-sm">
+                Hasil ini adalah indikasi risiko, bukan bukti penipuan atau
+                kepastian hukum.
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-4">
+                <p className="text-sm font-semibold text-slate-900">
+                  Yang kami cek
+                </p>
+                <ul className="mt-2 list-disc pl-5 text-xs leading-relaxed text-slate-600">
+                  <li>
+                    Aturan ketenagakerjaan dan indikator risiko yang kami miliki
+                    ({RULES.length} aturan).
+                  </li>
+                  <li>Pola teks yang sering muncul pada iklan berisiko.</li>
+                  <li>Konsistensi upah, kontak, dan dokumen yang diminta.</li>
+                </ul>
+              </div>
+
+              <div className="rounded-xl border border-amber-200 bg-amber-50/70 p-4">
+                <p className="text-sm font-semibold text-amber-900">
+                  Yang tidak bisa kami verifikasi
+                </p>
+                <ul className="mt-2 list-disc pl-5 text-xs leading-relaxed text-slate-700">
+                  <li>Identitas perusahaan atau pemilik rekening.</li>
+                  <li>Niat pelaku atau keaslian dokumen perusahaan.</li>
+                  <li>Kebenaran di balik layar selain teks iklan.</li>
+                </ul>
+              </div>
+            </div>
+
+            <p className="text-xs leading-relaxed text-slate-500">
+              Hasil ini bersifat indikasi risiko dan bukan vonis hukum. Selalu
+              verifikasi ke sumber resmi sebelum mengambil keputusan.
+            </p>
           </section>
 
           {/* Rujukan Hukum Section */}

@@ -89,6 +89,7 @@ export const HALAMAN_PUBLIK = [
   { jalur: "/cek", prioritas: 0.9, frekuensi: "monthly" },
   { jalur: "/edukasi", prioritas: 0.8, frekuensi: "monthly" },
   { jalur: "/edukasi/kuis", prioritas: 0.7, frekuensi: "monthly" },
+  { jalur: "/bantuan", prioritas: 0.8, frekuensi: "monthly" },
   { jalur: "/metodologi", prioritas: 0.8, frekuensi: "monthly" },
   { jalur: "/sumber", prioritas: 0.7, frekuensi: "monthly" },
   { jalur: "/uji-akurasi", prioritas: 0.7, frekuensi: "monthly" },
