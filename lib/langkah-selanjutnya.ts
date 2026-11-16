@@ -2,14 +2,13 @@
  * Kartu "Langkah selanjutnya" di halaman hasil.
  *
  * Seluruh konten bersifat statis dan berbeda per level risiko. Tidak ada
- * teks iklan pengguna atau data pribadi yang masuk ke sini, dan salinan
+ * teks iklan pengguna maupun data pribadi yang masuk ke sini, dan salinan
  * tidak pernah menuduh perusahaan sebagai penipu — hanya indikasi risiko.
  *
- * Kanal resmi disimpan sebagai data. Karena belum ada URL resmi yang
- * diverifikasi (tidak ada di repo dan belum diberikan pemilik), seluruh
- * kanal memiliki `url` dan `tanggalVerifikasi` bernilai null sehingga
- * berstatus "perlu verifikasi" menurut aturan di `lib/verifikasi.ts`;
- * antarmuka menampilkan statusnya, bukan tautan karangan.
+ * Kanal resmi disimpan sebagai data di bawah (diekspor untuk pengujian).
+ * Karena belum ada URL resmi yang diverifikasi, seluruh kanal berstatus
+ * "perlu verifikasi". Data ini sengaja TIDAK dirender di kartu hasil,
+ * PDF, maupun /cek — kanal pelaporan hanya ditunjuk di /bantuan.
  */
 
 import type { Band } from "@/lib/evaluation/types";
@@ -47,7 +46,7 @@ export const LANGKAH_SELANJUTNYA: Readonly<Record<Band, LangkahSelanjutnya>> = {
       "Berhenti berkomunikasi bila diminta transfer atau data rekening.",
       "Jangan kirim KTP, NPWP, atau dokumen pribadi apa pun.",
       "Simpan semua bukti: tangkapan layar, nomor rekening, dan riwayat pesan.",
-      "Laporkan melalui kanal resmi berikut bila sudah terjadi kerugian.",
+      "Verifikasi identitas perusahaan lewat situs atau nomor resminya sendiri sebelum melanjutkan.",
     ],
     templatePesan:
       "Halo Tim Rekrutmen,\n\nSaya meminta konfirmasi resmi atas lowongan ini karena beberapa poinnya tidak lazim. Mohon tanggapan melalui kanal perusahaan terverifikasi; sampai saat itu saya tidak akan mengirim data pribadi atau melakukan pembayaran.\n\nTerima kasih.",

@@ -39,7 +39,7 @@ async function muatHasil(page: Page, id: string, hasil: object) {
 }
 
 test.describe("Kartu Langkah selanjutnya", () => {
-  test("band tinggi: menampilkan tindakan, template, dan badge perlu verifikasi pada kanal", async ({
+  test("band tinggi: menampilkan tindakan, template, dan TANPA kanal pelaporan", async ({
     page,
     context,
   }) => {
@@ -55,10 +55,13 @@ test.describe("Kartu Langkah selanjutnya", () => {
       kartu.getByText(/Berhenti berkomunikasi bila diminta transfer/),
     ).toBeVisible();
 
-    // Empat kanal resmi tampil dengan status perlu verifikasi, bukan tautan.
-    const badge = kartu.getByText("Perlu verifikasi", { exact: true });
-    await expect(badge).toHaveCount(4);
+    // Kartu hasil hanya memuat langkah pencegahan — kanal pelaporan,
+    // hotline, dan tautan pengaduan tidak boleh tampil di sini.
+    await expect(
+      kartu.getByText("Perlu verifikasi", { exact: true }),
+    ).toHaveCount(0);
     await expect(kartu.getByRole("link")).toHaveCount(0);
+    await expect(kartu).not.toContainText(/Laporkan|1500|KP2MI|Aduan/i);
 
     // Tombol salin menyalin template pesan band tinggi.
     await kartu.getByRole("button", { name: "Salin pesan" }).click();

@@ -135,7 +135,7 @@ export const LANGKAH_PER_LEVEL: Readonly<Record<Level, readonly string[]>> = {
     "Jangan transfer uang dan jangan kirim KTP, ijazah, atau data rekening sebelum identitas perusahaan terverifikasi.",
     "Konfirmasi lewat kanal resmi perusahaan (situs atau nomor kantor yang Anda temukan sendiri, bukan dari iklan).",
     "Simpan tangkapan layar iklan dan percakapan sebagai bukti.",
-    "Jika sudah terlanjur membayar atau mengirim data, laporkan ke kanal resmi dan hubungi bank Anda.",
+    "Jika sudah terlanjur membayar atau mengirim data, berhenti mengirim apa pun dan simpan seluruh bukti secara lokal.",
   ],
   "Perlu dicek": [
     "Konfirmasi upah, jam kerja, dan identitas perusahaan lewat sumber resmi.",
