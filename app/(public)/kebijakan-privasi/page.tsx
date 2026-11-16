@@ -71,6 +71,19 @@ export default function HalamanKebijakanPrivasi() {
           berada di perangkat Anda, bukan di server kami, dan akan hilang saat
           tab ditutup.
         </p>
+        <p>
+          Halaman{" "}
+          <Link
+            href="/bantuan"
+            className="font-semibold text-blue-600 underline-offset-4 hover:underline"
+          >
+            bantuan korban
+          </Link>{" "}
+          bekerja dengan prinsip yang sama: pilihan situasi pada checklist 24
+          jam tersimpan di peramban Anda dan dapat dihapus lewat tombol
+          &quot;Hapus semua data&quot;. Seluruh isi kronologi diproses dan
+          disimpan hanya di perangkat Anda — tidak pernah dikirim ke server.
+        </p>
       </BagianLegal>
 
       <BagianLegal judul="Bantuan Ekstraksi AI (Opsional)">

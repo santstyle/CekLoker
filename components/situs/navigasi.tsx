@@ -41,6 +41,12 @@ export function Navigasi() {
           </Link>
         );
       })}
+      <Link
+        href="/bantuan"
+        className="ml-2 text-xs font-medium text-slate-600 transition-colors hover:text-slate-900"
+      >
+        Sudah terlanjur? Bantuan
+      </Link>
     </nav>
   );
 }

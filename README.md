@@ -26,6 +26,7 @@ Rentang ditentukan secara deterministik dari pemeriksaan berbasis aturan, bukan 
 - Rentang risiko deterministik dengan alasan, bukti, dan rujukan hukum resmi (aktif)
 - Antarmuka publik dengan sistem desain utilitas Tailwind murni (aktif)
 - Halaman edukasi hak pekerja dan panduan verifikasi mandiri (aktif)
+- Halaman bantuan korban: checklist 24 jam, penunjuk kanal resmi, dan penyusun kronologi — seluruhnya di peramban (aktif)
 - Alur pembacaan poster lowongan (OCR peramban)
 - Perbandingan upah terhadap UMP/UMK (belum aktif — menunggu data upah resmi terverifikasi)
 
