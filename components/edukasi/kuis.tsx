@@ -1,10 +1,93 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type FormEvent,
+} from "react";
 
 import { cn } from "@/components/ui/cn";
-import { KATEGORI_KUIS, KUIS_PERTANYAAN, nilaiKuis } from "@/lib/edukasi/kuis";
+import {
+  KATEGORI_KUIS,
+  pilihSoalKuis,
+  SOAL_PER_KUIS,
+  nilaiKuis,
+} from "@/lib/edukasi/kuis";
+
+/**
+ * Mengambil seed soal dari URL (`?set=`) agar set soal dapat diulang, atau
+ * membuat seed acak baru. Kuis tidak pernah menulis URL sendiri.
+ */
+function ambilSeedAwal(): number {
+  if (typeof window === "undefined") return 0;
+  try {
+    const nilai = new URLSearchParams(window.location.search).get("set");
+    if (nilai !== null) {
+      const angka = Number(nilai);
+      if (Number.isFinite(angka)) return Math.trunc(angka);
+    }
+  } catch {
+    // URL tidak dapat dibaca — jatuh ke seed acak di bawah.
+  }
+  return buatSeedAcak();
+}
+
+function buatSeedAcak(): number {
+  if (typeof crypto !== "undefined" && "getRandomValues" in crypto) {
+    const buf = new Uint32Array(1);
+    crypto.getRandomValues(buf);
+    return buf[0] ?? 0;
+  }
+  return Math.floor(Math.random() * 4294967296);
+}
+
+/** Seed yang dipakai saat render server, agar hidrasi tidak berbeda. */
+const SEED_SERVER = 0;
+
+let seedKlien: number | null = null;
+let kunciSeedKlien = "";
+
+const pendengarSeed = new Set<() => void>();
+
+function kunciLokasi(): string {
+  if (typeof window === "undefined") return "";
+  return window.location.search;
+}
+
+/**
+ * Snapshot seed sisi klien. Nilainya di-cache per URL agar stabil selama
+ * satu sesi, dan dihitung ulang bila URL berubah (mis. `?set=` lain).
+ */
+function bacaSeedKlien(): number {
+  const kunci = kunciLokasi();
+  if (seedKlien === null || kunciSeedKlien !== kunci) {
+    seedKlien = ambilSeedAwal();
+    kunciSeedKlien = kunci;
+  }
+  return seedKlien;
+}
+
+function bacaSeedServer(): number {
+  return SEED_SERVER;
+}
+
+function langgananSeed(pendengar: () => void): () => void {
+  pendengarSeed.add(pendengar);
+  return () => {
+    pendengarSeed.delete(pendengar);
+  };
+}
+
+/** Mengganti seed aktif, mis. saat pengguna menekan "Ulangi Kuis". */
+function tetapkanSeed(seed: number): void {
+  seedKlien = seed;
+  kunciSeedKlien = kunciLokasi();
+  for (const pendengar of pendengarSeed) pendengar();
+}
 
 /**
  * Kuis edukasi — berjalan sepenuhnya di peramban.
@@ -15,13 +98,25 @@ import { KATEGORI_KUIS, KUIS_PERTANYAAN, nilaiKuis } from "@/lib/edukasi/kuis";
 export function KuisEdukasi() {
   const [jawaban, setJawaban] = useState<Record<string, number>>({});
   const [terkirim, setTerkirim] = useState(false);
+  // Seed dipilih di klien lewat store eksternal agar render server tetap
+  // deterministik dan hidrasi tidak berbeda.
+  const seed = useSyncExternalStore(
+    langgananSeed,
+    bacaSeedKlien,
+    bacaSeedServer,
+  );
   const hasilRef = useRef<HTMLDivElement>(null);
 
+  const soal = useMemo(() => pilihSoalKuis(seed), [seed]);
+
   const deretJawaban = useMemo(
-    () => KUIS_PERTANYAAN.map((soal) => jawaban[soal.id]),
-    [jawaban],
+    () => soal.map((butir) => jawaban[butir.id]),
+    [jawaban, soal],
   );
-  const hasil = useMemo(() => nilaiKuis(deretJawaban), [deretJawaban]);
+  const hasil = useMemo(
+    () => nilaiKuis(deretJawaban, soal),
+    [deretJawaban, soal],
+  );
   const lengkap = deretJawaban.every((j) => typeof j === "number");
 
   // Saat hasil ditampilkan, pindahkan fokus ke sana agar pembaca layar
@@ -46,17 +141,23 @@ export function KuisEdukasi() {
   function ulangi() {
     setJawaban({});
     setTerkirim(false);
+    tetapkanSeed(buatSeedAcak());
   }
 
   return (
     <div className="flex flex-col gap-8">
+      <p className="text-sm leading-relaxed text-muted">
+        Setiap sesi menampilkan {SOAL_PER_KUIS} soal yang dipilih acak dari bank
+        soal, jadi susunan soal bisa berbeda dengan sesi sebelumnya. Seluruh
+        soal diambil dari materi yang sama di halaman edukasi.
+      </p>
       <form onSubmit={tanganiKirim} noValidate>
         <div className="flex flex-col gap-8">
-          {KUIS_PERTANYAAN.map((soal, nomorSoal) => {
-            const dipilih = jawaban[soal.id];
+          {soal.map((butir, nomorSoal) => {
+            const dipilih = jawaban[butir.id];
             return (
               <fieldset
-                key={soal.id}
+                key={butir.id}
                 disabled={terkirim}
                 className="min-w-0 rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-7"
               >
@@ -68,7 +169,7 @@ export function KuisEdukasi() {
                  * kelompok pilihan radio punya nama yang jelas.
                  */}
                 <legend className="sr-only">
-                  Soal {nomorSoal + 1} dari {KUIS_PERTANYAAN.length}
+                  Soal {nomorSoal + 1} dari {soal.length}
                 </legend>
 
                 <div className="flex items-start gap-3">
@@ -79,14 +180,14 @@ export function KuisEdukasi() {
                     {nomorSoal + 1}
                   </span>
                   <p className="min-w-0 flex-1 text-base leading-snug font-bold break-words text-slate-950 sm:text-lg">
-                    {soal.pertanyaan}
+                    {butir.pertanyaan}
                   </p>
                 </div>
 
                 <div className="mt-4 flex flex-col gap-3">
-                  {soal.pilihan.map((teks, indeks) => {
-                    const idOpsi = `${soal.id}-p-${indeks}`;
-                    const merupakanJawaban = indeks === soal.jawaban;
+                  {butir.pilihan.map((teks, indeks) => {
+                    const idOpsi = `${butir.id}-p-${indeks}`;
+                    const merupakanJawaban = indeks === butir.jawaban;
                     const dipilihUser = dipilih === indeks;
 
                     const kelasAktif = terkirim
@@ -114,10 +215,10 @@ export function KuisEdukasi() {
                         <input
                           type="radio"
                           id={idOpsi}
-                          name={soal.id}
+                          name={butir.id}
                           value={indeks}
                           checked={dipilihUser}
-                          onChange={() => pilih(soal.id, indeks)}
+                          onChange={() => pilih(butir.id, indeks)}
                           className="mt-0.5 size-4 accent-[#0f172a]"
                         />
                         <span className="min-w-0 flex-1 break-words">
@@ -173,7 +274,7 @@ export function KuisEdukasi() {
               {hasil.benar}
               <span className="text-2xl font-bold text-slate-400">
                 {" "}
-                / {KUIS_PERTANYAAN.length} benar
+                / {soal.length} benar
               </span>
             </p>
             <p className="text-sm text-slate-600">
@@ -188,12 +289,12 @@ export function KuisEdukasi() {
           )}
 
           <ol className="flex flex-col gap-4">
-            {KUIS_PERTANYAAN.map((soal, indeks) => {
+            {soal.map((butir, indeks) => {
               const dipilih = deretJawaban[indeks];
-              const tepat = dipilih === soal.jawaban;
+              const tepat = dipilih === butir.jawaban;
               return (
                 <li
-                  key={soal.id}
+                  key={butir.id}
                   className={cn(
                     "min-w-0 rounded-2xl border p-5",
                     tepat
@@ -203,20 +304,20 @@ export function KuisEdukasi() {
                 >
                   <p className="text-sm font-bold break-words text-slate-950">
                     <span className="text-slate-500">Soal {indeks + 1} · </span>
-                    {tepat ? "Benar" : "Belum tepat"} — {soal.pertanyaan}
+                    {tepat ? "Benar" : "Belum tepat"} — {butir.pertanyaan}
                   </p>
                   {!tepat && (
                     <p className="mt-1 text-sm break-words text-slate-700">
                       Jawaban benar:{" "}
-                      <strong>{soal.pilihan[soal.jawaban]}</strong>
+                      <strong>{butir.pilihan[butir.jawaban]}</strong>
                     </p>
                   )}
                   <p className="mt-2 text-sm leading-relaxed break-words text-slate-600">
-                    {soal.penjelasan}
+                    {butir.penjelasan}
                   </p>
-                  {soal.rujukan && (
+                  {butir.rujukan && (
                     <p className="mt-2 text-xs font-semibold break-words text-slate-500">
-                      Rujukan: {soal.rujukan}
+                      Rujukan: {butir.rujukan}
                     </p>
                   )}
                 </li>

@@ -24,7 +24,7 @@ export default function HalamanKuisEdukasi() {
             <span className="teks-gradasi-terang">tanpa vonis apa pun.</span>
           </>
         }
-        deskripsi="Tujuh soal singkat seputar hak kerja dan pola rekrutmen berisiko. Jawaban tidak dikirim ke server mana pun dan tidak disimpan."
+        deskripsi="Tujuh soal pilihan dari bank soal seputar hak kerja dan pola rekrutmen berisiko, dipilih acak tiap sesi. Jawaban tidak dikirim ke server mana pun dan tidak disimpan."
       />
 
       <Container className="pb-16 sm:pb-20">
