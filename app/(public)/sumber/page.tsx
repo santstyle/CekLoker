@@ -40,7 +40,8 @@ const SUMBER_HUKUM = [
   },
   {
     id: "permenaker-39-2016",
-    judul: "Permenaker No. 39 Tahun 2016 tentang Persyaratan dan Tatacara Perjanjian Kerja Waktu Tertentu",
+    judul:
+      "Permenaker No. 39 Tahun 2016 tentang Persyaratan dan Tatacara Perjanjian Kerja Waktu Tertentu",
     deskripsi:
       "Mengatur syarat PKWT, jangka waktu maksimal, perpanjangan, dan upah saat berakhirnya PKWT. Dasar aturan CekLoker untuk indikator kontraktor palsu dan PKWT berantai.",
     url: "https://jdih.kemnaker.go.id/peraturan/permenaker-no-39-tahun-2016",
@@ -64,7 +65,8 @@ const SUMBER_HUKUM = [
   },
   {
     id: "kep-226-2019",
-    judul: "KEP Menaker No. 226 Tahun 2019 tentang Pedoman Penetapan Upah Minimum Provinsi",
+    judul:
+      "KEP Menaker No. 226 Tahun 2019 tentang Pedoman Penetapan Upah Minimum Provinsi",
     deskripsi:
       "Pedoman teknis penetapan UMP: formula, variabel, dan prosedur. Referensi metodologi data upah CekLoker.",
     url: "https://jdih.kemnaker.go.id/peraturan/kepmen-no-226-tahun-2019",
@@ -88,9 +90,9 @@ export default function HalamanSumber() {
         judul="Sumber Hukum & Data Upah Minimum"
         deskripsi={
           <>
-            CekLoker menggunakan sumber hukum resmi Indonesia dan data upah minimum regional
-            untuk menilai lowongan kerja. Semua rujukan dapat diklik menuju dokumen asli di
-            peraturan.go.id atau JDIH Kemenaker.
+            CekLoker menggunakan sumber hukum resmi Indonesia dan data upah
+            minimum regional untuk menilai lowongan kerja. Semua rujukan dapat
+            diklik menuju dokumen asli di peraturan.go.id atau JDIH Kemenaker.
           </>
         }
       />
@@ -109,8 +111,8 @@ export default function HalamanSumber() {
                   Status Data Upah Minimum Regional
                 </h2>
                 <div className="flex flex-col gap-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-                  <div className="flex items-start gap-3 p-4 rounded-xl border bg-white shadow-xs">
-                    <div className="flex-shrink-0 size-10 flex items-center justify-center rounded-lg bg-blue-100">
+                  <div className="flex items-start gap-3 rounded-xl border bg-white p-4 shadow-xs">
+                    <div className="flex size-10 flex-shrink-0 items-center justify-center rounded-lg bg-blue-100">
                       <svg
                         className="size-5 text-blue-700"
                         fill="currentColor"
@@ -126,17 +128,26 @@ export default function HalamanSumber() {
                     <div>
                       <p className="font-semibold text-slate-900">
                         Data Upah Minimum:{" "}
-                        <span className={DATA_UPAH_TERSEDIA ? "text-green-700" : "text-amber-700"}>
-                          {DATA_UPAH_TERSEDIA ? "Tersedia & Aktif" : "Belum Tersedia (Belum Aktif)"}
+                        <span
+                          className={
+                            DATA_UPAH_TERSEDIA
+                              ? "text-green-700"
+                              : "text-amber-700"
+                          }
+                        >
+                          {DATA_UPAH_TERSEDIA
+                            ? "Tersedia & Aktif"
+                            : "Belum Tersedia (Belum Aktif)"}
                         </span>
                       </p>
                       <p className="mt-1 text-slate-600">{CATATAN_DATA_UPAH}</p>
                     </div>
                   </div>
-                  <p className="text-slate-500 pl-10">
-                    Data upah minimum provinsi/kabupaten/kota diambil dari penetapan resmi
-                    gubernur/keputusan menteri. CekLoker akan mengaktifkan fitur bandingkan upah
-                    lowongan dengan UMP/UMK/UMAK begitu data lengkap tersedia dan diverifikasi.
+                  <p className="pl-10 text-slate-500">
+                    Data upah minimum provinsi/kabupaten/kota diambil dari
+                    penetapan resmi gubernur/keputusan menteri. CekLoker akan
+                    mengaktifkan fitur bandingkan upah lowongan dengan
+                    UMP/UMK/UMAK begitu data lengkap tersedia dan diverifikasi.
                   </p>
                 </div>
               </section>
@@ -152,36 +163,38 @@ export default function HalamanSumber() {
                   {SUMBER_HUKUM.map((sumber, idx) => (
                     <div
                       key={sumber.id}
-                      className="flex flex-col gap-2 p-4 rounded-xl border bg-white shadow-xs transition-all hover:shadow-md"
+                      className="flex flex-col gap-2 rounded-xl border bg-white p-4 shadow-xs transition-all hover:shadow-md"
                     >
                       <div className="flex items-start gap-3">
-                        <span className="flex-shrink-0 font-mono text-xs text-sky-600 bg-sky-50 px-2 py-0.5 rounded">
+                        <span className="flex-shrink-0 rounded bg-sky-50 px-2 py-0.5 font-mono text-xs text-sky-600">
                           {idx + 1}
                         </span>
-                        <div className="flex-1 min-w-0">
+                        <div className="min-w-0 flex-1">
                           <h3 className="font-semibold text-slate-900">
                             <a
                               href={sumber.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="hover:text-sky-700 underline-offset-2 transition-colors"
+                              className="underline-offset-2 transition-colors hover:text-sky-700"
                             >
                               {sumber.judul}
                             </a>
                           </h3>
                           {sumber.pasal.length > 0 && (
-                            <p className="mt-1 text-xs text-sky-700 font-medium">
+                            <p className="mt-1 text-xs font-medium text-sky-700">
                               Pasal terkait CekLoker: {sumber.pasal.join(", ")}
                             </p>
                           )}
-                          <p className="mt-2 text-slate-600">{sumber.deskripsi}</p>
+                          <p className="mt-2 text-slate-600">
+                            {sumber.deskripsi}
+                          </p>
                         </div>
                       </div>
                       <a
                         href={sumber.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-medium text-sky-600 hover:text-sky-800 transition-colors"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-sky-600 transition-colors hover:text-sky-800"
                       >
                         Buka dokumen resmi
                         <svg
@@ -241,7 +254,7 @@ export default function HalamanSumber() {
                                 href={url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-sky-600 hover:text-sky-800 underline-offset-2 transition-colors inline-flex items-center gap-1"
+                                className="inline-flex items-center gap-1 text-sky-600 underline-offset-2 transition-colors hover:text-sky-800"
                               >
                                 Buka
                                 <svg
@@ -265,9 +278,10 @@ export default function HalamanSumber() {
                       </tbody>
                     </table>
                   </div>
-                  <p className="text-slate-500 pl-2">
-                    Tabel di atas memetakan setiap id rujukan yang dipakai aturan evaluasi ke
-                    URL dokumen resmi di peraturan.go.id atau JDIH Kemenaker.
+                  <p className="pl-2 text-slate-500">
+                    Tabel di atas memetakan setiap id rujukan yang dipakai
+                    aturan evaluasi ke URL dokumen resmi di peraturan.go.id atau
+                    JDIH Kemenaker.
                   </p>
                 </div>
               </section>
@@ -280,28 +294,36 @@ export default function HalamanSumber() {
                   Catatan Metodologi
                 </h2>
                 <div className="flex flex-col gap-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-                  <ul className="list-disc list-inside space-y-2 pl-2">
+                  <ul className="list-inside list-disc space-y-2 pl-2">
                     <li>
-                      Semua rujukan hukum diambil dari situs resmi <strong>peraturan.go.id</strong>
+                      Semua rujukan hukum diambil dari situs resmi{" "}
+                      <strong>peraturan.go.id</strong>
                       (Direktori Peraturan Perundang-undangan BPHN) dan
-                      <strong>JDIH Kemenaker</strong> (Jaringan Dokumentasi dan Informasi Hukum
-                      Kementerian Ketenagakerjaan).
+                      <strong>JDIH Kemenaker</strong> (Jaringan Dokumentasi dan
+                      Informasi Hukum Kementerian Ketenagakerjaan).
                     </li>
                     <li>
-                      URL ditujukan ke halaman indeks peraturan; nomor pasal spesifik dapat
-                      dicari di dalam dokumen PDF/HTML yang tersedia di situs tersebut.
+                      URL ditujukan ke halaman indeks peraturan; nomor pasal
+                      spesifik dapat dicari di dalam dokumen PDF/HTML yang
+                      tersedia di situs tersebut.
                     </li>
                     <li>
-                      CekLoker tidak mengarsipkan salinan dokumen hukum; tautan selalu mengarah
-                      ke sumber asli agar pengguna mendapatkan versi terbaru dan sah.
+                      CekLoker tidak mengarsipkan salinan dokumen hukum; tautan
+                      selalu mengarah ke sumber asli agar pengguna mendapatkan
+                      versi terbaru dan sah.
                     </li>
                     <li>
-                      Data upah minimum regional akan diupdate mengikuti penetapan resmi
-                      gubernur (UMP) dan keputusan menteri (UMK/UMAK) setiap tahunnya.
+                      Data upah minimum regional akan diupdate mengikuti
+                      penetapan resmi gubernur (UMP) dan keputusan menteri
+                      (UMK/UMAK) setiap tahunnya.
                     </li>
                     <li>
-                      Jika menemukan tautan rusak atau peraturan yang telah dicabut/diganti,
-                      silakan laporkan melalui halaman <a href="/tentang" className="underline text-sky-600">Tentang</a>.
+                      Jika menemukan tautan rusak atau peraturan yang telah
+                      dicabut/diganti, silakan laporkan melalui halaman{" "}
+                      <a href="/tentang" className="text-sky-600 underline">
+                        Tentang
+                      </a>
+                      .
                     </li>
                   </ul>
                 </div>

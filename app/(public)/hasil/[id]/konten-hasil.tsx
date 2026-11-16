@@ -367,7 +367,8 @@ export default function KontenHasil() {
                   Rujukan Hukum Terkait
                 </h2>
                 <p className="text-xs text-muted sm:text-sm">
-                  Dasar hukum aturan evaluasi yang teridentifikasi dalam hasil ini.
+                  Dasar hukum aturan evaluasi yang teridentifikasi dalam hasil
+                  ini.
                 </p>
               </div>
             </div>
@@ -403,7 +404,7 @@ export default function KontenHasil() {
                       className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-all ${
                         url
                           ? "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900"
-                          : "border-amber-200 bg-amber-50 text-amber-700 cursor-default"
+                          : "cursor-default border-amber-200 bg-amber-50 text-amber-700"
                       }`}
                       title={url ? "Buka sumber resmi" : "URL tidak tersedia"}
                     >

@@ -31,7 +31,8 @@ export const URL_RUJUKAN: Readonly<Record<string, string>> = {
   "uu-13-2003-pasal-77": "https://peraturan.go.id/uu/nomor-13-tahun-2003.html",
   "uu-13-2003-pasal-78": "https://peraturan.go.id/uu/nomor-13-tahun-2003.html",
   "uu-13-2003-pasal-89": "https://peraturan.go.id/uu/nomor-13-tahun-2003.html",
-  "permenaker-39-2016": "https://jdih.kemnaker.go.id/peraturan/permenaker-no-39-tahun-2016",
+  "permenaker-39-2016":
+    "https://jdih.kemnaker.go.id/peraturan/permenaker-no-39-tahun-2016",
   "uu-27-2022": "https://peraturan.go.id/uu/nomor-27-tahun-2022.html",
   "uu-18-2017": "https://peraturan.go.id/uu/nomor-18-tahun-2017.html",
 };

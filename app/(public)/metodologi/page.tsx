@@ -63,7 +63,7 @@ export default function HalamanMetodologi() {
           {/* Badge Status Data Upah */}
           <Reveal>
             <div className="flex items-center gap-3 rounded-2xl border bg-white p-4 shadow-xs">
-              <div className="flex-shrink-0 size-10 flex items-center justify-center rounded-lg bg-blue-100">
+              <div className="flex size-10 flex-shrink-0 items-center justify-center rounded-lg bg-blue-100">
                 <svg
                   className="size-5 text-blue-700"
                   fill="currentColor"
@@ -79,8 +79,14 @@ export default function HalamanMetodologi() {
               <div>
                 <p className="font-semibold text-slate-900">
                   Data Upah Minimum Regional:{" "}
-                  <span className={DATA_UPAH_TERSEDIA ? "text-green-700" : "text-amber-700"}>
-                    {DATA_UPAH_TERSEDIA ? "Tersedia & Aktif" : "Belum Tersedia (Belum Aktif)"}
+                  <span
+                    className={
+                      DATA_UPAH_TERSEDIA ? "text-green-700" : "text-amber-700"
+                    }
+                  >
+                    {DATA_UPAH_TERSEDIA
+                      ? "Tersedia & Aktif"
+                      : "Belum Tersedia (Belum Aktif)"}
                   </span>
                 </p>
                 <p className="text-sm text-slate-600">{CATATAN_DATA_UPAH}</p>
@@ -307,21 +313,30 @@ export default function HalamanMetodologi() {
                                   const url = urlRujukan(id);
                                   const label = labelRujukan(id);
                                   return (
-                                    <span key={`${id}-${idx}`} className="flex items-center gap-0.5">
+                                    <span
+                                      key={`${id}-${idx}`}
+                                      className="flex items-center gap-0.5"
+                                    >
                                       {url ? (
                                         <a
                                           href={url}
                                           target="_blank"
                                           rel="noopener noreferrer"
-                                          className="text-slate-700 underline hover:text-slate-900 transition-colors"
+                                          className="text-slate-700 underline transition-colors hover:text-slate-900"
                                         >
                                           {label}
                                         </a>
                                       ) : (
-                                        <span className="text-slate-700">{label}</span>
+                                        <span className="text-slate-700">
+                                          {label}
+                                        </span>
                                       )}
-                                      {idx < aturan.rujukanHukumIds.length - 1 && (
-                                        <span aria-hidden="true" className="text-slate-400">
+                                      {idx <
+                                        aturan.rujukanHukumIds.length - 1 && (
+                                        <span
+                                          aria-hidden="true"
+                                          className="text-slate-400"
+                                        >
                                           ,
                                         </span>
                                       )}
