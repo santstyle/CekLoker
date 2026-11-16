@@ -114,9 +114,9 @@ function bacaKutipan(entri: EntriHasilMentah | null): readonly string[] {
     if (!Array.isArray(temuan)) return [];
     return temuan.flatMap((t: unknown) =>
       typeof t === "object" && t !== null && "bukti" in t
-        ? ((t as { bukti: unknown }).bukti instanceof Array
-            ? (t as { bukti: unknown[] }).bukti.map(String)
-            : [])
+        ? (t as { bukti: unknown }).bukti instanceof Array
+          ? (t as { bukti: unknown[] }).bukti.map(String)
+          : []
         : [],
     );
   } catch {
@@ -169,8 +169,7 @@ export function PenyusunKronologi() {
       // Lampirkan ringkasan hasil pemeriksaan bila ada dan pengguna
       // mencentangnya. Tanpa kutipan iklan di sini — kutipan hanya
       // disisipkan di teksKronologiFinal bila sertakanKutipan menyala.
-      ringkasanHasil:
-        hasilSesi && lampirkanHasil ? hasilSesi.ringkasan : null,
+      ringkasanHasil: hasilSesi && lampirkanHasil ? hasilSesi.ringkasan : null,
     });
   }, [
     tanggalKejadian,
@@ -218,7 +217,11 @@ export function PenyusunKronologi() {
     });
   }
 
-  function ubahLangkah(id: string, bagian: "tanggal" | "deskripsi", nilai: string) {
+  function ubahLangkah(
+    id: string,
+    bagian: "tanggal" | "deskripsi",
+    nilai: string,
+  ) {
     setLangkah((prev) =>
       prev.map((l) => (l.id === id ? { ...l, [bagian]: nilai } : l)),
     );
@@ -226,7 +229,11 @@ export function PenyusunKronologi() {
 
   function ubahBukti(item: string, aktif: boolean) {
     setBukti((prev) =>
-      aktif ? (prev.includes(item) ? prev : [...prev, item]) : prev.filter((b) => b !== item),
+      aktif
+        ? prev.includes(item)
+          ? prev
+          : [...prev, item]
+        : prev.filter((b) => b !== item),
     );
   }
 
@@ -279,7 +286,7 @@ export function PenyusunKronologi() {
               value={tanggalKejadian}
               max="2050-12-31"
               onChange={(e) => setTanggalKejadian(e.target.value)}
-              className="min-h-11 rounded-xl border border-slate-300 px-3 text-sm text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+              className="min-h-11 rounded-xl border border-slate-300 px-3 text-sm text-slate-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 focus:outline-none"
             />
           </label>
 
@@ -293,7 +300,7 @@ export function PenyusunKronologi() {
               placeholder="Mis. Instagram, Jobstreet, grup WhatsApp"
               value={platform}
               onChange={(e) => setPlatform(e.target.value)}
-              className="min-h-11 rounded-xl border border-slate-300 px-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+              className="min-h-11 rounded-xl border border-slate-300 px-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 focus:outline-none"
             />
           </label>
 
@@ -307,7 +314,7 @@ export function PenyusunKronologi() {
               placeholder="Nama perusahaan / perekrut yang mengaku"
               value={pihak}
               onChange={(e) => setPihak(e.target.value)}
-              className="min-h-11 rounded-xl border border-slate-300 px-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+              className="min-h-11 rounded-xl border border-slate-300 px-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 focus:outline-none"
             />
           </label>
 
@@ -321,13 +328,14 @@ export function PenyusunKronologi() {
               placeholder="Mis. 0811-0000-0000, akun terverifikasi, email, akun sosial media"
               value={kontak}
               onChange={(e) => setKontak(e.target.value)}
-              className="min-h-11 rounded-xl border border-slate-300 px-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+              className="min-h-11 rounded-xl border border-slate-300 px-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 focus:outline-none"
             />
           </label>
 
           <label className="flex flex-col gap-1.5">
             <span className="text-xs font-semibold text-slate-800">
-              Nomor rekening tujuan <span className="text-slate-600">(opsional)</span>
+              Nomor rekening tujuan{" "}
+              <span className="text-slate-600">(opsional)</span>
             </span>
             <input
               type="text"
@@ -336,13 +344,14 @@ export function PenyusunKronologi() {
               placeholder="Mis. 0000000000"
               value={rekening}
               onChange={(e) => setRekening(e.target.value)}
-              className="min-h-11 rounded-xl border border-slate-300 px-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+              className="min-h-11 rounded-xl border border-slate-300 px-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 focus:outline-none"
             />
           </label>
 
           <label className="flex flex-col gap-1.5">
             <span className="text-xs font-semibold text-slate-800">
-              Nominal kerugian <span className="text-slate-600">(opsional)</span>
+              Nominal kerugian{" "}
+              <span className="text-slate-600">(opsional)</span>
             </span>
             <input
               type="text"
@@ -350,7 +359,7 @@ export function PenyusunKronologi() {
               placeholder="Mis. Rp2.000.000"
               value={nominal}
               onChange={(e) => setNominal(e.target.value)}
-              className="min-h-11 rounded-xl border border-slate-300 px-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+              className="min-h-11 rounded-xl border border-slate-300 px-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 focus:outline-none"
             />
           </label>
         </div>
@@ -366,13 +375,17 @@ export function PenyusunKronologi() {
               className="grid gap-2 rounded-2xl border border-slate-200/80 bg-white p-3 sm:grid-cols-[auto_1fr_auto] sm:items-end"
             >
               <label className="flex flex-col gap-1.5">
-                <span className="text-[0.7rem] font-medium text-slate-500">Tanggal</span>
+                <span className="text-[0.7rem] font-medium text-slate-500">
+                  Tanggal
+                </span>
                 <input
                   type="date"
                   value={item.tanggal}
                   max="2050-12-31"
-                  onChange={(e) => ubahLangkah(item.id, "tanggal", e.target.value)}
-                  className="min-h-10 rounded-xl border border-slate-300 px-3 text-xs text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+                  onChange={(e) =>
+                    ubahLangkah(item.id, "tanggal", e.target.value)
+                  }
+                  className="min-h-10 rounded-xl border border-slate-300 px-3 text-xs text-slate-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 focus:outline-none"
                 />
               </label>
               <label className="flex flex-col gap-1.5">
@@ -387,7 +400,7 @@ export function PenyusunKronologi() {
                   onChange={(e) =>
                     ubahLangkah(item.id, "deskripsi", e.target.value)
                   }
-                  className="min-h-10 rounded-xl border border-slate-300 px-3 text-xs text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+                  className="min-h-10 rounded-xl border border-slate-300 px-3 text-xs text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 focus:outline-none"
                 />
               </label>
               <button
@@ -445,8 +458,8 @@ export function PenyusunKronologi() {
                 onChange={(e) => setLampirkanHasil(e.target.checked)}
               />
               <span>
-                {hasilSesi.label} — skor dan nama temuan akan disertakan.
-                Tanpa kutipan iklan, kecuali Anda centang di bawah.
+                {hasilSesi.label} — skor dan nama temuan akan disertakan. Tanpa
+                kutipan iklan, kecuali Anda centang di bawah.
               </span>
             </label>
             {lampirkanHasil && (
@@ -466,7 +479,7 @@ export function PenyusunKronologi() {
 
       {/* Hasil */}
       <div className="flex flex-col gap-3">
-        <h3 className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
+        <h3 className="text-xs font-semibold tracking-wide text-slate-600 uppercase">
           Teks kronologi (diproses di perangkat Anda)
         </h3>
         <pre
@@ -492,8 +505,8 @@ export function PenyusunKronologi() {
           </button>
         </div>
         <p className="text-xs leading-relaxed text-slate-600">
-          Teks ini hanya ada di perangkat Anda. CekLoker tidak menyimpan
-          isi kronologi di server.
+          Teks ini hanya ada di perangkat Anda. CekLoker tidak menyimpan isi
+          kronologi di server.
         </p>
       </div>
     </div>

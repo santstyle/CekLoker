@@ -37,17 +37,21 @@ export default function HalamanBantuan() {
           <Reveal>
             <div className="rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs sm:p-9">
               <p className="text-sm leading-relaxed text-slate-700">
-                CekLoker bukan lembaga pelaporan dan bukan nasihat hukum. Kami tidak
-                mengirim laporan atas nama Anda. Informasi di bawah ini disusun dari
-                sumber sekunder yang perlu diverifikasi; gunakan sebaik-baiknya dan
-                segera hubungi bank/polisi bila ada uang tertipu.
+                CekLoker bukan lembaga pelaporan dan bukan nasihat hukum. Kami
+                tidak mengirim laporan atas nama Anda. Informasi di bawah ini
+                disusun dari sumber sekunder yang perlu diverifikasi; gunakan
+                sebaik-baiknya dan segera hubungi bank/polisi bila ada uang
+                tertipu.
               </p>
             </div>
           </Reveal>
 
           {/* 1. Checklist 24 Jam */}
           <Reveal delay={40}>
-            <section aria-labelledby="checklist-heading" className="flex flex-col gap-6">
+            <section
+              aria-labelledby="checklist-heading"
+              className="flex flex-col gap-6"
+            >
               <h2
                 id="checklist-heading"
                 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl"
@@ -63,7 +67,10 @@ export default function HalamanBantuan() {
 
           {/* 2. Penunjuk Kanal */}
           <Reveal delay={80}>
-            <section aria-labelledby="kanal-heading" className="flex flex-col gap-6">
+            <section
+              aria-labelledby="kanal-heading"
+              className="flex flex-col gap-6"
+            >
               <h2
                 id="kanal-heading"
                 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl"
@@ -80,7 +87,10 @@ export default function HalamanBantuan() {
 
           {/* 3. Penyusun Kronologi */}
           <Reveal delay={120}>
-            <section aria-labelledby="kronologi-heading" className="flex flex-col gap-6">
+            <section
+              aria-labelledby="kronologi-heading"
+              className="flex flex-col gap-6"
+            >
               <h2
                 id="kronologi-heading"
                 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl"

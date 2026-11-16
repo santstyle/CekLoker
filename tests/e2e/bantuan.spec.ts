@@ -25,9 +25,7 @@ test.describe("Bantuan korban /bantuan", () => {
       page.getByText(/CekLoker bukan lembaga pelaporan/).first(),
     ).toBeVisible();
     await expect(
-      page
-        .getByText(/tidak mengirim laporan atas nama Anda/i)
-        .first(),
+      page.getByText(/tidak mengirim laporan atas nama Anda/i).first(),
     ).toBeVisible();
 
     // Tidak ada tautan maupun teks mentah "TODO" yang lolos ke layar.
@@ -44,9 +42,9 @@ test.describe("Bantuan korban /bantuan", () => {
     await expect(
       page.getByText(/Hentikan kontak dan jangan transfer lagi/),
     ).toBeVisible();
-    await expect(
-      page.getByText(/hubungi bank sesegera mungkin/i),
-    ).toHaveCount(0);
+    await expect(page.getByText(/hubungi bank sesegera mungkin/i)).toHaveCount(
+      0,
+    );
 
     // Memilih "sudah transfer" memunculkan langkah bank.
     await page.getByRole("checkbox", { name: "Sudah transfer uang" }).check();
@@ -59,9 +57,9 @@ test.describe("Bantuan korban /bantuan", () => {
     await expect(
       page.getByRole("checkbox", { name: "Sudah transfer uang" }),
     ).not.toBeChecked();
-    await expect(
-      page.getByText(/hubungi bank sesegera mungkin/i),
-    ).toHaveCount(0);
+    await expect(page.getByText(/hubungi bank sesegera mungkin/i)).toHaveCount(
+      0,
+    );
   });
 
   test("penunjuk kanal: kasus rekening menampilkan kanal dan status jujur", async ({
@@ -69,17 +67,11 @@ test.describe("Bantuan korban /bantuan", () => {
   }) => {
     await page.goto("/bantuan");
 
-    await page
-      .getByRole("button", { name: /Rekening penipu/ })
-      .click();
+    await page.getByRole("button", { name: /Rekening penipu/ }).click();
 
-    await expect(
-      page.getByText("CekRekening.id (Komdigi)"),
-    ).toBeVisible();
+    await expect(page.getByText("CekRekening.id (Komdigi)")).toBeVisible();
     // Seluruh kanal belum diverifikasi — status harus jujur, bukan klaim.
-    await expect(
-      page.getByText("Belum diverifikasi").first(),
-    ).toBeVisible();
+    await expect(page.getByText("Belum diverifikasi").first()).toBeVisible();
   });
 
   test("penunjuk kanal: URL TODO tampil sebagai teks, bukan tautan", async ({
@@ -87,9 +79,7 @@ test.describe("Bantuan korban /bantuan", () => {
   }) => {
     await page.goto("/bantuan");
 
-    await page
-      .getByRole("button", { name: /Lowongan luar negeri/ })
-      .click();
+    await page.getByRole("button", { name: /Lowongan luar negeri/ }).click();
 
     await expect(
       page.getByText("Tautan resmi belum tersedia", { exact: true }),
@@ -107,13 +97,17 @@ test.describe("Bantuan korban /bantuan", () => {
     await page.getByLabel(/Tanggal kejadian pertama/).fill("2026-11-01");
     await page.getByLabel(/Platform \/ sumber iklan/).fill("Instagram");
     await page.getByLabel(/Pihak yang mengaku/).fill("PT Contoh Sukses");
-    await page.getByRole("textbox", { name: /Kontak pelaku/ }).fill("0811000000");
+    await page
+      .getByRole("textbox", { name: /Kontak pelaku/ })
+      .fill("0811000000");
     await page.getByLabel(/Nomor rekening tujuan/).fill("0001234567");
     await page.getByLabel(/Nominal kerugian/).fill("Rp2.000.000");
-    await page.getByLabel("Kejadian", { exact: true }).fill(
-      "Diminta transfer biaya admin",
-    );
-    await page.getByRole("checkbox", { name: "Bukti transfer", exact: true }).check();
+    await page
+      .getByLabel("Kejadian", { exact: true })
+      .fill("Diminta transfer biaya admin");
+    await page
+      .getByRole("checkbox", { name: "Bukti transfer", exact: true })
+      .check();
 
     const hasil = page.getByLabel("Hasil teks kronologi");
     await expect(hasil).toContainText("PT Contoh Sukses");
@@ -122,12 +116,8 @@ test.describe("Bantuan korban /bantuan", () => {
 
     // Tombol salin menyalin teks kronologi ke papan klip.
     await page.getByRole("button", { name: "Salin teks" }).click();
-    await expect(
-      page.getByRole("button", { name: /Tersalin/ }),
-    ).toBeVisible();
-    const tersalin = await page.evaluate(() =>
-      navigator.clipboard.readText(),
-    );
+    await expect(page.getByRole("button", { name: /Tersalin/ })).toBeVisible();
+    const tersalin = await page.evaluate(() => navigator.clipboard.readText());
     expect(tersalin).toContain("PT Contoh Sukses");
   });
 

@@ -79,8 +79,7 @@ export function hitungLangkah(
   return LANGKAH_CHECKLIST.filter((langkah) => {
     if (langkah.selalu) return true;
     if (langkah.butuhTransfer && aktif.has("sudah-transfer")) return true;
-    if (langkah.butuhDataPribadi && aktif.has("sudah-kirim-data"))
-      return true;
+    if (langkah.butuhDataPribadi && aktif.has("sudah-kirim-data")) return true;
     if (langkah.butuhPerangkat && aktif.has("sudah-klik-tautan")) return true;
     return false;
   });
@@ -108,7 +107,10 @@ export function simpanStatus(status: StatusChecklist): string {
 export function bacaStatus(mentah: string | null): StatusChecklist | null {
   if (mentah === null) return null;
   try {
-    const nilai = JSON.parse(mentah) as { situasi?: unknown; selesai?: unknown };
+    const nilai = JSON.parse(mentah) as {
+      situasi?: unknown;
+      selesai?: unknown;
+    };
     if (
       nilai === null ||
       typeof nilai !== "object" ||
@@ -117,8 +119,8 @@ export function bacaStatus(mentah: string | null): StatusChecklist | null {
     ) {
       return null;
     }
-    const situasi = nilai.situasi.filter(
-      (s): s is IdSituasi => PILIHAN_SITUASI.some((p) => p.id === s),
+    const situasi = nilai.situasi.filter((s): s is IdSituasi =>
+      PILIHAN_SITUASI.some((p) => p.id === s),
     );
     const selesai = nilai.selesai.filter(
       (s): s is string => typeof s === "string" && s.length > 0,

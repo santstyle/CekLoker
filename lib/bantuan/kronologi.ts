@@ -79,7 +79,9 @@ export function bangunKronologi(data: DataKronologi): string {
     baris.push("");
     baris.push("URUTAN KEJADIAN");
     for (const langkah of langkahIsi) {
-      const tanggal = kosong(langkah.tanggal) ? "" : `[${langkah.tanggal.trim()}] `;
+      const tanggal = kosong(langkah.tanggal)
+        ? ""
+        : `[${langkah.tanggal.trim()}] `;
       baris.push(`- ${tanggal}${langkah.deskripsi.trim()}`);
     }
   }

@@ -113,8 +113,7 @@ export const KANAL_LAPOR: DataKanalLapor[] = [
     url: "https://patrolisiber.id",
     cara: "web",
     jenis_kasus: ["lowongan_palsu", "biaya_dimuka", "data_pribadi_bocor"],
-    catatan:
-      "URL dari sumber sekunder; cek juga SPKT terdekat.",
+    catatan: "URL dari sumber sekunder; cek juga SPKT terdekat.",
     perlu_verifikasi: true,
     tanggal_verifikasi: "",
     sumber_info: "Commoner Law, Katadata",
@@ -146,6 +145,4 @@ export const KANAL_LAPOR: DataKanalLapor[] = [
 ];
 
 // Mapping cepat: id -> data kanal (untuk pencarian cepat di klien)
-export const CANAL_BY_ID = new Map(
-  KANAL_LAPOR.map((k) => [k.id, k])
-);
+export const CANAL_BY_ID = new Map(KANAL_LAPOR.map((k) => [k.id, k]));

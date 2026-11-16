@@ -71,11 +71,7 @@ function tulisChecklist(mentah: string | null): void {
 const STATUS_AWAL: StatusChecklist = { situasi: [], selesai: [] };
 
 export function Checklist24Jam() {
-  const mentah = useSyncExternalStore(
-    langganan,
-    bacaKlien,
-    bacaServer,
-  );
+  const mentah = useSyncExternalStore(langganan, bacaKlien, bacaServer);
   // Perubahan lokal menimpa hasil bacaan storage sampai tombol hapus
   // dipakai; null berarti belum ada perubahan sejak dimuat.
   const [statusLokal, setStatusLokal] = useState<StatusChecklist | null>(null);

@@ -97,10 +97,7 @@ test.describe("Kuis edukasi /edukasi/kuis", () => {
         name: new RegExp(`Soal 1 dari ${SOAL_PER_KUIS}`),
       }),
     ).toContainText(soalSeed1[0]!.pertanyaan);
-    const seed1 = await page
-      .getByRole("group")
-      .locator("p")
-      .allTextContents();
+    const seed1 = await page.getByRole("group").locator("p").allTextContents();
 
     await page.goto("/edukasi/kuis?set=2");
     await expect(
@@ -108,10 +105,7 @@ test.describe("Kuis edukasi /edukasi/kuis", () => {
         name: new RegExp(`Soal 1 dari ${SOAL_PER_KUIS}`),
       }),
     ).toContainText(soalSeed2[0]!.pertanyaan);
-    const seed2 = await page
-      .getByRole("group")
-      .locator("p")
-      .allTextContents();
+    const seed2 = await page.getByRole("group").locator("p").allTextContents();
 
     expect(seed1).not.toEqual(seed2);
   });

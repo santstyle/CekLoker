@@ -132,7 +132,10 @@ export default function LayoutPublik({
           <div className="flex flex-wrap items-center justify-between gap-6 border-t border-white/10 pt-6 font-mono text-[0.62rem] tracking-[0.14em] text-slate-400 uppercase">
             <p>© 2026 Tim CekLoker · Lisensi MIT</p>
             <p>Inisiatif SDG 8: Decent Work &amp; Economic Growth</p>
-            <Link href="/bantuan" className="text-sm font-medium text-slate-300 hover:text-white normal-case tracking-normal">
+            <Link
+              href="/bantuan"
+              className="text-sm font-medium tracking-normal text-slate-300 normal-case hover:text-white"
+            >
               Sudah terlanjur? Bantuan
             </Link>
           </div>

@@ -237,10 +237,10 @@ export function PenunjukKanal() {
       )}
 
       <p className="text-xs leading-relaxed text-slate-600">
-        Catatan jujur: kanal tertentu (mis. CekRekening.id) tidak
-        mengembalikan uang atau membekukan rekening; urusan uang dan
-        pemblokiran transaksi sebaiknya lewat bank atau penyedia e-wallet
-        Anda. CekLoker bukan lembaga pelaporan dan bukan nasihat hukum.
+        Catatan jujur: kanal tertentu (mis. CekRekening.id) tidak mengembalikan
+        uang atau membekukan rekening; urusan uang dan pemblokiran transaksi
+        sebaiknya lewat bank atau penyedia e-wallet Anda. CekLoker bukan lembaga
+        pelaporan dan bukan nasihat hukum.
       </p>
     </div>
   );
