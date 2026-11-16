@@ -5,8 +5,10 @@
  * headline poster) walau keyakinan rata-ratanya tinggi, sedangkan
  * PSM SPARSE_TEXT menemukan blok-blok besar itu. Tidak ada satu pun mode
  * yang selalu unggul, jadi kedua pass dijalankan dan seluruh baris unik
- * digabungkan. Teks hasil tetap ditinjau pengguna di textarea sebelum
- * dikirim ke mesin evaluasi.
+ * digabungkan. Pass SPARSE_TEXT membaca tekstur foto, logo, dan QR sebagai
+ * karakter ("K2", "(Re") — baris sampah semacam itu disaring lewat
+ * barisBermakna sebelum digabung. Teks hasil tetap ditinjau pengguna di
+ * textarea sebelum dikirim ke mesin evaluasi.
  */
 
 export interface RingkasanOcr {
@@ -28,19 +30,43 @@ export function normalisasiBaris(baris: string): string {
 }
 
 /**
+ * Penyaring baris hasil OCR. Sebuah baris layak dipertahankan bila:
+ * - memuat minimal 3 karakter alfanumerik,
+ * - mayoritas karakternya alfanumerik (bukan sup simbol), dan
+ * - memuat token bermakna: kata >= 3 huruf, angka >= 3 digit, atau
+ *   pola domain (mis. kaiter.kai.id).
+ *
+ * Aturan ini membuang sampah khas pass SPARSE_TEXT pada poster padat
+ * (tekstur foto, logo, QR) tanpa bergantung pada bahasa tertentu.
+ */
+export function barisBermakna(baris: string): boolean {
+  const tanpaSpasi = baris.replace(/\s+/g, "");
+  const jumlahAlnum = (tanpaSpasi.match(/[A-Za-z0-9]/g) ?? []).length;
+  if (jumlahAlnum < 3) return false;
+  if (jumlahAlnum / tanpaSpasi.length < 0.55) return false;
+  // Token bermakna: kata koheren kasusnya (semua kapital, semua kecil,
+  // atau kapital di awal), angka >= 3 digit, atau pola domain. Huruf
+  // acak ber-campur-besar-kecil ("gDtKi") khas hallucination pass sparse.
+  return /(?:[A-Z]{3,}|[a-z]{3,}|[A-Z][a-z]{2,}|\d{3,}|[A-Za-z0-9.-]+\.[A-Za-z]{2,})/.test(
+    tanpaSpasi,
+  );
+}
+
+/**
  * Menggabungkan dua hasil OCR: baris dari teks utama dipertahankan lebih
  * dulu (urutan dokumen), lalu baris baru dari teks tambahan ditambahkan
- * bila belum pernah muncul secara ternormalisasi. Baris kosong dibuang.
+ * bila belum pernah muncul secara ternormalisasi. Baris kosong dan baris
+ * sampah hasil OCR dibuang (lihat barisBermakna).
  */
 export function gabungkanTeks(utama: string, tambahan: string): string {
   const barisUtama = utama
     .split("\n")
     .map((b) => b.trim())
-    .filter(Boolean);
+    .filter(barisBermakna);
   const barisTambahan = tambahan
     .split("\n")
     .map((b) => b.trim())
-    .filter(Boolean);
+    .filter(barisBermakna);
 
   const terlihat = new Set(barisUtama.map(normalisasiBaris));
   const gabungan = [...barisUtama];
