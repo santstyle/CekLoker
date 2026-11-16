@@ -31,7 +31,7 @@ const HEADER_KEAMANAN = [
             "default-src 'self'",
             "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
             "style-src 'self' 'unsafe-inline'",
-            "img-src 'self' data: blob:",
+            "img-src 'self' data: blob: https://images.unsplash.com",
             "font-src 'self'",
             "connect-src 'self'",
             "worker-src 'self' blob:",
@@ -52,6 +52,9 @@ const nextConfig: NextConfig = {
   images: {
     // 85 untuk foto kartu liputan; bawaan Next 16 hanya 75
     qualities: [75, 85],
+    remotePatterns: [
+      { protocol: "https", hostname: "images.unsplash.com" },
+    ],
   },
   async headers() {
     return [
