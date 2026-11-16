@@ -49,6 +49,10 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   poweredByHeader: false,
+  images: {
+    // 85 untuk foto kartu liputan; bawaan Next 16 hanya 75
+    qualities: [75, 85],
+  },
   async headers() {
     return [
       {
