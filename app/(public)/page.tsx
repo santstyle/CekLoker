@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
-import { IlustrasiKasus } from "@/components/situs/ilustrasi-kasus";
+import gambarKasus01 from "@/public/images/liputan/kasus-01.png";
+import gambarKasus02 from "@/public/images/liputan/kasus-02.png";
+import gambarKasus03 from "@/public/images/liputan/kasus-03.png";
+import gambarKasus04 from "@/public/images/liputan/kasus-04.png";
 import { Faq } from "@/components/situs/faq";
 import { Reveal } from "@/components/situs/reveal";
 import { RULES } from "@/lib/evaluation/rules";
@@ -56,7 +60,8 @@ const KASUS = [
     aturan: ["Pungutan biaya kepada pelamar", "Rekrutmen lewat pesan pribadi"],
     tautan:
       "https://tribratanews.jabar.polri.go.id/ungkap-sindikat-penipuan-online-polda-jabar-imbau-masyarakat-waspada-lowongan-kerja-palsu-di-media-sosial/",
-    alt: "Ilustrasi ponsel menampilkan pesan penawaran kerja dengan perisai peringatan di sekelilingnya",
+    gambar: gambarKasus01,
+    alt: "Ilustrasi ponsel dengan gelembung pesan, siluet pelamar yang tergiur, dan perisai peringatan di atasnya",
   },
   {
     nomor: "02",
@@ -72,7 +77,8 @@ const KASUS = [
     ],
     tautan:
       "https://www.liputan6.com/cek-fakta/read/6311354/lowongan-kerja-pos-indonesia-palsu-beredar-dalam-berbagai-bentuk-simak-jalur-resmi-rekrutmennya",
-    alt: "Ilustrasi truk pengiriman dan surat yang dicap X, diperiksa dengan kaca pembesar",
+    gambar: gambarKasus02,
+    alt: "Ilustrasi van pengiriman di jalan, selebaran sobek bertanda silang, amplop dan paket, serta kaca pembesar",
   },
   {
     nomor: "03",
@@ -87,7 +93,8 @@ const KASUS = [
     ],
     tautan:
       "https://www.cnbcindonesia.com/lifestyle/20251107132730-33-683210/penipuan-lowongan-kerja-di-linkedin-pelamar-rugi-rp32-juta",
-    alt: "Ilustrasi laptop dengan profil perekrut abstrak dan rantai tautan yang patah",
+    gambar: gambarKasus03,
+    alt: "Ilustrasi laptop dengan kartu profil perekrut tanpa wajah, rantai tautan yang patah, dan kaca pembesar",
   },
   {
     nomor: "04",
@@ -99,7 +106,8 @@ const KASUS = [
     aturan: ["Rekrutmen lewat pesan pribadi", "Pungutan biaya kepada pelamar"],
     tautan:
       "https://finance.detik.com/tips-dan-trik/d-7941714/waspada-marak-modus-penipuan-lowongan-admin-e-commerce",
-    alt: "Ilustrasi ponsel dengan obrolan, keranjang belanja, dan koin berpita peringatan",
+    gambar: gambarKasus04,
+    alt: "Ilustrasi tangan memegang ponsel berisi obrolan, koin yang mengorbit, keranjang belanja, dan paket",
   },
 ] as const;
 
@@ -403,10 +411,11 @@ export default function Beranda() {
                   className="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-[0_1px_2px_rgb(15_23_42/0.04),0_16px_40px_-20px_rgb(15_23_42/0.18)] ring-1 ring-line transition-all duration-300 hover:-translate-y-1.5"
                 >
                   <div className="relative">
-                    <IlustrasiKasus
-                      nomor={kasus.nomor}
+                    <Image
+                      src={kasus.gambar}
+                      alt={kasus.alt}
                       className="aspect-[16/9] w-full"
-                      aria-label={kasus.alt}
+                      sizes="(min-width: 1280px) 288px, (min-width: 640px) 50vw, 100vw"
                     />
                     <span className="absolute bottom-3 left-3 rounded-full bg-ink/70 px-2.5 py-0.5 font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-white uppercase backdrop-blur-sm">
                       Ilustrasi
