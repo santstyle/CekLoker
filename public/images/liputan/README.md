@@ -1,6 +1,6 @@
-# Ilustrasi liputan ("Dari lapangan")
+﻿# Ilustrasi liputan ("Dari lapangan")
 
-Masukkan 4 gambar ilustrasi ke folder ini, lalu beri tahu tim — gambar akan disambungkan ke kartu liputan di beranda (menggantikan ilustrasi SVG sementara di `components/situs/ilustrasi-kasus.tsx`).
+4 gambar ilustrasi di folder ini tersambung ke kartu liputan di beranda (`app/(public)/page.tsx`) melalui `next/image` — ilustrasi SVG sementara di `components/situs/ilustrasi-kasus.tsx` sudah dihapus. Untuk mengganti gambar, timpa file dengan nama yang sama, atau gambar ulang dengan spesifikasi dan prompt di bawah lalu perbarui import di beranda.
 
 ## Nama file wajib
 
