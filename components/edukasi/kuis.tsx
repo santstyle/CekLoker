@@ -58,14 +58,30 @@ export function KuisEdukasi() {
               <fieldset
                 key={soal.id}
                 disabled={terkirim}
-                className="rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs"
+                className="min-w-0 rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-7"
               >
-                <legend className="px-2 text-base font-bold text-slate-950 sm:text-lg">
-                  <span className="mr-2 inline-flex size-6 items-center justify-center rounded-full bg-ink text-xs font-bold text-white">
+                {/*
+                 * Nomor soal sengaja dipindah ke dalam isi kartu. Elemen
+                 * <legend> tidak mengikuti padding fieldset di sebagian
+                 * peramban sehingga teks soal panjang bisa melewati tepi
+                 * kartu. Legend tetap ada (khusus pembaca layar) agar
+                 * kelompok pilihan radio punya nama yang jelas.
+                 */}
+                <legend className="sr-only">
+                  Soal {nomorSoal + 1} dari {KUIS_PERTANYAAN.length}
+                </legend>
+
+                <div className="flex items-start gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="mt-0.5 inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-ink text-xs font-bold text-white"
+                  >
                     {nomorSoal + 1}
                   </span>
-                  {soal.pertanyaan}
-                </legend>
+                  <p className="min-w-0 flex-1 text-base leading-snug font-bold break-words text-slate-950 sm:text-lg">
+                    {soal.pertanyaan}
+                  </p>
+                </div>
 
                 <div className="mt-4 flex flex-col gap-3">
                   {soal.pilihan.map((teks, indeks) => {
@@ -104,14 +120,16 @@ export function KuisEdukasi() {
                           onChange={() => pilih(soal.id, indeks)}
                           className="mt-0.5 size-4 accent-[#0f172a]"
                         />
-                        <span className="flex-1">{teks}</span>
+                        <span className="min-w-0 flex-1 break-words">
+                          {teks}
+                        </span>
                         {terkirim && merupakanJawaban && (
-                          <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[0.65rem] font-bold tracking-wide text-emerald-900 uppercase">
+                          <span className="shrink-0 rounded-full bg-emerald-100 px-2.5 py-0.5 text-[0.65rem] font-bold tracking-wide whitespace-nowrap text-emerald-900 uppercase">
                             Benar
                           </span>
                         )}
                         {terkirim && dipilihUser && !merupakanJawaban && (
-                          <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-[0.65rem] font-bold tracking-wide text-rose-900 uppercase">
+                          <span className="shrink-0 rounded-full bg-rose-100 px-2.5 py-0.5 text-[0.65rem] font-bold tracking-wide whitespace-nowrap text-rose-900 uppercase">
                             Belum tepat
                           </span>
                         )}
@@ -145,7 +163,7 @@ export function KuisEdukasi() {
           tabIndex={-1}
           role="status"
           aria-live="polite"
-          className="flex scroll-mt-24 flex-col gap-6 rounded-3xl border border-slate-200/90 bg-white p-8 shadow-xs sm:p-10"
+          className="flex min-w-0 scroll-mt-24 flex-col gap-6 rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-10"
         >
           <div className="flex flex-col items-center gap-2 text-center">
             <p className="text-xs font-bold tracking-wider text-muted uppercase">
@@ -177,26 +195,27 @@ export function KuisEdukasi() {
                 <li
                   key={soal.id}
                   className={cn(
-                    "rounded-2xl border p-5",
+                    "min-w-0 rounded-2xl border p-5",
                     tepat
                       ? "border-emerald-200 bg-emerald-50/50"
                       : "border-rose-200 bg-rose-50/50",
                   )}
                 >
-                  <p className="text-sm font-bold text-slate-950">
+                  <p className="text-sm font-bold break-words text-slate-950">
+                    <span className="text-slate-500">Soal {indeks + 1} · </span>
                     {tepat ? "Benar" : "Belum tepat"} — {soal.pertanyaan}
                   </p>
                   {!tepat && (
-                    <p className="mt-1 text-sm text-slate-700">
+                    <p className="mt-1 text-sm break-words text-slate-700">
                       Jawaban benar:{" "}
                       <strong>{soal.pilihan[soal.jawaban]}</strong>
                     </p>
                   )}
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  <p className="mt-2 text-sm leading-relaxed break-words text-slate-600">
                     {soal.penjelasan}
                   </p>
                   {soal.rujukan && (
-                    <p className="mt-2 text-xs font-semibold text-slate-500">
+                    <p className="mt-2 text-xs font-semibold break-words text-slate-500">
                       Rujukan: {soal.rujukan}
                     </p>
                   )}
