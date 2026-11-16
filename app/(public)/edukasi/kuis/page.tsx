@@ -27,16 +27,8 @@ export default function HalamanKuisEdukasi() {
         deskripsi="Tujuh soal pilihan dari bank soal seputar hak kerja dan pola rekrutmen berisiko, dipilih acak tiap sesi. Jawaban tidak dikirim ke server mana pun dan tidak disimpan."
       />
 
-      <Container className="pb-16 sm:pb-20">
-        <div className="mx-auto flex max-w-3xl flex-col gap-10">
-          <Reveal>
-            <p className="text-sm leading-relaxed text-muted">
-              Kuis ini hanya untuk refleksi diri. Nilai yang muncul bukan
-              penilaian atas diri Anda, melainkan pengingat mana pola yang sudah
-              dikenali dan mana yang perlu dipelajari ulang.
-            </p>
-          </Reveal>
-
+      <Container className="py-12 sm:py-16">
+        <div className="mx-auto max-w-3xl">
           <Reveal>
             <KuisEdukasi />
           </Reveal>

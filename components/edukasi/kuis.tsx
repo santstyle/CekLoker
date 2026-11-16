@@ -146,11 +146,29 @@ export function KuisEdukasi() {
 
   return (
     <div className="flex flex-col gap-8">
-      <p className="text-sm leading-relaxed text-muted">
-        Setiap sesi menampilkan {SOAL_PER_KUIS} soal yang dipilih acak dari bank
-        soal, jadi susunan soal bisa berbeda dengan sesi sebelumnya. Seluruh
-        soal diambil dari materi yang sama di halaman edukasi.
-      </p>
+      <div className="flex items-start gap-3 rounded-2xl border border-slate-200/80 bg-white/70 px-4 py-3.5 text-sm leading-relaxed text-muted sm:px-5">
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          className="mt-0.5 size-4 shrink-0 text-aksen"
+        >
+          <path
+            fillRule="evenodd"
+            d="M18 10A8 8 0 1 1 2 10a8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a1 1 0 0 0 0 2v3a1 1 0 1 0 2 0v-3a1 1 0 0 0-1-1H9Z"
+            clipRule="evenodd"
+          />
+        </svg>
+        <p className="min-w-0">
+          Kuis ini hanya untuk refleksi diri, bukan penilaian atas Anda. Tiap
+          sesi menyajikan{" "}
+          <strong className="font-semibold text-slate-800">
+            {SOAL_PER_KUIS} soal acak
+          </strong>{" "}
+          dari bank soal — susunannya bisa berbeda dari sesi sebelumnya, dan
+          jawaban tidak dikirim atau disimpan.
+        </p>
+      </div>
       <form onSubmit={tanganiKirim} noValidate>
         <div className="flex flex-col gap-8">
           {soal.map((butir, nomorSoal) => {
@@ -252,8 +270,7 @@ export function KuisEdukasi() {
             Lihat Hasil
           </button>
           <p className="text-xs text-muted">
-            Jawab seluruh soal untuk melihat hasil. Kuis berjalan sepenuhnya di
-            peramban — tidak ada jawaban yang dikirim atau disimpan.
+            Jawab seluruh soal untuk melihat hasil.
           </p>
         </div>
       </form>

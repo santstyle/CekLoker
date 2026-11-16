@@ -75,6 +75,17 @@ describe("KuisEdukasi", () => {
     expect(pertanyaanSeed1).not.toEqual(pertanyaanSeed2);
   });
 
+  it("menampilkan catatan refleksi diri dan pemilihan soal acak", () => {
+    pasangSeed(SEED);
+    render(<KuisEdukasi />);
+
+    expect(screen.getByText(/refleksi diri/i)).toBeInTheDocument();
+    expect(screen.getByText("7 soal acak")).toBeInTheDocument();
+    expect(
+      screen.getByText(/tidak dikirim atau disimpan/i),
+    ).toBeInTheDocument();
+  });
+
   it("mengaktifkan tombol hasil setelah seluruh soal terjawab", async () => {
     pasangSeed(SEED);
     const user = userEvent.setup();
