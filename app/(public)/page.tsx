@@ -62,7 +62,7 @@ const KASUS = [
     tautan:
       "https://tribratanews.jabar.polri.go.id/ungkap-sindikat-penipuan-online-polda-jabar-imbau-masyarakat-waspada-lowongan-kerja-palsu-di-media-sosial/",
     gambar: gambarKasus01,
-    alt: "Ilustrasi foto tangan memegang ponsel dengan daftar percakapan aplikasi pesan",
+    alt: "Ilustrasi iklan kerja online dari rumah dengan stempel PENIPUAN",
   },
   {
     nomor: "02",
@@ -79,7 +79,7 @@ const KASUS = [
     tautan:
       "https://www.liputan6.com/cek-fakta/read/6311354/lowongan-kerja-pos-indonesia-palsu-beredar-dalam-berbagai-bentuk-simak-jalur-resmi-rekrutmennya",
     gambar: gambarKasus02,
-    alt: "Ilustrasi foto tumpukan surat pos tua terikat tali rami dengan pena tulis merah",
+    alt: "Ilustrasi surat lowongan PT POS Indonesia dengan stempel PALSU",
   },
   {
     nomor: "03",
@@ -95,7 +95,7 @@ const KASUS = [
     tautan:
       "https://www.cnbcindonesia.com/lifestyle/20251107132730-33-683210/penipuan-lowongan-kerja-di-linkedin-pelamar-rugi-rp32-juta",
     gambar: gambarKasus03,
-    alt: "Ilustrasi foto seseorang menghadapi laptop dalam panggilan video di kantor",
+    alt: "Ilustrasi lowongan kerja di LinkedIn dengan stempel WASPADA PENIPUAN",
   },
   {
     nomor: "04",
@@ -108,7 +108,7 @@ const KASUS = [
     tautan:
       "https://finance.detik.com/tips-dan-trik/d-7941714/waspada-marak-modus-penipuan-lowongan-admin-e-commerce",
     gambar: gambarKasus04,
-    alt: "Ilustrasi foto laptop toko daring di sebelah ponsel dengan dompet digital",
+    alt: "Ilustrasi iklan admin e-commerce dengan stempel PENIPUAN",
   },
 ] as const;
 
