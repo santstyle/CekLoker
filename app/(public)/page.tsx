@@ -3,10 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
-import gambarKasus01 from "@/public/images/liputan/kasus-01.png";
-import gambarKasus02 from "@/public/images/liputan/kasus-02.png";
-import gambarKasus03 from "@/public/images/liputan/kasus-03.png";
-import gambarKasus04 from "@/public/images/liputan/kasus-04.png";
+import gambarKasus01 from "@/public/images/liputan/kasus-01.jpg";
+import gambarKasus02 from "@/public/images/liputan/kasus-02.jpg";
+import gambarKasus03 from "@/public/images/liputan/kasus-03.jpg";
+import gambarKasus04 from "@/public/images/liputan/kasus-04.jpg";
 import { Faq } from "@/components/situs/faq";
 import { Reveal } from "@/components/situs/reveal";
 import { RULES } from "@/lib/evaluation/rules";
@@ -61,7 +61,7 @@ const KASUS = [
     tautan:
       "https://tribratanews.jabar.polri.go.id/ungkap-sindikat-penipuan-online-polda-jabar-imbau-masyarakat-waspada-lowongan-kerja-palsu-di-media-sosial/",
     gambar: gambarKasus01,
-    alt: "Ilustrasi ponsel dengan gelembung pesan, siluet pelamar yang tergiur, dan perisai peringatan di atasnya",
+    alt: "Ilustrasi foto tangan memegang ponsel dengan aplikasi pesan berisi pesan suara",
   },
   {
     nomor: "02",
@@ -78,7 +78,7 @@ const KASUS = [
     tautan:
       "https://www.liputan6.com/cek-fakta/read/6311354/lowongan-kerja-pos-indonesia-palsu-beredar-dalam-berbagai-bentuk-simak-jalur-resmi-rekrutmennya",
     gambar: gambarKasus02,
-    alt: "Ilustrasi van pengiriman di jalan, selebaran sobek bertanda silang, amplop dan paket, serta kaca pembesar",
+    alt: "Ilustrasi foto amplop pos tua dengan perangko yang berserakan",
   },
   {
     nomor: "03",
@@ -94,7 +94,7 @@ const KASUS = [
     tautan:
       "https://www.cnbcindonesia.com/lifestyle/20251107132730-33-683210/penipuan-lowongan-kerja-di-linkedin-pelamar-rugi-rp32-juta",
     gambar: gambarKasus03,
-    alt: "Ilustrasi laptop dengan kartu profil perekrut tanpa wajah, rantai tautan yang patah, dan kaca pembesar",
+    alt: "Ilustrasi foto seseorang melewatkan panggilan video di depan laptop",
   },
   {
     nomor: "04",
@@ -107,7 +107,7 @@ const KASUS = [
     tautan:
       "https://finance.detik.com/tips-dan-trik/d-7941714/waspada-marak-modus-penipuan-lowongan-admin-e-commerce",
     gambar: gambarKasus04,
-    alt: "Ilustrasi tangan memegang ponsel berisi obrolan, koin yang mengorbit, keranjang belanja, dan paket",
+    alt: "Ilustrasi foto ponsel bertuliskan belanja daring di atas kereta belanja mini",
   },
 ] as const;
 
