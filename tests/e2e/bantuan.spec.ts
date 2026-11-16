@@ -121,6 +121,40 @@ test.describe("Bantuan korban /bantuan", () => {
     expect(tersalin).toContain("PT Contoh Sukses");
   });
 
+  test("lampiran hasil pemeriksaan mati secara default (privasi)", async ({
+    page,
+    context,
+  }) => {
+    // Seed sesi hasil: key berawalan `cekloker-hasil-`, isi minimal yang
+    // lolos validasi ringkasHasil (skor numerik + band di LABEL_BAND).
+    await context.addInitScript(() => {
+      window.sessionStorage.setItem(
+        "cekloker-hasil-e2e",
+        JSON.stringify({
+          hasil: { skor: 15, band: "rendah", temuan: [{ judul: "Upah" }] },
+        }),
+      );
+    });
+    await page.goto("/bantuan");
+
+    const kotakLampir = page.getByRole("checkbox", {
+      name: /Pemeriksaan \(rentang Rendah\)/,
+    });
+    await expect(kotakLampir).toBeVisible();
+    await expect(kotakLampir).not.toBeChecked();
+    // Opsi kutipan belum muncul sebelum lampir dicentang.
+    await expect(
+      page.getByRole("checkbox", { name: /Sertakan juga kutipan/ }),
+    ).toHaveCount(0);
+
+    await kotakLampir.check();
+    const kotakKutipan = page.getByRole("checkbox", {
+      name: /Sertakan juga kutipan/,
+    });
+    await expect(kotakKutipan).toBeVisible();
+    await expect(kotakKutipan).not.toBeChecked();
+  });
+
   test("navbar dan footer memuat tautan 'Sudah terlanjur? Bantuan'", async ({
     page,
   }) => {

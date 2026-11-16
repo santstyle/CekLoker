@@ -140,7 +140,7 @@ export function PenyusunKronologi() {
     { id: "1", tanggal: "", deskripsi: "" },
   ]);
   const [bukti, setBukti] = useState<string[]>([]);
-  const [lampirkanHasil, setLampirkanHasil] = useState(true);
+  const [lampirkanHasil, setLampirkanHasil] = useState(false);
   const [sertakanKutipan, setSertakanKutipan] = useState(false);
   const [tersalin, setTersalin] = useState(false);
 
