@@ -4,12 +4,12 @@
 
 ## Nama file & sumber
 
-| File         | Tema kartu               | Foto oleh           | Tautan sumber                          |
-| ------------ | ------------------------ | ------------------- | -------------------------------------- |
-| kasus-01.jpg | Tribratanews Polda Jabar | cottonbro studio    | https://www.pexels.com/photo/7120126/  |
-| kasus-02.jpg | Liputan6.com             | craveiro_ pics      | https://www.pexels.com/photo/15873606/ |
-| kasus-03.jpg | CNBC Indonesia           | RDNE Stock project  | https://www.pexels.com/photo/6414507/  |
-| kasus-04.jpg | detikFinance             | Nataliya Vaitkevich | https://www.pexels.com/photo/6214388/  |
+| File         | Tema kartu               | Foto oleh       | Tautan sumber                          |
+| ------------ | ------------------------ | --------------- | -------------------------------------- |
+| kasus-01.jpg | Tribratanews Polda Jabar | Sanket Mishra   | https://www.pexels.com/photo/17888111/ |
+| kasus-02.jpg | Liputan6.com             | Ylanite Koppens | https://www.pexels.com/photo/1906606/  |
+| kasus-03.jpg | CNBC Indonesia           | Vitaly Gariev   | https://www.pexels.com/photo/22046216/ |
+| kasus-04.jpg | detikFinance             | Julio Lopez     | https://www.pexels.com/photo/29502375/ |
 
 ## Spesifikasi
 
