@@ -14,6 +14,8 @@ import {
   type MetaSesi,
 } from "@/lib/api/evaluasi";
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
+import { RULES } from "@/lib/evaluation/rules";
+import { labelRujukan, urlRujukan } from "@/lib/evaluation/rujukan";
 import type {
   Band,
   HasilEvaluasi,
@@ -355,6 +357,79 @@ export default function KontenHasil() {
                 ))}
               </div>
             )}
+          </section>
+
+          {/* Rujukan Hukum Section */}
+          <section className="flex flex-col gap-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-bold text-slate-950 sm:text-2xl">
+                  Rujukan Hukum Terkait
+                </h2>
+                <p className="text-xs text-muted sm:text-sm">
+                  Dasar hukum aturan evaluasi yang teridentifikasi dalam hasil
+                  ini.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {(() => {
+                const semuaRujukan = new Set<string>();
+                for (const temuan of hasil.temuan) {
+                  const aturan = RULES.find((r) => r.id === temuan.ruleId);
+                  if (aturan) {
+                    for (const id of aturan.rujukanHukumIds) {
+                      semuaRujukan.add(id);
+                    }
+                  }
+                }
+                const unikRujukan = Array.from(semuaRujukan);
+                if (unikRujukan.length === 0) {
+                  return (
+                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-500">
+                      Tidak ada rujukan hukum spesifik untuk temuan ini
+                    </span>
+                  );
+                }
+                return unikRujukan.map((id) => {
+                  const url = urlRujukan(id);
+                  const label = labelRujukan(id);
+                  return (
+                    <a
+                      key={id}
+                      href={url ?? "#"}
+                      target={url ? "_blank" : undefined}
+                      rel={url ? "noopener noreferrer" : undefined}
+                      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-all ${
+                        url
+                          ? "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900"
+                          : "cursor-default border-amber-200 bg-amber-50 text-amber-700"
+                      }`}
+                      title={url ? "Buka sumber resmi" : "URL tidak tersedia"}
+                    >
+                      {label}
+                      {url && (
+                        <svg
+                          className="size-3 text-slate-400"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2.5"
+                          stroke="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M13.5 3H21M21 13.5V21M21 3l-18 18"
+                          />
+                        </svg>
+                      )}
+                    </a>
+                  );
+                });
+              })()}
+            </div>
           </section>
 
           {/* Saran Langkah Berikutnya Section */}

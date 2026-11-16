@@ -10,6 +10,73 @@ import {
 
 import "./globals.css";
 
+// JSON-LD structured data untuk SEO & rich results
+function generateJsonLd() {
+  const url = ambilUrlSitus();
+  const base = url.toString().replace(/\/$/, "");
+
+  const website = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: NAMA_SITUS,
+    url: base,
+    description: DESKRIPSI_SITUS,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${base}/cek?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+
+  const organization = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: NAMA_SITUS,
+    url: base,
+    logo: `${base}/icon-512.png`,
+    sameAs: [],
+    description: DESKRIPSI_SITUS,
+  };
+
+  // FAQPage dari halaman utama (opsional, di-render inline di page.tsx juga bisa)
+  // Di sini hanya struktur dasar; FAQ lengkap di halaman utama.
+  const faqPage = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Apakah CekLoker menyimpan teks lowongan yang saya periksa?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Tidak. CekLoker tidak menyimpan teks lowongan Anda di server. Evaluasi berjalan di sisi klien dan hasil disimpan sementara di sessionStorage peramban Anda saja.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Bagaimana CekLoker menilai risiko lowongan?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "CekLoker menggunakan 17 aturan deterministik berbasis UU 13/2003, Permenaker 39/2016, UU 27/2022, dan UU 18/2017. Setiap aturan memiliki bobot, kategori, dan kekuatan yang transparan di halaman Metodologi.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Apakah hasil CekLoker merupakan vonis hukum?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Tidak. Hasil berupa rentang risiko estimasi (rendah/perlu dicek/tinggi) dengan bukti dan rujukan hukum, bukan vonis penipuan atau keaslian.",
+        },
+      },
+    ],
+  };
+
+  return [website, organization, faqPage];
+}
+
 // Sistem dua keluarga: Inter Tight (ExtraBold untuk display, reguler untuk
 // body) dan IBM Plex Mono untuk label/data ala dokumen resmi.
 const interTight = Inter_Tight({
@@ -88,11 +155,19 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  const jsonLd = generateJsonLd();
+
   return (
     <html
       lang="id"
       className={`${interTight.variable} ${plexMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

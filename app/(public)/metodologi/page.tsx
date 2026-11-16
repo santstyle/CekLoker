@@ -4,7 +4,7 @@ import { Container } from "@/components/ui/container";
 import { Kepala } from "@/components/situs/kepala";
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
 import { RULES } from "@/lib/evaluation/rules";
-import { labelRujukan } from "@/lib/evaluation/rujukan";
+import { labelRujukan, urlRujukan } from "@/lib/evaluation/rujukan";
 import { BATAS_BAND } from "@/lib/evaluation/score";
 import { KEKUATAN_NILAI, type KategoriRule } from "@/lib/evaluation/types";
 import {
@@ -60,8 +60,42 @@ export default function HalamanMetodologi() {
 
       <Container className="py-16 sm:py-20">
         <div className="mx-auto flex max-w-4xl flex-col gap-16 sm:gap-20">
-          {/* Alur Pemeriksaan */}
+          {/* Badge Status Data Upah */}
           <Reveal>
+            <div className="flex items-center gap-3 rounded-2xl border bg-white p-4 shadow-xs">
+              <div className="flex size-10 flex-shrink-0 items-center justify-center rounded-lg bg-blue-100">
+                <svg
+                  className="size-5 text-blue-700"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm3.707-9.293a1 1 0 0 0-1.414-1.414L9 10.586 7.707 9.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+              <div>
+                <p className="font-semibold text-slate-900">
+                  Data Upah Minimum Regional:{" "}
+                  <span
+                    className={
+                      DATA_UPAH_TERSEDIA ? "text-green-700" : "text-amber-700"
+                    }
+                  >
+                    {DATA_UPAH_TERSEDIA
+                      ? "Tersedia & Aktif"
+                      : "Belum Tersedia (Belum Aktif)"}
+                  </span>
+                </p>
+                <p className="text-sm text-slate-600">{CATATAN_DATA_UPAH}</p>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Alur Pemeriksaan */}
+          <Reveal delay={60}>
             <section className="flex flex-col gap-6">
               <div className="flex flex-col gap-1">
                 <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
@@ -122,9 +156,6 @@ export default function HalamanMetodologi() {
                     pernah menurunkannya.
                   </li>
                 </ol>
-                <p className="mt-6 rounded-2xl border border-amber-200 bg-amber-50/70 px-4 py-3 text-xs leading-relaxed text-amber-900">
-                  {CATATAN_DATA_UPAH}
-                </p>
               </div>
             </section>
           </Reveal>
@@ -276,11 +307,46 @@ export default function HalamanMetodologi() {
                             {LABEL_KEKUATAN[aturan.kekuatan]}
                           </td>
                           <td className="p-4 align-top text-xs text-slate-600">
-                            {aturan.rujukanHukumIds.length > 0
-                              ? aturan.rujukanHukumIds
-                                  .map(labelRujukan)
-                                  .join(", ")
-                              : "—"}
+                            {aturan.rujukanHukumIds.length > 0 ? (
+                              <span className="flex flex-wrap gap-1">
+                                {aturan.rujukanHukumIds.map((id, idx) => {
+                                  const url = urlRujukan(id);
+                                  const label = labelRujukan(id);
+                                  return (
+                                    <span
+                                      key={`${id}-${idx}`}
+                                      className="flex items-center gap-0.5"
+                                    >
+                                      {url ? (
+                                        <a
+                                          href={url}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-slate-700 underline transition-colors hover:text-slate-900"
+                                        >
+                                          {label}
+                                        </a>
+                                      ) : (
+                                        <span className="text-slate-700">
+                                          {label}
+                                        </span>
+                                      )}
+                                      {idx <
+                                        aturan.rujukanHukumIds.length - 1 && (
+                                        <span
+                                          aria-hidden="true"
+                                          className="text-slate-400"
+                                        >
+                                          ,
+                                        </span>
+                                      )}
+                                    </span>
+                                  );
+                                })}
+                              </span>
+                            ) : (
+                              "—"
+                            )}
                           </td>
                           <td className="p-4 align-top">
                             {aturan.id === "upah_dibawah_umr" &&
