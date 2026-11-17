@@ -220,24 +220,28 @@ export default function Beranda() {
           </p>
         </Container>
 
-        {/* Kubah aurora di atas horizon */}
+        {/* Horizon: lengkung sangat dangkal yang keluar dari tepi kiri-kanan */}
         <svg
-          viewBox="0 0 1440 460"
-          preserveAspectRatio="xMidYMax slice"
+          viewBox="0 0 1440 320"
+          preserveAspectRatio="none"
           aria-hidden="true"
           className="mt-2 block h-56 w-full sm:h-72 lg:h-80"
         >
           <defs>
             <linearGradient id="kubah" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#2563eb" />
-              <stop offset="30%" stopColor="#3b82f6" />
-              <stop offset="58%" stopColor="#60a5fa" />
-              <stop offset="82%" stopColor="#93c5fd" />
+              <stop offset="34%" stopColor="#3b82f6" />
+              <stop offset="62%" stopColor="#60a5fa" />
+              <stop offset="84%" stopColor="#93c5fd" />
               <stop offset="100%" stopColor="#e0f2fe" />
             </linearGradient>
-            <radialGradient id="cahayaHorizon" cx="50%" cy="100%" r="75%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
-              <stop offset="55%" stopColor="#ffffff" stopOpacity="0" />
+            <linearGradient id="lapisDalam" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.45" />
+              <stop offset="75%" stopColor="#ffffff" stopOpacity="0" />
+            </linearGradient>
+            <radialGradient id="cahayaHorizon" cx="50%" cy="100%" r="70%">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
+              <stop offset="60%" stopColor="#ffffff" stopOpacity="0" />
             </radialGradient>
             <pattern
               id="titikKubah"
@@ -253,41 +257,68 @@ export default function Beranda() {
                 fillOpacity="0.4"
               />
             </pattern>
+            <linearGradient id="pudarTitikGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="55%" stopColor="#ffffff" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#000000" />
+            </linearGradient>
+            <mask id="pudarTitik" maskUnits="userSpaceOnUse">
+              <rect
+                x="0"
+                y="150"
+                width="1440"
+                height="180"
+                fill="url(#pudarTitikGrad)"
+              />
+            </mask>
           </defs>
-          <ellipse cx="720" cy="480" rx="780" ry="440" fill="url(#kubah)" />
-          <ellipse
-            cx="720"
-            cy="480"
-            rx="780"
-            ry="440"
-            fill="url(#titikKubah)"
+
+          {/* Lapis dasar horizon */}
+          <path
+            d="M -120 268 C 300 168 1140 168 1560 268 L 1560 340 L -120 340 Z"
+            fill="url(#kubah)"
           />
+          {/* Titik-titik yang memudar ke bawah */}
+          <path
+            d="M -120 268 C 300 168 1140 168 1560 268 L 1560 340 L -120 340 Z"
+            fill="url(#titikKubah)"
+            mask="url(#pudarTitik)"
+          />
+          {/* Lapis dalam yang lebih terang */}
+          <path
+            d="M -120 300 C 420 214 1020 214 1560 300 L 1560 340 L -120 340 Z"
+            fill="url(#lapisDalam)"
+          />
+          {/* Cahaya di garis horizon */}
           <ellipse
             cx="720"
-            cy="480"
-            rx="780"
-            ry="440"
+            cy="320"
+            rx="680"
+            ry="190"
             fill="url(#cahayaHorizon)"
           />
+          {/* Garis lengkung tipis, sedikit dimiringkan */}
           <ellipse
             cx="720"
-            cy="480"
-            rx="560"
-            ry="300"
-            fill="none"
-            stroke="#ffffff"
-            strokeOpacity="0.5"
-            strokeWidth="1.4"
-          />
-          <ellipse
-            cx="720"
-            cy="480"
-            rx="340"
-            ry="170"
+            cy="570"
+            rx="1100"
+            ry="460"
             fill="none"
             stroke="#ffffff"
             strokeOpacity="0.45"
+            strokeWidth="1.4"
+            transform="rotate(-4 720 570)"
+          />
+          <ellipse
+            cx="720"
+            cy="560"
+            rx="940"
+            ry="400"
+            fill="none"
+            stroke="#ffffff"
+            strokeOpacity="0.3"
             strokeWidth="1.2"
+            transform="rotate(-4 720 560)"
           />
         </svg>
 
