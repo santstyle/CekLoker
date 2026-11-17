@@ -1,21 +1,18 @@
 import { expect, test } from "@playwright/test";
 
 /**
- * Klaim jujur data upah: kerangka TODO menampilkan "Data belum tersedia",
- * bukan hasil palsu, dan katalog menghitung aturan aktif secara dinamis.
+ * Klaim jujur data upah: UMP 2026 yang sudah terverifikasi ditampilkan
+ * sebagai tersedia, dan katalog menghitung aturan aktif secara dinamis.
  */
 test.describe("Status data upah di antarmuka", () => {
-  test("/cek menyatakan data belum tersedia untuk lokasi yang dipilih", async ({
+  test("/cek menyatakan data UMP tersedia untuk lokasi yang dipilih", async ({
     page,
   }) => {
     await page.goto("/cek");
     await page.locator("#lokasi").fill("Bandung");
-    await page
-      .getByText("Data belum tersedia untuk Jawa Barat.")
-      .scrollIntoViewIfNeeded();
-    await expect(
-      page.getByText("Data belum tersedia untuk Jawa Barat."),
-    ).toBeVisible();
+    const status = page.getByText("Data UMP Jawa Barat tahun 2026 tersedia.");
+    await status.scrollIntoViewIfNeeded();
+    await expect(status).toBeVisible();
   });
 
   test("/cek menampilkan catatan netral bila lokasi kosong", async ({
@@ -23,24 +20,20 @@ test.describe("Status data upah di antarmuka", () => {
   }) => {
     await page.goto("/cek");
     await expect(
-      page.getByText(/Perbandingan upah terhadap UMP\/UMK belum aktif/),
+      page.getByText(/Perbandingan upah terhadap UMP\/UMK aktif/),
     ).toBeVisible();
   });
 
-  test("/metodologi menandai aturan upah belum aktif dan menghitung aturan aktif dinamis", async ({
+  test("/metodologi menandai aturan upah aktif dan menghitung aturan aktif dinamis", async ({
     page,
   }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/metodologi");
 
-    const badge = page.getByText("Data belum tersedia", { exact: true });
+    const badge = page.getByText("Tersedia & Aktif", { exact: true });
     await badge.scrollIntoViewIfNeeded();
     await expect(badge).toBeVisible();
 
-    await expect(
-      page.getByText(
-        /aturan aktif; aturan perbandingan upah menunggu data resmi/,
-      ),
-    ).toBeVisible();
+    await expect(page.getByText(/Seluruh \d+ aturan aktif\./)).toBeVisible();
   });
 });

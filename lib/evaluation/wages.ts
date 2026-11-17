@@ -1,9 +1,9 @@
 /**
  * Pencarian upah minimum regional.
  *
- * Data upah sengaja dikosongkan sampai sumber resmi terverifikasi. Selama
- * daftar kosong, aturan upah di bawah minimum tidak pernah menyala; ini
- * disengaja agar aplikasi tidak pernah menampilkan angka karangan.
+ * Data UMP 2026 diisi dari penetapan resmi dan tetap dijaga: baris yang
+ * nilainya belum lengkap tidak pernah aktif, sehingga aplikasi tidak pernah
+ * menampilkan angka karangan.
  */
 
 import { barisAktif, DATA_UPAH_MENTAH } from "./data-upah";
@@ -18,6 +18,9 @@ import { bolehTautkan } from "@/lib/verifikasi";
  * dari data, bukan di-hardcode.
  */
 export const DATA_UPAH: readonly RegionalWage[] = barisAktif(DATA_UPAH_MENTAH);
+
+/** Tanggal verifikasi data upah, dipakai label "Terakhir diperbarui". */
+export { TANGGAL_VERIFIKASI_UMP_2026 } from "./data-upah";
 
 /**
  * Apakah seluruh baris aktif punya sumber lengkap (URL + tanggal

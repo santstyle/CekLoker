@@ -1,11 +1,11 @@
 /**
  * Data upah minimum regional (UMP/UMK) per provinsi.
  *
- * SELURUH NILAI MASIH KOSONG (TODO) — menunggu pengisian oleh pemilik
- * proyek dari sumber resmi per daerah. Jangan menebak angka: baris dengan
- * upahBulanan atau tahun null otomatis tidak aktif, sehingga mesin tidak
- * pernah memakai angka karangan dan aturan upah-dibawah-minimum tetap
- * sunyi sampai data benar-benar diisi.
+ * Nilai UMP 2026 diisi dari penetapan resmi (dasar hukum: PP Nomor 49 Tahun
+ * 2025, perubahan kedua PP 36/2021 tentang Pengupahan). Angka tidak boleh
+ * ditebak: baris dengan upahBulanan atau tahun null otomatis tidak aktif,
+ * sehingga mesin tidak pernah memakai angka karangan dan aturan
+ * upah-dibawah-minimum tetap sunyi untuk daerah yang belum terisi.
  *
  * Struktur per baris:
  * - provinsi: nama provinsi sesuai PROVINSI di provinces.ts
@@ -21,283 +21,297 @@ import type { RegionalWage } from "./types";
 export interface BarisDataUpah {
   provinsi: string;
   daerah?: string;
-  /** TODO: nilai upah minimum bulanan dari sumber resmi. */
+  /** Nilai upah minimum bulanan dari sumber resmi (null = TODO). */
   upahBulanan: number | null;
-  /** TODO: tahun berlaku. */
+  /** Tahun berlaku (null = TODO). */
   tahun: number | null;
-  /** TODO: URL sumber resmi. */
+  /** URL sumber resmi (null = TODO). */
   sumberUrl: string | null;
-  /** TODO: tanggal verifikasi sumber (YYYY-MM-DD). */
+  /** Tanggal verifikasi sumber, format ISO YYYY-MM-DD (null = TODO). */
   tanggalVerifikasi: string | null;
 }
+
+/**
+ * Sumber resmi UMP 2026. Satu rujukan Kemnaker dipakai untuk semua baris;
+ * penetapan gubernur per provinsi adalah dasar hukum utama dan akan
+ * ditautkan terpisah bila dokumennya sudah terkumpul.
+ */
+export const SUMBER_UMP_2026 = "https://satudata.kemnaker.go.id/infografik/105";
+
+/**
+ * Tanggal verifikasi data UMP 2026. Dipakai bersama oleh seluruh baris dan
+ * oleh label "Terakhir diperbarui" di antarmuka, sehingga tanggal yang
+ * tampil tidak pernah menyimpang dari tanggal sumber yang benar-benar dicek.
+ */
+export const TANGGAL_VERIFIKASI_UMP_2026 = "2026-11-17";
 
 export const DATA_UPAH_MENTAH: readonly BarisDataUpah[] = [
   {
     provinsi: "Aceh",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_932_552,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Sumatera Utara",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_228_949,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Sumatera Barat",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_182_955,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Riau",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_780_495,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Kepulauan Riau",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_879_520,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Jambi",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_471_497,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Bengkulu",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 2_827_250,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Sumatera Selatan",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_942_963,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Kepulauan Bangka Belitung",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 4_035_000,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Lampung",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_047_734,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Banten",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_100_881.4,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "DKI Jakarta",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 5_729_876,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Jawa Barat",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 2_317_601,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Jawa Tengah",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 2_327_386.07,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "DI Yogyakarta",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 2_417_495,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Jawa Timur",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 2_446_880,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Bali",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_207_459,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Nusa Tenggara Barat",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 2_673_861,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Nusa Tenggara Timur",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 2_455_898,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Kalimantan Barat",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_054_552,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Kalimantan Tengah",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_686_138,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Kalimantan Selatan",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_725_000,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Kalimantan Timur",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_762_431,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Kalimantan Utara",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_775_243,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Sulawesi Utara",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 4_002_630,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Sulawesi Tengah",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_179_565,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Sulawesi Selatan",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_921_088,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Sulawesi Tenggara",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_306_496.18,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Gorontalo",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_405_144,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Sulawesi Barat",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_315_934,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Maluku",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_334_490,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Maluku Utara",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_510_240,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Papua",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 4_436_283,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Papua Barat",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_841_000,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Papua Barat Daya",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 3_766_000,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Papua Tengah",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 4_285_848,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Papua Pegunungan",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 4_508_714,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
   {
     provinsi: "Papua Selatan",
-    upahBulanan: null,
-    tahun: null,
-    sumberUrl: null,
-    tanggalVerifikasi: null,
-  }, // TODO
+    upahBulanan: 4_508_100,
+    tahun: 2026,
+    sumberUrl: SUMBER_UMP_2026,
+    tanggalVerifikasi: TANGGAL_VERIFIKASI_UMP_2026,
+  },
 ] as const satisfies readonly BarisDataUpah[];
 
 /**
