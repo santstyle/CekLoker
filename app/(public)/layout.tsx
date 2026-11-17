@@ -6,7 +6,7 @@ import { Navigasi } from "@/components/situs/navigasi";
 import { NAV, NAV_LEGAL } from "@/components/situs/nav";
 import { GarisProgresGulir } from "@/components/situs/garis-progres";
 import { Container } from "@/components/ui/container";
-import { TautanTombol } from "@/components/ui/tombol";
+import { MenuMobile } from "@/components/situs/menu-mobile";
 
 export default function LayoutPublik({
   children,
@@ -50,9 +50,7 @@ export default function LayoutPublik({
             <Navigasi />
           </Suspense>
 
-          <TautanTombol href="/cek" className="md:hidden">
-            Cek lowongan
-          </TautanTombol>
+          <MenuMobile />
         </Container>
       </header>
 
