@@ -13,7 +13,8 @@ import { cn } from "@/components/ui/cn";
  *
  * Menu mobile menggabungkan seluruh link NAV, link legal, link bantuan,
  * dan tombol "Cek lowongan" di dalam dropdown, supaya tidak ada tombol
- * duplikat di kanan atas.
+ * duplikat di kanan atas. Menutup cukup dengan menekan tombol hamburger
+ * (beranimasi jadi X), mengklik area di luar menu, atau tombol Escape.
  */
 export function MenuMobile() {
   const [terbuka, setTerbuka] = useState(false);
@@ -45,7 +46,7 @@ export function MenuMobile() {
     <div className="relative md:hidden">
       <button
         type="button"
-        aria-label="Buka menu navigasi"
+        aria-label="Menu navigasi"
         aria-expanded={terbuka}
         aria-controls="menu-mobile"
         onClick={() => setTerbuka((s) => !s)}
@@ -88,30 +89,6 @@ export function MenuMobile() {
             id="menu-mobile"
             className="fixed top-16 right-0 z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-line bg-paper shadow-lg sm:top-20"
           >
-            <div className="flex items-center justify-between border-b border-line px-4 py-2">
-              <span className="font-mono text-[0.6rem] font-semibold tracking-[0.22em] text-slate-400 uppercase">
-                Menu
-              </span>
-              <button
-                type="button"
-                aria-label="Tutup menu"
-                onClick={tutup}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-800 focus:ring-2 focus:ring-blue-500/40 focus:outline-none"
-              >
-                <svg
-                  className="size-4"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 6 6 18" />
-                  <path d="m6 6 12 12" />
-                </svg>
-              </button>
-            </div>
             <nav aria-label="Navigasi mobile" className="flex flex-col py-1">
               {NAV.map((butir) => (
                 <Link
