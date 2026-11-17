@@ -9,7 +9,9 @@ import gambarKasus03 from "@/public/images/liputan/kasus-03.jpg";
 import gambarKasus04 from "@/public/images/liputan/kasus-04.jpg";
 import { AngkaHitung } from "@/components/situs/angka-hitung";
 import { Faq } from "@/components/situs/faq";
+import { KartuContohLaporan } from "@/components/situs/kartu-contoh-laporan";
 import { Reveal } from "@/components/situs/reveal";
+import { CONTOH_LAPORAN } from "@/lib/hero-contoh";
 import { RULES } from "@/lib/evaluation/rules";
 import { BATAS_BAND } from "@/lib/evaluation/score";
 import { DATA_UPAH_TERSEDIA } from "@/lib/evaluation/wages";
@@ -178,7 +180,7 @@ const PASAL = [
 export default function Beranda() {
   return (
     <div className="relative bg-cream text-ink">
-      {/* ============ HERO: kanvas terang dengan kubah gradasi ============ */}
+      {/* ============ HERO: kanvas terang dengan kubah setengah lingkaran ============ */}
       <section className="relative overflow-hidden bg-gradient-to-b from-[#e7ebf5] via-[#edf0f8] to-cream">
         <Container
           ukuran="penuh"
@@ -220,144 +222,40 @@ export default function Beranda() {
           </p>
         </Container>
 
-        {/* Kubah aurora di atas horizon */}
-        <svg
-          viewBox="0 0 1440 460"
-          preserveAspectRatio="xMidYMax slice"
+        {/* Kubah setengah lingkaran: puncak selalu utuh di semua lebar layar */}
+        <div
           aria-hidden="true"
-          className="mt-2 block h-56 w-full sm:h-72 lg:h-80"
+          className="relative mt-2 h-[clamp(14rem,32vw,34rem)] w-full overflow-hidden"
         >
-          <defs>
-            <linearGradient id="kubah" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#2563eb" />
-              <stop offset="30%" stopColor="#3b82f6" />
-              <stop offset="58%" stopColor="#60a5fa" />
-              <stop offset="82%" stopColor="#93c5fd" />
-              <stop offset="100%" stopColor="#e0f2fe" />
-            </linearGradient>
-            <radialGradient id="cahayaHorizon" cx="50%" cy="100%" r="75%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
-              <stop offset="55%" stopColor="#ffffff" stopOpacity="0" />
-            </radialGradient>
-            <pattern
-              id="titikKubah"
-              width="22"
-              height="22"
-              patternUnits="userSpaceOnUse"
-            >
-              <circle
-                cx="1.6"
-                cy="1.6"
-                r="1.6"
-                fill="#ffffff"
-                fillOpacity="0.4"
-              />
-            </pattern>
-          </defs>
-          <ellipse cx="720" cy="480" rx="780" ry="440" fill="url(#kubah)" />
-          <ellipse
-            cx="720"
-            cy="480"
-            rx="780"
-            ry="440"
-            fill="url(#titikKubah)"
-          />
-          <ellipse
-            cx="720"
-            cy="480"
-            rx="780"
-            ry="440"
-            fill="url(#cahayaHorizon)"
-          />
-          <ellipse
-            cx="720"
-            cy="480"
-            rx="560"
-            ry="300"
-            fill="none"
-            stroke="#ffffff"
-            strokeOpacity="0.5"
-            strokeWidth="1.4"
-          />
-          <ellipse
-            cx="720"
-            cy="480"
-            rx="340"
-            ry="170"
-            fill="none"
-            stroke="#ffffff"
-            strokeOpacity="0.45"
-            strokeWidth="1.2"
-          />
-        </svg>
+          {/* Kubah dibuat lebih lebar dari layar agar tepi kiri/kanan terisi, tidak cekung sampai dasar */}
+          <div className="absolute top-0 left-1/2 h-full w-[160%] -translate-x-1/2 overflow-hidden [border-radius:50%_50%_0_0/100%_100%_0_0] bg-[linear-gradient(to_bottom,#2563eb_0%,#3b82f6_32%,#60a5fa_58%,#93c5fd_80%,#e0f2fe_100%)]">
+            <div className="absolute inset-0 bg-[radial-gradient(circle,rgb(255_255_255/0.4)_1.6px,transparent_1.6px)] [background-size:22px_22px]" />
+            <div className="absolute inset-x-0 bottom-0 h-3/5 bg-[radial-gradient(ellipse_at_50%_100%,rgb(255_255_255/0.55),transparent_62%)]" />
+            <div className="absolute inset-0 [border-radius:50%_50%_0_0/100%_100%_0_0] border border-white/45" />
+          </div>
+        </div>
 
-        {/* Kartu laporan ilustrasi, mengambang di atas horizon */}
-        <div className="relative z-10 -mt-24 flex justify-center px-4 pb-16 sm:-mt-40 sm:pb-20">
-          <figure className="kartu-bingkai-gradasi w-[min(92vw,400px)] rotate-[-1.2deg] rounded-2xl p-5 shadow-[0_30px_60px_-20px_rgb(15_23_42/0.4)]">
-            <div className="flex items-center justify-between gap-4 border-b border-slate-100 pb-3 font-mono text-[0.58rem] font-semibold tracking-[0.2em] text-ink uppercase">
-              <span>CekLoker · Laporan risiko</span>
-              <span className="text-muted normal-case">
-                No. 000 · Ilustrasi
-              </span>
-            </div>
-            <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-[0.72rem]">
-              <div>
-                <dt className="font-mono text-[0.52rem] tracking-[0.18em] text-muted uppercase">
-                  Posisi
-                </dt>
-                <dd className="font-medium text-ink">Admin toko</dd>
-              </div>
-              <div>
-                <dt className="font-mono text-[0.52rem] tracking-[0.18em] text-muted uppercase">
-                  Lokasi
-                </dt>
-                <dd className="font-medium text-ink">Jakarta Barat</dd>
-              </div>
-              <div>
-                <dt className="font-mono text-[0.52rem] tracking-[0.18em] text-muted uppercase">
-                  Sumber
-                </dt>
-                <dd className="font-medium text-ink">Pesan pribadi</dd>
-              </div>
-              <div>
-                <dt className="font-mono text-[0.52rem] tracking-[0.18em] text-muted uppercase">
-                  Upah
-                </dt>
-                <dd className="font-medium text-ink">Tidak dicantumkan</dd>
-              </div>
-            </dl>
-            <div className="mt-4 flex items-end justify-between gap-4 border-y border-slate-100 py-3">
-              <div>
-                <p className="font-mono text-[0.52rem] tracking-[0.18em] text-muted uppercase">
-                  Skor risiko
-                </p>
-                <p className="mt-1 font-display text-5xl leading-none font-extrabold text-ink tabular-nums">
-                  65<span className="text-lg font-medium text-muted">/100</span>
-                </p>
-              </div>
-              <span className="stempel mb-1 rotate-[-6deg] text-amber-700">
-                Perlu dicek
-              </span>
-            </div>
-            <ol className="mt-3 space-y-1.5 text-[0.7rem] leading-snug text-slate-600">
-              <li>
-                <span className="font-semibold text-amber-800">TEMUAN #01</span>{" "}
-                Pungutan biaya di muka (Rp 150.000)
-              </li>
-              <li>
-                <span className="font-semibold text-amber-800">TEMUAN #02</span>{" "}
-                Kontak hanya nomor pribadi perorangan
-              </li>
-              <li>
-                <span className="font-semibold text-blue-800">TEMUAN #03</span>{" "}
-                Nominal upah tidak dicantumkan
-              </li>
-            </ol>
-            <figcaption className="mt-3 border-t border-slate-100 pt-2 text-[0.62rem] leading-snug text-muted">
-              Ilustrasi dengan iklan contoh, bukan data pengguna. CekLoker tidak
-              pernah memberi vonis.
-            </figcaption>
-          </figure>
+        {/* Kartu laporan ilustrasi, mengambang di atas puncak kubah */}
+        <div className="relative z-10 -mt-[calc(clamp(14rem,32vw,34rem)_-_8rem)] pb-16 sm:pb-20">
+          <ul
+            aria-label="Contoh laporan risiko dari iklan contoh"
+            className="flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto px-4 pb-4 lg:mx-auto lg:grid lg:max-w-6xl lg:grid-cols-3 lg:items-start lg:gap-5 lg:overflow-visible lg:px-6 lg:pb-0 [&::-webkit-scrollbar]:hidden"
+          >
+            {CONTOH_LAPORAN.map((contoh, indeks) => (
+              <KartuContohLaporan
+                key={contoh.id}
+                contoh={contoh}
+                indeks={indeks}
+              />
+            ))}
+          </ul>
+          <p className="mt-2 text-center font-mono text-[0.56rem] tracking-[0.16em] text-slate-600 uppercase lg:hidden">
+            Geser untuk melihat contoh lain
+          </p>
+          <p className="mx-auto mt-4 max-w-xl px-6 text-center text-[0.68rem] leading-relaxed text-slate-600">
+            Ilustrasi dengan iklan contoh, bukan data pengguna. CekLoker tidak
+            pernah memberi vonis.
+          </p>
         </div>
       </section>
 
