@@ -7,7 +7,7 @@
 
 import { z } from "zod";
 
-import { extractSalaries, normalizeText } from "./normalize";
+import { extractGajiBulanan, normalizeText } from "./normalize";
 import { matchProvinsi } from "./provinces";
 import { DETEKTOR, RULES } from "./rules";
 import { bandDariSkor, bandTerburuk, hitungSkor } from "./score";
@@ -161,7 +161,7 @@ export function evaluasiLowongan(
   const provinsi = provinsiFromLokasi ?? matchProvinsi(teksMentah);
   const upahMinimum = getUpahMinimum(provinsi, opsi.dataUpah);
 
-  const gaji = extractSalaries(teks)[0] ?? null;
+  const gaji = extractGajiBulanan(teks);
   const konteks: KonteksDeteksi = {
     teks,
     teksMentah,

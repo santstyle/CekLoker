@@ -305,10 +305,14 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
     teks: "PT Contoh Sinar Abadi membuka lowongan Satpam. Shift malam, jam kerja 12 jam per hari. Gaji Rp 3.500.000 per bulan.",
     lokasi: "Jakarta",
     expectedBand: "perlu_dicek",
-    expectedRuleIds: ["lembur_tanpa_batas", "waktu_kerja_berlebih"],
-    expectedSkor: 13,
+    expectedRuleIds: [
+      "lembur_tanpa_batas",
+      "upah_dibawah_umr",
+      "waktu_kerja_berlebih",
+    ],
+    expectedSkor: 25,
     catatan:
-      "Tanpa temuan kontak/identitas; hanya beban jam kerja yang perlu dicek.",
+      "Upah di bawah UMP Jakarta, ditambah beban jam kerja yang perlu dicek.",
   },
   {
     id: "d12_spg_wanita",
@@ -416,8 +420,8 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
     teks: "PT Contoh Anugerah Kerja membuka lowongan Staff Gudang. Wajib transfer biaya pelatihan Rp300.000 dan biaya seragam Rp150.000.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
-    expectedRuleIds: ["pungutan_biaya"],
-    expectedSkor: 15,
+    expectedRuleIds: ["pungutan_biaya", "upah_tidak_diungkap"],
+    expectedSkor: 17,
     catatan: "Dua pungutan biaya sekaligus, keduanya terlarang bagi pelamar.",
   },
   {
@@ -425,8 +429,8 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
     teks: "PT Contoh Pelatihan Cepat membuka lowongan. Wajib membayar biaya pelatihan Rp500.000 sebelum kerja.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
-    expectedRuleIds: ["pungutan_biaya"],
-    expectedSkor: 15,
+    expectedRuleIds: ["pungutan_biaya", "upah_tidak_diungkap"],
+    expectedSkor: 17,
     catatan: "Biaya pelatihan dibebankan ke pelamar sebelum mulai bekerja.",
   },
   {

@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   containsAny,
   containsPhrase,
+  extractGajiBulanan,
   extractSalaries,
   formatRupiah,
   normalizeText,
@@ -415,6 +416,67 @@ describe("extractSalaries", () => {
 
   it("bekerja pada keluaran normalizeText", () => {
     expect(extractSalaries(normalizeText("ＲＰ 5 JUTA"))).toEqual([5000000]);
+  });
+});
+
+describe("extractGajiBulanan", () => {
+  type KasusGaji = {
+    nama: string;
+    masukan: string;
+    harapan: number | null;
+  };
+
+  const KASUS_GAJI: readonly KasusGaji[] = [
+    {
+      nama: "upah biasa",
+      masukan: "gaji rp 5.000.000 per bulan",
+      harapan: 5_000_000,
+    },
+    {
+      nama: "upah dengan kata dibayar",
+      masukan: "gaji dibayar rp 4.500.000 setiap bulan",
+      harapan: 4_500_000,
+    },
+    {
+      nama: "rentang upah memakai batas bawah",
+      masukan: "upah rp 5.000.000 - rp 7.000.000",
+      harapan: 5_000_000,
+    },
+    {
+      nama: "biaya pelatihan bukan upah",
+      masukan: "wajib membayar biaya pelatihan rp 500.000 sebelum kerja",
+      harapan: null,
+    },
+    {
+      nama: "biaya seragam bukan upah",
+      masukan: "wajib transfer biaya seragam rp 150.000",
+      harapan: null,
+    },
+    {
+      nama: "biaya lalu upah tetap terbaca",
+      masukan: "tanpa biaya. gaji rp 3.500.000 per bulan",
+      harapan: 3_500_000,
+    },
+    {
+      nama: "upah lalu biaya memakai upah",
+      masukan: "gaji rp 4.000.000. wajib bayar biaya rp 100.000",
+      harapan: 4_000_000,
+    },
+    {
+      nama: "tanpa nominal sama sekali",
+      masukan: "gaji kompetitif dan menarik",
+      harapan: null,
+    },
+  ];
+
+  it.each(KASUS_GAJI)("membaca upah: $nama", ({ masukan, harapan }) => {
+    expect(extractGajiBulanan(masukan)).toBe(harapan);
+  });
+
+  it("memberi hasil sama pada pemanggilan berulang", () => {
+    const teks = "gaji rp 6.000.000 per bulan";
+    expect(extractGajiBulanan(teks)).toBe(6_000_000);
+    expect(extractGajiBulanan(teks)).toBe(6_000_000);
   });
 });
 
