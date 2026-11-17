@@ -143,12 +143,23 @@ export default function HalamanSumber() {
                       <p className="mt-1 text-slate-600">{CATATAN_DATA_UPAH}</p>
                     </div>
                   </div>
-                  <p className="rounded-xl border bg-slate-50/70 p-4 text-slate-600">
-                    Data upah minimum provinsi/kabupaten/kota diambil dari
-                    penetapan resmi gubernur/keputusan menteri. CekLoker akan
-                    mengaktifkan fitur bandingkan upah lowongan dengan
-                    UMP/UMK/UMAK begitu data lengkap tersedia dan diverifikasi.
-                  </p>
+                  <div className="flex items-start gap-3">
+                    <div
+                      aria-hidden
+                      className="hidden size-10 shrink-0 sm:block"
+                    />
+                    <div className="max-w-[60ch] border-l-2 border-slate-300 pl-4">
+                      <p className="font-mono text-[0.6rem] font-medium tracking-[0.2em] text-muted uppercase">
+                        Catatan
+                      </p>
+                      <p className="mt-1.5 text-slate-500">
+                        Angka upah minimum provinsi/kabupaten/kota diambil dari
+                        penetapan resmi gubernur/keputusan menteri. Perbandingan
+                        upah lowongan dengan UMP/UMK/UMAK aktif setelah data
+                        lengkap dan terverifikasi.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </section>
             </Reveal>
