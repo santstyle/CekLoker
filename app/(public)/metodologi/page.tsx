@@ -8,6 +8,11 @@ import { labelRujukan, urlRujukan } from "@/lib/evaluation/rujukan";
 import { BATAS_BAND } from "@/lib/evaluation/score";
 import { KEKUATAN_NILAI, type KategoriRule } from "@/lib/evaluation/types";
 import {
+  DIPERBARUI_ATURAN,
+  formatTanggalAturan,
+  VERSI_ATURAN,
+} from "@/lib/evaluation/versi";
+import {
   CATATAN_DATA_UPAH,
   DATA_UPAH_TERSEDIA,
   LABEL_DATA_UPAH_BELUM_TERSEDIA,
@@ -266,6 +271,10 @@ export default function HalamanMetodologi() {
                   {aturanUpahAktif
                     ? `Seluruh ${RULES.length} aturan aktif.`
                     : `${jumlahAturanAktif} aturan aktif; aturan perbandingan upah menunggu data resmi.`}
+                </p>
+                <p className="mt-1 font-mono text-xs text-slate-400">
+                  Katalog aturan v{VERSI_ATURAN} &bull; diperbarui{" "}
+                  {formatTanggalAturan(DIPERBARUI_ATURAN)}
                 </p>
               </div>
 

@@ -22,6 +22,7 @@ import type {
   Kekuatan,
   KategoriRule,
 } from "@/lib/evaluation/types";
+import { VERSI_ATURAN } from "@/lib/evaluation/versi";
 
 const TEMA_BAND: Record<
   Band,
@@ -223,7 +224,8 @@ export default function KontenHasil() {
             </Link>
 
             <span className="font-mono text-xs text-slate-400">
-              Mesin Evaluasi v{hasil.versi} &bull; Sesi #{id.slice(0, 8)}
+              Mesin Evaluasi v{hasil.versi} &bull; Katalog Aturan v
+              {VERSI_ATURAN} &bull; Sesi #{id.slice(0, 8)}
             </span>
           </div>
 
