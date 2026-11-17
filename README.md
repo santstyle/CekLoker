@@ -28,7 +28,7 @@ Rentang ditentukan secara deterministik dari pemeriksaan berbasis aturan, bukan 
 - Halaman edukasi hak pekerja dan panduan verifikasi mandiri (aktif)
 - Halaman bantuan korban: checklist 24 jam, penunjuk kanal resmi, dan penyusun kronologi — seluruhnya di peramban (aktif)
 - Alur pembacaan poster lowongan (OCR peramban)
-- Perbandingan upah terhadap UMP/UMK (belum aktif — menunggu data upah resmi terverifikasi)
+- Perbandingan upah terhadap UMP 2026 (aktif — 38 provinsi, sumber Kemnaker; UMK kabupaten/kota menyusul)
 
 ## Teknologi
 

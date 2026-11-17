@@ -167,14 +167,12 @@ const PASAL = [
     pasal: "UU No. 27/2022 (PDP)",
     teks: "Permintaan dokumen sensitif di awal proses, di luar kebutuhan seleksi yang wajar.",
   },
-  ...(DATA_UPAH_TERSEDIA
-    ? []
-    : [
-        {
-          pasal: "Upah Minimum (UMP/UMK)",
-          teks: "Perbandingan kisaran upah terhadap upah minimum. Belum aktif, menunggu data resmi.",
-        },
-      ]),
+  {
+    pasal: "Upah Minimum (UMP/UMK)",
+    teks: DATA_UPAH_TERSEDIA
+      ? "Perbandingan kisaran upah terhadap UMP 2026 provinsi tempat kerja."
+      : "Perbandingan kisaran upah terhadap upah minimum. Belum aktif, menunggu data resmi.",
+  },
 ] as const;
 
 export default function Beranda() {

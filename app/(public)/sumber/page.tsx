@@ -3,7 +3,11 @@ import { Container } from "@/components/ui/container";
 import { Kepala } from "@/components/situs/kepala";
 import { Reveal } from "@/components/situs/reveal";
 import { URL_RUJUKAN, LABEL_RUJUKAN } from "@/lib/evaluation/rujukan";
-import { DATA_UPAH_TERSEDIA, CATATAN_DATA_UPAH } from "@/lib/evaluation/wages";
+import {
+  DATA_UPAH_TERSEDIA,
+  CATATAN_DATA_UPAH,
+  TANGGAL_VERIFIKASI_UMP_2026,
+} from "@/lib/evaluation/wages";
 import { metadataHalaman } from "@/lib/situs";
 
 export const metadata: Metadata = metadataHalaman({
@@ -100,7 +104,7 @@ export default function HalamanSumber() {
       <Container ukuran="lebar" className="py-16 sm:py-20">
         <div>
           <p className="font-mono text-[0.6rem] font-medium tracking-[0.2em] text-muted uppercase">
-            Terakhir diperbarui: 2025-11-15
+            Terakhir diperbarui: {TANGGAL_VERIFIKASI_UMP_2026}
           </p>
 
           <div className="mt-10 flex flex-col gap-10">
@@ -153,10 +157,10 @@ export default function HalamanSumber() {
                         Catatan
                       </p>
                       <p className="mt-1.5 text-slate-500">
-                        Angka upah minimum provinsi/kabupaten/kota diambil dari
-                        penetapan resmi gubernur/keputusan menteri. Perbandingan
-                        upah lowongan dengan UMP/UMK/UMAK aktif setelah data
-                        lengkap dan terverifikasi.
+                        UMP tahun 2026 untuk seluruh provinsi sudah
+                        terverifikasi dan dipakai membandingkan upah lowongan.
+                        Upah minimum kabupaten/kota (UMK) menyusul pada tahap
+                        berikutnya, lengkap dengan sumber resmi per daerah.
                       </p>
                     </div>
                   </div>
@@ -308,8 +312,8 @@ export default function HalamanSumber() {
                   <ul className="grid list-inside list-disc gap-x-8 gap-y-2 pl-2 lg:grid-cols-2">
                     <li>
                       Semua rujukan hukum diambil dari situs resmi{" "}
-                      <strong>peraturan.go.id</strong>
-                      (Direktori Peraturan Perundang-undangan BPHN) dan
+                      <strong>peraturan.go.id</strong> (Direktori Peraturan
+                      Perundang-undangan BPHN) dan{" "}
                       <strong>JDIH Kemenaker</strong> (Jaringan Dokumentasi dan
                       Informasi Hukum Kementerian Ketenagakerjaan).
                     </li>
