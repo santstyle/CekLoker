@@ -97,8 +97,8 @@ export default function HalamanSumber() {
         }
       />
 
-      <Container className="py-16 sm:py-20">
-        <div className="mx-auto max-w-3xl">
+      <Container ukuran="lebar" className="py-16 sm:py-20">
+        <div>
           <p className="font-mono text-[0.6rem] font-medium tracking-[0.2em] text-muted uppercase">
             Terakhir diperbarui: 2025-11-15
           </p>
@@ -143,7 +143,7 @@ export default function HalamanSumber() {
                       <p className="mt-1 text-slate-600">{CATATAN_DATA_UPAH}</p>
                     </div>
                   </div>
-                  <p className="pl-10 text-slate-500">
+                  <p className="rounded-xl border bg-slate-50/70 p-4 text-slate-600">
                     Data upah minimum provinsi/kabupaten/kota diambil dari
                     penetapan resmi gubernur/keputusan menteri. CekLoker akan
                     mengaktifkan fitur bandingkan upah lowongan dengan
@@ -159,11 +159,11 @@ export default function HalamanSumber() {
                 <h2 className="font-display text-lg font-extrabold tracking-tight text-ink sm:text-xl">
                   Daftar Sumber Hukum Resmi
                 </h2>
-                <div className="flex flex-col gap-3 text-sm leading-relaxed text-slate-600 sm:text-base">
+                <div className="grid gap-3 text-sm leading-relaxed text-slate-600 sm:grid-cols-2 sm:text-base xl:grid-cols-4 xl:gap-4">
                   {SUMBER_HUKUM.map((sumber, idx) => (
                     <div
                       key={sumber.id}
-                      className="flex flex-col gap-2 rounded-xl border bg-white p-4 shadow-xs transition-all hover:shadow-md"
+                      className="flex h-full flex-col gap-2 rounded-xl border bg-white p-4 shadow-xs transition-all hover:shadow-md"
                     >
                       <div className="flex items-start gap-3">
                         <span className="flex-shrink-0 rounded bg-sky-50 px-2 py-0.5 font-mono text-xs text-sky-600">
@@ -194,7 +194,7 @@ export default function HalamanSumber() {
                         href={sumber.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-medium text-sky-600 transition-colors hover:text-sky-800"
+                        className="mt-auto inline-flex items-center gap-1.5 pt-1 text-xs font-medium text-sky-600 transition-colors hover:text-sky-800"
                       >
                         Buka dokumen resmi
                         <svg
@@ -278,7 +278,7 @@ export default function HalamanSumber() {
                       </tbody>
                     </table>
                   </div>
-                  <p className="pl-2 text-slate-500">
+                  <p className="max-w-3xl pl-2 text-slate-500">
                     Tabel di atas memetakan setiap id rujukan yang dipakai
                     aturan evaluasi ke URL dokumen resmi di peraturan.go.id atau
                     JDIH Kemenaker.
@@ -293,8 +293,8 @@ export default function HalamanSumber() {
                 <h2 className="font-display text-lg font-extrabold tracking-tight text-ink sm:text-xl">
                   Catatan Metodologi
                 </h2>
-                <div className="flex flex-col gap-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-                  <ul className="list-inside list-disc space-y-2 pl-2">
+                <div className="text-sm leading-relaxed text-slate-600 sm:text-base">
+                  <ul className="grid list-inside list-disc gap-x-8 gap-y-2 pl-2 lg:grid-cols-2">
                     <li>
                       Semua rujukan hukum diambil dari situs resmi{" "}
                       <strong>peraturan.go.id</strong>
