@@ -98,21 +98,26 @@ describe("getUpahMinimum", () => {
 });
 
 describe("DATA_UPAH", () => {
-  it("sengaja kosong sampai sumber resmi terverifikasi", () => {
-    expect(DATA_UPAH).toHaveLength(0);
+  it("memuat satu baris aktif per provinsi kanonik", () => {
+    expect(DATA_UPAH).toHaveLength(PROVINSI.length);
   });
 
-  it("menandai data upah belum tersedia", () => {
-    expect(DATA_UPAH_TERSEDIA).toBe(false);
+  it("menandai data upah tersedia", () => {
+    expect(DATA_UPAH_TERSEDIA).toBe(true);
   });
 
-  it("menyatakan keterbatasan pada catatan antarmuka", () => {
-    expect(CATATAN_DATA_UPAH).toContain("belum aktif");
+  it("menyatakan sumber terverifikasi pada catatan antarmuka", () => {
+    expect(CATATAN_DATA_UPAH).toContain("terverifikasi");
+    expect(CATATAN_DATA_UPAH).not.toContain("belum aktif");
   });
 
-  it("membuat pencarian dengan data bawaan selalu null", () => {
-    expect(getUpahMinimum("DKI Jakarta")).toBeNull();
-    expect(cariUpahUntukLokasi("Jakarta Selatan")).toBeNull();
+  it("mencari upah memakai data bawaan untuk ibu kota", () => {
+    const upah = getUpahMinimum("DKI Jakarta");
+    expect(upah).not.toBeNull();
+    expect(upah?.tahun).toBe(2026);
+    expect(cariUpahUntukLokasi("Jakarta Selatan")?.provinsi).toBe(
+      "DKI Jakarta",
+    );
   });
 });
 
@@ -144,7 +149,7 @@ describe("cariUpahUntukLokasi", () => {
   });
 });
 
-describe("DATA_UPAH_MENTAH (kerangka TODO)", () => {
+describe("DATA_UPAH_MENTAH (data UMP 2026)", () => {
   it("mencakup satu baris per provinsi kanonik", () => {
     expect(DATA_UPAH_MENTAH).toHaveLength(PROVINSI.length);
 
@@ -154,12 +159,12 @@ describe("DATA_UPAH_MENTAH (kerangka TODO)", () => {
     }
   });
 
-  it("belum diisi: seluruh nilai masih TODO (null), tanpa angka tebakan", () => {
+  it("mengisi setiap baris tanpa angka tebakan: nilai, tahun, sumber, tanggal", () => {
     for (const baris of DATA_UPAH_MENTAH) {
-      expect(baris.upahBulanan).toBeNull();
-      expect(baris.tahun).toBeNull();
-      expect(baris.sumberUrl).toBeNull();
-      expect(baris.tanggalVerifikasi).toBeNull();
+      expect(baris.upahBulanan).toBeGreaterThan(0);
+      expect(baris.tahun).toBe(2026);
+      expect(baris.sumberUrl).toMatch(/^https:\/\//);
+      expect(baris.tanggalVerifikasi).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     }
   });
 });
@@ -213,10 +218,12 @@ describe("statusDataUpah", () => {
     );
   });
 
-  it("menyatakan data belum tersedia untuk provinsi yang datanya masih kosong", () => {
+  it("menyatakan tersedia untuk provinsi yang datanya terisi", () => {
     const status = statusDataUpah("Bandung");
-    expect(status).toContain(LABEL_DATA_UPAH_BELUM_TERSEDIA);
     expect(status).toContain("Jawa Barat");
+    expect(status).toContain("2026");
+    expect(status).toContain("tersedia");
+    expect(status).not.toContain(LABEL_DATA_UPAH_BELUM_TERSEDIA);
   });
 
   it("menyatakan tersedia bila datanya lengkap", () => {
@@ -234,7 +241,7 @@ describe("statusDataUpah", () => {
 });
 
 describe("kejujuran klaim data upah", () => {
-  it("catatan antarmuka memakai frasa data belum tersedia", () => {
-    expect(CATATAN_DATA_UPAH).toContain("data belum tersedia");
+  it("catatan antarmuka memakai frasa data resmi terverifikasi", () => {
+    expect(CATATAN_DATA_UPAH).toContain("data resmi yang terverifikasi");
   });
 });

@@ -121,6 +121,65 @@ function wajar(nilai: number): boolean {
   return nilai >= BATAS_GAJI_BAWAH && nilai <= BATAS_GAJI_ATAS;
 }
 
+type Nominal = {
+  nilai: number;
+  index: number;
+};
+
+/**
+ * Mengumpulkan semua nominal yang masuk akal beserta posisinya di teks.
+ *
+ * Tahun, usia, dan nomor telepon otomatis tersaring lewat rentang
+ * kewajaran 300 ribu - 5 miliar. Satuan "k"/"m" sengaja diabaikan
+ * karena terlalu rawan salah tafsir. Hasil diurutkan sesuai urutan dokumen.
+ */
+function kumpulkanNominal(teks: string): Nominal[] {
+  const hasil: Nominal[] = [];
+
+  const tambah = (
+    mentah: string,
+    satuan: string | undefined,
+    index: number,
+  ): void => {
+    // Titik/koma di ujung nominal biasanya tanda baca kalimat, bukan angka.
+    const angka = parseAngkaIndo(mentah.replace(/[.,]+$/, ""));
+    if (angka === null) return;
+
+    const pengali = satuan ? (MAGNITUDO[satuan] ?? 1) : 1;
+    const nilai = angka * pengali;
+    if (!wajar(nilai)) return;
+    hasil.push({ nilai: Math.round(nilai), index });
+  };
+
+  POLA_RP.lastIndex = 0;
+  let cocok: RegExpExecArray | null;
+  let akhirTerakhir = 0;
+
+  while ((cocok = POLA_RP.exec(teks)) !== null) {
+    tambah(cocok[1], cocok[2], cocok.index);
+    akhirTerakhir = cocok.index + cocok[0].length;
+
+    const sisa = teks.slice(akhirTerakhir);
+    const lanjutan = POLA_LANJUTAN_RENTANG.exec(sisa);
+    if (lanjutan) {
+      tambah(lanjutan[1], lanjutan[2], akhirTerakhir + lanjutan.index);
+      akhirTerakhir += lanjutan[0].length;
+      POLA_RP.lastIndex = akhirTerakhir;
+    }
+  }
+
+  for (const rentang of teks.matchAll(POLA_RENTANG_MAGNITUDO)) {
+    tambah(rentang[1], rentang[3], rentang.index);
+    tambah(rentang[2], rentang[3], rentang.index);
+  }
+
+  for (const tunggal of teks.matchAll(POLA_MAGNITUDO)) {
+    tambah(tunggal[1], tunggal[2], tunggal.index);
+  }
+
+  return hasil.sort((a, b) => a.index - b.index);
+}
+
 /**
  * Mengambil semua nominal gaji bulanan yang masuk akal dari teks.
  *
@@ -129,45 +188,37 @@ function wajar(nilai: number): boolean {
  * karena terlalu rawan salah tafsir.
  */
 export function extractSalaries(teks: string): number[] {
-  const hasil = new Set<number>();
-
-  const tambah = (mentah: string, satuan?: string): void => {
-    const angka = parseAngkaIndo(mentah);
-    if (angka === null) return;
-
-    const pengali = satuan ? (MAGNITUDO[satuan] ?? 1) : 1;
-    const nilai = angka * pengali;
-    if (!wajar(nilai)) return;
-    hasil.add(Math.round(nilai));
-  };
-
-  POLA_RP.lastIndex = 0;
-  let cocok: RegExpExecArray | null;
-  let akhirTerakhir = 0;
-
-  while ((cocok = POLA_RP.exec(teks)) !== null) {
-    tambah(cocok[1], cocok[2]);
-    akhirTerakhir = cocok.index + cocok[0].length;
-
-    const sisa = teks.slice(akhirTerakhir);
-    const lanjutan = POLA_LANJUTAN_RENTANG.exec(sisa);
-    if (lanjutan) {
-      tambah(lanjutan[1], lanjutan[2]);
-      akhirTerakhir += lanjutan[0].length;
-      POLA_RP.lastIndex = akhirTerakhir;
-    }
-  }
-
-  for (const rentang of teks.matchAll(POLA_RENTANG_MAGNITUDO)) {
-    tambah(rentang[1], rentang[3]);
-    tambah(rentang[2], rentang[3]);
-  }
-
-  for (const tunggal of teks.matchAll(POLA_MAGNITUDO)) {
-    tambah(tunggal[1], tunggal[2]);
-  }
-
+  const hasil = new Set(kumpulkanNominal(teks).map((nominal) => nominal.nilai));
   return [...hasil].sort((a, b) => a - b);
+}
+
+const KATA_BIAYA =
+  /\b(?:biaya|bayar|dibayar|membayar|pembayaran|transfer|setoran|pungutan|iuran|retribusi|ongkos|tarif|jaminan|deposit|seragam|pelatihan|administrasi|kontribusi)\b/;
+
+const KATA_UPAH = /\b(?:gaji|upah|honor|pendapatan|penghasilan|gajian)\b/;
+
+/** Potongan klausa tepat sebelum posisi tertentu, maksimal 40 karakter. */
+function klausaSebelum(teks: string, index: number): string {
+  const potongan = teks.slice(Math.max(0, index - 40), index);
+  const bagian = potongan.split(/[,.;!?\n]/);
+  return bagian[bagian.length - 1] ?? "";
+}
+
+/**
+ * Menebak gaji bulanan yang benar-benar ditawarkan.
+ *
+ * Nominal yang didahului kata biaya (pelatihan, seragam, administrasi,
+ * dan sejenisnya) dilewati, karena itu pungutan ke pelamar, bukan upah.
+ * Klausa yang memuat kata upah tetap diterima walau ada kata biaya.
+ */
+export function extractGajiBulanan(teks: string): number | null {
+  for (const nominal of kumpulkanNominal(teks)) {
+    const klausa = klausaSebelum(teks, nominal.index);
+    if (KATA_BIAYA.test(klausa) && !KATA_UPAH.test(klausa)) continue;
+    return nominal.nilai;
+  }
+
+  return null;
 }
 
 /** Format rupiah tanpa bergantung pada locale: Rp3.500.000 */

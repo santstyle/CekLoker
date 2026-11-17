@@ -5,7 +5,12 @@
  * bukti pendek. Daftar kosong berarti aturan tidak menyala.
  */
 
-import { containsAny, extractSalaries, formatRupiah } from "./normalize";
+import {
+  containsAny,
+  extractGajiBulanan,
+  extractSalaries,
+  formatRupiah,
+} from "./normalize";
 import type { Detektor, Rule } from "./types";
 
 const POLA_WAKTU_BERLEBIH = [
@@ -611,7 +616,7 @@ export const DETEKTOR: readonly Detektor[] = [
   {
     ruleId: "upah_tidak_diungkap",
     deteksi: (konteks) => {
-      if (extractSalaries(konteks.teks).length > 0) return [];
+      if (extractGajiBulanan(konteks.teks) !== null) return [];
       if (containsAny(konteks.teks, PENANDA_UPAH_TERSIRAT).length > 0)
         return [];
       return ["nominal upah tidak disebutkan"];
