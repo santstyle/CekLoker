@@ -52,7 +52,7 @@ Kualifikasi:
 - Memiliki ketelitian tinggi dan integritas kerja.
 
 Kompensasi & Hak Kerja:
-- Gaji pokok sesuai ketentuan UMP DKI Jakarta (Rp 5.067.000) ditambah tunjangan kesehatan BPJS Ketenagakerjaan & BPJS Kesehatan.
+- Gaji pokok Rp 8.000.000 per bulan, di atas ketentuan upah minimum DKI Jakarta yang berlaku, ditambah tunjangan kesehatan BPJS Ketenagakerjaan & BPJS Kesehatan.
 - Jam kerja: Senin - Jumat, 08.30 - 17.30 WIB (40 jam per minggu).
 
 Pendaftaran:
