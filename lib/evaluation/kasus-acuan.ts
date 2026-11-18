@@ -489,4 +489,59 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
     catatan:
       "Kasus batas ambang upah: tepat Rp 40.000.000 sudah memicu aturan upah tidak wajar.",
   },
+  // --- kasus tepi (adversarial): perilaku mesin pada masukan tak biasa ---
+  {
+    id: "x1_negasi_biaya",
+    teks: "PT Contoh Mitra Sejahtera membuka lowongan Admin Gudang. Tanpa biaya pendaftaran, seluruhnya gratis. Gaji Rp 7.000.000 per bulan. Kirim CV ke hrd@contoh-mitrasejahtera.example.",
+    lokasi: "Semarang, Jawa Tengah",
+    expectedBand: "rendah",
+    expectedRuleIds: [],
+    expectedSkor: 0,
+    catatan:
+      "Negasi: 'tanpa biaya ... gratis' tidak boleh terbaca sebagai pungutan biaya.",
+  },
+  {
+    id: "x2_iklan_inggris",
+    teks: "Looking for a Software Engineer (remote, flexible). Salary Rp 8.000.000 per month. Send your CV to hr@contoh-globaltech.example.",
+    lokasi: "Jakarta",
+    expectedBand: "rendah",
+    expectedRuleIds: [],
+    expectedSkor: 0,
+    catatan:
+      "Bahasa Inggris: tidak ada pola Indonesia yang cocok; tidak boleh memicu temuan palsu.",
+  },
+  {
+    id: "x3_spasi_zero_width",
+    teks: "PT Contoh Bersih Solusi membuka lowongan Staff Logistik. biaya\u200Badministrasi Rp 150.000 dibebankan ke pelamar. Gaji Rp 7.000.000. Kirim CV ke hrd@contoh-bersihsolusi.example.",
+    lokasi: "Jakarta",
+    expectedBand: "tinggi",
+    expectedRuleIds: ["pungutan_biaya"],
+    expectedSkor: 15,
+    catatan:
+      "Karakter tak terlihat (zero-width space) di dalam frasa tidak boleh menutupi pungutan biaya.",
+  },
+  {
+    id: "x4_teks_sangat_panjang",
+    teks:
+      "PT Contoh Solusi Panjang mencari Staff Administrasi Kantor. Detail peran meliputi pengarsipan dokumen harian, penjadwalan meeting, pengelolaan surat masuk dan keluar, pembelian alat tulis kantor, serta pelaporan bulanan kepada kepala divisi. Kami menyediakan lingkungan kerja yang kondusif, jenjang karier jelas, cuti tahunan, THR, dan pelatihan rutin. Gaji Rp 7.000.000 per bulan. Kirim CV ke hrd@contoh-solusipanjang.example beserta portofolio dan kontak referensi. " +
+      "Isi tambahan ini sengaja memperpanjang teks jauh melewati panjang iklan normal tanpa menambah kata kunci apa pun. ".repeat(
+        60,
+      ),
+    lokasi: "Jakarta",
+    expectedBand: "rendah",
+    expectedRuleIds: [],
+    expectedSkor: 0,
+    catatan:
+      "Teks sangat panjang (> 4.000 karakter) tetap diproses tanpa galat dan tanpa temuan palsu.",
+  },
+  {
+    id: "x5_hanya_emoji",
+    teks: "💼🔥💰📢🚀💵📈🧾🛒💼🔥💰📢🚀💵📈🧾🛒💼🔥💰📢🚀💵📈🧾🛒💼🔥💰📢🚀💵",
+    lokasi: "Jakarta",
+    expectedBand: "perlu_dicek",
+    expectedRuleIds: ["tanpa_nama_perusahaan", "upah_tidak_diungkap"],
+    expectedSkor: 6,
+    catatan:
+      "Teks hanya emoji: tidak ada kata kunci apa pun; mesin hanya dapat menandai absennya nama perusahaan dan upah.",
+  },
 ];

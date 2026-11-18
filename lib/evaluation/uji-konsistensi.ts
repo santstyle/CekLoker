@@ -3,12 +3,15 @@ import { KASUS_ACUAN, type KasusAcuan } from "./kasus-acuan";
 import type { Band } from "./types";
 
 /**
- * Uji akurasi deterministik atas kasus acuan.
+ * Uji konsistensi deterministik atas kasus acuan.
  *
  * Fungsi ini menjalankan mesin evaluasi pada setiap kasus acuan lalu
  * membandingkan keluarannya dengan nilai yang dikunci. Hasilnya dipakai oleh
- * halaman publik `/uji-akurasi` sebagai bukti keterbukaan: jumlah kasus,
- * kecocokan per rentang risiko, dan daftar ketidakcocokan bila ada.
+ * halaman publik `/uji-konsistensi` sebagai bukti keterbukaan: jumlah kasus,
+ * konsistensi per rentang risiko, dan daftar ketidakkonsistenan bila ada.
+ *
+ * Ini mengukur konsistensi terhadap kasus acuan sintetis — bukan akurasi
+ * pada iklan nyata, yang belum pernah diuji (lihat halaman Uji Konsistensi).
  *
  * Karena evaluator bersifat deterministik, keluaran fungsi ini juga
  * deterministik untuk himpunan kasus yang sama.
@@ -36,7 +39,7 @@ export interface RingkasanBand {
   cocok: number;
 }
 
-export interface RingkasanUjiAkurasi {
+export interface RingkasanUjiKonsistensi {
   /** Versi mesin evaluasi yang diuji. */
   versi: string;
   total: number;
@@ -54,9 +57,9 @@ function samaUrutan(a: readonly string[], b: readonly string[]): boolean {
   return a.every((nilai, indeks) => nilai === b[indeks]);
 }
 
-export function ujiAkurasi(
+export function ujiKonsistensi(
   kasus: readonly KasusAcuan[] = KASUS_ACUAN,
-): RingkasanUjiAkurasi {
+): RingkasanUjiKonsistensi {
   const hasil: HasilKasusAcuan[] = kasus.map((butir) => {
     const keluaran = evaluasiLowongan({
       teksLowongan: butir.teks,

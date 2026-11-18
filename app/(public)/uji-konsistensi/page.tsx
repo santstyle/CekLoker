@@ -7,14 +7,14 @@ import { Container } from "@/components/ui/container";
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
 import { KASUS_ACUAN } from "@/lib/evaluation/kasus-acuan";
 import type { Band } from "@/lib/evaluation/types";
-import { ujiAkurasi } from "@/lib/evaluation/uji-akurasi";
+import { ujiKonsistensi } from "@/lib/evaluation/uji-konsistensi";
 import { metadataHalaman } from "@/lib/situs";
 
 export const metadata: Metadata = metadataHalaman({
-  judul: "Uji Akurasi",
+  judul: "Uji Konsistensi",
   deskripsi:
-    "CekLoker menguji mesin evaluasinya terhadap puluhan kasus acuan dan menampilkan hasilnya terbuka: kecocokan rentang, skor, dan aturan per kasus.",
-  jalur: "/uji-akurasi",
+    "CekLoker menguji mesin evaluasinya terhadap himpunan kasus acuan dan menampilkan hasilnya terbuka: rentang, skor, dan aturan per kasus.",
+  jalur: "/uji-konsistensi",
 });
 
 const GAYA_BAND: Record<Band, string> = {
@@ -23,20 +23,20 @@ const GAYA_BAND: Record<Band, string> = {
   tinggi: "bg-rose-50 text-rose-800 border-rose-200",
 };
 
-export default function HalamanUjiAkurasi() {
-  const ringkasan = ujiAkurasi();
+export default function HalamanUjiKonsistensi() {
+  const ringkasan = ujiKonsistensi();
 
   return (
     <div className="bg-cream">
       <Kepala
-        kicker="Uji Akurasi · Terbuka"
+        kicker="Uji Konsistensi · Terbuka"
         judul={
           <>
             Diuji terbuka,{" "}
             <span className="teks-gradasi-terang">bukan diklaim.</span>
           </>
         }
-        deskripsi="Setiap versi mesin evaluasi diuji terhadap himpunan kasus acuan. Halaman ini menampilkan hasilnya apa adanya — termasuk bila ada kasus yang tidak cocok."
+        deskripsi="Setiap versi mesin evaluasi diuji terhadap himpunan kasus acuan. Halaman ini menampilkan hasilnya apa adanya — termasuk bila ada kasus yang keluarannya berbeda dari acuan."
       />
 
       <Container className="py-16 sm:py-20">
@@ -50,7 +50,12 @@ export default function HalamanUjiAkurasi() {
                 </h2>
                 <p className="text-sm text-muted">
                   Mesin evaluasi versi {ringkasan.versi} diuji terhadap{" "}
-                  {ringkasan.total} kasus acuan.
+                  {ringkasan.total} kasus acuan:{" "}
+                  <strong className="text-slate-900">
+                    {ringkasan.jumlahCocok}/{ringkasan.total} konsisten dengan
+                    acuan
+                  </strong>
+                  .
                 </p>
               </div>
 
@@ -70,7 +75,7 @@ export default function HalamanUjiAkurasi() {
 
                 <div className="rounded-3xl border border-emerald-200 bg-emerald-50/60 p-6 shadow-xs">
                   <span className="text-xs font-bold tracking-wider text-emerald-700 uppercase">
-                    Cocok
+                    Konsisten
                   </span>
                   <p className="mt-2 text-4xl font-black text-emerald-900">
                     {ringkasan.jumlahCocok}
@@ -85,14 +90,13 @@ export default function HalamanUjiAkurasi() {
 
                 <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs">
                   <span className="text-xs font-bold tracking-wider text-slate-500 uppercase">
-                    Tingkat Kecocokan
+                    Deterministik
                   </span>
-                  <p className="mt-2 text-4xl font-black text-slate-950">
-                    {ringkasan.persenCocok}%
+                  <p className="mt-2 text-2xl font-black text-slate-950">
+                    v{ringkasan.versi}
                   </p>
                   <p className="mt-2 text-xs leading-relaxed text-slate-600">
-                    Mesin bersifat deterministik: masukan yang sama selalu
-                    menghasilkan keluaran yang sama.
+                    Masukan yang sama selalu menghasilkan keluaran yang sama.
                   </p>
                 </div>
               </div>
@@ -104,7 +108,7 @@ export default function HalamanUjiAkurasi() {
             <section className="flex flex-col gap-6">
               <div className="flex flex-col gap-1">
                 <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
-                  Kecocokan per Rentang Risiko
+                  Konsistensi per Rentang Risiko
                 </h2>
                 <p className="text-sm text-muted">
                   Sebaran kasus acuan pada tiap rentang risiko.
@@ -125,8 +129,8 @@ export default function HalamanUjiAkurasi() {
                     </p>
                     <p className="mt-1 text-xs font-semibold">
                       {butir.cocok === butir.total
-                        ? "Seluruh kasus cocok"
-                        : `${butir.total - butir.cocok} kasus tidak cocok`}
+                        ? "Seluruh kasus konsisten"
+                        : `${butir.total - butir.cocok} kasus tidak konsisten`}
                     </p>
                   </div>
                 ))}
@@ -134,16 +138,39 @@ export default function HalamanUjiAkurasi() {
             </section>
           </Reveal>
 
-          {/* Ketidakcocokan */}
+          {/* Evaluasi dengan iklan nyata */}
+          <Reveal>
+            <section className="flex flex-col gap-4 rounded-3xl border border-amber-200 bg-amber-50/60 p-6 shadow-xs">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h2 className="text-xl font-black tracking-tight text-amber-950">
+                  Evaluasi dengan iklan nyata
+                </h2>
+                <span className="rounded-full border border-amber-300 bg-white px-3 py-1 text-[0.7rem] font-bold tracking-wider text-amber-800 uppercase">
+                  Belum dilakukan
+                </span>
+              </div>
+              <p className="text-sm leading-relaxed text-amber-950">
+                Seluruh {ringkasan.total} kasus di halaman ini adalah contoh
+                sintetis yang ditulis untuk pengujian — bukan iklan lowongan
+                pengguna. CekLoker belum menguji mesinnya terhadap iklan nyata:
+                pengujian semacam itu hanya dapat dilakukan dengan persetujuan
+                pemilik iklan lewat kanal opt-in, atau oleh pihak independen.
+                Karena itu tidak ada klaim seberapa sering mesin ini benar pada
+                iklan di lapangan — hanya konsistensi terhadap kasus acuan.
+              </p>
+            </section>
+          </Reveal>
+
+          {/* Ketidakkonsistenan */}
           <Reveal>
             <section className="flex flex-col gap-6">
               <div className="flex flex-col gap-1">
                 <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
-                  Kasus yang Tidak Cocok
+                  Kasus yang Tidak Konsisten
                 </h2>
                 <p className="text-sm text-muted">
                   Bila ada, bagian ini menampilkan kasus yang keluarannya
-                  menyimpang dari acuan.
+                  berbeda dari acuan.
                 </p>
               </div>
 
@@ -152,7 +179,7 @@ export default function HalamanUjiAkurasi() {
                   data-testid="tanpa-ketidakcocokan"
                   className="rounded-3xl border border-emerald-200 bg-emerald-50/70 p-6 text-sm leading-relaxed text-emerald-900"
                 >
-                  Tidak ada ketidakcocokan. Seluruh {ringkasan.total} kasus
+                  Tidak ada ketidakkonsistenan. Seluruh {ringkasan.total} kasus
                   acuan menghasilkan rentang, skor, dan aturan sesuai yang
                   dikunci.
                 </div>
@@ -260,11 +287,11 @@ export default function HalamanUjiAkurasi() {
                           <td className="p-4 align-top">
                             {butir.cocok ? (
                               <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap text-emerald-700">
-                                Cocok
+                                Konsisten
                               </span>
                             ) : (
                               <span className="rounded-full bg-rose-50 px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap text-rose-700">
-                                Tidak cocok
+                                Tidak konsisten
                               </span>
                             )}
                           </td>
