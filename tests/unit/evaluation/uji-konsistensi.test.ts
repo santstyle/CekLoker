@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { KASUS_ACUAN } from "@/lib/evaluation/kasus-acuan";
 import { RULES } from "@/lib/evaluation/rules";
-import { ujiAkurasi, URUTAN_BAND } from "@/lib/evaluation/uji-akurasi";
+import { ujiKonsistensi, URUTAN_BAND } from "@/lib/evaluation/uji-konsistensi";
 import { FIXTURES_EVALUASI } from "@/tests/fixtures/evaluation";
 
 const ID_RULE = new Set(RULES.map((rule) => rule.id));
@@ -44,8 +44,8 @@ describe("himpunan kasus acuan", () => {
   });
 });
 
-describe("ujiAkurasi", () => {
-  const ringkasan = ujiAkurasi();
+describe("ujiKonsistensi", () => {
+  const ringkasan = ujiKonsistensi();
 
   it("menguji seluruh kasus acuan", () => {
     expect(ringkasan.total).toBe(KASUS_ACUAN.length);
@@ -79,14 +79,14 @@ describe("ujiAkurasi", () => {
   });
 
   it("deterministik: dua pemanggilan menghasilkan keluaran identik", () => {
-    expect(ujiAkurasi()).toEqual(ujiAkurasi());
+    expect(ujiKonsistensi()).toEqual(ujiKonsistensi());
   });
 
   it("melaporkan ketidakcocokan bila acuan digeser", () => {
     const dasar = KASUS_ACUAN[0];
     const dirusak = { ...dasar, expectedSkor: dasar.expectedSkor + 1 };
 
-    const hasil = ujiAkurasi([dirusak]);
+    const hasil = ujiKonsistensi([dirusak]);
 
     expect(hasil.total).toBe(1);
     expect(hasil.jumlahCocok).toBe(0);
@@ -96,7 +96,7 @@ describe("ujiAkurasi", () => {
   });
 
   it("menangani himpunan kosong tanpa pembagian nol", () => {
-    const hasil = ujiAkurasi([]);
+    const hasil = ujiKonsistensi([]);
 
     expect(hasil.total).toBe(0);
     expect(hasil.persenCocok).toBe(0);

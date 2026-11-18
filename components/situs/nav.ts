@@ -3,7 +3,7 @@ export const NAV = [
   { href: "/edukasi", label: "Edukasi" },
   { href: "/metodologi", label: "Metodologi" },
   { href: "/sumber", label: "Sumber" },
-  { href: "/uji-akurasi", label: "Uji Akurasi" },
+  { href: "/uji-konsistensi", label: "Uji Konsistensi" },
   { href: "/tren", label: "Tren" },
   { href: "/tentang", label: "Tentang" },
 ] as const;

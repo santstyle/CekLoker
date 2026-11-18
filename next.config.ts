@@ -61,6 +61,16 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        // Rute lama /uji-akurasi sudah diganti /uji-konsistensi.
+        source: "/uji-akurasi",
+        destination: "/uji-konsistensi",
+        permanent: true,
+      },
+    ];
+  },
   turbopack: {
     rules: {
       "*.css": {
