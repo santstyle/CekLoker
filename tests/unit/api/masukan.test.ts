@@ -191,3 +191,23 @@ describe("POST /api/masukan", () => {
     expect(insert).not.toHaveBeenCalled();
   });
 });
+
+describe("POST /api/masukan — log", () => {
+  it("tidak membocorkan pesan galat driver ke log saat penyimpanan gagal", async () => {
+    const PENANDA = "MASUKAN_PENANDA_RAHASIA_7c1d2e";
+    const peringatan = vi.spyOn(console, "warn").mockImplementation(() => {});
+    values.mockRejectedValueOnce(new Error(`kolom check_id ${PENANDA}`));
+
+    const respons = await POST(permintaan(MASUKAN_VALID, "203.0.113.210"));
+
+    expect(respons.status).toBe(503);
+    const keluaran = peringatan.mock.calls
+      .flat()
+      .map((nilai) => String(nilai))
+      .join(" ");
+    expect(keluaran).not.toContain(PENANDA);
+    expect(keluaran).not.toContain("check_id");
+
+    peringatan.mockRestore();
+  });
+});

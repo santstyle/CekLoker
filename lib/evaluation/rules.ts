@@ -574,6 +574,7 @@ export const DETEKTOR: readonly Detektor[] = [
   {
     ruleId: "tanpa_nama_perusahaan",
     deteksi: (konteks) => {
+      if (konteks.perusahaanDiisi === true) return [];
       if (konteks.perusahaan && konteks.perusahaan.trim().length > 0) return [];
       if (containsAny(konteks.teks, PENANDA_PERUSAHAAN).length > 0) return [];
       return ["nama perusahaan tidak disebutkan"];

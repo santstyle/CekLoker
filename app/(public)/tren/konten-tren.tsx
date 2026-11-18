@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/situs/reveal";
 import { getDb } from "@/lib/db/client";
 import { checks } from "@/lib/db/schema";
+import { ringkasGalat } from "@/lib/security/log";
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
 import { RULES } from "@/lib/evaluation/rules";
 import type { Band } from "@/lib/evaluation/types";
@@ -41,7 +42,9 @@ async function ambilBaris(): Promise<BarisTrenMentah[] | null> {
       kodeAturan: baris.triggeredRuleCodes,
     }));
   } catch (galat) {
-    console.warn("[tren] agregat tidak dapat dimuat:", galat);
+    // Pesan galat driver dapat memuat detail query/parameter; catat nama
+    // dan kode saja, bukan objek galat mentah.
+    console.warn(`[tren] agregat tidak dapat dimuat: ${ringkasGalat(galat)}`);
     return null;
   }
 }

@@ -100,7 +100,17 @@ export interface KonteksDeteksi {
   /** Teks lowongan apa adanya. */
   teksMentah: string;
   lokasi?: string;
+  /**
+   * Nama perusahaan sebagaimana diketik pengguna. Hanya dipakai untuk
+   * kecocokan token secara internal; jangan dikirim ke server bila tidak
+   * diperlukan — pakai `perusahaanDiisi` saja.
+   */
   perusahaan?: string;
+  /**
+   * Benar bila pengguna mengisi nama perusahaan. Cukup predikat kehadiran;
+   * nilai namanya sendiri tidak dibutuhkan mesin evaluasi.
+   */
+  perusahaanDiisi?: boolean;
   /** Provinsi yang berhasil dikenali, null bila tidak diketahui. */
   provinsi: string | null;
   /** Upah bulanan terendah yang wajar, null bila tidak terurai. */

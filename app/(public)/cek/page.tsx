@@ -87,7 +87,7 @@ export default function HalamanCek() {
         body: JSON.stringify({
           teksLowongan: teks,
           ...(lokasi.trim() ? { lokasi: lokasi.trim() } : {}),
-          ...(perusahaan.trim() ? { perusahaan: perusahaan.trim() } : {}),
+          ...(perusahaan.trim() ? { perusahaanDiisi: true } : {}),
         }),
       });
       const data: unknown = await respons.json();
@@ -460,7 +460,8 @@ export default function HalamanCek() {
                     />
                     <p className="text-[0.65rem] text-muted">
                       Dipakai di peramban untuk memeriksa kesesuaian domain
-                      email, dan dikirim bersama evaluasi; tidak disimpan.
+                      email; ke server hanya dikirim penanda apakah nama diisi,
+                      bukan nilainya; tidak disimpan.
                     </p>
                   </div>
 
