@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
+import { penjelasanPenentuLevel } from "@/lib/evaluation/penentu";
 import type { HasilEvaluasi } from "@/lib/evaluation/types";
 import { unduhLaporanPdf } from "@/lib/hasil/pdf";
 import type { MetaLaporan } from "@/lib/hasil/laporan";
@@ -67,7 +68,7 @@ export function KartuHasilBagikan({
     window.setTimeout(() => setStatus("siap"), 1800);
   }, [hasil, id, meta, sertakanKutipan]);
 
-  const ringkasanBagikan = `Hasil pemeriksaan lowongan CekLoker: ${hasil.ringkasan}\nSkor: ${hasil.skor}/100 (${labelBand}).\nEstimasi risiko deterministik berbasis teks, bukan vonis hukum.`;
+  const ringkasanBagikan = `Hasil pemeriksaan lowongan CekLoker: ${hasil.ringkasan}\nSkor: ${hasil.skor}/100 (${labelBand}). ${penjelasanPenentuLevel(hasil)}\nEstimasi risiko deterministik berbasis teks, bukan vonis hukum.`;
 
   const tanganiBagikan = useCallback(async () => {
     try {
@@ -128,6 +129,9 @@ export function KartuHasilBagikan({
         </span>
         <span className="text-xs text-slate-500">
           Estimasi risiko deterministik berbasis teks, bukan vonis hukum.
+        </span>
+        <span className="block w-full text-xs leading-relaxed text-slate-500">
+          {penjelasanPenentuLevel(hasil)}
         </span>
       </div>
 
