@@ -76,8 +76,8 @@ export const elemenGambarOg = (
           maxWidth: 880,
         }}
       >
-        Rentang risiko, kutipan bukti, dan rujukan hukum resmi ketenagakerjaan
-        Indonesia.
+        Rentang risiko, kutipan bukti, dan rujukan hukum bila aturannya merujuk
+        hukum.
       </div>
     </div>
 

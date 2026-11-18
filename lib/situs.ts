@@ -11,7 +11,7 @@ export const NAMA_SITUS = "CekLoker";
 export const JUDUL_SITUS = "CekLoker — Cek Risiko Lowongan Kerja Indonesia";
 
 export const DESKRIPSI_SITUS =
-  "CekLoker menilai iklan lowongan kerja Indonesia terhadap standar ketenagakerjaan dan indikator penipuan. Hasil berupa rentang risiko, kutipan bukti, dan rujukan hukum resmi — tanpa vonis dan tanpa menyimpan teks lowongan Anda.";
+  "CekLoker menilai iklan lowongan kerja Indonesia terhadap standar ketenagakerjaan dan indikator penipuan. Hasil berupa rentang risiko, kutipan bukti, dan rujukan hukum bila aturannya merujuk hukum — tanpa vonis dan tanpa menyimpan teks lowongan Anda.";
 
 export const ALT_GAMBAR_OG =
   "CekLoker — Cek risiko lowongan kerja Indonesia sebelum melamar";

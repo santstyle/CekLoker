@@ -9,7 +9,7 @@ import KontenHasil from "./konten-hasil";
 export const metadata: Metadata = {
   title: "Hasil Evaluasi",
   description:
-    "Ringkasan rentang risiko, bukti yang ditemukan, dan rujukan hukum dari evaluasi lowongan kerja yang baru Anda jalankan.",
+    "Ringkasan rentang risiko, bukti yang ditemukan, dan rujukan hukum bila tersedia dari evaluasi lowongan kerja yang baru Anda jalankan.",
   robots: { index: false, follow: false },
 };
 

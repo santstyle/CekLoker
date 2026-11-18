@@ -60,7 +60,7 @@ function generateJsonLd() {
         name: "Bagaimana CekLoker menilai risiko lowongan?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "CekLoker menggunakan 17 aturan deterministik berbasis UU 13/2003, Permenaker 39/2016, UU 27/2022, dan UU 18/2017. Setiap aturan memiliki bobot, kategori, dan kekuatan yang transparan di halaman Metodologi.",
+          text: "CekLoker menggunakan aturan deterministik yang transparan: sebagian merujuk UU 13/2003, Permenaker 39/2016, UU 27/2022, dan UU 18/2017; sisanya pola indikator umum risiko rekrutmen. Setiap aturan memiliki bobot, kategori, dan kekuatan yang bisa dibaca di halaman Metodologi.",
         },
       },
       {
@@ -68,7 +68,7 @@ function generateJsonLd() {
         name: "Apakah hasil CekLoker merupakan vonis hukum?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Tidak. Hasil berupa rentang risiko estimasi (rendah/perlu dicek/tinggi) dengan bukti dan rujukan hukum, bukan vonis penipuan atau keaslian.",
+          text: "Tidak. Hasil berupa rentang risiko estimasi (rendah/perlu dicek/tinggi) dengan bukti, dan rujukan hukum bila aturannya merujuk hukum — bukan vonis penipuan atau keaslian.",
         },
       },
     ],

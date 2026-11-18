@@ -3,10 +3,15 @@ import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { Kepala } from "@/components/situs/kepala";
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
+import { hitungJenis, jenisAturan } from "@/lib/evaluation/jenis";
 import { RULES } from "@/lib/evaluation/rules";
 import { labelRujukan, urlRujukan } from "@/lib/evaluation/rujukan";
 import { BATAS_BAND } from "@/lib/evaluation/score";
-import { KEKUATAN_NILAI, type KategoriRule } from "@/lib/evaluation/types";
+import {
+  KEKUATAN_NILAI,
+  type KategoriRule,
+  type Rule,
+} from "@/lib/evaluation/types";
 import {
   DIPERBARUI_ATURAN,
   formatTanggalAturan,
@@ -38,10 +43,107 @@ const LABEL_KEKUATAN = {
   kuat: "Kuat (×1,5)",
 } as const;
 
+/** Tabel katalog aturan (dipakai untuk kelompok hukum dan pola). */
+function TabelAturan({
+  aturan,
+  aturanUpahAktif,
+}: {
+  aturan: readonly Rule[];
+  aturanUpahAktif: boolean;
+}) {
+  return (
+    <div className="overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-xs">
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[640px] border-collapse text-left text-sm">
+          <thead>
+            <tr className="border-b border-slate-100 bg-slate-50/80">
+              <th className="p-4 font-bold text-slate-900">Nama Aturan</th>
+              <th className="p-4 font-bold text-slate-900">Kategori</th>
+              <th className="p-4 font-bold text-slate-900">Kekuatan</th>
+              <th className="p-4 font-bold text-slate-900">Rujukan Hukum</th>
+              <th className="p-4 font-bold text-slate-900">Status</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {aturan.map((butir) => (
+              <tr
+                key={butir.id}
+                className="transition-colors hover:bg-slate-50/50"
+              >
+                <td className="p-4 align-top font-semibold text-slate-900">
+                  {butir.judul}
+                </td>
+                <td className="p-4 align-top text-slate-600">
+                  <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-700">
+                    {LABEL_KATEGORI[butir.kategori]}
+                  </span>
+                </td>
+                <td className="p-4 align-top text-slate-600">
+                  {LABEL_KEKUATAN[butir.kekuatan]}
+                </td>
+                <td className="p-4 align-top text-xs text-slate-600">
+                  {butir.rujukanHukumIds.length > 0 ? (
+                    <span className="flex flex-wrap gap-1">
+                      {butir.rujukanHukumIds.map((id, idx) => {
+                        const url = urlRujukan(id);
+                        const label = labelRujukan(id);
+                        return (
+                          <span
+                            key={`${id}-${idx}`}
+                            className="flex items-center gap-0.5"
+                          >
+                            {url ? (
+                              <a
+                                href={url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-slate-700 underline transition-colors hover:text-slate-900"
+                              >
+                                {label}
+                              </a>
+                            ) : (
+                              <span className="text-slate-700">{label}</span>
+                            )}
+                            {idx < butir.rujukanHukumIds.length - 1 && (
+                              <span
+                                aria-hidden="true"
+                                className="text-slate-400"
+                              >
+                                ,
+                              </span>
+                            )}
+                          </span>
+                        );
+                      })}
+                    </span>
+                  ) : (
+                    "—"
+                  )}
+                </td>
+                <td className="p-4 align-top">
+                  {butir.id === "upah_dibawah_umr" && !aturanUpahAktif ? (
+                    <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap text-amber-700">
+                      {LABEL_DATA_UPAH_BELUM_TERSEDIA}
+                    </span>
+                  ) : (
+                    <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700">
+                      Aktif
+                    </span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
 export const metadata: Metadata = metadataHalaman({
   judul: "Metodologi",
   deskripsi:
-    "Cara CekLoker menghitung rentang risiko: daftar aturan, bobot kategori, ambang skor, dan rujukan hukum yang dipakai secara deterministik.",
+    "Cara CekLoker menghitung rentang risiko: daftar aturan (dengan dan tanpa rujukan hukum), bobot kategori, dan ambang skor — dihitung secara deterministik.",
   jalur: "/metodologi",
 });
 
@@ -50,6 +152,9 @@ export default function HalamanMetodologi() {
   // aturan aktif dihitung dari data, bukan di-hardcode.
   const aturanUpahAktif = DATA_UPAH_TERSEDIA;
   const jumlahAturanAktif = aturanUpahAktif ? RULES.length : RULES.length - 1;
+  const { hukum: JUMLAH_HUKUM, pola: JUMLAH_POLA } = hitungJenis(RULES);
+  const ATURAN_HUKUM = RULES.filter((butir) => jenisAturan(butir) === "hukum");
+  const ATURAN_POLA = RULES.filter((butir) => jenisAturan(butir) === "pola");
 
   return (
     <div className="bg-cream">
@@ -266,8 +371,9 @@ export default function HalamanMetodologi() {
                   Katalog {RULES.length} Aturan Evaluasi
                 </h2>
                 <p className="text-sm text-muted">
-                  Setiap aturan dirumuskan dari perundang-undangan resmi
-                  Republik Indonesia.{" "}
+                  Sebagian aturan dirumuskan dari perundang-undangan resmi
+                  Republik Indonesia; sebagian lainnya berdasarkan pola
+                  indikator umum risiko rekrutmen, bukan pasal tertentu.{" "}
                   {aturanUpahAktif
                     ? `Seluruh ${RULES.length} aturan aktif.`
                     : `${jumlahAturanAktif} aturan aktif; aturan perbandingan upah menunggu data resmi.`}
@@ -278,102 +384,50 @@ export default function HalamanMetodologi() {
                 </p>
               </div>
 
-              <div className="overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-xs">
-                <div className="overflow-x-auto">
-                  <table className="w-full min-w-[640px] border-collapse text-left text-sm">
-                    <thead>
-                      <tr className="border-b border-slate-100 bg-slate-50/80">
-                        <th className="p-4 font-bold text-slate-900">
-                          Nama Aturan
-                        </th>
-                        <th className="p-4 font-bold text-slate-900">
-                          Kategori
-                        </th>
-                        <th className="p-4 font-bold text-slate-900">
-                          Kekuatan
-                        </th>
-                        <th className="p-4 font-bold text-slate-900">
-                          Rujukan Hukum
-                        </th>
-                        <th className="p-4 font-bold text-slate-900">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                      {RULES.map((aturan) => (
-                        <tr
-                          key={aturan.id}
-                          className="transition-colors hover:bg-slate-50/50"
-                        >
-                          <td className="p-4 align-top font-semibold text-slate-900">
-                            {aturan.judul}
-                          </td>
-                          <td className="p-4 align-top text-slate-600">
-                            <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-700">
-                              {LABEL_KATEGORI[aturan.kategori]}
-                            </span>
-                          </td>
-                          <td className="p-4 align-top text-slate-600">
-                            {LABEL_KEKUATAN[aturan.kekuatan]}
-                          </td>
-                          <td className="p-4 align-top text-xs text-slate-600">
-                            {aturan.rujukanHukumIds.length > 0 ? (
-                              <span className="flex flex-wrap gap-1">
-                                {aturan.rujukanHukumIds.map((id, idx) => {
-                                  const url = urlRujukan(id);
-                                  const label = labelRujukan(id);
-                                  return (
-                                    <span
-                                      key={`${id}-${idx}`}
-                                      className="flex items-center gap-0.5"
-                                    >
-                                      {url ? (
-                                        <a
-                                          href={url}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="text-slate-700 underline transition-colors hover:text-slate-900"
-                                        >
-                                          {label}
-                                        </a>
-                                      ) : (
-                                        <span className="text-slate-700">
-                                          {label}
-                                        </span>
-                                      )}
-                                      {idx <
-                                        aturan.rujukanHukumIds.length - 1 && (
-                                        <span
-                                          aria-hidden="true"
-                                          className="text-slate-400"
-                                        >
-                                          ,
-                                        </span>
-                                      )}
-                                    </span>
-                                  );
-                                })}
-                              </span>
-                            ) : (
-                              "—"
-                            )}
-                          </td>
-                          <td className="p-4 align-top">
-                            {aturan.id === "upah_dibawah_umr" &&
-                            !aturanUpahAktif ? (
-                              <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap text-amber-700">
-                                {LABEL_DATA_UPAH_BELUM_TERSEDIA}
-                              </span>
-                            ) : (
-                              <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700">
-                                Aktif
-                              </span>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+              <div className="flex flex-col gap-8">
+                <section
+                  aria-labelledby="katalog-hukum"
+                  className="flex flex-col gap-3"
+                >
+                  <div>
+                    <h3
+                      id="katalog-hukum"
+                      className="text-lg font-extrabold tracking-tight text-slate-950"
+                    >
+                      Aturan dengan Rujukan Hukum ({JUMLAH_HUKUM})
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      Aturan yang menyebut basis pasal resmi; klik rujukannya
+                      untuk membuka sumber.
+                    </p>
+                  </div>
+                  <TabelAturan
+                    aturan={ATURAN_HUKUM}
+                    aturanUpahAktif={aturanUpahAktif}
+                  />
+                </section>
+
+                <section
+                  aria-labelledby="katalog-pola"
+                  className="flex flex-col gap-3"
+                >
+                  <div>
+                    <h3
+                      id="katalog-pola"
+                      className="text-lg font-extrabold tracking-tight text-slate-950"
+                    >
+                      Aturan Pola Indikator ({JUMLAH_POLA})
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      Pola risiko rekrutmen yang umum dikenali mesin; tidak
+                      merujuk pasal tertentu dan bukan penilaian hukum.
+                    </p>
+                  </div>
+                  <TabelAturan
+                    aturan={ATURAN_POLA}
+                    aturanUpahAktif={aturanUpahAktif}
+                  />
+                </section>
               </div>
             </section>
           </Reveal>
