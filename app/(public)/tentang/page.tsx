@@ -18,13 +18,13 @@ const PRINSIP = [
     nomor: "01",
     judul: "Tanpa Vonis Sepihak",
     uraian:
-      "CekLoker tidak pernah menghakimi secara mutlak sebuah lowongan 'penipuan' atau 'asli'. Kami menyajikan rentang risiko terukur beserta kutipan bukti dan rujukan hukum resmi agar pencari kerja dapat mengambil keputusan secara mandiri dan bijak.",
+      "CekLoker tidak pernah menghakimi secara mutlak sebuah lowongan 'penipuan' atau 'asli'. Kami menyajikan rentang risiko terukur beserta kutipan bukti dan rujukan hukum bila aturannya merujuk hukum, agar pencari kerja dapat mengambil keputusan secara mandiri dan bijak.",
   },
   {
     nomor: "02",
     judul: "Deterministik Murni",
     uraian:
-      "Hasil evaluasi dihitung oleh sekumpulan aturan baku ketenagakerjaan, bukan opini acak model generatif. Teks iklan yang sama akan selalu menghasilkan skor dan rentang risiko yang konsisten.",
+      "Hasil evaluasi dihitung oleh sekumpulan aturan deterministik — sebagian merujuk peraturan ketenagakerjaan Indonesia — bukan opini acak model generatif. Teks iklan yang sama akan selalu menghasilkan skor dan rentang risiko yang konsisten.",
   },
   {
     nomor: "03",

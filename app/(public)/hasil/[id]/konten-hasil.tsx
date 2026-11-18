@@ -14,6 +14,7 @@ import {
   type MetaSesi,
 } from "@/lib/api/evaluasi";
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
+import { jenisAturan, LABEL_JENIS_RULE } from "@/lib/evaluation/jenis";
 import { RULES } from "@/lib/evaluation/rules";
 import { labelRujukan, urlRujukan } from "@/lib/evaluation/rujukan";
 import type {
@@ -56,6 +57,8 @@ const TEMA_BAND: Record<
     barColor: "bg-rose-500",
   },
 };
+
+const PETA_RULE = new Map(RULES.map((aturan) => [aturan.id, aturan]));
 
 const LABEL_KATEGORI: Record<KategoriRule, string> = {
   upah: "Kompensasi & Upah",
@@ -304,9 +307,9 @@ export default function KontenHasil() {
                   <span className="font-bold">
                     Tidak ditemukan indikator bermasalah.{" "}
                   </span>
-                  Teks iklan tidak memuat kata kunci atau pola yang melanggar
-                  standar aturan ketenagakerjaan CekLoker. Tetap lakukan
-                  verifikasi keabsahan izin perusahaan sebelum melamar.
+                  Teks iklan tidak memuat pola atau ambang dari katalog aturan
+                  CekLoker. Tetap lakukan verifikasi keabsahan izin perusahaan
+                  sebelum melamar.
                 </div>
               </div>
             ) : (
@@ -332,6 +335,26 @@ export default function KontenHasil() {
                       <span className="rounded-full bg-emerald-50 px-3 py-0.5 text-xs font-semibold text-emerald-700">
                         Keyakinan: {LABEL_KEKUATAN[temuan.kekuatan]}
                       </span>
+                      {(() => {
+                        const aturan = PETA_RULE.get(temuan.ruleId);
+                        const jenis = aturan ? jenisAturan(aturan) : "pola";
+                        return (
+                          <span
+                            className={`rounded-full px-3 py-0.5 text-xs font-semibold ${
+                              jenis === "hukum"
+                                ? "bg-indigo-50 text-indigo-700"
+                                : "bg-slate-100 text-slate-600"
+                            }`}
+                            title={
+                              jenis === "hukum"
+                                ? "Aturan ini merujuk peraturan resmi"
+                                : "Pola indikator umum, tanpa pasal tertentu"
+                            }
+                          >
+                            {LABEL_JENIS_RULE[jenis]}
+                          </span>
+                        );
+                      })()}
                     </div>
 
                     {temuan.bukti.length > 0 && (
@@ -424,7 +447,7 @@ export default function KontenHasil() {
               {(() => {
                 const semuaRujukan = new Set<string>();
                 for (const temuan of hasil.temuan) {
-                  const aturan = RULES.find((r) => r.id === temuan.ruleId);
+                  const aturan = PETA_RULE.get(temuan.ruleId);
                   if (aturan) {
                     for (const id of aturan.rujukanHukumIds) {
                       semuaRujukan.add(id);

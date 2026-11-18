@@ -29,7 +29,7 @@ const FAQ = [
   {
     pertanyaan: "Apakah CekLoker bisa memastikan sebuah lowongan itu penipuan?",
     jawaban:
-      "Tidak, dan kami tidak pernah mengklaimnya. CekLoker menyajikan rentang risiko berbasis aturan beserta kutipan bukti dan rujukan pasal, agar keputusan akhir tetap di tangan Anda. Vonis hanya bisa keluar dari proses hukum, bukan dari pindaian teks.",
+      "Tidak, dan kami tidak pernah mengklaimnya. CekLoker menyajikan rentang risiko berbasis aturan beserta kutipan bukti; rujukan pasal disertakan bila aturannya merujuk hukum, agar keputusan akhir tetap di tangan Anda. Vonis hanya bisa keluar dari proses hukum, bukan dari pindaian teks.",
   },
   {
     pertanyaan: "Apakah teks lowongan yang saya tempel disimpan?",
@@ -44,7 +44,7 @@ const FAQ = [
   {
     pertanyaan: "Dari mana dasar rujukan hukumnya?",
     jawaban:
-      "Dari peraturan ketenagakerjaan Indonesia yang berlaku: UU No. 13/2003, Permenaker No. 39/2016, UU No. 27/2022 tentang pelindungan data pribadi, dan UU No. 18/2017 tentang pelindungan pekerja migran. Rinciannya ada di halaman Metodologi.",
+      "Untuk aturan yang merujuk hukum: dari peraturan ketenagakerjaan Indonesia yang berlaku — UU No. 13/2003, Permenaker No. 39/2016, UU No. 27/2022 tentang pelindungan data pribadi, dan UU No. 18/2017 tentang pelindungan pekerja migran. Aturan lainnya adalah pola indikator umum tanpa pasal tertentu. Rinciannya ada di halaman Metodologi.",
   },
 ] as const;
 
@@ -200,8 +200,8 @@ export default function Beranda() {
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-slate-600 sm:text-xl">
             Tempel iklan lowongan Anda. CekLoker memindainya dengan{" "}
-            {JUMLAH_ATURAN} aturan baku ketenagakerjaan Indonesia, lalu menjawab
-            dengan bukti dan rujukan pasal.
+            {JUMLAH_ATURAN} aturan — sebagian merujuk pasal ketenagakerjaan
+            resmi — lalu menjawab dengan bukti dan rujukan bila ada.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
@@ -538,13 +538,13 @@ export default function Beranda() {
                 nomor: "02",
                 tag: "Proses",
                 judul: "Mesin membaca",
-                teks: `${JUMLAH_ATURAN} aturan baku ketenagakerjaan memindai pola: pungutan biaya, kontak pribadi, jam kerja melebihi batas, dan lainnya.`,
+                teks: `${JUMLAH_ATURAN} aturan memindai pola dan ambang: pungutan biaya, kontak pribadi, jam kerja melebihi batas, dan lainnya.`,
               },
               {
                 nomor: "03",
                 tag: "Keluaran",
                 judul: "Anda terima jawabannya",
-                teks: "Kutipan asli dari iklan, pasal yang dilanggar, dan rentang risiko. Keputusan akhir tetap di tangan Anda.",
+                teks: "Kutipan asli dari iklan, rujukan hukum bila ada, dan rentang risiko. Keputusan akhir tetap di tangan Anda.",
               },
             ].map((langkah, indeks) => (
               <Reveal
@@ -591,13 +591,14 @@ export default function Beranda() {
                   Dasar hukum
                 </p>
                 <h2 className="mt-4 font-display text-[clamp(2.25rem,4.5vw,4rem)] leading-[1.02] font-extrabold tracking-tight text-ink">
-                  Setiap temuan,{" "}
+                  Aturan yang merujuk hukum,{" "}
                   <span className="teks-gradasi">pasalnya ikut.</span>
                 </h2>
                 <p className="mt-5 max-w-md text-base leading-relaxed text-muted">
-                  Tidak ada aturan karangan. Setiap indikator terhubung ke
-                  peraturan ketenagakerjaan Indonesia yang berlaku, dan Anda
-                  bisa membacanya sendiri.
+                  Tidak ada pasal karangan. Aturan yang merujuk peraturan
+                  ketenagakerjaan Indonesia mencantumkan rujukannya — aturan
+                  lain adalah pola indikator umum, tanpa pasal tertentu.
+                  Keduanya bisa Anda baca di halaman Metodologi.
                 </p>
                 <Link
                   href="/metodologi"

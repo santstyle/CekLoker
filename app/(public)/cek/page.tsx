@@ -192,9 +192,10 @@ export default function HalamanCek() {
             </h1>
 
             <p className="max-w-md text-base leading-relaxed text-muted sm:text-lg">
-              CekLoker memindai {JUMLAH_ATURAN} aturan baku ketenagakerjaan
-              Indonesia dan memperlihatkan kutipan bukti beserta rujukan
-              pasalnya. Bukan vonis — keputusan akhir tetap di tangan Anda.
+              CekLoker memindai {JUMLAH_ATURAN} aturan — sebagian merujuk pasal
+              ketenagakerjaan resmi — dan memperlihatkan kutipan bukti beserta
+              rujukannya bila ada. Bukan vonis — keputusan akhir tetap di tangan
+              Anda.
             </p>
 
             <ul className="flex flex-col gap-4">
