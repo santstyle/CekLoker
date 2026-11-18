@@ -4,7 +4,11 @@ import { Container } from "@/components/ui/container";
 import { Kepala } from "@/components/situs/kepala";
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
 import { RULES } from "@/lib/evaluation/rules";
-import { labelRujukan, urlRujukan } from "@/lib/evaluation/rujukan";
+import {
+  labelRujukan,
+  urlRujukan,
+  verifikasiRujukan,
+} from "@/lib/evaluation/rujukan";
 import { BATAS_BAND } from "@/lib/evaluation/score";
 import { KEKUATAN_NILAI, type KategoriRule } from "@/lib/evaluation/types";
 import {
@@ -37,6 +41,25 @@ const LABEL_KEKUATAN = {
   sedang: "Sedang (×1)",
   kuat: "Kuat (×1,5)",
 } as const;
+
+/** Status verifikasi gabungan untuk sel rujukan hukum sebuah aturan. */
+function statusRujukanSel(ids: readonly string[]): {
+  teks: string;
+  perlu: boolean;
+} {
+  const vs = ids.map((id) => verifikasiRujukan(id));
+  const belum = vs.filter((v) => v.perluVerifikasi).length;
+  if (belum === vs.length) return { teks: "Belum diverifikasi", perlu: true };
+  if (belum > 0) {
+    return { teks: "Sebagian rujukan belum diverifikasi", perlu: true };
+  }
+  const tanggal = vs
+    .map((v) => v.tanggalVerifikasi)
+    .filter((t): t is string => Boolean(t))
+    .sort()
+    .at(-1);
+  return { teks: `Terakhir diverifikasi: ${tanggal}`, perlu: false };
+}
 
 export const metadata: Metadata = metadataHalaman({
   judul: "Metodologi",
@@ -317,41 +340,67 @@ export default function HalamanMetodologi() {
                           </td>
                           <td className="p-4 align-top text-xs text-slate-600">
                             {aturan.rujukanHukumIds.length > 0 ? (
-                              <span className="flex flex-wrap gap-1">
-                                {aturan.rujukanHukumIds.map((id, idx) => {
-                                  const url = urlRujukan(id);
-                                  const label = labelRujukan(id);
+                              <span className="flex flex-col gap-1">
+                                <span className="flex flex-wrap gap-1">
+                                  {aturan.rujukanHukumIds.map((id, idx) => {
+                                    const url = urlRujukan(id);
+                                    const label = labelRujukan(id);
+                                    return (
+                                      <span
+                                        key={`${id}-${idx}`}
+                                        className="flex items-center gap-0.5"
+                                      >
+                                        {url ? (
+                                          <a
+                                            href={url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-slate-700 underline transition-colors hover:text-slate-900"
+                                          >
+                                            {label}
+                                          </a>
+                                        ) : (
+                                          <span className="text-slate-700">
+                                            {label}
+                                          </span>
+                                        )}
+                                        {idx <
+                                          aturan.rujukanHukumIds.length - 1 && (
+                                          <span
+                                            aria-hidden="true"
+                                            className="text-slate-400"
+                                          >
+                                            ,
+                                          </span>
+                                        )}
+                                      </span>
+                                    );
+                                  })}
+                                </span>
+                                {(() => {
+                                  const status = statusRujukanSel(
+                                    aturan.rujukanHukumIds,
+                                  );
                                   return (
                                     <span
-                                      key={`${id}-${idx}`}
-                                      className="flex items-center gap-0.5"
+                                      className={`inline-flex items-center gap-1 text-[0.65rem] font-semibold ${
+                                        status.perlu
+                                          ? "text-amber-700"
+                                          : "text-emerald-700"
+                                      }`}
                                     >
-                                      {url ? (
-                                        <a
-                                          href={url}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="text-slate-700 underline transition-colors hover:text-slate-900"
-                                        >
-                                          {label}
-                                        </a>
-                                      ) : (
-                                        <span className="text-slate-700">
-                                          {label}
-                                        </span>
-                                      )}
-                                      {idx <
-                                        aturan.rujukanHukumIds.length - 1 && (
-                                        <span
-                                          aria-hidden="true"
-                                          className="text-slate-400"
-                                        >
-                                          ,
-                                        </span>
-                                      )}
+                                      <span
+                                        aria-hidden="true"
+                                        className={`inline-block size-1.5 rounded-full ${
+                                          status.perlu
+                                            ? "bg-amber-500"
+                                            : "bg-emerald-500"
+                                        }`}
+                                      />
+                                      {status.teks}
                                     </span>
                                   );
-                                })}
+                                })()}
                               </span>
                             ) : (
                               "—"

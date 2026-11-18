@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 import { Kepala } from "@/components/situs/kepala";
 import { Reveal } from "@/components/situs/reveal";
-import { URL_RUJUKAN, LABEL_RUJUKAN } from "@/lib/evaluation/rujukan";
+import {
+  URL_RUJUKAN,
+  LABEL_RUJUKAN,
+  labelVerifikasiRujukan,
+  verifikasiRujukan,
+} from "@/lib/evaluation/rujukan";
 import {
   DATA_UPAH_TERSEDIA,
   CATATAN_DATA_UPAH,
@@ -25,14 +30,18 @@ const SUMBER_HUKUM = [
       "Dasar hukum utama ketenagakerjaan Indonesia mengatur hubungan industrial, upah, jam kerja, hak cuti, PHK, dan penyelesaian perselisihan. CekLoker merujuk pasal 5, 6, 38, 77, 78, dan 89.",
     url: "https://peraturan.go.id/uu/nomor-13-tahun-2003.html",
     pasal: ["5", "6", "38", "77", "78", "89"],
+    perluVerifikasi: true,
+    tanggalVerifikasi: null,
   },
   {
     id: "uu-27-2022",
-    judul: "UU No. 27 Tahun 2022 tentang Pelindungan Pekerja Migran",
+    judul: "UU No. 27 Tahun 2022 tentang Pelindungan Data Pribadi",
     deskripsi:
-      "Mengatur perlindungan pekerja migran Indonesia, prosedur penempatan, dan tanggung jawab penyelenggara. Relevan untuk lowongan kerja di luar negeri.",
+      "Undang-Undang Pelindungan Data Pribadi (UU PDP): mengatur pemrosesan data pribadi, hak subjek data, dan kewajiban pengendali data. Dirujuk untuk indikator permintaan dokumen pribadi di awal proses seleksi; relevansinya perlu diperiksa ulang.",
     url: "https://peraturan.go.id/uu/nomor-27-tahun-2022.html",
     pasal: [],
+    perluVerifikasi: true,
+    tanggalVerifikasi: null,
   },
   {
     id: "uu-18-2017",
@@ -41,6 +50,8 @@ const SUMBER_HUKUM = [
       "Mengubah UU No. 39/2004. Memperkuat perlindungan mulai pra-penempatan hingga pasca-pulang, serta sanksi bagi penyelenggara yang melanggar.",
     url: "https://peraturan.go.id/uu/nomor-18-tahun-2017.html",
     pasal: [],
+    perluVerifikasi: true,
+    tanggalVerifikasi: null,
   },
   {
     id: "permenaker-39-2016",
@@ -50,6 +61,8 @@ const SUMBER_HUKUM = [
       "Mengatur syarat PKWT, jangka waktu maksimal, perpanjangan, dan upah saat berakhirnya PKWT. Dasar aturan CekLoker untuk indikator kontraktor palsu dan PKWT berantai.",
     url: "https://jdih.kemnaker.go.id/peraturan/permenaker-no-39-tahun-2016",
     pasal: [],
+    perluVerifikasi: true,
+    tanggalVerifikasi: null,
   },
   {
     id: "permenaker-7-2013",
@@ -58,14 +71,18 @@ const SUMBER_HUKUM = [
       "Mengatur penetapan, komponen, dan mekanisme upah minimum provinsi/kabupaten/kota. Landasan data upah minimum regional CekLoker.",
     url: "https://jdih.kemnaker.go.id/peraturan/permenaker-no-7-tahun-2013",
     pasal: [],
+    perluVerifikasi: true,
+    tanggalVerifikasi: null,
   },
   {
     id: "pp-36-2021",
-    judul: "PP No. 36 Tahun 2021 tentang Upah",
+    judul: "PP No. 36 Tahun 2021 tentang Pengupahan",
     deskripsi:
       "Mengatur komponen upah, struktur dan skala upah, upah minimum, pembayaran upah, dan penundaan pembayaran upah. Pengaturan turunan UU 13/2003 pasal 88-89.",
     url: "https://peraturan.go.id/pp/nomor-36-tahun-2021.html",
     pasal: [],
+    perluVerifikasi: true,
+    tanggalVerifikasi: null,
   },
   {
     id: "kep-226-2019",
@@ -75,6 +92,8 @@ const SUMBER_HUKUM = [
       "Pedoman teknis penetapan UMP: formula, variabel, dan prosedur. Referensi metodologi data upah CekLoker.",
     url: "https://jdih.kemnaker.go.id/peraturan/kepmen-no-226-tahun-2019",
     pasal: [],
+    perluVerifikasi: true,
+    tanggalVerifikasi: null,
   },
   {
     id: "se-1-2020",
@@ -83,8 +102,21 @@ const SUMBER_HUKUM = [
       "Surat edaran pelaksanaan UMP bagi gubernur dan pengusaha. Detail mekanisme pengecualian dan penundaan UMP.",
     url: "https://jdih.kemnaker.go.id/peraturan/se-menaker-no-1-tahun-2020",
     pasal: [],
+    perluVerifikasi: true,
+    tanggalVerifikasi: null,
   },
 ] as const;
+
+/** Label status verifikasi untuk kartu sumber hukum. */
+function labelVerifikasiSumber(sumber: {
+  perluVerifikasi: boolean;
+  tanggalVerifikasi: string | null;
+}): string {
+  if (sumber.perluVerifikasi || !sumber.tanggalVerifikasi) {
+    return "Belum diverifikasi";
+  }
+  return `Terakhir diverifikasi: ${sumber.tanggalVerifikasi}`;
+}
 
 export default function HalamanSumber() {
   return (
@@ -203,6 +235,25 @@ export default function HalamanSumber() {
                           <p className="mt-2 text-slate-600">
                             {sumber.deskripsi}
                           </p>
+                          <p
+                            className={`mt-1 inline-flex items-center gap-1 text-[0.65rem] font-semibold ${
+                              sumber.perluVerifikasi ||
+                              !sumber.tanggalVerifikasi
+                                ? "text-amber-700"
+                                : "text-emerald-700"
+                            }`}
+                          >
+                            <span
+                              aria-hidden="true"
+                              className={`inline-block size-1.5 rounded-full ${
+                                sumber.perluVerifikasi ||
+                                !sumber.tanggalVerifikasi
+                                  ? "bg-amber-500"
+                                  : "bg-emerald-500"
+                              }`}
+                            />
+                            {labelVerifikasiSumber(sumber)}
+                          </p>
                         </div>
                       </div>
                       <a
@@ -253,6 +304,9 @@ export default function HalamanSumber() {
                           <th className="p-3 font-semibold text-slate-900">
                             Rujukan Hukum
                           </th>
+                          <th className="p-3 font-semibold text-slate-900">
+                            Verifikasi
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-100">
@@ -287,6 +341,25 @@ export default function HalamanSumber() {
                                   />
                                 </svg>
                               </a>
+                            </td>
+                            <td className="p-3">
+                              <span
+                                className={`inline-flex items-center gap-1 text-xs font-semibold ${
+                                  verifikasiRujukan(id).perluVerifikasi
+                                    ? "text-amber-700"
+                                    : "text-emerald-700"
+                                }`}
+                              >
+                                <span
+                                  aria-hidden="true"
+                                  className={`inline-block size-1.5 rounded-full ${
+                                    verifikasiRujukan(id).perluVerifikasi
+                                      ? "bg-amber-500"
+                                      : "bg-emerald-500"
+                                  }`}
+                                />
+                                {labelVerifikasiRujukan(id)}
+                              </span>
                             </td>
                           </tr>
                         ))}
@@ -339,6 +412,24 @@ export default function HalamanSumber() {
                         Tentang
                       </a>
                       .
+                    </li>
+                    <li>
+                      <strong>Status verifikasi:</strong> belum satu pun sumber
+                      hukum di atas diverifikasi ulang terhadap teks resmi
+                      terbaru; semuanya ditandai{" "}
+                      <strong>&quot;Belum diverifikasi&quot;</strong>. Tautan
+                      mencantumkan lokasi dokumen, bukan jaminan bahwa bunyi
+                      pasal/regulasi tersebut masih berlaku atau sesuai dengan
+                      indikator yang dirujuk. Lihat{" "}
+                      <a
+                        href="https://github.com/santstyle/CekLoker/blob/main/docs/verifikasi-hukum.md"
+                        className="text-sky-600 underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        catatan verifikasi hukum
+                      </a>{" "}
+                      untuk rincian pemeriksaan per sumber.
                     </li>
                   </ul>
                 </div>
