@@ -168,3 +168,119 @@ describe("POST /api/evaluasi", () => {
     expect(lanjutan.status).toBe(201);
   });
 });
+
+describe("POST /api/evaluasi — privasi", () => {
+  const PENANDA = "TEKS_PENANDA_RAHASIA_9f8e7d";
+  const TEKS_PENANDA = `Lowongan kerja admin online. ${PENANDA}. Gaji 5 juta per bulan.`;
+
+  function tangkapLog() {
+    const log = vi.spyOn(console, "log").mockImplementation(() => {});
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    return { log, warn, error };
+  }
+
+  function semuaLogTerkumpul(tangkapan: ReturnType<typeof tangkapLog>) {
+    return [
+      ...tangkapan.log.mock.calls,
+      ...tangkapan.warn.mock.calls,
+      ...tangkapan.error.mock.calls,
+    ]
+      .flat()
+      .map((nilai) => String(nilai))
+      .join(" ");
+  }
+
+  it("tidak pernah menulis teks lowongan ke log (jalur sukses)", async () => {
+    const tangkapan = tangkapLog();
+
+    const respons = await POST(
+      permintaan({ teksLowongan: TEKS_PENANDA }, "203.0.113.201"),
+    );
+
+    expect(respons.status).toBe(201);
+    expect(semuaLogTerkumpul(tangkapan)).not.toContain(PENANDA);
+
+    tangkapan.log.mockRestore();
+    tangkapan.warn.mockRestore();
+    tangkapan.error.mockRestore();
+  });
+
+  it("tidak pernah menulis teks lowongan ke log saat pencatatan gagal", async () => {
+    const tangkapan = tangkapLog();
+    // Pesan galat driver sengaja memuat penanda: log tidak boleh mengutipnya.
+    values.mockRejectedValueOnce(new Error(`query gagal untuk ${PENANDA}`));
+
+    const respons = await POST(
+      permintaan({ teksLowongan: TEKS_PENANDA }, "203.0.113.202"),
+    );
+
+    expect(respons.status).toBe(201);
+    expect(semuaLogTerkumpul(tangkapan)).not.toContain(PENANDA);
+
+    tangkapan.log.mockRestore();
+    tangkapan.warn.mockRestore();
+    tangkapan.error.mockRestore();
+  });
+
+  it("tidak memanggil fetch ke layanan eksternal saat evaluasi", async () => {
+    const tiruanFetch = vi.fn();
+    vi.stubGlobal("fetch", tiruanFetch);
+
+    try {
+      const respons = await POST(
+        permintaan({ teksLowongan: TEKS_PENANDA }, "203.0.113.203"),
+      );
+
+      expect(respons.status).toBe(201);
+      expect(tiruanFetch).not.toHaveBeenCalled();
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
+  it("mengabaikan nama perusahaan yang dikirim (hanya menerima penanda)", async () => {
+    const tangkapan = tangkapLog();
+    const NAMA_RAHASIA = "PT KARAKTERSERAHASIAUTAMA Tbk";
+
+    const respons = await POST(
+      permintaan(
+        { teksLowongan: TEKS_PENANDA, perusahaan: NAMA_RAHASIA },
+        "203.0.113.204",
+      ),
+    );
+
+    expect(respons.status).toBe(201);
+    // Penanda dikirim sebagai string tak dikenal skema: diarsipkan zod,
+    // tidak pernah masuk agregat maupun log.
+    expect(JSON.stringify(values.mock.calls)).not.toContain(NAMA_RAHASIA);
+    expect(semuaLogTerkumpul(tangkapan)).not.toContain(NAMA_RAHASIA);
+
+    tangkapan.log.mockRestore();
+    tangkapan.warn.mockRestore();
+    tangkapan.error.mockRestore();
+  });
+
+  it("perusahaanDiisi: true mematikan aturan tanpa_nama_perusahaan", async () => {
+    const tanpa = await POST(
+      permintaan({ teksLowongan: TEKS_PENANDA }, "203.0.113.205"),
+    );
+    const jsonTanpa = await tanpa.json();
+    const kodeTanpa = jsonTanpa.hasil.temuan.map(
+      (t: { ruleId: string }) => t.ruleId,
+    );
+    expect(kodeTanpa).toContain("tanpa_nama_perusahaan");
+
+    const dengan = await POST(
+      permintaan(
+        { teksLowongan: TEKS_PENANDA, perusahaanDiisi: true },
+        "203.0.113.206",
+      ),
+    );
+    const jsonDengan = await dengan.json();
+    const kodeDengan = jsonDengan.hasil.temuan.map(
+      (t: { ruleId: string }) => t.ruleId,
+    );
+    expect(kodeDengan).not.toContain("tanpa_nama_perusahaan");
+  });
+});

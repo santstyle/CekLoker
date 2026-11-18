@@ -13,6 +13,7 @@ import {
   type HasilPembatas,
   type PembatasLaju,
 } from "@/lib/security/rate-limit";
+import { ringkasGalat } from "@/lib/security/log";
 import { periksaUkuranBody } from "@/lib/security/ukuran-body";
 
 /** Kuota permintaan evaluasi per klien dalam satu menit. */
@@ -105,7 +106,11 @@ export async function POST(request: Request) {
         inputLength: terurai.data.teksLowongan.length,
       });
   } catch (error) {
-    console.warn("Pencatatan agregat gagal; hasil tetap dikirim.", error);
+    // Jangan log objek galat mentah: pesan galat driver dapat memuat query
+    // dan nilai parameter (mis. wilayah). Cukup nama kelas + kode galat.
+    console.warn(
+      `Pencatatan agregat gagal; hasil tetap dikirim. (${ringkasGalat(error)})`,
+    );
   }
 
   return NextResponse.json(

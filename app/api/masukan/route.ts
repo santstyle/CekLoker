@@ -10,6 +10,7 @@ import {
   type HasilPembatas,
   type PembatasLaju,
 } from "@/lib/security/rate-limit";
+import { ringkasGalat } from "@/lib/security/log";
 import { periksaUkuranBody } from "@/lib/security/ukuran-body";
 
 /** Kuota kiriman masukan per klien dalam satu menit. */
@@ -107,8 +108,9 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     // Berbeda dari evaluasi, masukan tidak punya nilai bila tidak tercatat —
-    // karena itu kegagalan penyimpanan dibalas 503, bukan diabaikan.
-    console.warn("Penyimpanan masukan gagal.", error);
+    // karena itu kegagalan penyimpanan dibalas 503, bukan diabaikan. Pesan
+    // galat driver tidak ikut ditulis ke log; cukup nama kelas + kode.
+    console.warn(`Penyimpanan masukan gagal. (${ringkasGalat(error)})`);
     return NextResponse.json(
       { error: "Masukan belum dapat disimpan. Coba lagi nanti." },
       { status: 503, headers: headerPembatas(kuota) },

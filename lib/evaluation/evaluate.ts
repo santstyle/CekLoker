@@ -36,10 +36,8 @@ export const skemaInputEvaluasi = z.object(
       .trim()
       .max(200, "Lokasi maksimal 200 karakter.")
       .optional(),
-    perusahaan: z
-      .string("Nama perusahaan harus berupa teks.")
-      .trim()
-      .max(200, "Nama perusahaan maksimal 200 karakter.")
+    perusahaanDiisi: z
+      .boolean("perusahaanDiisi harus berupa boolean.")
       .optional(),
   },
   { error: "Body permintaan harus berupa objek JSON." },
@@ -152,10 +150,9 @@ export function evaluasiLowongan(
   const teks = normalizeText(teksMentah);
   const lokasi =
     input.lokasi && input.lokasi.length > 0 ? input.lokasi : undefined;
-  const perusahaan =
-    input.perusahaan && input.perusahaan.length > 0
-      ? input.perusahaan
-      : undefined;
+  // Klien hanya mengirim penanda "nama perusahaan sudah diisi" — nilai nama
+  // itu sendiri tidak pernah meninggalkan peramban pengguna.
+  const perusahaanDiisi = input.perusahaanDiisi === true;
 
   const provinsiFromLokasi = matchProvinsi(lokasi);
   const provinsi = provinsiFromLokasi ?? matchProvinsi(teksMentah);
@@ -169,7 +166,7 @@ export function evaluasiLowongan(
     gajiBulanan: gaji,
     upahMinimum,
     ...(lokasi ? { lokasi } : {}),
-    ...(perusahaan ? { perusahaan } : {}),
+    ...(perusahaanDiisi ? { perusahaanDiisi: true } : {}),
   };
 
   const temuan: Temuan[] = [];
