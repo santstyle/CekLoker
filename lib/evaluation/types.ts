@@ -74,6 +74,8 @@ export interface Temuan {
 export interface HasilEvaluasi {
   band: Band;
   skor: number;
+  penentu_level?: "skor" | "aturan_penentu";
+  id_aturan_penentu?: string;
   temuan: Temuan[];
   saran: string[];
   ringkasan: string;
