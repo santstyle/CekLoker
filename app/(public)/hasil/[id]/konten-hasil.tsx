@@ -14,6 +14,7 @@ import {
   type MetaSesi,
 } from "@/lib/api/evaluasi";
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
+import { penjelasanPenentuLevel } from "@/lib/evaluation/penentu";
 import { RULES } from "@/lib/evaluation/rules";
 import { labelRujukan, urlRujukan } from "@/lib/evaluation/rujukan";
 import type {
@@ -248,27 +249,42 @@ export default function KontenHasil() {
                 <p className="max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
                   {hasil.ringkasan}
                 </p>
+                <p className="max-w-xl border-l-2 border-slate-300 pl-3 text-xs leading-relaxed text-slate-500 sm:text-sm">
+                  {penjelasanPenentuLevel(hasil)}
+                </p>
               </div>
 
-              {/* Gauge Meter Box */}
-              <div className="flex min-w-[180px] flex-col items-center justify-center rounded-2xl border border-slate-200/80 bg-white/90 p-6 shadow-md backdrop-blur-xs">
-                <span className="text-xs font-bold tracking-wider text-slate-400 uppercase">
-                  Indeks Risiko
+              {/* Rentang Meter: tiga segmen, bukan skala 0–100 padat */}
+              <div className="flex min-w-[180px] flex-col items-stretch justify-center gap-3 rounded-2xl border border-slate-200/80 bg-white/90 p-6 shadow-md backdrop-blur-xs">
+                <span className="text-center text-xs font-bold tracking-wider text-slate-400 uppercase">
+                  Rentang Risiko
                 </span>
-                <div className="mt-2 flex items-baseline gap-1">
-                  <span className="text-5xl font-black text-slate-950">
-                    {hasil.skor}
-                  </span>
-                  <span className="text-sm font-semibold text-slate-400">
-                    / 100
-                  </span>
+                <div
+                  className="flex w-full gap-1.5"
+                  role="img"
+                  aria-label={`Rentang risiko hasil pemeriksaan: ${LABEL_BAND[hasil.band]}`}
+                >
+                  {(["rendah", "perlu_dicek", "tinggi"] as const).map((seg) => (
+                    <div
+                      key={seg}
+                      className={`h-2.5 flex-1 rounded-full ${
+                        seg === hasil.band
+                          ? TEMA_BAND[seg].barColor
+                          : "bg-slate-200"
+                      }`}
+                    />
+                  ))}
                 </div>
-                <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-100">
-                  <div
-                    className={`h-full rounded-full ${tema.barColor}`}
-                    style={{ width: `${Math.min(hasil.skor, 100)}%` }}
-                  />
-                </div>
+                <p
+                  className={`text-center text-2xl font-black tracking-tight ${tema.textTitle}`}
+                >
+                  {LABEL_BAND[hasil.band]}
+                </p>
+                <p className="text-center text-[0.7rem] leading-snug text-slate-400">
+                  Skor akumulasi: {hasil.skor}
+                  <br />
+                  angka indikator, bukan persentase
+                </p>
               </div>
             </div>
           </div>

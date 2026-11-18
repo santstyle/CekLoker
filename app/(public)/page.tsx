@@ -434,7 +434,7 @@ export default function Beranda() {
                 </h2>
               </div>
               <p className="max-w-[16rem] font-mono text-[0.6rem] leading-relaxed tracking-[0.16em] text-muted uppercase">
-                Spektrum skor 0 – 100 · tiga rentang
+                Akumulasi skor · tiga rentang risiko
               </p>
             </div>
           </Reveal>
@@ -499,6 +499,10 @@ export default function Beranda() {
               </Reveal>
             ))}
           </div>
+          <p className="mt-6 max-w-2xl text-sm leading-relaxed text-slate-600">
+            Level juga bisa ditetapkan langsung oleh indikator terkuat, berapa
+            pun skornya.
+          </p>
         </Container>
       </section>
 

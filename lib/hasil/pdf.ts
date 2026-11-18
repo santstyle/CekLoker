@@ -1058,7 +1058,8 @@ function susunBlok(k: Konteks, laporan: LaporanLengkap): Blok[] {
         "Pemeriksaan dilakukan oleh aturan baku yang hasilnya selalu sama untuk teks yang sama. " +
         "Setiap temuan menyebut kutipan dan dasar rujukannya. Tingkat kekuatan dasar (undang-undang, " +
         "peraturan menteri, surat edaran, atau indikator umum) dicantumkan agar Anda bisa menimbang sendiri. " +
-        "Hasil ini adalah indikasi risiko, bukan penilaian bahwa suatu pihak melakukan pelanggaran atau penipuan.",
+        laporan.penjelasanPenentu +
+        " Hasil ini adalah indikasi risiko, bukan penilaian bahwa suatu pihak melakukan pelanggaran atau penipuan.",
       isiGaya: "regular",
       isiUkuran: 8,
       isiBaris: 11.5,

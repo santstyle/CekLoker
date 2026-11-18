@@ -10,6 +10,7 @@
  */
 
 import { labelRujukan } from "@/lib/evaluation/rujukan";
+import { penjelasanPenentuLevel } from "@/lib/evaluation/penentu";
 import { RULES } from "@/lib/evaluation/rules";
 import type { Band, HasilEvaluasi } from "@/lib/evaluation/types";
 
@@ -60,6 +61,8 @@ export interface LaporanLengkap extends LaporanPdfInput {
     sesuai: number;
   };
   versiMesin: string;
+  /** Kalimat asal penetapan level (skor vs aturan penentu). */
+  penjelasanPenentu: string;
 }
 
 const PETA_RULE = new Map(RULES.map((rule) => [rule.id, rule]));
@@ -341,6 +344,7 @@ export function bangunLaporan(
       sesuai: temuan.filter((butir) => butir.status === "Sesuai").length,
     },
     versiMesin: hasil.versi,
+    penjelasanPenentu: penjelasanPenentuLevel(hasil),
   };
 }
 

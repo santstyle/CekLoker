@@ -107,7 +107,7 @@ export default function HalamanMetodologi() {
                   Alur Pemeriksaan Sistem
                 </h2>
                 <p className="text-sm text-muted">
-                  5 tahapan evaluasi data yang dijalankan oleh mesin CekLoker.
+                  6 tahapan evaluasi data yang dijalankan oleh mesin CekLoker.
                 </p>
               </div>
 
@@ -173,8 +173,8 @@ export default function HalamanMetodologi() {
                   Formula Perhitungan Skor
                 </h2>
                 <p className="text-sm text-muted">
-                  Rumus matematis baku tanpa campur tangan kecerdasan buatan
-                  opini.
+                  Rumus matematis baku: hasil selalu sama untuk teks yang sama,
+                  tanpa model bahasa atau opini kecerdasan buatan.
                 </p>
               </div>
 
@@ -203,7 +203,8 @@ export default function HalamanMetodologi() {
                   Batas Ambang Rentang Risiko
                 </h2>
                 <p className="text-sm text-muted">
-                  Kriteria penetapan status evaluasi berdasarkan akumulasi skor.
+                  Kriteria penetapan rentang: akumulasi skor, atau indikator
+                  terkuat yang menaikkan rentang langsung.
                 </p>
               </div>
 
@@ -255,6 +256,10 @@ export default function HalamanMetodologi() {
                   </p>
                 </div>
               </div>
+              <p className="text-sm leading-relaxed text-slate-600">
+                Level juga bisa ditetapkan langsung oleh indikator terkuat,
+                berapa pun skornya.
+              </p>
             </section>
           </Reveal>
 
