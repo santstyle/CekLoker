@@ -100,8 +100,24 @@ const PETA_RULE: ReadonlyMap<string, Rule> = new Map(
   RULES.map((rule) => [rule.id, rule]),
 );
 
-function bandAkhir(skor: number, temuan: readonly Temuan[]): Band {
-  let band = bandDariSkor(skor);
+interface PenetapanBand {
+  band: Band;
+  /** "skor" bila band murni dari akumulasi skor; "aturan_penentu" bila naik. */
+  penentu: "skor" | "aturan_penentu";
+  /** Id aturan yang menaikkan band, hanya saat penentu = "aturan_penentu". */
+  idAturanPenentu?: string;
+}
+
+/**
+ * Menentukan band akhir beserta sumber penetapannya.
+ *
+ * Band dari skor dihitung lebih dulu; bila ada aturan dengan `hasilJikaCocok`
+ * yang menaikkannya, band akhir ditetapkan oleh aturan tersebut. Aturan
+ * penentu dipilih yang berkontribusi terbesar (temuan sudah urut menurun).
+ */
+function bandAkhir(skor: number, temuan: readonly Temuan[]): PenetapanBand {
+  const bandSkor = bandDariSkor(skor);
+  let band: Band = bandSkor;
 
   for (const butir of temuan) {
     const rule = PETA_RULE.get(butir.ruleId);
@@ -110,7 +126,20 @@ function bandAkhir(skor: number, temuan: readonly Temuan[]): Band {
     }
   }
 
-  return band;
+  if (band === bandSkor) {
+    return { band, penentu: "skor" };
+  }
+
+  const penentu = temuan.find((butir) => {
+    const rule = PETA_RULE.get(butir.ruleId);
+    return rule?.hasilJikaCocok === band;
+  });
+
+  return {
+    band,
+    penentu: "aturan_penentu",
+    ...(penentu ? { idAturanPenentu: penentu.ruleId } : {}),
+  };
 }
 
 function susunSaran(temuan: readonly Temuan[]): string[] {
@@ -202,14 +231,18 @@ export function evaluasiLowongan(
   });
 
   const skor = hitungSkor(temuan);
-  const band = bandAkhir(skor, temuan);
+  const penetapan = bandAkhir(skor, temuan);
 
   return {
-    band,
+    band: penetapan.band,
     skor,
+    penentu_level: penetapan.penentu,
+    ...(penetapan.idAturanPenentu
+      ? { id_aturan_penentu: penetapan.idAturanPenentu }
+      : {}),
     temuan,
     saran: susunSaran(temuan),
-    ringkasan: susunRingkasan(temuan.length, band),
+    ringkasan: susunRingkasan(temuan.length, penetapan.band),
     versi: EVALUATOR_VERSION,
   };
 }

@@ -63,6 +63,61 @@ describe("determinisme", () => {
   });
 });
 
+describe("penentu_level", () => {
+  it("skor: band turun dari akumulasi skor", () => {
+    // d2_operator_produksi: skor 16, tanpa aturan penentu, band dari skor
+    const kasus = FIXTURES_EVALUASI.find((f) => f.id === "d2_operator_produksi");
+    if (kasus === undefined) {
+      throw new Error("Fixture d2_operator_produksi tidak ditemukan");
+    }
+
+    const hasil = evaluasiLowongan({
+      teksLowongan: kasus.teks,
+      lokasi: kasus.lokasi,
+    });
+
+    expect(hasil.penentu_level).toBe("skor");
+    expect(hasil.id_aturan_penentu).toBeUndefined();
+    expect(hasil.band).toBe("perlu_dicek");
+    expect(hasil.skor).toBe(16);
+  });
+
+  it("aturan_penentu: band naik melalui aturan penentu (tiada akumulasi skor)", () => {
+    // t1_biaya_administrasi: skor 17 (need perlu_dicek), band tinggi via pungutan_biaya
+    const kasus = FIXTURES_EVALUASI.find((f) => f.id === "t1_biaya_administrasi");
+    if (kasus === undefined) {
+      throw new Error("Fixture t1_biaya_administrasi tidak ditemukan");
+    }
+
+    const hasil = evaluasiLowongan({
+      teksLowongan: kasus.teks,
+      lokasi: kasus.lokasi,
+    });
+
+    expect(hasil.penentu_level).toBe("aturan_penentu");
+    expect(hasil.id_aturan_penentu).toBe("pungutan_biaya");
+    expect(hasil.band).toBe("tinggi");
+    expect(hasil.skor).toBe(17);
+  });
+
+  it("aturan_penentu: band naik melalui aturan lain saat skor rendah", () => {
+    // t4_langsung_diterima: skor 12, band tinggi via diterima_tanpa_seleksi
+    const kasus = FIXTURES_EVALUASI.find((f) => f.id === "t4_langsung_diterima");
+    if (kasus === undefined) {
+      throw new Error("Fixture t4_langsung_diterima tidak ditemukan");
+    }
+
+    const hasil = evaluasiLowongan({
+      teksLowongan: kasus.teks,
+      lokasi: kasus.lokasi,
+    });
+
+    expect(hasil.penentu_level).toBe("aturan_penentu");
+    expect(hasil.id_aturan_penentu).toBe("diterima_tanpa_seleksi");
+    expect(hasil.band).toBe("tinggi");
+  });
+});
+
 describe("larangan vonis", () => {
   it("keluaran tidak memuat kata vonis terlarang", () => {
     for (const kasus of FIXTURES_EVALUASI) {
