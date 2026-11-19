@@ -4,21 +4,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-import { NAV, NAV_LEGAL } from "@/components/situs/nav";
+import { NAV, NAV_TRANSPARANSI, NAV_LEGAL } from "@/components/situs/nav";
 import { cn } from "@/components/ui/cn";
 
 /**
- * Menu mobile hamburger (tiga garis) yang menggantikan tombol
- * "Cek lowongan" di header. Di desktop (md ke atas) tidak tampil —
- * navigasi horizontal bawaan yang digunakan.
- *
- * Menu mobile menggabungkan seluruh link NAV, link legal, link bantuan,
- * dan tombol "Cek lowongan" di dalam dropdown, supaya tidak ada tombol
- * duplikat di kanan atas. Overlay dan panel di-render via portal ke
- * document.body karena header memakai backdrop-blur (yang membuat
- * position: fixed di dalamnya diukur relatif ke header, bukan viewport).
- * Menutup cukup dengan menekan tombol hamburger (beranimasi jadi X),
- * mengklik area di luar menu, atau tombol Escape.
+ * Menu mobile hamburger menggantikan tombol navigasi desktop.
+ * Menampilkan seluruh link: NAV, NAV_TRANSPARANSI, NAV_LEGAL, bantuan, dan CTA.
  */
 export function MenuMobile() {
   const [terbuka, setTerbuka] = useState(false);
@@ -106,7 +97,7 @@ export function MenuMobile() {
                   </Link>
                 ))}
                 <div className="my-1 border-t border-line" />
-                {NAV_LEGAL.map((butir) => (
+                {NAV_TRANSPARANSI.map((butir) => (
                   <Link
                     key={butir.href}
                     href={butir.href}
@@ -118,20 +109,39 @@ export function MenuMobile() {
                 ))}
                 <div className="my-1 border-t border-line" />
                 <Link
-                  href="/bantuan"
+                  href="/tentang"
                   onClick={tutup}
                   className="inline-flex min-h-11 items-center px-4 text-sm font-medium text-slate-700 transition-colors hover:bg-blue-50 hover:text-slate-900"
                 >
-                  Sudah terlanjur? Bantuan
+                  Tentang
                 </Link>
+                {NAV_LEGAL.map((butir) => (
+                  <Link
+                    key={butir.href}
+                    href={butir.href}
+                    onClick={tutup}
+                    className="inline-flex min-h-11 items-center px-4 text-xs font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-slate-700"
+                  >
+                    {butir.label}
+                  </Link>
+                ))}
                 <div className="border-t border-line p-2">
                   <Link
-                    href="/cek"
+                    href="/bantuan"
                     onClick={tutup}
-                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-ink px-4 text-sm font-semibold text-white transition-colors hover:bg-ink-deep"
+                    className="inline-flex min-h-11 items-center px-4 text-sm font-medium text-slate-700 transition-colors hover:bg-blue-50 hover:text-slate-900"
                   >
-                    Cek lowongan
+                    Sudah terlanjur? Bantuan
                   </Link>
+                  <div className="border-t border-line p-2">
+                    <Link
+                      href="/cek"
+                      onClick={tutup}
+                      className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-ink px-4 text-sm font-semibold text-white transition-colors hover:bg-ink-deep"
+                    >
+                      Cek lowongan
+                    </Link>
+                  </div>
                 </div>
               </nav>
             </div>

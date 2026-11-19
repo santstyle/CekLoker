@@ -11,7 +11,7 @@ import { ujiAkurasi } from "@/lib/evaluation/uji-akurasi";
 import { metadataHalaman } from "@/lib/situs";
 
 export const metadata: Metadata = metadataHalaman({
-  judul: "Uji Akurasi",
+  judul: "Uji Konsistensi",
   deskripsi:
     "CekLoker menguji mesin evaluasinya terhadap puluhan kasus acuan dan menampilkan hasilnya terbuka: kecocokan rentang, skor, dan aturan per kasus.",
   jalur: "/uji-akurasi",

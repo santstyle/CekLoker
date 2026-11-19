@@ -50,10 +50,28 @@ test.describe("Halaman /tren", () => {
 
   test("dapat dicapai dari navigasi utama", async ({ page }) => {
     await page.goto("/");
-    await expect(
-      page
-        .getByRole("navigation", { name: "Navigasi utama" })
-        .getByRole("link", { name: /tren/i }),
-    ).toBeVisible();
+
+    // Di desktop, Tren berada di dropdown "Transparansi".
+    const dropdown = page.getByRole("button", { name: /transparansi/i });
+    if (await dropdown.isVisible()) {
+      await dropdown.click();
+      await expect(
+        page.getByRole("menu").getByRole("menuitem", { name: "Tren" }),
+      ).toBeVisible();
+      return;
+    }
+
+    // Di mobile, Tren muncul sebagai item daftar di bawah menu hamburger.
+    const hamburger = page.getByRole("button", { name: /menu navigasi/i });
+    if (await hamburger.isVisible()) {
+      await hamburger.click();
+      await expect(
+        page
+          .getByRole("navigation", { name: "Navigasi mobile" })
+          .getByRole("link", {
+            name: "Tren",
+          }),
+      ).toBeVisible();
+    }
   });
 });
