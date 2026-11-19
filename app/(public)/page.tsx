@@ -370,6 +370,11 @@ export default function Beranda() {
                       Baca liputan asli
                       <span aria-hidden="true">↗</span>
                     </a>
+                    <p className="mt-2 font-mono text-[0.62rem] leading-snug text-slate-500">
+                      Verifikasi: ikut membuka artikel asli dan cocokkan kutipan
+                      di atas. Data berjalan berubah — CekLoker tidak menyimpan
+                      konten pihak ketiga di server.
+                    </p>
                   </div>
                 </div>
               </Reveal>
@@ -531,8 +536,8 @@ export default function Beranda() {
               {
                 nomor: "01",
                 tag: "Masukan",
-                judul: "Tempel teksnya",
-                teks: "Salin iklan lowongan dari mana pun Anda menemukannya, lalu tempel ke kotak di halaman Cek.",
+                judul: "Tempel teks atau unggah poster",
+                teks: "Salin iklan lowongan dari mana pun Anda menemukannya, lalu tempel teks atau unggah poster iklannya di halaman Cek.",
               },
               {
                 nomor: "02",

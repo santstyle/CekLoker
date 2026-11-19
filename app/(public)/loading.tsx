@@ -6,9 +6,9 @@ export default function Memuat() {
       className="bg-white py-16 sm:py-24"
       aria-busy="true"
       aria-live="polite"
+      data-testid="loading-skeleton"
     >
       <Container>
-        <span className="sr-only">Memuat konten…</span>
         <div className="mx-auto flex max-w-4xl animate-pulse flex-col gap-6">
           <div className="h-4 w-32 rounded-full bg-slate-200" />
           <div className="h-10 w-3/4 rounded-2xl bg-slate-200" />

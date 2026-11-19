@@ -367,7 +367,7 @@ export function PenyusunKronologi() {
         {/* Urutan kejadian */}
         <fieldset className="flex flex-col gap-2">
           <legend className="text-xs font-semibold text-slate-800">
-            Urutan kejadian (beranggal)
+            Urutan kejadian (bertanggal)
           </legend>
           {langkah.map((item) => (
             <div

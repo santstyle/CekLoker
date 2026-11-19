@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Suspense } from "react";
 
 import { Navigasi } from "@/components/situs/navigasi";
-import { NAV, NAV_LEGAL } from "@/components/situs/nav";
+import { NAV, NAV_TRANSPARANSI, NAV_LEGAL } from "@/components/situs/nav";
 import { GarisProgresGulir } from "@/components/situs/garis-progres";
 import { Container } from "@/components/ui/container";
 import { MenuMobile } from "@/components/situs/menu-mobile";
@@ -105,7 +105,11 @@ export default function LayoutPublik({
               <p className="font-mono text-[0.6rem] font-semibold tracking-[0.22em] text-slate-400 uppercase">
                 Jelajah
               </p>
-              {NAV.map((butir) => (
+              {[
+                ...NAV,
+                ...NAV_TRANSPARANSI,
+                { href: "/tentang", label: "Tentang" },
+              ].map((butir) => (
                 <Link
                   key={butir.href}
                   href={butir.href}

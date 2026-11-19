@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-import { NAV } from "@/components/situs/nav";
+import { NAV, NAV_TRANSPARANSI } from "@/components/situs/nav";
 import { Container } from "@/components/ui/container";
 import { TautanTombol } from "@/components/ui/tombol";
 
@@ -61,7 +61,11 @@ export default function TidakDitemukan() {
               aria-label="Navigasi alternatif"
               className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3"
             >
-              {NAV.map((butir) => (
+              {[
+                ...NAV,
+                ...NAV_TRANSPARANSI,
+                { href: "/tentang", label: "Tentang" },
+              ].map((butir) => (
                 <Link
                   key={butir.href}
                   href={butir.href}

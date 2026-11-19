@@ -27,7 +27,7 @@ export interface DataKronologi {
   rekening: string;
   /** Nominal kerugian (teks bebas, mis. "Rp2.000.000"), opsional. */
   nominal: string;
-  /** Urutan langkah beranggal. */
+  /** Urutan langkah bertanggal. */
   langkah: readonly LangkahKronologi[];
   /** Bukti yang dimiliki pengguna. */
   bukti: readonly string[];
