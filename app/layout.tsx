@@ -1,5 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Inter_Tight } from "next/font/google";
+import {
+  IBM_Plex_Mono,
+  Inter_Tight,
+  Plus_Jakarta_Sans,
+} from "next/font/google";
 
 import {
   ambilUrlSitus,
@@ -77,8 +81,15 @@ function generateJsonLd() {
   return [website, organization, faqPage];
 }
 
-// Sistem dua keluarga: Inter Tight (ExtraBold untuk display, reguler untuk
-// body) dan IBM Plex Mono untuk label/data ala dokumen resmi.
+// Sistem tiga keluarga: Inter Tight (ExtraBold untuk display, reguler untuk
+// body), IBM Plex Mono untuk label/data ala dokumen resmi, dan Plus Jakarta
+// Sans untuk kicker lembut yang tidak sekaku mono.
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
   subsets: ["latin"],
@@ -160,7 +171,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="id"
-      className={`${interTight.variable} ${plexMono.variable} h-full antialiased`}
+      className={`${interTight.variable} ${plexMono.variable} ${plusJakarta.variable} h-full antialiased`}
     >
       <head>
         <script
