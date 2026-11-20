@@ -769,6 +769,15 @@
   --tw-gradient-to: #070b14;
 }
 
+/* Latar hero beranda memakai nilai hex khusus; gelapkan agar teks terang terbaca. */
+.dark .from-\[\#e7ebf5\] {
+  --tw-gradient-from: #131c2e;
+}
+
+.dark .via-\[\#edf0f8\] {
+  --tw-gradient-via: #101a2b;
+}
+
 .dark .from-blue-50 {
   --tw-gradient-from: #10203a;
 }
