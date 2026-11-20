@@ -75,7 +75,7 @@ export default function HalamanCek() {
     panjangTeks <= MAKSIMAL_KARAKTER &&
     !mengirim;
 
-  async function kirim(peristiwa: React.FormEvent<HTMLFormElement>) {
+  async function kirim(peristiwa: React.SyntheticEvent<HTMLFormElement>) {
     peristiwa.preventDefault();
     setMengirim(true);
     setPesan(null);
