@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { NAV, NAV_LEGAL } from "@/components/situs/nav";
+import { ToggleTema } from "@/components/situs/toggle-tema";
 import { cn } from "@/components/ui/cn";
 
 /**
@@ -47,7 +48,8 @@ export function MenuMobile() {
   }, [terbuka]);
 
   return (
-    <div className="relative md:hidden">
+    <div className="relative flex items-center gap-2 md:hidden">
+      <ToggleTema />
       <button
         type="button"
         aria-label="Menu navigasi"
