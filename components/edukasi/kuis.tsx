@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
   useSyncExternalStore,
-  type FormEvent,
+  type SubmitEvent,
 } from "react";
 
 import { cn } from "@/components/ui/cn";
@@ -132,7 +132,7 @@ export function KuisEdukasi() {
     setJawaban((sebelumnya) => ({ ...sebelumnya, [soalId]: indeks }));
   }
 
-  function tanganiKirim(peristiwa: FormEvent<HTMLFormElement>) {
+  function tanganiKirim(peristiwa: SubmitEvent<HTMLFormElement>) {
     peristiwa.preventDefault();
     if (!lengkap || terkirim) return;
     setTerkirim(true);

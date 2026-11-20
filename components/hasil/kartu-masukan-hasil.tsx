@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore, type FormEvent } from "react";
+import { useState, useSyncExternalStore, type SubmitEvent } from "react";
 
 import {
   ALASAN_MASUKAN,
@@ -60,7 +60,7 @@ export function KartuMasukanHasil({
   const mengirim = status === "mengirim";
   const terkirim = status === "terkirim" || sudahDikirim;
 
-  async function kirim(peristiwa: FormEvent<HTMLFormElement>) {
+  async function kirim(peristiwa: SubmitEvent<HTMLFormElement>) {
     peristiwa.preventDefault();
     if (!alasan || mengirim) return;
 
