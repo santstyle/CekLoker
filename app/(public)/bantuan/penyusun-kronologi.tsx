@@ -484,7 +484,7 @@ export function PenyusunKronologi() {
         </h3>
         <pre
           aria-label="Hasil teks kronologi"
-          className="min-h-72 flex-1 overflow-auto rounded-2xl border border-slate-200/80 bg-slate-950 p-4 font-mono text-[0.72rem] leading-relaxed whitespace-pre-wrap text-slate-100"
+          className="min-h-72 flex-1 overflow-auto rounded-2xl border border-slate-200/80 bg-ink-deep p-4 font-mono text-[0.72rem] leading-relaxed whitespace-pre-wrap text-slate-100"
         >
           {teksKronologiFinal}
         </pre>
@@ -492,7 +492,7 @@ export function PenyusunKronologi() {
           <button
             type="button"
             onClick={salinTeks}
-            className="inline-flex min-h-11 cursor-pointer items-center rounded-full bg-slate-950 px-6 py-2.5 text-xs font-bold text-white transition-all hover:bg-slate-800"
+            className="inline-flex min-h-11 cursor-pointer items-center rounded-full bg-ink px-6 py-2.5 text-xs font-bold text-white transition-all hover:bg-ink-deep"
           >
             {tersalin ? "✓ Tersalin!" : "Salin teks"}
           </button>

@@ -150,7 +150,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  colorScheme: "light",
+  colorScheme: "light dark",
   themeColor: "#2563eb",
 };
 
@@ -166,6 +166,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          // Terapkan tema tersimpan sebelum cat pertama supaya tidak berkedip.
+          dangerouslySetInnerHTML={{
+            __html:
+              '(function(){try{if(localStorage.getItem("tema-cekloker")==="gelap"){document.documentElement.classList.add("dark");}}catch(e){}})();',
+          }}
         />
       </head>
       <body className="flex min-h-full flex-col">{children}</body>

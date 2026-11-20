@@ -29,6 +29,7 @@ export default function TidakDitemukan() {
               height={56}
               priority
               sizes="146px"
+              className="logo-header"
             />
           </Link>
         </Container>

@@ -7,6 +7,7 @@ import { NAV, NAV_LEGAL } from "@/components/situs/nav";
 import { GarisProgresGulir } from "@/components/situs/garis-progres";
 import { Container } from "@/components/ui/container";
 import { MenuMobile } from "@/components/situs/menu-mobile";
+import { ToggleTema } from "@/components/situs/toggle-tema";
 
 export default function LayoutPublik({
   children,
@@ -39,18 +40,23 @@ export default function LayoutPublik({
               height={56}
               priority
               sizes="146px"
+              className="logo-header"
             />
           </Link>
 
-          <Suspense
-            fallback={
-              <div aria-hidden="true" className="hidden h-11 md:block" />
-            }
-          >
-            <Navigasi />
-          </Suspense>
+          <div className="flex items-center gap-2 md:gap-4">
+            <Suspense
+              fallback={
+                <div aria-hidden="true" className="hidden h-11 md:block" />
+              }
+            >
+              <Navigasi />
+            </Suspense>
 
-          <MenuMobile />
+            <ToggleTema className="hidden md:inline-flex" />
+
+            <MenuMobile />
+          </div>
         </Container>
       </header>
 
