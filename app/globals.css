@@ -12,9 +12,6 @@
   --color-aksen-pekat: #1d4ed8;
 
   --font-display: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
-  --font-soft:
-    var(--font-plus-jakarta), ui-sans-serif, system-ui, -apple-system,
-    sans-serif;
   --font-mono:
     var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 

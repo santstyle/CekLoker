@@ -77,7 +77,7 @@ export default function LayoutPublik({
               <p className="font-display text-2xl font-extrabold tracking-tight text-white">
                 Cek<span className="teks-gradasi-terang">Loker</span>
               </p>
-              <p className="font-soft text-[0.78rem] font-semibold tracking-[0.01em] text-slate-400">
+              <p className="font-mono text-[0.6rem] tracking-[0.22em] text-slate-400 uppercase">
                 Alat pra-lamaran · Ketenagakerjaan Indonesia
               </p>
               <p className="text-sm leading-relaxed text-slate-400">
