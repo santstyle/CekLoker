@@ -184,7 +184,7 @@ export default function Beranda() {
           ukuran="penuh"
           className="relative pt-14 text-center sm:pt-20"
         >
-          <p className="mx-auto inline-flex items-center gap-2.5 rounded-full bg-white/70 py-1.5 pr-4 pl-2 font-soft text-[0.78rem] font-semibold tracking-[0.01em] text-ink ring-1 ring-ink/10 backdrop-blur-sm">
+          <p className="mx-auto inline-flex items-center gap-2.5 rounded-full bg-white/70 py-1.5 pr-4 pl-2 font-mono text-[0.6rem] font-medium tracking-[0.2em] text-ink uppercase ring-1 ring-ink/10 backdrop-blur-sm">
             <span
               aria-hidden="true"
               className="size-2 rounded-full bg-gradient-to-r from-sky-400 to-blue-600"
