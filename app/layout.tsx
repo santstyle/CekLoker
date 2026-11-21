@@ -160,6 +160,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="id"
+      // Skrip anti-kedip menambahkan kelas `dark` ke elemen ini sebelum hidrasi.
+      // Perbedaan atribut ini disengaja, jadi peringatan hidrasi diredam.
+      suppressHydrationWarning
       className={`${interTight.variable} ${plexMono.variable} h-full antialiased`}
     >
       <head>
