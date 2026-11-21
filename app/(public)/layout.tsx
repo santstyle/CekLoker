@@ -53,7 +53,9 @@ export default function LayoutPublik({
               <Navigasi />
             </Suspense>
 
-            <ToggleTema className="hidden md:inline-flex" />
+            <div className="hidden md:block">
+              <ToggleTema />
+            </div>
 
             <MenuMobile />
           </div>
