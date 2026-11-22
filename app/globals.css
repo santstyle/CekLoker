@@ -67,6 +67,33 @@
   }
 }
 
+/* ============================================================================
+   Isi otomatis peramban (autofill) — Chrome/Edge mengecat latar biru/abu
+   sendiri dan mengabaikan bg-* utilitas, sehingga kolom terlihat lebih gelap
+   dari kolom lain begitu peramban mengisi data tersimpan. Kita tutup cat itu
+   dengan lapisan inset selebar kolom dan paksakan warna teks token tema aktif,
+   supaya tampilan autofill sama dengan kolom biasa (terang maupun gelap).
+   Ditulis di luar @layer agar menang atas box-shadow ring saat fokus.
+   ========================================================================== */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: var(--color-ink);
+  caret-color: var(--color-ink);
+  box-shadow: 0 0 0 1000px var(--color-paper) inset;
+}
+
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-ink);
+  caret-color: var(--color-ink);
+  box-shadow:
+    0 0 0 1000px var(--color-paper) inset,
+    0 0 0 4px color-mix(in oklab, var(--color-aksen) 10%, transparent);
+}
+
 @layer components {
   /*
    * Reveal saat scroll: sekali jalan, tanpa loop.
