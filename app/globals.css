@@ -95,6 +95,18 @@
     transform: scale(0.94) translateY(0.75rem);
   }
 
+  /*
+   * Di layar sempit, varian kiri/kanan memakai gerak vertikal.
+   * Pergeseran horizontal pada elemen selebar kolom menambah lebar
+   * dokumen sehingga halaman sempat bergulir ke samping saat animasi.
+   */
+  @media (width < 64rem) {
+    .reveal.reveal-init.reveal-var-kiri,
+    .reveal.reveal-init.reveal-var-kanan {
+      transform: translateY(1.75rem);
+    }
+  }
+
   .reveal.reveal-init.is-visible {
     opacity: 1;
     transform: none;
