@@ -85,6 +85,12 @@ export function KartuContohLaporan({
         </span>
       </div>
 
+      {contoh.penentuBand ? (
+        <p className="mt-2 font-mono text-[0.56rem] leading-relaxed tracking-[0.1em] text-muted uppercase">
+          Rentang dinaikkan indikator penentu, bukan skor
+        </p>
+      ) : null}
+
       {kosong ? (
         <p className="mt-3 rounded-lg bg-slate-50 px-3 py-2.5 text-[0.68rem] leading-snug text-slate-600">
           {contoh.hasil.ringkasan}
