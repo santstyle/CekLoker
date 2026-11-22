@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { KASUS_ACUAN } from "@/lib/evaluation/kasus-acuan";
 import { RULES } from "@/lib/evaluation/rules";
+import { bandDariSkor } from "@/lib/evaluation/score";
 import { BATAS_TEMUAN_TAMPIL, CONTOH_LAPORAN } from "@/lib/hero-contoh";
 
 const JUDUL_RULE = new Set(RULES.map((rule) => rule.judul));
@@ -53,6 +54,15 @@ describe("contoh laporan hero", () => {
       );
       expect(contoh.sisaTemuan).toBeGreaterThanOrEqual(0);
     }
+  });
+
+  it("menandai contoh yang rentangnya naik karena indikator penentu", () => {
+    for (const contoh of CONTOH_LAPORAN) {
+      expect(contoh.penentuBand, contoh.id).toBe(
+        contoh.hasil.band !== bandDariSkor(contoh.hasil.skor),
+      );
+    }
+    expect(CONTOH_LAPORAN.some((contoh) => contoh.penentuBand)).toBe(true);
   });
 
   it("memakai ringkasan asli dari mesin evaluasi", () => {

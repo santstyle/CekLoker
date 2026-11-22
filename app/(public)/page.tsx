@@ -13,7 +13,7 @@ import { KartuContohLaporan } from "@/components/situs/kartu-contoh-laporan";
 import { Reveal } from "@/components/situs/reveal";
 import { CONTOH_LAPORAN } from "@/lib/hero-contoh";
 import { RULES } from "@/lib/evaluation/rules";
-import { BATAS_BAND } from "@/lib/evaluation/score";
+import { BATAS_BAND, KETERANGAN_BAND } from "@/lib/evaluation/score";
 import { DATA_UPAH_TERSEDIA } from "@/lib/evaluation/wages";
 import { DESKRIPSI_SITUS, metadataHalaman } from "@/lib/situs";
 
@@ -122,7 +122,8 @@ const RENTANG = [
   {
     nomor: "01",
     label: "Rendah",
-    skor: `Skor < ${BATAS_BAND.perluDicek}`,
+    skor: KETERANGAN_BAND.rendah,
+    syarat: KETERANGAN_BAND.syaratSkor,
     status: "Tidak ada indikator bermasalah",
     saran: "Tetap verifikasi kanal resmi perusahaan sebelum mengirim berkas.",
     kartu: "from-blue-50 to-white ring-blue-200/80",
@@ -131,7 +132,8 @@ const RENTANG = [
   {
     nomor: "02",
     label: "Perlu dicek",
-    skor: `Skor ${BATAS_BAND.perluDicek} – ${BATAS_BAND.tinggi - 1}`,
+    skor: KETERANGAN_BAND.perluDicek,
+    syarat: KETERANGAN_BAND.syaratSkor,
     status: "Indikator ambigu, perlu konfirmasi",
     saran:
       "Konfirmasi upah, jam kerja, dan identitas perusahaan lewat sumber resmi.",
@@ -141,7 +143,8 @@ const RENTANG = [
   {
     nomor: "03",
     label: "Tinggi",
-    skor: `Skor ≥ ${BATAS_BAND.tinggi}`,
+    skor: KETERANGAN_BAND.tinggi,
+    syarat: KETERANGAN_BAND.penentu,
     status: "Kombinasi indikator berisiko",
     saran:
       "Jangan kirim berkas apa pun sampai identitas dan legalitasnya terverifikasi.",
@@ -445,10 +448,19 @@ export default function Beranda() {
               aria-hidden="true"
               className="mt-2 flex justify-between font-mono text-[0.6rem] tracking-[0.16em] text-muted uppercase"
             >
-              <span className="w-[15%] text-center">0–14</span>
-              <span className="w-[30%] text-center">15–44</span>
-              <span className="w-[55%] text-center">45–100</span>
+              <span className="w-[15%] text-center">
+                {`0–${BATAS_BAND.perluDicek - 1}`}
+              </span>
+              <span className="w-[30%] text-center">
+                {`${BATAS_BAND.perluDicek}–${BATAS_BAND.tinggi - 1}`}
+              </span>
+              <span className="w-[55%] text-center">
+                {`${BATAS_BAND.tinggi}–100`}
+              </span>
             </div>
+            <p className="mt-3 text-xs leading-relaxed text-slate-600">
+              {KETERANGAN_BAND.catatan}
+            </p>
           </Reveal>
 
           <div role="list" className="mt-8 grid gap-5 md:grid-cols-3">
@@ -474,6 +486,9 @@ export default function Beranda() {
                 </div>
                 <p className="mt-5 font-mono text-[0.6rem] tracking-[0.18em] text-muted uppercase">
                   {band.skor}
+                  <span className="mt-1 block tracking-normal normal-case">
+                    {band.syarat}
+                  </span>
                 </p>
                 <h3 className="mt-2 font-display text-xl font-extrabold text-ink sm:text-2xl">
                   {band.status}

@@ -12,6 +12,7 @@
 
 import { evaluasiLowongan } from "./evaluation/evaluate";
 import { KASUS_ACUAN } from "./evaluation/kasus-acuan";
+import { bandDariSkor } from "./evaluation/score";
 import type { HasilEvaluasi } from "./evaluation/types";
 
 /** Jumlah judul temuan yang ditampilkan langsung di kartu. */
@@ -26,6 +27,11 @@ export type ContohLaporan = {
   sumber: string;
   upah: string;
   hasil: HasilEvaluasi;
+  /**
+   * Rentang dinaikkan aturan penentu, bukan oleh skor. Dipakai untuk
+   * menjelaskan mengapa skor kecil bisa berlabel Tinggi.
+   */
+  penentuBand: boolean;
   /** Judul temuan teratas, maksimal `BATAS_TEMUAN_TAMPIL`. */
   temuanTampil: string[];
   /** Jumlah temuan yang tidak ditampilkan karena melebihi batas. */
@@ -94,6 +100,7 @@ export const CONTOH_LAPORAN: readonly ContohLaporan[] = METADATA_CONTOH.map(
       sumber: meta.sumber,
       upah: meta.upah,
       hasil,
+      penentuBand: hasil.band !== bandDariSkor(hasil.skor),
       temuanTampil,
       sisaTemuan: Math.max(hasil.temuan.length - temuanTampil.length, 0),
     };

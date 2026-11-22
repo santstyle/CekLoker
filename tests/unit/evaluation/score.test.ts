@@ -5,6 +5,7 @@ import {
   bandDariSkor,
   bandTerburuk,
   hitungSkor,
+  KETERANGAN_BAND,
 } from "@/lib/evaluation/score";
 import type {
   Band,
@@ -183,5 +184,21 @@ describe("bandTerburuk", () => {
     expect(bandTerburuk("rendah", "rendah")).toBe("rendah");
     expect(bandTerburuk("perlu_dicek", "perlu_dicek")).toBe("perlu_dicek");
     expect(bandTerburuk("tinggi", "tinggi")).toBe("tinggi");
+  });
+});
+
+describe("KETERANGAN_BAND", () => {
+  it("menyusun keterangan skor dari BATAS_BAND", () => {
+    expect(KETERANGAN_BAND.rendah).toBe(`Skor < ${BATAS_BAND.perluDicek}`);
+    expect(KETERANGAN_BAND.perluDicek).toBe(
+      `Skor ${BATAS_BAND.perluDicek} – ${BATAS_BAND.tinggi - 1}`,
+    );
+    expect(KETERANGAN_BAND.tinggi).toBe(`Skor ≥ ${BATAS_BAND.tinggi}`);
+  });
+
+  it("menyebut indikator penentu sebagai jalur band di luar skor", () => {
+    expect(KETERANGAN_BAND.syaratSkor).toContain("tanpa indikator penentu");
+    expect(KETERANGAN_BAND.penentu).toContain("indikator penentu");
+    expect(KETERANGAN_BAND.catatan).toContain("indikator penentu");
   });
 });

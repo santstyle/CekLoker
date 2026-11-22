@@ -12,6 +12,24 @@ export const BATAS_BAND = {
   tinggi: 45,
 } as const;
 
+/**
+ * Keterangan rentang untuk tampilan.
+ *
+ * Skor hanya menentukan rentang dasar. Satu aturan bisa punya
+ * `hasilJikaCocok` yang menaikkan rentang tanpa menaikkan skor, jadi rentang
+ * Tinggi tidak selalu berarti skor ≥ 45. Teks di sini dipakai bersama oleh
+ * kartu contoh dan spektrum beranda agar tidak saling bertentangan.
+ */
+export const KETERANGAN_BAND = {
+  rendah: `Skor < ${BATAS_BAND.perluDicek}`,
+  perluDicek: `Skor ${BATAS_BAND.perluDicek} – ${BATAS_BAND.tinggi - 1}`,
+  tinggi: `Skor ≥ ${BATAS_BAND.tinggi}`,
+  syaratSkor: "tanpa indikator penentu",
+  penentu: "atau indikator penentu",
+  catatan:
+    "Satu indikator penentu dapat menaikkan rentang tanpa menaikkan skor.",
+} as const;
+
 export function hitungSkor(temuan: readonly Temuan[]): number {
   const total = temuan.reduce((jumlah, butir) => jumlah + butir.kontribusi, 0);
   return Math.min(100, Math.round(total));
