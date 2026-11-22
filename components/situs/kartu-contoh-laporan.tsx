@@ -1,6 +1,5 @@
 import { cn } from "@/components/ui/cn";
 import { LABEL_BAND } from "@/lib/evaluation/evaluate";
-import { bandDariSkor } from "@/lib/evaluation/score";
 import type { Band } from "@/lib/evaluation/types";
 import type { ContohLaporan } from "@/lib/hero-contoh";
 
@@ -31,8 +30,7 @@ export function KartuContohLaporan({
   contoh: ContohLaporan;
   indeks: number;
 }) {
-  const bandSkor = bandDariSkor(contoh.hasil.skor);
-  const aksen = AKSEN_BAND[bandSkor];
+  const aksen = AKSEN_BAND[contoh.hasil.band];
   const kosong = contoh.hasil.temuan.length === 0;
 
   return (
@@ -81,9 +79,9 @@ export function KartuContohLaporan({
         </div>
         <span
           className={cn("stempel mb-1 rotate-[-6deg]", aksen.stempel)}
-          aria-label={`Rentang risiko berbasis skor: ${LABEL_BAND[bandSkor]}`}
+          aria-label={`Rentang risiko akhir: ${LABEL_BAND[contoh.hasil.band]}`}
         >
-          {LABEL_BAND[bandSkor]}
+          {LABEL_BAND[contoh.hasil.band]}
         </span>
       </div>
 
