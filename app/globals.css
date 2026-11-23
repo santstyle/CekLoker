@@ -981,10 +981,10 @@ input[type="checkbox"]:focus-visible {
   background: linear-gradient(
     to bottom,
     #1d4ed8 0%,
-    #2563eb 32%,
-    #1e3a8a 58%,
-    #0f172a 80%,
-    #020617 100%
+    #1e40af 28%,
+    #0f2f5e 58%,
+    #0b1120 80%,
+    #070b14 100%
   );
 }
 
@@ -999,7 +999,7 @@ input[type="checkbox"]:focus-visible {
 .dark .kubah-aurora__cahaya {
   background: radial-gradient(
     ellipse at 50% 100%,
-    rgb(37 99 235 / 0.22),
+    rgb(37 99 235 / 0.12),
     transparent 62%
   );
 }
