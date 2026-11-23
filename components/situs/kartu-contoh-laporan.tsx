@@ -36,7 +36,7 @@ export function KartuContohLaporan({
   return (
     <li
       className={cn(
-        "kartu-bingkai-gradasi w-[78vw] max-w-[340px] shrink-0 snap-center rounded-2xl p-5 shadow-[0_30px_60px_-22px_rgb(15_23_42/0.45)] transition-transform duration-300 lg:w-auto lg:max-w-none lg:hover:rotate-0",
+        "kartu-bingkai-gradasi w-[78vw] max-w-[340px] shrink-0 snap-center rounded-2xl p-5 shadow-[0_30px_60px_-22px_rgb(15_23_42/0.45)] transition-transform duration-300 sm:w-[44vw] sm:max-w-[320px] md:w-[31vw] md:max-w-[300px] lg:w-auto lg:max-w-none lg:hover:rotate-0",
         ROTASI[indeks],
       )}
     >

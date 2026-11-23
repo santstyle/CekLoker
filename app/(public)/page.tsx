@@ -240,9 +240,9 @@ export default function Beranda() {
           className="relative mt-2 h-[clamp(14rem,32vw,34rem)] w-full overflow-hidden"
         >
           {/* Kubah dibuat lebih lebar dari layar agar tepi kiri/kanan terisi, tidak cekung sampai dasar */}
-          <div className="absolute top-0 left-1/2 h-full w-[160%] -translate-x-1/2 overflow-hidden [border-radius:50%_50%_0_0/100%_100%_0_0] bg-[linear-gradient(to_bottom,#2563eb_0%,#3b82f6_32%,#60a5fa_58%,#93c5fd_80%,#e0f2fe_100%)] dark:bg-[linear-gradient(to_bottom,#020617_0%,#0f172a_32%,#1e293b_58%,#1e3a8a_80%,#1d4ed8_100%)]">
-            <div className="absolute inset-0 bg-[radial-gradient(circle,rgb(255_255_255/0.4)_1.6px,transparent_1.6px)] [background-size:22px_22px] dark:bg-[radial-gradient(circle,rgb(255_255_255/0.08)_1.6px,transparent_1.6px)]" />
-            <div className="absolute inset-x-0 bottom-0 h-3/5 bg-[radial-gradient(ellipse_at_50%_100%,rgb(255_255_255/0.55),transparent_62%)] dark:bg-[radial-gradient(ellipse_at_50%_100%,rgb(30_58_138/0.4),transparent_62%)]" />
+          <div className="absolute top-0 left-1/2 h-full w-[160%] -translate-x-1/2 overflow-hidden [border-radius:50%_50%_0_0/100%_100%_0_0] bg-[linear-gradient(to_bottom,#2563eb_0%,#3b82f6_32%,#60a5fa_58%,#93c5fd_80%,#e0f2fe_100%)] dark:bg-[linear-gradient(to_bottom,#1d4ed8_0%,#2563eb_32%,#1e3a8a_58%,#0f172a_80%,#020617_100%)]">
+            <div className="absolute inset-0 bg-[radial-gradient(circle,rgb(255_255_255/0.4)_1.6px,transparent_1.6px)] [background-size:22px_22px] dark:bg-[radial-gradient(circle,rgb(255_255_255/0.1)_1.6px,transparent_1.6px)]" />
+            <div className="absolute inset-x-0 bottom-0 h-3/5 bg-[radial-gradient(ellipse_at_50%_100%,rgb(255_255_255/0.55),transparent_62%)] dark:bg-[radial-gradient(ellipse_at_50%_100%,rgb(37_99_235/0.22),transparent_62%)]" />
             <div className="absolute inset-0 [border-radius:50%_50%_0_0/100%_100%_0_0] border border-white/45 dark:border-white/10" />
           </div>
         </div>
