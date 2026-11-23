@@ -46,6 +46,17 @@ const FAQ = [
     jawaban:
       "Dari peraturan ketenagakerjaan Indonesia yang berlaku: UU No. 13/2003, Permenaker No. 39/2016, UU No. 27/2022 tentang pelindungan data pribadi, dan UU No. 18/2017 tentang pelindungan pekerja migran. Rinciannya ada di halaman Metodologi.",
   },
+  {
+    pertanyaan:
+      "Sudah terlanjur mengirim berkas atau uang ke pihak yang mencurigakan, apa yang harus dilakukan?",
+    jawaban:
+      "Hentikan komunikasi, jangan kirim berkas atau uang tambahan, amankan akun Anda, lalu laporkan ke pihak berwenang. Panduan langkah demi langkah ada di halaman Bantuan, termasuk kanal lapor resmi.",
+  },
+  {
+    pertanyaan: "Apakah CekLoker punya fitur lain selain mengecek teks iklan?",
+    jawaban:
+      "Ya. Anda bisa mengunggah tangkapan layar poster lowongan (teks diekstrak di peramban), menyusun kronologi kasus, dan mengecek akurasi aturan di halaman Uji Akurasi. Semua gratis tanpa akun.",
+  },
 ] as const;
 
 const POLA = RULES.map((aturan) => aturan.judul);
@@ -410,7 +421,7 @@ export default function Beranda() {
                 href="/edukasi"
                 className="inline-flex min-h-12 items-center rounded-full bg-white px-7 text-sm font-semibold text-slate-700 ring-1 ring-ink/15 transition-all duration-200 hover:-translate-y-0.5 hover:bg-cream"
               >
-                Baca 6 pola lengkapnya
+                Baca 10 pola lengkapnya
               </Link>
             </div>
             <p className="mx-auto mt-5 max-w-xl text-center text-xs leading-relaxed text-muted">
@@ -602,7 +613,15 @@ export default function Beranda() {
                 <p className="mt-5 max-w-md text-base leading-relaxed text-muted">
                   Tidak ada aturan karangan. Setiap indikator terhubung ke
                   peraturan ketenagakerjaan Indonesia yang berlaku, dan Anda
-                  bisa membacanya sendiri.
+                  bisa membacanya sendiri. Hasilnya juga bisa Anda uji sendiri
+                  di halaman{" "}
+                  <Link
+                    href="/uji-akurasi"
+                    className="font-semibold text-aksen underline-offset-4 hover:underline"
+                  >
+                    Uji Akurasi
+                  </Link>
+                  .
                 </p>
                 <Link
                   href="/metodologi"
