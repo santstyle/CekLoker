@@ -359,12 +359,21 @@ export const KASUS_ACUAN: readonly KasusAcuan[] = [
   // --- tinggi: kombinasi indikator risiko ---
   {
     id: "t1_biaya_administrasi",
-    teks: "PT Contoh Berkah Jaya membuka lowongan Staff Administrasi. Wajib bayar biaya administrasi Rp150.000 sebelum tes.",
+    teks: "PT Contoh Berkah Jaya membuka lowongan Staff Administrasi. Langsung diterima tanpa seleksi, kuota terbatas. Siap lembur kapan saja. Wajib bayar biaya administrasi Rp150.000 dan kirim scan KTP serta buku tabungan saat mendaftar. Info: WhatsApp 0813-0000-0000.",
     lokasi: "Jakarta",
     expectedBand: "tinggi",
-    expectedRuleIds: ["pungutan_biaya", "upah_tidak_diungkap"],
-    expectedSkor: 17,
-    catatan: "Pungutan biaya sebelum seleksi menetapkan band tinggi langsung.",
+    expectedRuleIds: [
+      "diterima_tanpa_seleksi",
+      "kontak_whatsapp_saja",
+      "lembur_tanpa_batas",
+      "minta_dokumen_sensitif_dini",
+      "pungutan_biaya",
+      "tekanan_mendesak",
+      "upah_tidak_diungkap",
+    ],
+    expectedSkor: 48,
+    catatan:
+      "Pungutan biaya, dokumen sensitif diminta sebelum seleksi, janji diterima tanpa seleksi, dan lembur tanpa batas menumpuk menjadi skor tinggi.",
   },
   {
     id: "t2_penempatan_korea",

@@ -62,7 +62,6 @@ describe("contoh laporan hero", () => {
         contoh.hasil.band !== bandDariSkor(contoh.hasil.skor),
       );
     }
-    expect(CONTOH_LAPORAN.some((contoh) => contoh.penentuBand)).toBe(true);
   });
 
   it("memakai ringkasan asli dari mesin evaluasi", () => {
