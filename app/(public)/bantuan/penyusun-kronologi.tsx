@@ -434,7 +434,7 @@ export function PenyusunKronologi() {
               >
                 <input
                   type="checkbox"
-                  className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                  className="mt-0.5 shrink-0"
                   checked={bukti.includes(item)}
                   onChange={() => ubahBukti(item, !bukti.includes(item))}
                 />
@@ -453,7 +453,7 @@ export function PenyusunKronologi() {
             <label className="flex cursor-pointer items-start gap-2 text-xs leading-snug text-slate-700">
               <input
                 type="checkbox"
-                className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                className="mt-0.5 shrink-0"
                 checked={lampirkanHasil}
                 onChange={(e) => setLampirkanHasil(e.target.checked)}
               />
@@ -466,7 +466,7 @@ export function PenyusunKronologi() {
               <label className="ml-6 flex cursor-pointer items-start gap-2 text-xs leading-snug text-slate-600">
                 <input
                   type="checkbox"
-                  className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                  className="mt-0.5 shrink-0"
                   checked={sertakanKutipan}
                   onChange={(e) => setSertakanKutipan(e.target.checked)}
                 />

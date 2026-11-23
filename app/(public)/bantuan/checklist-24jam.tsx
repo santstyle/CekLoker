@@ -132,7 +132,7 @@ export function Checklist24Jam() {
             >
               <input
                 type="checkbox"
-                className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                className="mt-0.5 shrink-0"
                 checked={situasi.includes(p.id)}
                 onChange={(e) => ubahSituasi(p.id, e.target.checked)}
               />
@@ -166,7 +166,7 @@ export function Checklist24Jam() {
                   <label className="flex cursor-pointer items-start gap-3">
                     <input
                       type="checkbox"
-                      className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                      className="mt-0.5 shrink-0"
                       checked={centang}
                       onChange={(e) => ubahLangkah(l.id, e.target.checked)}
                     />
