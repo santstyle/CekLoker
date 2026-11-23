@@ -292,8 +292,10 @@ select:-webkit-autofill:focus {
   .kartu-bingkai-gradasi {
     border: 1.5px solid transparent;
     background:
-      linear-gradient(#ffffff, #ffffff) padding-box,
+      linear-gradient(rgb(255 255 255 / 0.72), rgb(255 255 255 / 0.72)) padding-box,
       linear-gradient(135deg, #bfdbfe, #60a5fa 45%, #dbeafe) border-box;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
   }
 
   /* Transisi masuk halaman (app/(public)/template.tsx) */
