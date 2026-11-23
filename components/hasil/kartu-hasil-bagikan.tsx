@@ -138,7 +138,7 @@ export function KartuHasilBagikan({
           data-testid="centang-kutipan"
           checked={sertakanKutipan}
           onChange={(peristiwa) => setSertakanKutipan(peristiwa.target.checked)}
-          className="mt-0.5 size-4 shrink-0 rounded border-slate-300 text-blue-600 focus-visible:ring-2 focus-visible:ring-blue-500/40"
+          className="mt-0.5 shrink-0"
         />
         <label htmlFor="sertakan-kutipan" className="text-sm text-slate-700">
           <span className="font-semibold text-slate-900">
