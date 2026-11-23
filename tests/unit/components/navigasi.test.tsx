@@ -1,8 +1,7 @@
 // @vitest-environment jsdom
 import "@testing-library/jest-dom/vitest";
 
-import { cleanup, render, screen, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("next/navigation", () => ({
@@ -14,12 +13,9 @@ import { Navigasi } from "@/components/situs/navigasi";
 afterEach(cleanup);
 
 describe("Navigasi (desktop)", () => {
-  it("menampilkan tombol Transparansi dan item Cek Lowongan / Edukasi / Metodologi", () => {
+  it("menampilkan item navigasi utama secara rata", () => {
     render(<Navigasi />);
 
-    expect(
-      screen.getByRole("button", { name: /transparansi/i }),
-    ).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: "Cek Lowongan" }),
     ).toBeInTheDocument();
@@ -27,39 +23,27 @@ describe("Navigasi (desktop)", () => {
     expect(
       screen.getByRole("link", { name: "Metodologi" }),
     ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Sumber" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Uji Konsistensi" }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Tentang" })).toBeInTheDocument();
   });
 
-  it("dropdown Transparansi memuat Sumber, Uji Konsistensi", async () => {
-    const user = userEvent.setup();
+  it("tidak menampilkan tombol atau menu dropdown Transparansi", () => {
     render(<Navigasi />);
 
-    const tombol = screen.getByRole("button", { name: /transparansi/i });
-    expect(tombol).toHaveAttribute("aria-expanded", "false");
-
-    await user.click(tombol);
-    expect(tombol).toHaveAttribute("aria-expanded", "true");
-
-    const menu = screen.getByRole("menu", { name: /transparansi/i });
     expect(
-      within(menu).getByRole("menuitem", { name: "Sumber" }),
-    ).toBeInTheDocument();
+      screen.queryByRole("button", { name: /transparansi/i }),
+    ).not.toBeInTheDocument();
     expect(
-      within(menu).getByRole("menuitem", { name: "Uji Konsistensi" }),
-    ).toBeInTheDocument();
-    expect(
-      within(menu).queryByRole("menuitem", { name: "Tren" }),
+      screen.queryByRole("menu", { name: /transparansi/i }),
     ).not.toBeInTheDocument();
   });
 
-  it("Escape menutup dropdown Transparansi", async () => {
-    const user = userEvent.setup();
+  it("menyertakan link Bantuan", () => {
     render(<Navigasi />);
 
-    const tombol = screen.getByRole("button", { name: /transparansi/i });
-    await user.click(tombol);
-    expect(tombol).toHaveAttribute("aria-expanded", "true");
-
-    await user.keyboard("{Escape}");
-    expect(tombol).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByText("Sudah terlanjur? Bantuan")).toBeInTheDocument();
   });
 });

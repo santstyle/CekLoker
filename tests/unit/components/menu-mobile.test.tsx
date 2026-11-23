@@ -14,7 +14,7 @@ import { MenuMobile } from "@/components/situs/menu-mobile";
 afterEach(cleanup);
 
 describe("MenuMobile", () => {
-  it("tampilkan Sumber, Uji Konsistensi di daftar mobile", async () => {
+  it("menampilkan seluruh item navigasi utama di daftar mobile", async () => {
     const user = userEvent.setup();
     render(<MenuMobile />);
 
@@ -23,8 +23,12 @@ describe("MenuMobile", () => {
 
     const nav = screen.getByRole("navigation", { name: /navigasi mobile/i });
 
+    expect(nav.querySelector('a[href="/cek"]')).toBeInTheDocument();
+    expect(nav.querySelector('a[href="/edukasi"]')).toBeInTheDocument();
+    expect(nav.querySelector('a[href="/metodologi"]')).toBeInTheDocument();
     expect(nav.querySelector('a[href="/sumber"]')).toBeInTheDocument();
     expect(nav.querySelector('a[href="/uji-akurasi"]')).toBeInTheDocument();
+    expect(nav.querySelector('a[href="/tentang"]')).toBeInTheDocument();
     expect(nav.querySelector('a[href="/tren"]')).not.toBeInTheDocument();
   });
 
