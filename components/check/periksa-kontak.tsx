@@ -14,9 +14,11 @@ import { analisisKontak } from "@/lib/evaluation/kontak-domain";
 export function PeriksaKontak({
   teks,
   perusahaan,
+  jenisPemberiKerja = "otomatis",
 }: {
   teks: string;
   perusahaan: string;
+  jenisPemberiKerja?: "otomatis" | "perusahaan" | "fnb" | "lainnya";
 }) {
   const analisis = useMemo(
     () => analisisKontak(teks, perusahaan),
@@ -162,9 +164,9 @@ export function PeriksaKontak({
                 <path d="M12 17h.01" />
               </svg>
               <span>
-                Kontak hanya berupa nomor telepon. Verifikasi identitas
-                perusahaan lewat situs resmi atau kanal terdaftar sebelum
-                mengirim data pribadi.
+                {jenisPemberiKerja === "fnb"
+                  ? "Kontak lewat nomor telepon umum untuk usaha kecil. Sebelum mengirim data pribadi, kunjungi lokasi usahanya atau cek akun resminya."
+                  : "Kontak hanya berupa nomor telepon. Verifikasi identitas perusahaan lewat situs resmi atau kanal terdaftar sebelum mengirim data pribadi."}
               </span>
             </p>
           )}

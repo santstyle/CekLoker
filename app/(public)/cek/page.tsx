@@ -48,6 +48,9 @@ export default function HalamanCek() {
   const [teks, setTeks] = useState("");
   const [lokasi, setLokasi] = useState("");
   const [perusahaan, setPerusahaan] = useState("");
+  const [jenisPemberiKerja, setJenisPemberiKerja] = useState<
+    "otomatis" | "perusahaan" | "fnb" | "lainnya"
+  >("otomatis");
   const [mengirim, setMengirim] = useState(false);
   const [pesan, setPesan] = useState<string | null>(null);
   const [sumberOcr, setSumberOcr] = useState(false);
@@ -88,6 +91,9 @@ export default function HalamanCek() {
           teksLowongan: teks,
           ...(lokasi.trim() ? { lokasi: lokasi.trim() } : {}),
           ...(perusahaan.trim() ? { perusahaan: perusahaan.trim() } : {}),
+          ...(jenisPemberiKerja !== "otomatis"
+            ? { sektor: jenisPemberiKerja }
+            : {}),
         }),
       });
       const data: unknown = await respons.json();
@@ -153,6 +159,7 @@ export default function HalamanCek() {
     setTeks(teksContoh);
     setLokasi(lokasiContoh);
     setPerusahaan("");
+    setJenisPemberiKerja("otomatis");
     setSumberOcr(false);
     setPesan(null);
     setContohAktif(contoh);
@@ -433,12 +440,49 @@ export default function HalamanCek() {
                   </div>
 
                   <div className="flex flex-col gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-muted uppercase">
+                        Jenis pemberi kerja
+                      </span>
+                      {(
+                        [
+                          {
+                            nilai: "otomatis",
+                            label: "Otomatis (deteksi dari teks)",
+                          },
+                          { nilai: "perusahaan", label: "Perusahaan/pabrik" },
+                          { nilai: "fnb", label: "FnB/usaha kecil" },
+                          { nilai: "lainnya", label: "Lainnya" },
+                        ] as const
+                      ).map((pilihan) => (
+                        <button
+                          key={pilihan.nilai}
+                          type="button"
+                          onClick={() => setJenisPemberiKerja(pilihan.nilai)}
+                          disabled={mengirim}
+                          className={`rounded-full border px-3 py-1.5 text-[0.7rem] font-semibold transition-all duration-200 ${
+                            jenisPemberiKerja === pilihan.nilai
+                              ? "border-aksen bg-aksen text-white shadow-sm"
+                              : "border-line bg-paper text-muted hover:border-aksen/60 hover:text-ink"
+                          }`}
+                        >
+                          {pilihan.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
                     <div className="flex items-baseline justify-between gap-4">
                       <label
                         htmlFor="perusahaan"
                         className="text-sm font-bold text-ink"
                       >
-                        Nama perusahaan
+                        {jenisPemberiKerja === "perusahaan"
+                          ? "Nama perusahaan"
+                          : jenisPemberiKerja === "fnb"
+                            ? "Nama usaha / stand / akun"
+                            : "Nama perusahaan / usaha (opsional)"}
                       </label>
                       <span className="font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-muted uppercase">
                         Opsional
@@ -455,12 +499,19 @@ export default function HalamanCek() {
                       maxLength={200}
                       autoComplete="organization"
                       disabled={mengirim}
-                      placeholder="Mis. PT Contoh Berkat Abadi"
+                      placeholder={
+                        jenisPemberiKerja === "perusahaan"
+                          ? "Mis. PT Contoh Berkat Abadi"
+                          : jenisPemberiKerja === "fnb"
+                            ? "Mis. Kedai Es Teh Pak Budi"
+                            : "Mis. PT Contoh Berkat Abadi, atau Kedai Es Teh Pak Budi"
+                      }
                       className="w-full rounded-2xl border border-line bg-cream/60 px-4 py-3 text-sm text-ink transition-all duration-200 placeholder:text-slate-400 focus:border-aksen focus:bg-paper focus:ring-4 focus:ring-aksen/10 focus:outline-none disabled:opacity-50 sm:text-base"
                     />
                     <p className="text-[0.65rem] text-muted">
-                      Dipakai di peramban untuk memeriksa kesesuaian domain
-                      email, dan dikirim bersama evaluasi; tidak disimpan.
+                      Opsional. Kosongkan jika tidak ada. Dipakai di peramban
+                      untuk mencocokkan dengan email atau domain jika ada; tidak
+                      disimpan.
                     </p>
                   </div>
 
@@ -491,7 +542,11 @@ export default function HalamanCek() {
                     </p>
                   </div>
 
-                  <PeriksaKontak teks={teks} perusahaan={perusahaan} />
+                  <PeriksaKontak
+                    teks={teks}
+                    perusahaan={perusahaan}
+                    jenisPemberiKerja={jenisPemberiKerja}
+                  />
 
                   {pesan && (
                     <div
