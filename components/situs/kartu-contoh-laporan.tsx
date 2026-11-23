@@ -89,7 +89,8 @@ export function KartuContohLaporan({
 
       {contoh.penentuBand ? (
         <p className="mt-2 font-mono text-[0.56rem] leading-relaxed tracking-[0.1em] text-muted uppercase">
-          Rentang dinaikkan ke {LABEL_BAND[contoh.hasil.band]} oleh indikator penentu, bukan skor
+          Rentang dinaikkan ke {LABEL_BAND[contoh.hasil.band]} oleh indikator
+          penentu, bukan skor
         </p>
       ) : null}
 
