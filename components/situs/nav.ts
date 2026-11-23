@@ -1,10 +1,15 @@
+/**
+ * Item navigasi utama. Semua rute publik utama tampil sebagai daftar
+ * rata (desktop maupun mobile) agar tidak ada perbedaan konten antar
+ * perangkat.
+ */
+
 export const NAV = [
   { href: "/cek", label: "Cek Lowongan" },
   { href: "/edukasi", label: "Edukasi" },
   { href: "/metodologi", label: "Metodologi" },
   { href: "/sumber", label: "Sumber" },
-  { href: "/uji-akurasi", label: "Uji Akurasi" },
-  { href: "/tren", label: "Tren" },
+  { href: "/uji-akurasi", label: "Uji Konsistensi" },
   { href: "/tentang", label: "Tentang" },
 ] as const;
 

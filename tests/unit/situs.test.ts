@@ -77,6 +77,11 @@ describe("HALAMAN_PUBLIK", () => {
     expect(jalur).toContain("/disclaimer");
   });
 
+  it("tidak lagi mencantumkan halaman Tren", () => {
+    const jalur = HALAMAN_PUBLIK.map((halaman) => halaman.jalur);
+    expect(jalur).not.toContain("/tren");
+  });
+
   it("memakai deskripsi situs yang konsisten", () => {
     expect(DESKRIPSI_SITUS).toContain(NAMA_SITUS);
   });

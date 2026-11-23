@@ -16,7 +16,6 @@ const RUTE = [
   "/edukasi",
   "/edukasi/kuis",
   "/uji-akurasi",
-  "/tren",
   "/bantuan",
 ] as const;
 
