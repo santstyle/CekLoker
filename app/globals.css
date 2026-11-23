@@ -299,6 +299,64 @@ select:-webkit-autofill:focus {
     -webkit-backdrop-filter: blur(14px);
   }
 
+  /* Kubah aurora hero: tiap lapisan dipisah agar rapi dan mudah dirawat */
+  .kubah-aurora {
+    position: relative;
+    margin-top: 0.5rem;
+    height: clamp(14rem, 32vw, 34rem);
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .kubah-aurora__badan {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    width: 160%;
+    transform: translateX(-50%);
+    overflow: hidden;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    background: linear-gradient(
+      to bottom,
+      #2563eb 0%,
+      #3b82f6 32%,
+      #60a5fa 58%,
+      #93c5fd 80%,
+      #e0f2fe 100%
+    );
+  }
+
+  .kubah-aurora__titik {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      circle,
+      rgb(255 255 255 / 0.4) 1.6px,
+      transparent 1.6px
+    );
+    background-size: 22px 22px;
+  }
+
+  .kubah-aurora__cahaya {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 60%;
+    background: radial-gradient(
+      ellipse at 50% 100%,
+      rgb(255 255 255 / 0.55),
+      transparent 62%
+    );
+  }
+
+  .kubah-aurora__garis {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgb(255 255 255 / 0.45);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+
   /* Transisi masuk halaman (app/(public)/template.tsx) */
   @keyframes masuk-halaman {
     from {
@@ -917,6 +975,37 @@ input[type="checkbox"]:focus-visible {
     linear-gradient(135deg, #3b82f6, #60a5fa 45%, #93c5fd) border-box;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+}
+
+.dark .kubah-aurora__badan {
+  background: linear-gradient(
+    to bottom,
+    #1d4ed8 0%,
+    #2563eb 32%,
+    #1e3a8a 58%,
+    #0f172a 80%,
+    #020617 100%
+  );
+}
+
+.dark .kubah-aurora__titik {
+  background-image: radial-gradient(
+    circle,
+    rgb(255 255 255 / 0.1) 1.6px,
+    transparent 1.6px
+  );
+}
+
+.dark .kubah-aurora__cahaya {
+  background: radial-gradient(
+    ellipse at 50% 100%,
+    rgb(37 99 235 / 0.22),
+    transparent 62%
+  );
+}
+
+.dark .kubah-aurora__garis {
+  border-color: rgb(255 255 255 / 0.1);
 }
 
 .dark .teks-aksen {
