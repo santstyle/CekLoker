@@ -29,7 +29,7 @@ describe("Navigasi (desktop)", () => {
     ).toBeInTheDocument();
   });
 
-  it("dropdown Transparansi memuat Sumber, Uji Konsistensi, Tren", async () => {
+  it("dropdown Transparansi memuat Sumber, Uji Konsistensi", async () => {
     const user = userEvent.setup();
     render(<Navigasi />);
 
@@ -47,8 +47,8 @@ describe("Navigasi (desktop)", () => {
       within(menu).getByRole("menuitem", { name: "Uji Konsistensi" }),
     ).toBeInTheDocument();
     expect(
-      within(menu).getByRole("menuitem", { name: "Tren" }),
-    ).toBeInTheDocument();
+      within(menu).queryByRole("menuitem", { name: "Tren" }),
+    ).not.toBeInTheDocument();
   });
 
   it("Escape menutup dropdown Transparansi", async () => {

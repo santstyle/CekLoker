@@ -14,7 +14,7 @@ import { MenuMobile } from "@/components/situs/menu-mobile";
 afterEach(cleanup);
 
 describe("MenuMobile", () => {
-  it("tampilkan Tren, Sumber, Uji Konsistensi di daftar mobile", async () => {
+  it("tampilkan Sumber, Uji Konsistensi di daftar mobile", async () => {
     const user = userEvent.setup();
     render(<MenuMobile />);
 
@@ -25,7 +25,7 @@ describe("MenuMobile", () => {
 
     expect(nav.querySelector('a[href="/sumber"]')).toBeInTheDocument();
     expect(nav.querySelector('a[href="/uji-akurasi"]')).toBeInTheDocument();
-    expect(nav.querySelector('a[href="/tren"]')).toBeInTheDocument();
+    expect(nav.querySelector('a[href="/tren"]')).not.toBeInTheDocument();
   });
 
   it("daftar mobile juga memuat Tentang dan link Bantuan", async () => {

@@ -74,7 +74,7 @@ export function Navigasi() {
         );
       })}
 
-      {/* Dropdown Transparansi: Sumber, Uji Konsistensi, Tren */}
+      {/* Dropdown Transparansi: Sumber, Uji Konsistensi */}
       <div ref={transparansiRef} className="relative">
         <button
           type="button"
