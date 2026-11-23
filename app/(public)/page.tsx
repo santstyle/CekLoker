@@ -194,7 +194,7 @@ export default function Beranda() {
   return (
     <div className="relative bg-cream text-ink">
       {/* ============ HERO: kanvas terang dengan kubah setengah lingkaran ============ */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#e7ebf5] via-[#edf0f8] to-cream dark:from-ink-deep dark:via-ink dark:to-cream">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#e7ebf5] via-[#edf0f8] to-cream dark:from-ink-deep dark:via-[#0b1120] dark:to-cream">
         <Container
           ukuran="penuh"
           className="relative pt-14 text-center sm:pt-20"
