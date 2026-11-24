@@ -970,11 +970,11 @@ input[type="checkbox"]:focus-visible {
 }
 
 .dark .kartu-bingkai-gradasi {
+  border: 1.5px solid transparent;
   background:
-    linear-gradient(rgb(15 23 42 / 0.72), rgb(15 23 42 / 0.72)) padding-box,
-    linear-gradient(135deg, #3b82f6, #60a5fa 45%, #93c5fd) border-box;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+    linear-gradient(#111827, #111827) padding-box,
+    linear-gradient(135deg, #60a5fa, #93c5fd 45%, #bfdbfe) border-box;
+  box-shadow: 0 24px 48px -20px rgb(0 0 0 / 0.7);
 }
 
 .dark .kubah-aurora__badan {
