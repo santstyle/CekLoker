@@ -378,6 +378,22 @@ export default function HalamanMetodologi() {
             </section>
           </Reveal>
 
+          <Reveal delay={100}>
+            <section className="flex flex-col gap-3 rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs sm:p-9">
+              <h2 className="text-xl font-bold text-slate-950 sm:text-2xl">
+                Upah rendah dan risiko penipuan
+              </h2>
+              <p className="text-sm leading-relaxed text-slate-700">
+                Upah yang tampak di bawah upah minimum tidak otomatis menaikkan
+                risiko penipuan. Di Indonesia ada pengecualian upah minimum
+                untuk usaha mikro dan kecil, dan iklan lowongan hampir tidak
+                pernah menyebut skala usahanya. Karena itu temuan upah dicatat
+                terpisah sebagai &ldquo;Catatan hak pekerja&rdquo; agar tidak
+                salah menandai pekerjaan yang sah.
+              </p>
+            </section>
+          </Reveal>
+
           <Reveal delay={120}>
             <div className="pt-2">
               <Link

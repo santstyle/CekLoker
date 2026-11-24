@@ -2,8 +2,16 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { gabungkanTeks, teksBermakna } from "@/lib/ocr/kualitas";
-import { prosesPiksel } from "@/lib/ocr/pra-proses";
+import { teksBermakna } from "@/lib/ocr/kualitas";
+import {
+  ambangOtsu,
+  binarisasiTerbalik,
+  histogramLuminansi,
+  luminansi,
+  pereganganKontras,
+  prosesPiksel,
+  prosesPikselBradley,
+} from "@/lib/ocr/pra-proses";
 
 interface UnggahPosterProps {
   onTeksTerbaca: (teks: string) => void;
@@ -13,7 +21,7 @@ interface UnggahPosterProps {
 
 const MAKSIMAL_UKURAN_BYTE = 8 * 1024 * 1024; // 8 MB
 const TIPE_MIME_DIIZINKAN = ["image/png", "image/jpeg", "image/webp"];
-const LEBAR_TARGET = 2000; // piksel; di bawah ini gambar di-upscale
+const LEBAR_TARGET = 1500; // piksel; di bawah ini gambar di-upscale
 const SKALA_MAKS = 3;
 
 /**
@@ -23,7 +31,10 @@ const SKALA_MAKS = 3;
  * Mengembalikan data URL hasil canvas; bila canvas 2D tidak tersedia,
  * mengembalikan berkas asli (Blob) yang juga bisa dibaca oleh Tesseract.
  */
-async function praProsesGambar(file: Blob): Promise<string | Blob> {
+async function praProsesGambar(
+  file: Blob,
+  mode: string,
+): Promise<string | Blob> {
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file);
     const img = new Image();
@@ -65,11 +76,28 @@ async function praProsesGambar(file: Blob): Promise<string | Blob> {
 
       try {
         const imgData = konteks.getImageData(0, 0, canvas.width, canvas.height);
-        prosesPiksel({
-          data: imgData.data,
-          width: imgData.width,
-          height: imgData.height,
-        });
+        if (mode === "otsuTerbalik") {
+          const jumlahPiksel = imgData.width * imgData.height;
+          const abu = luminansi(imgData.data, jumlahPiksel);
+          const ambang = ambangOtsu(histogramLuminansi(abu), jumlahPiksel);
+          binarisasiTerbalik(imgData.data, abu, ambang);
+        } else if (mode === "bradley") {
+          prosesPikselBradley({
+            data: imgData.data,
+            width: imgData.width,
+            height: imgData.height,
+          });
+        } else if (mode === "kontras") {
+          const jumlahPiksel = imgData.width * imgData.height;
+          const abu = luminansi(imgData.data, jumlahPiksel);
+          pereganganKontras(imgData.data, abu);
+        } else {
+          prosesPiksel({
+            data: imgData.data,
+            width: imgData.width,
+            height: imgData.height,
+          });
+        }
         konteks.putImageData(imgData, 0, 0);
         resolve(canvas.toDataURL("image/png"));
       } catch {
@@ -96,6 +124,9 @@ export function UnggahPoster({
   const [progress, setProgress] = useState(0);
   const [pesanStatus, setPesanStatus] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [pratinjauUrl, setPratinjauUrl] = useState<string | null>(null);
+  const [teleponHasil, setTeleponHasil] = useState<string[]>([]);
+  const [emailHasil, setEmailHasil] = useState<string[]>([]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -123,47 +154,102 @@ export function UnggahPoster({
       setSedangMemproses(true);
       setProgress(5);
       onMulaiMemproses?.();
+      setPratinjauUrl((prev) => {
+        if (prev) URL.revokeObjectURL(prev);
+        return URL.createObjectURL(file);
+      });
 
       try {
         setPesanStatus("Mengoptimalkan kontras gambar untuk pembacaan...");
-        const hasilPraProses = await praProsesGambar(file);
+        const hasilPraProses = await praProsesGambar(file, "otsu");
         setProgress(20);
 
         setPesanStatus("Memuat mesin pembaca teks OCR...");
-        const { createWorker } = await import("tesseract.js");
-
-        const worker = await createWorker(["ind", "eng"], 1, {
-          workerPath: "/tesseract/worker.min.js",
-          corePath: "/tesseract",
-          langPath: "/tesseract",
-          logger: (m) => {
-            if (m.status === "recognizing text") {
-              const p = Math.round(20 + m.progress * 75);
-              setProgress(p);
-              setPesanStatus(
-                `Membaca teks dari poster... (${Math.round(m.progress * 100)}%)`,
-              );
-            }
-          },
-        });
-
         let teksHasil = "";
         try {
-          // Dua pass selalu dijalankan: PSM AUTO sering melewatkan blok
-          // besar walau keyakinan rata-ratanya tinggi, sedangkan
-          // PSM SPARSE_TEXT menangkap blok-blok besar itu. Seluruh baris
-          // unik dari keduanya digabungkan; tidak ada satu pass yang
-          // menggantikan hasil pass lain.
-          const { data } = await worker.recognize(hasilPraProses);
+          const { createWorker } = await import("tesseract.js");
           const { PSM } = await import("tesseract.js");
-          await worker.setParameters({
-            tessedit_pageseg_mode: PSM.SPARSE_TEXT,
-          });
-          const { data: dataKedua } = await worker.recognize(hasilPraProses);
-          teksHasil = gabungkanTeks(data.text, dataKedua.text);
+
+          const buatWorker = async () => {
+            const worker = await createWorker(["ind", "eng"], 1, {
+              workerPath: "/tesseract/worker.min.js",
+              corePath: "/tesseract",
+              langPath: "/tesseract",
+              logger: (m) => {
+                if (m.status === "recognizing text") {
+                  const p = Math.round(20 + m.progress * 75);
+                  setProgress(p);
+                  setPesanStatus(
+                    `Membaca teks dari poster... (${Math.round(m.progress * 100)}%)`,
+                  );
+                }
+              },
+            });
+            return worker;
+          };
+
+          const jalankanPass = async (mode: unknown) => {
+            const worker = await buatWorker();
+            try {
+              await worker.setParameters({
+                tessedit_pageseg_mode: mode as never,
+              });
+              const { data } = await worker.recognize(hasilPraProses);
+              const baris = String(data.text ?? "")
+                .split("\n")
+                .map((t: string, i: number) => ({
+                  teks: t.trim(),
+                  keyakinan: Number(data.confidence ?? 80),
+                  bbox: { x0: 0, y0: i, x1: 0, y1: i },
+                }));
+              return {
+                baris,
+                rata: baris.length
+                  ? baris.reduce(
+                      (s: number, b: { keyakinan: number }) => s + b.keyakinan,
+                      0,
+                    ) / baris.length
+                  : 0,
+              };
+            } finally {
+              await worker.terminate();
+            }
+          };
+
+          const hasilAuto = await jalankanPass(PSM.AUTO);
+          const hasilSparse = await jalankanPass(PSM.SPARSE_TEXT);
+          const { rataKeyakinan, urutkanDanSaringBaris } =
+            await import("@/lib/ocr/baris-ocr");
+          const skorAuto =
+            hasilAuto.baris.reduce(
+              (s: number, b: { teks: string }) =>
+                s + (b.teks.match(/[A-Za-z0-9]/g)?.length ?? 0),
+              0,
+            ) * rataKeyakinan(hasilAuto.baris);
+          const skorSparse =
+            hasilSparse.baris.reduce(
+              (s: number, b: { teks: string }) =>
+                s + (b.teks.match(/[A-Za-z0-9]/g)?.length ?? 0),
+              0,
+            ) * rataKeyakinan(hasilSparse.baris);
+          const terpilih = skorSparse > skorAuto ? hasilSparse : hasilAuto;
+
+          const teksSaring = urutkanDanSaringBaris(terpilih.baris, 35);
+          const pakaiFallback =
+            teksSaring.replace(/[^A-Za-z0-9]/g, "").length < 30;
+          teksHasil = pakaiFallback
+            ? terpilih.baris.map((b: { teks: string }) => b.teks).join("\n")
+            : teksSaring;
+
+          if (pakaiFallback) {
+            setPesanStatus(
+              "Hasil pindai kurang bersih, periksa dan koreksi teks di bawah.",
+            );
+          } else {
+            setPesanStatus("Teks berhasil diekstraksi dari poster!");
+          }
         } finally {
-          // Pastikan worker OCR selalu dimatikan, walau recognize gagal.
-          await worker.terminate();
+          // pastikan proses selesai
         }
 
         setProgress(100);
@@ -174,6 +260,17 @@ export function UnggahPoster({
           );
         } else {
           setPesanStatus("Teks berhasil diekstraksi dari poster!");
+          const polaEmail = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
+          const emailTerdeteksi = [
+            ...new Set(teksHasil.match(polaEmail) ?? []),
+          ];
+          const polaTelepon = /(?:\+62|62|0)8[1-9][0-9]{7,11}/g;
+          const rapat = teksHasil.replace(/[\s().-]/g, "");
+          const teleponTerdeteksi = [
+            ...new Set(rapat.match(polaTelepon) ?? []),
+          ];
+          setTeleponHasil(teleponTerdeteksi);
+          setEmailHasil(emailTerdeteksi);
           onTeksTerbaca(teksHasil);
         }
       } catch {
@@ -320,6 +417,49 @@ export function UnggahPoster({
           </div>
         )}
       </div>
+
+      {/* Pratinjau gambar */}
+      {pratinjauUrl && (
+        <div className="rounded-2xl border border-line bg-cream/50 p-3">
+          <p className="mb-2 text-[0.65rem] font-semibold text-muted">
+            Pratinjau gambar
+          </p>
+          <img
+            src={pratinjauUrl}
+            alt="Pratinjau poster"
+            className="max-h-64 w-full rounded-xl object-contain"
+          />
+        </div>
+      )}
+
+      {/* Banner hasil pindai */}
+      {!sedangMemproses && pratinjauUrl && (
+        <div
+          role="status"
+          className="rounded-xl border border-amber-200 bg-amber-50/70 p-3 text-xs text-amber-900"
+        >
+          Hasil pindai bisa kurang akurat. Periksa teks di bawah, terutama nomor
+          telepon, lalu koreksi jika perlu.
+          {teleponHasil.length > 0 && (
+            <ul className="mt-2 flex flex-col gap-1">
+              {teleponHasil.map((n) => (
+                <li key={n} className="font-mono">
+                  {n} — periksa nomor ini
+                </li>
+              ))}
+            </ul>
+          )}
+          {emailHasil.length > 0 && (
+            <ul className="mt-2 flex flex-col gap-1">
+              {emailHasil.map((e) => (
+                <li key={e} className="font-mono">
+                  {e} — periksa email ini
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
 
       {/* Action / Help strip */}
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs">

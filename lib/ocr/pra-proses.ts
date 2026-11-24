@@ -106,9 +106,95 @@ export function binarisasi(
 }
 
 /**
+ * Peregangan kontras sederhana: grayscale lalu rentangkan rentang luminansi
+ * ke 0-255. Tidak melakukan binarisasi keras (sesuai permintaan: jangan
+ * binarisasi kecuali hasil uji menunjukkan membantu).
+ */
+export function pereganganKontras(
+  rgba: Uint8ClampedArray,
+  abu: Uint8ClampedArray,
+): void {
+  let min = 255;
+  let max = 0;
+  for (let i = 0; i < abu.length; i++) {
+    if (abu[i] < min) min = abu[i];
+    if (abu[i] > max) max = abu[i];
+  }
+  if (max - min < 5) return;
+  const rentang = max - min;
+  for (let i = 0, p = 0; i < abu.length; i++, p += 4) {
+    const v = Math.round(((abu[i] - min) / rentang) * 255);
+    rgba[p] = v;
+    rgba[p + 1] = v;
+    rgba[p + 2] = v;
+  }
+}
+/**
  * Satu pipa lengkap: RGBA -> grayscale -> Otsu -> biner, di tempat.
  * Mengembalikan ambang yang dipakai (berguna untuk uji coba & debug).
  */
+export function binarisasiTerbalik(
+  rgba: Uint8ClampedArray,
+  abu: Uint8ClampedArray,
+  ambang: number,
+): void {
+  for (let i = 0, p = 0; i < abu.length; i++, p += 4) {
+    const nilai = abu[i] > ambang ? 0 : 255;
+    rgba[p] = nilai;
+    rgba[p + 1] = nilai;
+    rgba[p + 2] = nilai;
+  }
+}
+
+export function ambangAdaptifBradley(
+  abu: Uint8ClampedArray,
+  width: number,
+  height: number,
+  jendela = Math.max(8, Math.floor(width / 8)),
+  k = 0.15,
+): Uint8ClampedArray {
+  // Integral image.
+  const integral = new Float64Array((width + 1) * (height + 1));
+  for (let y = 0; y < height; y++) {
+    let baris = 0;
+    for (let x = 0; x < width; x++) {
+      baris += abu[y * width + x];
+      integral[(y + 1) * (width + 1) + (x + 1)] =
+        integral[y * (width + 1) + (x + 1)] + baris;
+    }
+  }
+  const setengah = Math.floor(jendela / 2);
+  const keluaran = new Uint8ClampedArray(abu.length);
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const x1 = Math.max(0, x - setengah);
+      const y1 = Math.max(0, y - setengah);
+      const x2 = Math.min(width - 1, x + setengah);
+      const y2 = Math.min(height - 1, y + setengah);
+      const area = (x2 - x1 + 1) * (y2 - y1 + 1);
+      const sum =
+        integral[(y2 + 1) * (width + 1) + (x2 + 1)] -
+        integral[y1 * (width + 1) + (x2 + 1)] -
+        integral[(y2 + 1) * (width + 1) + x1] +
+        integral[y1 * (width + 1) + x1];
+      const rata = sum / area;
+      keluaran[y * width + x] = abu[y * width + x] < rata * (1 - k) ? 0 : 255;
+    }
+  }
+  return keluaran;
+}
+
+export function prosesPikselBradley(piksel: DataPiksel): void {
+  const jumlahPiksel = piksel.width * piksel.height;
+  const abu = luminansi(piksel.data, jumlahPiksel);
+  const biner = ambangAdaptifBradley(abu, piksel.width, piksel.height);
+  for (let i = 0, p = 0; i < jumlahPiksel; i++, p += 4) {
+    const v = biner[i];
+    piksel.data[p] = v;
+    piksel.data[p + 1] = v;
+    piksel.data[p + 2] = v;
+  }
+}
 export function prosesPiksel(piksel: DataPiksel): number {
   const jumlahPiksel = piksel.width * piksel.height;
   const abu = luminansi(piksel.data, jumlahPiksel);

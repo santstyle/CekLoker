@@ -10,7 +10,7 @@ import { z } from "zod";
 import { extractGajiBulanan, normalizeText } from "./normalize";
 import { matchProvinsi } from "./provinces";
 import { DETEKTOR, RULES } from "./rules";
-import { bandDariSkor, bandTerburuk, hitungSkor } from "./score";
+import { BATAS_BAND, bandDariSkor, bandTerburuk, hitungSkor } from "./score";
 import {
   KEKUATAN_NILAI,
   type Band,
@@ -40,6 +40,12 @@ export const skemaInputEvaluasi = z.object(
       .string("Nama perusahaan harus berupa teks.")
       .trim()
       .max(200, "Nama perusahaan maksimal 200 karakter.")
+      .optional(),
+    sektor: z
+      .enum(["perusahaan", "fnb", "lainnya"], {
+        error:
+          "Sektor harus salah satu dari: perusahaan, FnB/usaha kecil, lainnya.",
+      })
       .optional(),
   },
   { error: "Body permintaan harus berupa objek JSON." },
@@ -201,7 +207,19 @@ export function evaluasiLowongan(
     return kiri.ruleId < kanan.ruleId ? -1 : kiri.ruleId > kanan.ruleId ? 1 : 0;
   });
 
-  const skor = hitungSkor(temuan);
+  // Temuan upah saja tidak boleh mendorong hasil ke label "Tinggi". Upah rendah
+  // bukan indikator penipuan (ada pengecualian upah minimum untuk usaha
+  // mikro/kecil) dan hanya dicatat sebagai "Catatan hak pekerja". Bila upah
+  // adalah satu-satunya temuan, skor akhir dibatasi (cap) di bawah ambang
+  // "Tinggi" agar band akhir maksimal "Perlu dicek". Bila ada indikator
+  // penipuan lain yang terpicu, skor dihitung normal tanpa cap.
+  const skorDasar = hitungSkor(temuan);
+  const hanyaUpah =
+    temuan.length > 0 &&
+    temuan.every((butir) => butir.ruleId === "upah_dibawah_umr");
+  const skor = hanyaUpah
+    ? Math.min(skorDasar, BATAS_BAND.tinggi - 1)
+    : skorDasar;
   const band = bandAkhir(skor, temuan);
 
   return {
