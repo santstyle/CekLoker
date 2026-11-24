@@ -981,11 +981,18 @@ input[type="checkbox"]:focus-visible {
   background: linear-gradient(
     to bottom,
     #1d4ed8 0%,
-    #1e40af 28%,
-    #0f2f5e 58%,
-    #0b1120 80%,
+    #1e3a8a 24%,
+    #0f2f5e 48%,
+    #0b1120 70%,
     #070b14 100%
   );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 58%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 100%);
 }
 
 .dark .kubah-aurora__titik {
@@ -1005,7 +1012,7 @@ input[type="checkbox"]:focus-visible {
 }
 
 .dark .kubah-aurora__garis {
-  border-color: rgb(255 255 255 / 0.1);
+  border-color: rgb(255 255 255 / 0.06);
 }
 
 .dark .teks-aksen {
