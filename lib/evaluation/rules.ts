@@ -252,7 +252,7 @@ export const POLA_SITUS = /https?:\/\/|www\./;
 export const RULES: readonly Rule[] = [
   {
     id: "upah_dibawah_umr",
-    judul: "Upah di bawah ketentuan minimum",
+    judul: "Upah tampak di bawah UMP/UMK",
     deskripsi:
       "Nominal upah yang disebutkan lebih rendah daripada upah minimum provinsi yang berlaku.",
     kategori: "upah",

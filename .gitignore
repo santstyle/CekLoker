@@ -50,3 +50,11 @@ powershell.cmd
 
 # contoh env tetap di-track
 !.env.example
+
+# OCR poster uji (bisa memuat data pribadi)
+scripts/ocr-debug/posters/*.jpg
+scripts/ocr-debug/posters/*.jpeg
+scripts/ocr-debug/posters/*.png
+scripts/ocr-debug/posters/*.webp
+scripts/ocr-debug/results/
+

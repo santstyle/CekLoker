@@ -19,6 +19,7 @@ import {
   LOKASI_CONTOH,
 } from "@/lib/contoh-lowongan";
 import { RULES } from "@/lib/evaluation/rules";
+import { ekstrakNamaUsaha } from "@/lib/cek/ekstrak-nama-usaha";
 import { CATATAN_DATA_UPAH, statusDataUpah } from "@/lib/evaluation/wages";
 
 const MINIMAL_KARAKTER = 30;
@@ -48,6 +49,8 @@ export default function HalamanCek() {
   const [teks, setTeks] = useState("");
   const [lokasi, setLokasi] = useState("");
   const [perusahaan, setPerusahaan] = useState("");
+  const [namaOtomatis, setNamaOtomatis] = useState(false);
+  const [manualEditNama, setManualEditNama] = useState(false);
   const [jenisPemberiKerja, setJenisPemberiKerja] = useState<
     "otomatis" | "perusahaan" | "fnb" | "lainnya"
   >("otomatis");
@@ -77,6 +80,21 @@ export default function HalamanCek() {
     panjangTeks >= MINIMAL_KARAKTER &&
     panjangTeks <= MAKSIMAL_KARAKTER &&
     !mengirim;
+
+  useEffect(() => {
+    if (manualEditNama) return;
+    const timer = setTimeout(() => {
+      const hasil = ekstrakNamaUsaha(teks);
+      if (hasil) {
+        setPerusahaan(hasil);
+        setNamaOtomatis(true);
+      } else if (namaOtomatis) {
+        setPerusahaan("");
+        setNamaOtomatis(false);
+      }
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [teks, manualEditNama, namaOtomatis]);
 
   async function kirim(peristiwa: React.SyntheticEvent<HTMLFormElement>) {
     peristiwa.preventDefault();
@@ -140,6 +158,9 @@ export default function HalamanCek() {
     setSumberOcr(true);
     setPesan(null);
     setContohAktif(null);
+    setPerusahaan("");
+    setNamaOtomatis(false);
+    setManualEditNama(false);
     // Pindahkan fokus ke textarea agar pengguna memeriksa hasil bacaan
     setTimeout(() => {
       textareaRef.current?.focus();
@@ -159,6 +180,8 @@ export default function HalamanCek() {
     setTeks(teksContoh);
     setLokasi(lokasiContoh);
     setPerusahaan("");
+    setNamaOtomatis(false);
+    setManualEditNama(false);
     setJenisPemberiKerja("otomatis");
     setSumberOcr(false);
     setPesan(null);
@@ -426,6 +449,9 @@ export default function HalamanCek() {
                             setTeks("");
                             setSumberOcr(false);
                             setContohAktif(null);
+                            setPerusahaan("");
+                            setNamaOtomatis(false);
+                            setManualEditNama(false);
                           }}
                           className="absolute right-4 bottom-4 cursor-pointer rounded-lg bg-ink/5 px-2.5 py-1 text-[0.65rem] font-semibold text-muted transition-colors hover:bg-ink/10 hover:text-ink"
                         >
@@ -493,9 +519,16 @@ export default function HalamanCek() {
                       name="perusahaan"
                       type="text"
                       value={perusahaan}
-                      onChange={(perubahan) =>
-                        setPerusahaan(perubahan.target.value)
-                      }
+                      onChange={(perubahan) => {
+                        setPerusahaan(perubahan.target.value);
+                        if (perubahan.target.value.trim() === "") {
+                          setManualEditNama(false);
+                          setNamaOtomatis(false);
+                        } else {
+                          setManualEditNama(true);
+                          setNamaOtomatis(false);
+                        }
+                      }}
                       maxLength={200}
                       autoComplete="organization"
                       disabled={mengirim}
@@ -513,6 +546,12 @@ export default function HalamanCek() {
                       untuk mencocokkan dengan email atau domain jika ada; tidak
                       disimpan.
                     </p>
+                    {namaOtomatis && (
+                      <p className="text-[0.65rem] text-muted">
+                        Terisi otomatis dari teks iklan, silakan koreksi jika
+                        keliru
+                      </p>
+                    )}
                   </div>
 
                   <div className="flex flex-col gap-2">

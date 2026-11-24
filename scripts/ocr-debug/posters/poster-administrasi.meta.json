@@ -1,0 +1,12 @@
+{
+  "kategori": "perusahaan",
+  "jenisPoster": "teks-gelap-polos",
+  "kolomPenting": {
+    "telepon": ["081100000000"],
+    "email": ["karir@contoh.example"],
+    "posisi": ["STAFF ADMINISTRASI"],
+    "gaji": ["Rp 2.000.000"],
+    "biaya": ["Rp 500.000"],
+    "namaUsaha": "PT CONTOH MAKMUR SENTOSA"
+  }
+}
