@@ -343,7 +343,6 @@ export function UnggahPoster({
         ref={fileInputRef}
         type="file"
         accept="image/png,image/jpeg,image/webp"
-        capture="environment"
         onChange={handleFileChange}
         className="hidden"
         disabled={disabled || sedangMemproses}
