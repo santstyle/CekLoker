@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { teksBermakna } from "@/lib/ocr/kualitas";
+import { gabungkanFragmentTeks, teksBermakna } from "@/lib/ocr/kualitas";
 import {
   ambangOtsu,
   binarisasiTerbalik,
@@ -361,7 +361,7 @@ export function UnggahPoster({
           ];
           setTeleponHasil(teleponTerdeteksi);
           setEmailHasil(emailTerdeteksi);
-          onTeksTerbaca(teksHasil);
+          onTeksTerbaca(gabungkanFragmentTeks(teksHasil));
         }
       } catch {
         setPesanStatus(
