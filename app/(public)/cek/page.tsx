@@ -531,7 +531,10 @@ export default function HalamanCek() {
                                 nilai: "otomatis",
                                 label: "Otomatis (deteksi dari teks)",
                               },
-                              { nilai: "perusahaan", label: "Perusahaan/pabrik" },
+                              {
+                                nilai: "perusahaan",
+                                label: "Perusahaan/pabrik",
+                              },
                               { nilai: "fnb", label: "FnB/usaha kecil" },
                               { nilai: "lainnya", label: "Lainnya" },
                             ] as const
@@ -539,7 +542,9 @@ export default function HalamanCek() {
                             <button
                               key={pilihan.nilai}
                               type="button"
-                              onClick={() => setJenisPemberiKerja(pilihan.nilai)}
+                              onClick={() =>
+                                setJenisPemberiKerja(pilihan.nilai)
+                              }
                               disabled={mengirim}
                               className={`rounded-full border px-3 py-1.5 text-[0.7rem] font-semibold transition-all duration-200 ${
                                 jenisPemberiKerja === pilihan.nilai
@@ -597,14 +602,14 @@ export default function HalamanCek() {
                           className="w-full rounded-2xl border border-line bg-cream/60 px-4 py-3 text-sm text-ink transition-all duration-200 placeholder:text-slate-400 focus:border-aksen focus:bg-paper focus:ring-4 focus:ring-aksen/10 focus:outline-none disabled:opacity-50 sm:text-base"
                         />
                         <p className="text-[0.65rem] text-muted">
-                          Opsional. Kosongkan jika tidak ada. Dipakai di peramban
-                          untuk mencocokkan dengan email atau domain jika ada; tidak
-                          disimpan.
+                          Opsional. Kosongkan jika tidak ada. Dipakai di
+                          peramban untuk mencocokkan dengan email atau domain
+                          jika ada; tidak disimpan.
                         </p>
                         {namaOtomatis && (
                           <p className="text-[0.65rem] text-muted">
-                            Terisi otomatis dari teks iklan, silakan koreksi jika
-                            keliru
+                            Terisi otomatis dari teks iklan, silakan koreksi
+                            jika keliru
                           </p>
                         )}
                       </div>
@@ -686,33 +691,34 @@ export default function HalamanCek() {
                       Teks Anda tidak disimpan di server
                     </div>
                     {/* Phase 2: Stale result indicator */}
-                  {!hasilSegar && sumberOcr && !mengirim && (
-                    <div
-                      role="status"
-                      aria-live="polite"
-                      className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50/70 p-4 text-xs text-amber-900 sm:text-sm"
-                    >
-                      <svg
-                        className="mt-0.5 size-5 shrink-0 text-amber-600"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
+                    {!hasilSegar && sumberOcr && !mengirim && (
+                      <div
+                        role="status"
+                        aria-live="polite"
+                        className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50/70 p-4 text-xs text-amber-900 sm:text-sm"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
-                        />
-                      </svg>
-                      <div>
-                        <span className="font-bold">Teks diubah. </span>
-                        Klik Periksa lowongan sekarang untuk memperbarui hasil.
+                        <svg
+                          className="mt-0.5 size-5 shrink-0 text-amber-600"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+                          />
+                        </svg>
+                        <div>
+                          <span className="font-bold">Teks diubah. </span>
+                          Klik Periksa lowongan sekarang untuk memperbarui
+                          hasil.
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  <button
+                    <button
                       type="submit"
                       disabled={!bolehKirim}
                       className="inline-flex min-h-14 w-full cursor-pointer items-center justify-center gap-2.5 rounded-full bg-ink px-8 text-base font-semibold text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-ink-deep disabled:pointer-events-none disabled:opacity-40"
@@ -734,7 +740,7 @@ export default function HalamanCek() {
                       <button
                         type="button"
                         onClick={resetFormulir}
-                        className="inline-flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-full border border-line bg-paper px-8 text-base font-semibold text-muted transition-all duration-200 hover:bg-cream hover:border-aksen/50"
+                        className="inline-flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-full border border-line bg-paper px-8 text-base font-semibold text-muted transition-all duration-200 hover:border-aksen/50 hover:bg-cream"
                       >
                         Periksa lowongan lain
                         <span aria-hidden="true">↻</span>
