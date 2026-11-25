@@ -195,13 +195,103 @@ export function UnggahPoster({
                 tessedit_pageseg_mode: mode as never,
               });
               const { data } = await worker.recognize(hasilPraProses);
-              const baris = String(data.text ?? "")
-                .split("\n")
-                .map((t: string, i: number) => ({
-                  teks: t.trim(),
-                  keyakinan: Number(data.confidence ?? 80),
-                  bbox: { x0: 0, y0: i, x1: 0, y1: i },
+              const words = Array.isArray(
+                (data as unknown as { words?: unknown[] }).words,
+              )
+                ? (data as unknown as { words: Array<Record<string, unknown>> })
+                    .words
+                : [];
+              let baris: Array<{
+                teks: string;
+                keyakinan: number;
+                bbox: { x0: number; y0: number; x1: number; y1: number };
+              }>;
+              if (words.length > 0) {
+                const kelompok: Array<{
+                  y0: number;
+                  y1: number;
+                  kata: Array<{ text: string; x0: number; conf: number }>;
+                }> = [];
+                for (const w of words as Array<Record<string, unknown>>) {
+                  const wy0 = Number(
+                    (w.bbox as Record<string, unknown>)?.y0 ?? 0,
+                  );
+                  const wy1 = Number(
+                    (w.bbox as Record<string, unknown>)?.y1 ?? 0,
+                  );
+                  const wText = String(w.text ?? "").trim();
+                  if (!wText) continue;
+                  const existing = kelompok.find(
+                    (g) => Math.abs(g.y0 - wy0) < 8,
+                  );
+                  if (existing) {
+                    existing.kata.push({
+                      text: wText,
+                      x0: Number((w.bbox as Record<string, unknown>)?.x0 ?? 0),
+                      conf: Number(w.confidence ?? data.confidence ?? 80),
+                    });
+                    existing.y0 = Math.min(existing.y0, wy0);
+                    existing.y1 = Math.max(existing.y1, wy1);
+                  } else {
+                    kelompok.push({
+                      y0: wy0,
+                      y1: wy1,
+                      kata: [
+                        {
+                          text: wText,
+                          x0: Number(
+                            (w.bbox as Record<string, unknown>)?.x0 ?? 0,
+                          ),
+                          conf: Number(w.confidence ?? data.confidence ?? 80),
+                        },
+                      ],
+                    });
+                  }
+                }
+                baris = kelompok
+                  .map((g) => {
+                    g.kata.sort((a, b) => a.x0 - b.x0);
+                    const teks = g.kata.map((k) => k.text).join(" ");
+                    const conf =
+                      g.kata.reduce(
+                        (sum: number, k: { conf: number }) => sum + k.conf,
+                        0,
+                      ) / g.kata.length;
+                    const x0 = Math.min(...g.kata.map((k) => k.x0));
+                    return {
+                      teks,
+                      keyakinan: conf,
+                      bbox: { x0, y0: g.y0, x1: 0, y1: g.y1 },
+                    };
+                  })
+                  .sort((a, b) => a.bbox.y0 - b.bbox.y0);
+              } else if (
+                Array.isArray(
+                  (data as unknown as { lines?: unknown[] }).lines,
+                ) &&
+                (data as unknown as { lines: unknown[] }).lines.length > 0
+              ) {
+                baris = (
+                  data as unknown as { lines: Array<Record<string, unknown>> }
+                ).lines.map((ln: Record<string, unknown>) => ({
+                  teks: String(ln.text ?? "").trim(),
+                  keyakinan: Number(ln.confidence ?? data.confidence ?? 80),
+                  bbox: {
+                    x0: Number((ln.bbox as Record<string, unknown>)?.x0 ?? 0),
+                    y0: Number((ln.bbox as Record<string, unknown>)?.y0 ?? 0),
+                    x1: Number((ln.bbox as Record<string, unknown>)?.x1 ?? 0),
+                    y1: Number((ln.bbox as Record<string, unknown>)?.y1 ?? 0),
+                  },
                 }));
+              } else {
+                baris = String(data.text ?? "")
+                  .split("\n")
+                  .map((t: string, i: number) => ({
+                    teks: t.trim(),
+                    keyakinan: Number(data.confidence ?? 80),
+                    bbox: { x0: 0, y0: i, x1: 0, y1: i },
+                  }));
+              }
               return {
                 baris,
                 rata: baris.length
