@@ -137,7 +137,7 @@ export function UnggahPoster({
       // Validasi ukuran
       if (file.size > MAKSIMAL_UKURAN_BYTE) {
         setPesanStatus(
-          "Ukuran berkas terlalu besar. Maksimal ukuran adalah 8 MB.",
+          "Ukuran berkas terlalu besar (maksimal 8 MB). Coba kompres gambar atau tempel teks lowongan secara manual.",
         );
         return;
       }
@@ -145,7 +145,7 @@ export function UnggahPoster({
       // Validasi tipe
       if (file.type && !TIPE_MIME_DIIZINKAN.includes(file.type)) {
         setPesanStatus(
-          "Format berkas tidak didukung. Harap gunakan PNG, JPEG, atau WebP.",
+          "Format berkas tidak didukung (gunakan PNG, JPEG, atau WebP). Atau tempel teks lowongan secara manual.",
         );
         return;
       }
@@ -256,7 +256,7 @@ export function UnggahPoster({
 
         if (!teksBermakna(teksHasil)) {
           setPesanStatus(
-            "Teks poster tidak dapat terbaca dengan jelas. Anda dapat mengetik atau menempel isi lowongan secara manual.",
+            "Teks poster tidak dapat terbaca dengan jelas. Coba unggah versi yang lebih jelas, atau ketik/tempel teks lowongan secara manual.",
           );
         } else {
           setPesanStatus("Teks berhasil diekstraksi dari poster!");
@@ -275,7 +275,7 @@ export function UnggahPoster({
         }
       } catch {
         setPesanStatus(
-          "Terjadi kendala saat memproses gambar poster. Silakan coba lagi atau tempel teks langsung.",
+          "Terjadi kendala saat memproses gambar poster. Coba unggah versi yang lebih jelas, atau tempel teks lowongan secara manual.",
         );
       } finally {
         setSedangMemproses(false);
@@ -343,6 +343,7 @@ export function UnggahPoster({
         ref={fileInputRef}
         type="file"
         accept="image/png,image/jpeg,image/webp"
+        capture="environment"
         onChange={handleFileChange}
         className="hidden"
         disabled={disabled || sedangMemproses}
