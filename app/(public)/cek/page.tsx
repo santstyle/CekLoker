@@ -60,6 +60,9 @@ export default function HalamanCek() {
   const [contohAktif, setContohAktif] = useState<"tinggi" | "rendah" | null>(
     null,
   );
+  // Phase 2: collapsed optional details + stale result tracking
+  const [detailTerbuka, setDetailTerbuka] = useState(false);
+  const [hasilSegar, setHasilSegar] = useState(true);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -95,6 +98,17 @@ export default function HalamanCek() {
     }, 600);
     return () => clearTimeout(timer);
   }, [teks, manualEditNama, namaOtomatis]);
+
+  // Phase 2: Tandai hasil usang saat user edit teks setelah OCR
+  useEffect(() => {
+    if (sumberOcr && !hasilSegar) return;
+    if (sumberOcr && hasilSegar && teks.length > 0) {
+      const timer = setTimeout(() => {
+        setHasilSegar(false);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [teks, sumberOcr, hasilSegar]);
 
   async function kirim(peristiwa: React.SyntheticEvent<HTMLFormElement>) {
     peristiwa.preventDefault();
@@ -161,13 +175,11 @@ export default function HalamanCek() {
     setPerusahaan("");
     setNamaOtomatis(false);
     setManualEditNama(false);
+    setHasilSegar(true);
+    setDetailTerbuka(false);
     // Pindahkan fokus ke textarea agar pengguna memeriksa hasil bacaan
     setTimeout(() => {
       textareaRef.current?.focus();
-      textareaRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
     }, 150);
   }
 
@@ -186,6 +198,23 @@ export default function HalamanCek() {
     setSumberOcr(false);
     setPesan(null);
     setContohAktif(contoh);
+    setHasilSegar(true);
+    setDetailTerbuka(false);
+  }
+
+  // Phase 2: Reset form sepenuhnya (untuk tombol "Periksa lowongan lain" dan "Bersihkan")
+  function resetFormulir() {
+    setTeks("");
+    setLokasi("");
+    setPerusahaan("");
+    setNamaOtomatis(false);
+    setManualEditNama(false);
+    setJenisPemberiKerja("otomatis");
+    setSumberOcr(false);
+    setPesan(null);
+    setContohAktif(null);
+    setHasilSegar(true);
+    setDetailTerbuka(false);
   }
 
   return (
@@ -284,7 +313,7 @@ export default function HalamanCek() {
                   {(
                     [
                       { mode: "teks", label: "Tempel Teks Iklan" },
-                      { mode: "poster", label: "Pindai Poster (OCR)" },
+                      { mode: "poster", label: "Pindai Poster" },
                     ] as const
                   ).map((tab) => (
                     <button
@@ -396,7 +425,7 @@ export default function HalamanCek() {
                       </svg>
                       <div>
                         <span className="font-bold">
-                          Teks hasil bacaan mesin (OCR):{" "}
+                          Teks hasil bacaan mesin:{" "}
                         </span>
                         Periksa dan perbaiki ejaan, nominal gaji, atau nomor
                         telepon yang kurang tepat sebelum mengirim.
@@ -445,14 +474,7 @@ export default function HalamanCek() {
                       {teks.length > 0 && (
                         <button
                           type="button"
-                          onClick={() => {
-                            setTeks("");
-                            setSumberOcr(false);
-                            setContohAktif(null);
-                            setPerusahaan("");
-                            setNamaOtomatis(false);
-                            setManualEditNama(false);
-                          }}
+                          onClick={resetFormulir}
                           className="absolute right-4 bottom-4 cursor-pointer rounded-lg bg-ink/5 px-2.5 py-1 text-[0.65rem] font-semibold text-muted transition-colors hover:bg-ink/10 hover:text-ink"
                         >
                           Bersihkan
@@ -465,121 +487,161 @@ export default function HalamanCek() {
                     </p>
                   </div>
 
-                  <div className="flex flex-col gap-2">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-muted uppercase">
-                        Jenis pemberi kerja
+                  {/* Phase 2: Collapsed optional details */}
+                  <details
+                    className="group rounded-2xl border border-line bg-cream/50 p-4"
+                    open={detailTerbuka}
+                    onToggle={(e) => {
+                      e.preventDefault();
+                      setDetailTerbuka(!detailTerbuka);
+                    }}
+                  >
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-ink hover:text-aksen">
+                      <span>
+                        Perbaiki detail (opsional)
+                        {namaOtomatis && perusahaan && (
+                          <span className="ml-2 text-xs font-normal text-muted">
+                            Terdeteksi: {perusahaan}
+                          </span>
+                        )}
                       </span>
-                      {(
-                        [
-                          {
-                            nilai: "otomatis",
-                            label: "Otomatis (deteksi dari teks)",
-                          },
-                          { nilai: "perusahaan", label: "Perusahaan/pabrik" },
-                          { nilai: "fnb", label: "FnB/usaha kecil" },
-                          { nilai: "lainnya", label: "Lainnya" },
-                        ] as const
-                      ).map((pilihan) => (
-                        <button
-                          key={pilihan.nilai}
-                          type="button"
-                          onClick={() => setJenisPemberiKerja(pilihan.nilai)}
+                      <svg
+                        className="size-5 shrink-0 text-muted transition-transform duration-200 group-open:rotate-180"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                        />
+                      </svg>
+                    </summary>
+                    <div className="mt-4 flex flex-col gap-6 overflow-hidden transition-all duration-300">
+                      <div className="flex flex-col gap-2">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-muted uppercase">
+                            Jenis pemberi kerja
+                          </span>
+                          {(
+                            [
+                              {
+                                nilai: "otomatis",
+                                label: "Otomatis (deteksi dari teks)",
+                              },
+                              {
+                                nilai: "perusahaan",
+                                label: "Perusahaan/pabrik",
+                              },
+                              { nilai: "fnb", label: "FnB/usaha kecil" },
+                              { nilai: "lainnya", label: "Lainnya" },
+                            ] as const
+                          ).map((pilihan) => (
+                            <button
+                              key={pilihan.nilai}
+                              type="button"
+                              onClick={() =>
+                                setJenisPemberiKerja(pilihan.nilai)
+                              }
+                              disabled={mengirim}
+                              className={`rounded-full border px-3 py-1.5 text-[0.7rem] font-semibold transition-all duration-200 ${
+                                jenisPemberiKerja === pilihan.nilai
+                                  ? "border-aksen bg-aksen text-white shadow-sm"
+                                  : "border-line bg-paper text-muted hover:border-aksen/60 hover:text-ink"
+                              }`}
+                            >
+                              {pilihan.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <div className="flex items-baseline justify-between gap-4">
+                          <label
+                            htmlFor="perusahaan"
+                            className="text-sm font-bold text-ink"
+                          >
+                            {jenisPemberiKerja === "perusahaan"
+                              ? "Nama perusahaan"
+                              : jenisPemberiKerja === "fnb"
+                                ? "Nama usaha / stand / akun"
+                                : "Nama perusahaan / usaha (opsional)"}
+                          </label>
+                          <span className="font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-muted uppercase">
+                            Opsional
+                          </span>
+                        </div>
+                        <input
+                          id="perusahaan"
+                          name="perusahaan"
+                          type="text"
+                          value={perusahaan}
+                          onChange={(perubahan) => {
+                            setPerusahaan(perubahan.target.value);
+                            if (perubahan.target.value.trim() === "") {
+                              setManualEditNama(false);
+                              setNamaOtomatis(false);
+                            } else {
+                              setManualEditNama(true);
+                              setNamaOtomatis(false);
+                            }
+                          }}
+                          maxLength={200}
+                          autoComplete="organization"
                           disabled={mengirim}
-                          className={`rounded-full border px-3 py-1.5 text-[0.7rem] font-semibold transition-all duration-200 ${
-                            jenisPemberiKerja === pilihan.nilai
-                              ? "border-aksen bg-aksen text-white shadow-sm"
-                              : "border-line bg-paper text-muted hover:border-aksen/60 hover:text-ink"
-                          }`}
-                        >
-                          {pilihan.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                          placeholder={
+                            jenisPemberiKerja === "perusahaan"
+                              ? "Mis. PT Contoh Berkat Abadi"
+                              : jenisPemberiKerja === "fnb"
+                                ? "Mis. Kedai Es Teh Pak Budi"
+                                : "Mis. PT Contoh Berkat Abadi, atau Kedai Es Teh Pak Budi"
+                          }
+                          className="w-full rounded-2xl border border-line bg-cream/60 px-4 py-3 text-sm text-ink transition-all duration-200 placeholder:text-slate-400 focus:border-aksen focus:bg-paper focus:ring-4 focus:ring-aksen/10 focus:outline-none disabled:opacity-50 sm:text-base"
+                        />
+                        <p className="text-[0.65rem] text-muted">
+                          Opsional. Kosongkan jika tidak ada. Dipakai di
+                          peramban untuk mencocokkan dengan email atau domain
+                          jika ada; tidak disimpan.
+                        </p>
+                        {namaOtomatis && (
+                          <p className="text-[0.65rem] text-muted">
+                            Terisi otomatis dari teks iklan, silakan koreksi
+                            jika keliru
+                          </p>
+                        )}
+                      </div>
 
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-baseline justify-between gap-4">
-                      <label
-                        htmlFor="perusahaan"
-                        className="text-sm font-bold text-ink"
-                      >
-                        {jenisPemberiKerja === "perusahaan"
-                          ? "Nama perusahaan"
-                          : jenisPemberiKerja === "fnb"
-                            ? "Nama usaha / stand / akun"
-                            : "Nama perusahaan / usaha (opsional)"}
-                      </label>
-                      <span className="font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-muted uppercase">
-                        Opsional
-                      </span>
+                      <div className="flex flex-col gap-2">
+                        <div className="flex items-baseline justify-between gap-4">
+                          <label
+                            htmlFor="lokasi"
+                            className="text-sm font-bold text-ink"
+                          >
+                            Lokasi penempatan
+                          </label>
+                          <span className="font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-muted uppercase">
+                            Opsional
+                          </span>
+                        </div>
+                        <PilihLokasi
+                          id="lokasi"
+                          nilai={lokasi}
+                          onUbah={setLokasi}
+                          disabled={mengirim}
+                          placeholder="Kota atau provinsi, mis. Surabaya, Bandung, Bali..."
+                        />
+                        <p className="text-[0.65rem] text-muted">
+                          Pilih dari saran agar lokasi dikenali sistem.{" "}
+                          {lokasi.trim()
+                            ? statusDataUpah(lokasi)
+                            : CATATAN_DATA_UPAH}
+                        </p>
+                      </div>
                     </div>
-                    <input
-                      id="perusahaan"
-                      name="perusahaan"
-                      type="text"
-                      value={perusahaan}
-                      onChange={(perubahan) => {
-                        setPerusahaan(perubahan.target.value);
-                        if (perubahan.target.value.trim() === "") {
-                          setManualEditNama(false);
-                          setNamaOtomatis(false);
-                        } else {
-                          setManualEditNama(true);
-                          setNamaOtomatis(false);
-                        }
-                      }}
-                      maxLength={200}
-                      autoComplete="organization"
-                      disabled={mengirim}
-                      placeholder={
-                        jenisPemberiKerja === "perusahaan"
-                          ? "Mis. PT Contoh Berkat Abadi"
-                          : jenisPemberiKerja === "fnb"
-                            ? "Mis. Kedai Es Teh Pak Budi"
-                            : "Mis. PT Contoh Berkat Abadi, atau Kedai Es Teh Pak Budi"
-                      }
-                      className="w-full rounded-2xl border border-line bg-cream/60 px-4 py-3 text-sm text-ink transition-all duration-200 placeholder:text-slate-400 focus:border-aksen focus:bg-paper focus:ring-4 focus:ring-aksen/10 focus:outline-none disabled:opacity-50 sm:text-base"
-                    />
-                    <p className="text-[0.65rem] text-muted">
-                      Opsional. Kosongkan jika tidak ada. Dipakai di peramban
-                      untuk mencocokkan dengan email atau domain jika ada; tidak
-                      disimpan.
-                    </p>
-                    {namaOtomatis && (
-                      <p className="text-[0.65rem] text-muted">
-                        Terisi otomatis dari teks iklan, silakan koreksi jika
-                        keliru
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-baseline justify-between gap-4">
-                      <label
-                        htmlFor="lokasi"
-                        className="text-sm font-bold text-ink"
-                      >
-                        Lokasi penempatan
-                      </label>
-                      <span className="font-mono text-[0.55rem] font-semibold tracking-[0.18em] text-muted uppercase">
-                        Opsional
-                      </span>
-                    </div>
-                    <PilihLokasi
-                      id="lokasi"
-                      nilai={lokasi}
-                      onUbah={setLokasi}
-                      disabled={mengirim}
-                      placeholder="Kota atau provinsi, mis. Surabaya, Bandung, Bali..."
-                    />
-                    <p className="text-[0.65rem] text-muted">
-                      Pilih dari saran agar lokasi dikenali sistem.{" "}
-                      {lokasi.trim()
-                        ? statusDataUpah(lokasi)
-                        : CATATAN_DATA_UPAH}
-                    </p>
-                  </div>
+                  </details>
 
                   <PeriksaKontak
                     teks={teks}
@@ -628,6 +690,34 @@ export default function HalamanCek() {
                       </svg>
                       Teks Anda tidak disimpan di server
                     </div>
+                    {/* Phase 2: Stale result indicator */}
+                    {!hasilSegar && sumberOcr && !mengirim && (
+                      <div
+                        role="status"
+                        aria-live="polite"
+                        className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50/70 p-4 text-xs text-amber-900 sm:text-sm"
+                      >
+                        <svg
+                          className="mt-0.5 size-5 shrink-0 text-amber-600"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+                          />
+                        </svg>
+                        <div>
+                          <span className="font-bold">Teks diubah. </span>
+                          Klik Periksa lowongan sekarang untuk memperbarui
+                          hasil.
+                        </div>
+                      </div>
+                    )}
+
                     <button
                       type="submit"
                       disabled={!bolehKirim}
@@ -645,6 +735,17 @@ export default function HalamanCek() {
                         </>
                       )}
                     </button>
+                    {/* Phase 2: "Periksa lowongan lain" reset button */}
+                    {!mengirim && (
+                      <button
+                        type="button"
+                        onClick={resetFormulir}
+                        className="inline-flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-full border border-line bg-paper px-8 text-base font-semibold text-muted transition-all duration-200 hover:border-aksen/50 hover:bg-cream"
+                      >
+                        Periksa lowongan lain
+                        <span aria-hidden="true">↻</span>
+                      </button>
+                    )}
                   </div>
                 </form>
               </div>

@@ -160,6 +160,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="id"
+      data-scroll-behavior="smooth"
       // Skrip anti-kedip menambahkan kelas `dark` ke elemen ini sebelum hidrasi.
       // Perbedaan atribut ini disengaja, jadi peringatan hidrasi diredam.
       suppressHydrationWarning
